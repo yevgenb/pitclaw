@@ -278,7 +278,7 @@ void ui_update_output_bars(float fanPct, float damperPct) {
         lv_label_set_text(lbl_fan_bar, buf);
     }
     if (bar_fan) {
-        lv_bar_set_value(bar_fan, (int32_t)(fanPct + 0.5f), LV_ANIM_ON);
+        lv_bar_set_value(bar_fan, (int32_t)(fanPct + 0.5f), LV_ANIM_OFF);
     }
     if (lbl_damper_bar) {
         char buf[16];
@@ -286,7 +286,7 @@ void ui_update_output_bars(float fanPct, float damperPct) {
         lv_label_set_text(lbl_damper_bar, buf);
     }
     if (bar_damper) {
-        lv_bar_set_value(bar_damper, (int32_t)(damperPct + 0.5f), LV_ANIM_ON);
+        lv_bar_set_value(bar_damper, (int32_t)(damperPct + 0.5f), LV_ANIM_OFF);
     }
 }
 

@@ -1,16 +1,19 @@
 // Pit Claw - Service Worker
-// Cache-first for app shell, network-first for data/WebSocket
+// Cache-first for app shell; data and updates go directly to the network.
 
-var CACHE_VERSION = 'pitclaw-v1';
+var APP_BASE = self.registration.scope;
+var CACHE_PREFIX = 'pitclaw:' + APP_BASE + ':';
+var CACHE_VERSION = CACHE_PREFIX + 'v4';
 var APP_SHELL = [
-  '/',
-  '/index.html',
-  '/app.js',
-  '/style.css',
-  '/favicon.svg',
+  './',
+  'index.html',
+  'app.js',
+  'style.css',
+  'favicon.svg',
+  'manifest.json',
   'https://cdn.jsdelivr.net/npm/uplot@1.6.31/dist/uPlot.iife.min.js',
   'https://cdn.jsdelivr.net/npm/uplot@1.6.31/dist/uPlot.min.css'
-];
+].map(function (path) { return new URL(path, APP_BASE).href; });
 
 // Install: pre-cache app shell
 self.addEventListener('install', function (event) {
@@ -23,13 +26,13 @@ self.addEventListener('install', function (event) {
   );
 });
 
-// Activate: clean up old caches
+// Activate: clean up only this installation's old caches.
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
       return Promise.all(
         keys.filter(function (key) {
-          return key !== CACHE_VERSION;
+          return key.startsWith(CACHE_PREFIX) && key !== CACHE_VERSION;
         }).map(function (key) {
           return caches.delete(key);
         })
@@ -45,6 +48,9 @@ self.addEventListener('notificationclick', function (event) {
   event.notification.close();
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (clientList) {
+      clientList = clientList.filter(function (client) {
+        return client.url.startsWith(APP_BASE);
+      });
       for (var i = 0; i < clientList.length; i++) {
         if (clientList[i].visibilityState === 'visible') {
           return clientList[i].focus();
@@ -53,68 +59,35 @@ self.addEventListener('notificationclick', function (event) {
       if (clientList.length > 0) {
         return clientList[0].focus();
       }
-      return clients.openWindow('/');
+      return clients.openWindow(APP_BASE);
     })
   );
 });
 
-// Fetch: cache-first for app shell, network-first for everything else
+// Fetch: serve the cached shell immediately and refresh it in the background.
 self.addEventListener('fetch', function (event) {
-  var url = new URL(event.request.url);
-
-  // Skip WebSocket requests (they won't hit fetch, but guard anyway)
-  if (url.protocol === 'ws:' || url.protocol === 'wss:') {
+  if (event.request.method !== 'GET' || APP_SHELL.indexOf(event.request.url) === -1) {
     return;
   }
 
-  // Skip non-GET requests
-  if (event.request.method !== 'GET') {
-    return;
-  }
-
-  // Check if this is an app shell resource
-  var isAppShell = APP_SHELL.some(function (shellUrl) {
-    if (shellUrl.startsWith('http')) {
-      return event.request.url === shellUrl;
-    }
-    return url.pathname === shellUrl || (shellUrl === '/' && url.pathname === '/index.html');
-  });
-
-  if (isAppShell) {
-    // Cache-first strategy for app shell
-    event.respondWith(
-      caches.match(event.request).then(function (cached) {
-        if (cached) {
-          // Return cached, but also update cache in background
-          fetch(event.request).then(function (response) {
-            if (response && response.status === 200) {
-              caches.open(CACHE_VERSION).then(function (cache) {
-                cache.put(event.request, response);
-              });
-            }
-          }).catch(function () {
-            // Network failed, that's fine - we served from cache
-          });
-          return cached;
-        }
-        // Not in cache, fetch from network
-        return fetch(event.request).then(function (response) {
-          if (response && response.status === 200) {
-            var responseClone = response.clone();
-            caches.open(CACHE_VERSION).then(function (cache) {
-              cache.put(event.request, responseClone);
-            });
-          }
+  var cachePromise = caches.open(CACHE_VERSION);
+  var refresh = cachePromise.then(function (cache) {
+    return fetch(event.request).then(function (response) {
+      if (response && response.status === 200) {
+        return cache.put(event.request, response.clone()).then(function () {
           return response;
         });
-      })
-    );
-  } else {
-    // Network-first for API calls and other resources
-    event.respondWith(
-      fetch(event.request).catch(function () {
-        return caches.match(event.request);
-      })
-    );
-  }
+      }
+      return response;
+    });
+  });
+
+  event.waitUntil(refresh.catch(function () { /* Cached shell still works offline. */ }));
+  event.respondWith(
+    cachePromise.then(function (cache) {
+      return cache.match(event.request);
+    }).then(function (cached) {
+      return cached || refresh;
+    })
+  );
 });

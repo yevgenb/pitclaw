@@ -6,6 +6,9 @@
 // Call after ui_init() — splash loads on top of the dashboard.
 void ui_boot_splash_init();
 
+// Restart splash timing once blocking startup has finished and touch is serviced.
+void ui_boot_splash_restart_timer();
+
 // Returns true while the splash is still showing.
 bool ui_boot_splash_is_active();
 

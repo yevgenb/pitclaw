@@ -222,7 +222,8 @@ void SimWebServer::eventHandler(struct mg_connection* c, int ev, void* ev_data) 
         // Version API endpoint
         if (mg_match(hm->uri, mg_str("/api/version"), nullptr)) {
             mg_http_reply(c, 200, "Content-Type: application/json\r\n",
-                          "{\"version\":\"%s\",\"board\":\"simulator\"}", FIRMWARE_VERSION);
+                          "{\"version\":\"%s\",\"board\":\"simulator\",\"releaseUpdatesEnabled\":false}",
+                          FIRMWARE_VERSION);
             return;
         }
 

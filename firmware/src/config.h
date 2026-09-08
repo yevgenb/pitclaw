@@ -86,6 +86,11 @@
 #define WS_MAX_CLIENTS    4
 #define WS_SEND_INTERVAL  1500   // Send data every 1.5 seconds
 
+// Browser checks/downloads from GitHub. Does not disable manual OTA at /update.
+#ifndef ENABLE_RELEASE_UPDATES
+#define ENABLE_RELEASE_UPDATES 0
+#endif
+
 // --- Alarms ---
 #define ALARM_PIT_BAND_DEFAULT  15.0    // +/- 15F
 #define ALARM_BUZZER_FREQ       4000    // TDK PS1240P02BT rated frequency

@@ -115,11 +115,18 @@ static unsigned long g_lastGraphMs   = 0;
 // --- UI callbacks ---
 static void ui_cb_setpoint(float sp) {
     g_setpoint = sp;
+    ui_update_setpoint(g_setpoint);
 }
 
 static void ui_cb_meat_target(uint8_t probe, float target) {
-    if (probe == 1) alarmManager.setMeat1Target(target);
-    if (probe == 2) alarmManager.setMeat2Target(target);
+    if (probe == 1) {
+        alarmManager.setMeat1Target(target);
+        ui_update_meat1_target(alarmManager.getMeat1Target());
+    }
+    if (probe == 2) {
+        alarmManager.setMeat2Target(target);
+        ui_update_meat2_target(alarmManager.getMeat2Target());
+    }
 }
 
 static void ui_cb_alarm_ack() {
@@ -213,8 +220,8 @@ void setup() {
     //    Splash is visible while remaining hardware modules initialize.
     ui_init();
     ui_boot_splash_init();
-    ui_tick(10);
-    ui_handler();
+    // Paint the splash before blocking setup, without waiting for a refresh tick.
+    lv_refr_now(nullptr);
 
     // 4. Initialize I2C bus and temperature probes (ADS1115)
     tempManager.begin();
@@ -303,6 +310,7 @@ void setup() {
     g_lastPidMs = millis();
     g_lastDisplayMs = millis();
     g_lastGraphMs = millis();
+    ui_boot_splash_restart_timer();
 }
 
 // ---------------------------------------------------------------------------
@@ -338,7 +346,6 @@ void loop() {
                 Serial.println("[BOOT] Entering normal operation");
             }
         }
-        ui_tick(10);
         ui_handler();
         delay(10);
         return;
@@ -401,7 +408,6 @@ void loop() {
                 Serial.println("[BOOT] Entering normal operation");
             }
         }
-        ui_tick(10);
         ui_handler();
         delay(10);
         return;
@@ -563,8 +569,7 @@ void loop() {
                            !tempManager.isConnected(PROBE_MEAT2));
     }
 
-    // 12. LVGL tick and task handler
-    ui_tick(10);
+    // 12. Service LVGL; its tick callback reads the real hardware clock.
     ui_handler();
 
     // Yield to FreeRTOS / keep loop at ~100 Hz

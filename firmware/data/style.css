@@ -101,7 +101,7 @@ body {
 .header-left {
   display: flex;
   align-items: center;
-  min-width: 0;
+  min-width: 40px;
   flex: 1;
 }
 
@@ -827,6 +827,33 @@ body {
   color: var(--accent);
 }
 
+/* Keep the logo and controls together; give cook times their own row on mobile. */
+@media (max-width: 767px) {
+  .header-banner {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .header-left {
+    flex: 0 0 auto;
+  }
+
+  .header-center {
+    order: 1;
+    width: 100%;
+    padding: 0;
+  }
+
+  .time-block {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .time-val {
+    white-space: normal;
+  }
+}
+
 /* -------------------------------------------------------------------------
    Responsive: Narrow mobile — hide title, compact times & temp cards
    ------------------------------------------------------------------------- */
@@ -837,10 +864,6 @@ body {
 
   .header-left .app-logo {
     margin-right: 0;
-  }
-
-  .header-left {
-    flex: 0;
   }
 
   .header-center {
@@ -1111,4 +1134,9 @@ body {
 .firmware-info span {
   color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
+}
+
+.firmware-info .btn:disabled {
+  opacity: 0.5;
+  cursor: default;
 }

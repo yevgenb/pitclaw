@@ -184,6 +184,7 @@ static void nav_event_cb(lv_event_t* e) {
 static lv_obj_t* create_nav_btn(lv_obj_t* parent, const char* icon, const char* text, Screen target) {
     lv_obj_t* btn = lv_btn_create(parent);
     lv_obj_set_size(btn, 140, LV_PCT(100));
+    lv_obj_set_flex_grow(btn, 1);
     lv_obj_set_style_bg_color(btn, COLOR_CARD_BG, 0);
     lv_obj_set_style_radius(btn, 4, 0);
     lv_obj_add_event_cb(btn, nav_event_cb, LV_EVENT_CLICKED, (void*)(uintptr_t)target);
@@ -204,7 +205,9 @@ static void create_nav_bar(lv_obj_t* parent, uint8_t screen_idx) {
     lv_obj_align(nav, LV_ALIGN_BOTTOM_MID, 0, 0);
     lv_obj_set_style_bg_color(nav, COLOR_NAV_BG, 0);
     lv_obj_set_style_border_width(nav, 0, 0);
-    lv_obj_set_style_pad_all(nav, 4, 0);
+    // Make the entire bar tappable: three equal, full-height button targets.
+    lv_obj_set_style_pad_all(nav, 0, 0);
+    lv_obj_set_style_pad_column(nav, 0, 0);
     lv_obj_set_flex_flow(nav, LV_FLEX_FLOW_ROW);
     lv_obj_set_flex_align(nav, LV_FLEX_ALIGN_SPACE_EVENLY, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
 
@@ -1222,10 +1225,11 @@ void ui_init() {
 
 #ifdef SIMULATOR_BUILD
     lv_display_t* disp = lv_sdl_window_create(DISPLAY_WIDTH, DISPLAY_HEIGHT);
-    lv_indev_t* mouse = lv_sdl_mouse_create();
+    lv_indev_t* indev = lv_sdl_mouse_create();
     (void)disp;
-    (void)mouse;
 #else
+    // Include rendering and other loop work in LVGL's elapsed time.
+    lv_tick_set_cb([]() -> uint32_t { return millis(); });
     Serial.println("[DISPLAY] Initializing WT32-SC01 Plus i8080 LCD and FT6336U touch...");
     // LCD and touch share RESET. Pulse it once before either driver starts.
     pinMode(4, OUTPUT);
@@ -1254,6 +1258,9 @@ void ui_init() {
                   tft.width(), tft.height());
 #endif
 
+    // Poll touch independently of the display's default 33 ms refresh period.
+    lv_timer_set_period(lv_indev_get_read_timer(indev), 10);
+
     create_dashboard_screen();
     create_graph_screen();
     create_settings_screen();
@@ -1268,8 +1275,6 @@ void ui_init() {
     lv_screen_load(scr_dashboard);
     current_screen = Screen::DASHBOARD;
 
-    // Process one tick so the screen load takes effect before first render
-    lv_tick_inc(1);
     lv_timer_handler();
 }
 
@@ -1281,14 +1286,9 @@ void ui_switch_screen(Screen screen) {
         case Screen::SETTINGS:  target = scr_settings;  break;
     }
     if (target) {
-        // Splash cleanup can leave no active screen. A fade defers activation
-        // until an animation tick; a refresh before then asserts on the null
-        // screen and halts LVGL. Load immediately in that case.
-        if (lv_screen_active() == nullptr) {
-            lv_screen_load(target);
-        } else {
-            lv_screen_load_anim(target, LV_SCR_LOAD_ANIM_FADE_IN, 200, 0, false);
-        }
+        // LVGL suppresses touch input during animated screen loads.
+        // An immediate load also handles splash cleanup leaving no active screen.
+        lv_screen_load(target);
         current_screen = screen;
         update_nav_highlight(screen);
     }
@@ -1296,10 +1296,6 @@ void ui_switch_screen(Screen screen) {
 
 Screen ui_get_current_screen() {
     return current_screen;
-}
-
-void ui_tick(uint32_t ms) {
-    lv_tick_inc(ms);
 }
 
 void ui_handler() {
@@ -1311,7 +1307,6 @@ void ui_handler() {
 void ui_init() {}
 void ui_switch_screen(Screen) {}
 Screen ui_get_current_screen() { return Screen::DASHBOARD; }
-void ui_tick(uint32_t) {}
 void ui_handler() {}
 void ui_set_callbacks(UiSetpointCb, UiMeatTargetCb, UiAlarmAckCb) {}
 void ui_set_settings_callbacks(UiUnitsCb, UiFanModeCb, UiNewSessionCb, UiFactoryResetCb) {}

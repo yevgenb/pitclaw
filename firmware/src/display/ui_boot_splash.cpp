@@ -93,6 +93,12 @@ void ui_boot_splash_init() {
     lv_screen_load(scr_splash);
 }
 
+void ui_boot_splash_restart_timer() {
+    splash_start_ms = lv_tick_get();
+    // Time spent in blocking startup is not a verified continuous touch hold.
+    if (press_start_ms > 0) press_start_ms = splash_start_ms;
+}
+
 bool ui_boot_splash_is_active() {
     return splash_active;
 }
@@ -146,6 +152,7 @@ void ui_boot_splash_cleanup() {
 #else
 // Native test stubs
 void ui_boot_splash_init() {}
+void ui_boot_splash_restart_timer() {}
 bool ui_boot_splash_is_active() { return false; }
 void ui_boot_splash_update() {}
 bool ui_boot_splash_factory_reset_triggered() { return false; }

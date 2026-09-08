@@ -25,19 +25,17 @@ typedef void (*UiFactoryResetCb)();
 typedef void (*UiWifiActionCb)(const char* action);  // "disconnect", "reconnect", "setup_ap"
 
 // Initialize LVGL display driver, touch input, and create all screens.
-// Call once from setup() after all other modules are initialized.
+// Call once from setup() before showing the splash or updating widgets.
 void ui_init();
 
-// Switch to the specified screen with animation
+// Switch immediately to the specified screen, keeping touch input available.
 void ui_switch_screen(Screen screen);
 
 // Get the currently active screen
 Screen ui_get_current_screen();
 
-// LVGL tick handler — call from a timer interrupt or loop at ~5ms
-void ui_tick(uint32_t ms);
-
-// LVGL task handler — call from loop() to process LVGL events
+// LVGL task handler — call from loop() to process LVGL events.
+// Time comes from the hardware/SDL clock installed by ui_init().
 void ui_handler();
 
 // Set callbacks for dashboard interactive elements

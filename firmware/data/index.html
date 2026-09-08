@@ -7,12 +7,12 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#f59e0b">
   <meta name="description" content="Pit Claw Temperature Controller">
-  <link rel="manifest" href="/manifest.json">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="apple-touch-icon" href="/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
   <title>Pit Claw</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uplot@1.6.31/dist/uPlot.min.css">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Header Banner -->
@@ -274,17 +274,17 @@
         <div class="settings-label">Firmware</div>
         <div class="firmware-info">
           <span id="settingsVersion">v---</span>
-          <button class="btn btn-secondary" id="btnCheckUpdate">Check for Update</button>
+          <button class="btn btn-secondary" id="btnCheckUpdate" disabled>Updates disabled</button>
         </div>
       </div>
     </div>
   </aside>
 
   <script src="https://cdn.jsdelivr.net/npm/uplot@1.6.31/dist/uPlot.iife.min.js"></script>
-  <script src="/app.js"></script>
+  <script src="app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(function(err) {
+      navigator.serviceWorker.register('sw.js').catch(function(err) {
         console.warn('Service worker registration failed:', err);
       });
     }

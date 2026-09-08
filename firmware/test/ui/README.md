@@ -1,10 +1,13 @@
-# Display lifecycle regression check
+# Display input and lifecycle regression check
 
 `test_boot_transition.cpp` creates the production widgets on a headless LVGL
 display with the board's RGB565 format. It checks that deleting the boot splash
-and loading the dashboard leaves an active screen immediately, renders new
-frames, and still permits navigation. Before the fix, the active-screen
-assertion fails; refreshing in that state can halt LVGL.
+and loading the dashboard leaves an active screen immediately and renders new
+frames. It injects pointer presses/releases through LVGL's input timer to check
+rapid tab changes, slight finger movement, and taps at the navigation bar's edges
+and former gaps. It also checks that slow startup preserves the splash countdown
+and factory-reset hold window. The clock is deterministic; this does not measure
+ESP32 rendering or physical touch latency.
 
 Build the simulator first so its LVGL library and display objects are available:
 
@@ -20,7 +23,8 @@ simulator also requires `CPATH=/opt/homebrew/include` before `pio run`.
 ```sh
 c++ -std=c++17 \
   -DSIMULATOR_BUILD -DLV_CONF_SKIP=1 -DLV_COLOR_DEPTH=32 \
-  -DLV_TICK_PERIOD_MS=5 -DLV_MEM_SIZE=262144 \
+  -DLV_THEME_DEFAULT_TRANSITION_TIME=0 -DLV_THEME_DEFAULT_GROW=0 \
+  -DLV_MEM_SIZE=262144 \
   -DLV_FONT_MONTSERRAT_14=1 -DLV_FONT_MONTSERRAT_16=1 \
   -DLV_FONT_MONTSERRAT_18=1 -DLV_FONT_MONTSERRAT_24=1 \
   -DLV_FONT_MONTSERRAT_36=1 -DLV_FONT_MONTSERRAT_48=1 \

@@ -159,6 +159,17 @@ response. Logs: `/private/tmp/pitclaw-boot-fix-startup.log` and
   startup capture has no runtime error or panic messages, with one expected
   absent-ADS1115 diagnostic. Log: `/private/tmp/pitclaw-final-startup.log`.
 
+## Development release checks
+
+`ENABLE_RELEASE_UPDATES=0` in `platformio.ini` disables the browser's automatic
+and manual GitHub release checks. Set it to `1` to opt in with a stable `x.y.z`
+firmware version. Development/prerelease version strings and the simulator skip
+release checks. Manual firmware uploads at `/update` remain available on hardware.
+The `/api/version` response exposes `releaseUpdatesEnabled` to the web UI.
+
+Verify the browser gate with `node test/web/test_release_updates.cjs`.
+Deploy both the firmware and web assets for this setting to take effect.
+
 ## Web files and filesystem preservation
 
 The firmware upload does not include `data/`. The initial board had only
@@ -198,3 +209,27 @@ up settings and session data first if they need to be retained.
 
 Both commands used an isolated writable `PLATFORMIO_CORE_DIR`; no firmware was
 flashed. Repeat hardware validation on the actual assembled carrier.
+
+## Reverse-proxy UI deployment, 2026-09-08
+
+Flashed the current firmware and all six web assets to the WT32-SC01 Plus.
+A fresh LittleFS backup was merged with `data/` and verified by unpacking the
+new image. The saved `config.json` remained byte-for-byte identical, including
+when read back from the running controller. Backup, image, and flash logs are
+in `/private/tmp/pitclaw-proxy-deploy/`.
+
+Firmware and filesystem flash hashes passed, and serial output confirmed normal
+startup at `192.168.0.29`. All six served assets match the source files; GitHub
+checks remain disabled and the manual `/update` page responds successfully.
+The firmware build and both web regression checks passed. A temporary local
+Nginx instance verified the deployed assets, API, and continuing WebSocket
+readings under different prefixes over HTTP and HTTPS. The user's Nginx server
+still needs the [proxy configuration](docs/reverse-proxy.md).
+
+Mobile header follow-up: deployed a CSS fix that reserves space for the logo
+and puts cook times below the logo/buttons on narrow screens, with cache version
+`v4`. The previous filesystem image matched the device's full partition digest
+before merging the change. Saved configuration, flash hash, normal startup, and
+all six served assets were verified. Images and logs are in
+`/private/tmp/pitclaw-mobile-header/`. Phone visual verification was unavailable
+because no browser was connected.

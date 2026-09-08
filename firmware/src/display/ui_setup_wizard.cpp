@@ -70,7 +70,7 @@ static void go_to_step(uint8_t step) {
     }
 
     if (wiz_screens[step]) {
-        lv_screen_load_anim(wiz_screens[step], LV_SCR_LOAD_ANIM_MOVE_LEFT, 300, 0, false);
+        lv_screen_load(wiz_screens[step]);
     }
 }
 

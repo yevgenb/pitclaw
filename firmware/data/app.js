@@ -50,6 +50,7 @@
 
   var firmwareVersion = null;    // current firmware version string
   var latestRelease = null;      // cached GitHub release JSON
+  var releaseUpdatesEnabled = false; // opt in only after reading device capabilities
 
   // ---------------------------------------------------------------------------
   // DOM References
@@ -248,11 +249,12 @@
       return;
     }
 
-    var protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-    var url = protocol + '//' + location.host + '/ws';
+    // Keep the dashboard's directory when mounted behind a proxy.
+    var url = new URL('ws', document.baseURI);
+    url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
 
     try {
-      ws = new WebSocket(url);
+      ws = new WebSocket(url.href);
     } catch (e) {
       console.error('WebSocket creation failed:', e);
       scheduleReconnect();
@@ -1418,7 +1420,7 @@
     if (!notifyEnabled || !('Notification' in window) || Notification.permission !== 'granted') return;
     var opts = {
       body: body,
-      icon: '/favicon.svg',
+      icon: new URL('favicon.svg', document.baseURI).href,
       tag: 'pitclaw-' + title.replace(/\s+/g, '-').toLowerCase()
     };
     // Always try the service worker path first via .ready (resolves when SW is
@@ -1466,13 +1468,21 @@
   // Firmware Version & OTA Update
   // ---------------------------------------------------------------------------
   function fetchVersion() {
-    fetch('/api/version')
-      .then(function (r) { return r.json(); })
+    return fetch('api/version')
+      .then(function (r) {
+        if (!r.ok) throw new Error('Version API ' + r.status);
+        return r.json();
+      })
       .then(function (data) {
         firmwareVersion = data.version;
         dom.fwVersion.textContent = 'Pit Claw v' + firmwareVersion;
         dom.settingsVersion.textContent = 'v' + firmwareVersion;
-        checkForUpdate();
+        // Development/prerelease strings are not comparable with stable releases.
+        releaseUpdatesEnabled = data.releaseUpdatesEnabled === true &&
+          /^\d+\.\d+\.\d+$/.test(firmwareVersion);
+        dom.btnCheckUpdate.disabled = !releaseUpdatesEnabled;
+        dom.btnCheckUpdate.textContent = releaseUpdatesEnabled ? 'Check for Update' : 'Updates disabled';
+        return checkForUpdate();
       })
       .catch(function (err) {
         console.warn('Failed to fetch version:', err);
@@ -1491,10 +1501,13 @@
     return 0;
   }
 
-  function checkForUpdate() {
-    if (!firmwareVersion || firmwareVersion === 'dev') return;
+  function checkForUpdate(manual) {
+    if (!releaseUpdatesEnabled) return;
+    if (manual) dom.btnCheckUpdate.textContent = 'Checking...';
+    latestRelease = null;
+    dom.updateBanner.style.display = 'none';
 
-    fetch('https://api.github.com/repos/' + GITHUB_REPO + '/releases/latest')
+    return fetch('https://api.github.com/repos/' + GITHUB_REPO + '/releases/latest')
       .then(function (r) {
         if (!r.ok) throw new Error('GitHub API ' + r.status);
         return r.json();
@@ -1505,15 +1518,19 @@
         if (compareVersions(firmwareVersion, remoteVersion) < 0) {
           dom.updateMessage.textContent = 'Update available: v' + remoteVersion;
           dom.updateBanner.style.display = '';
+          if (manual) dom.btnCheckUpdate.textContent = 'v' + remoteVersion + ' available';
+        } else if (manual) {
+          dom.btnCheckUpdate.textContent = 'Up to date';
         }
       })
       .catch(function (err) {
         console.warn('Update check failed:', err);
+        if (manual) dom.btnCheckUpdate.textContent = 'Check failed';
       });
   }
 
   function performUpdate() {
-    if (!latestRelease) return;
+    if (!releaseUpdatesEnabled || !latestRelease) return;
 
     // Find firmware .bin asset
     var asset = null;
@@ -1586,7 +1603,7 @@
     var size = buffer.byteLength;
 
     // ElegantOTA v3 protocol: start session, then upload chunks
-    return fetch('/ota/start?mode=fr&hash=0&size=' + size)
+    return fetch('ota/start?mode=fr&hash=0&size=' + size)
       .then(function (r) {
         if (!r.ok) throw new Error('OTA start failed: ' + r.status);
         // Upload in chunks
@@ -1595,7 +1612,7 @@
           if (offset >= size) return Promise.resolve();
           var end = Math.min(offset + OTA_CHUNK_SIZE, size);
           var chunk = buffer.slice(offset, end);
-          return fetch('/ota/upload', {
+          return fetch('ota/upload', {
             method: 'POST',
             body: chunk,
             headers: { 'Content-Type': 'application/octet-stream' }
@@ -1680,30 +1697,7 @@
       dom.updateBanner.style.display = 'none';
     });
     dom.btnCheckUpdate.addEventListener('click', function () {
-      dom.btnCheckUpdate.textContent = 'Checking...';
-      latestRelease = null;
-      fetch('https://api.github.com/repos/' + GITHUB_REPO + '/releases/latest')
-        .then(function (r) {
-          if (!r.ok) throw new Error('GitHub API ' + r.status);
-          return r.json();
-        })
-        .then(function (release) {
-          latestRelease = release;
-          var remoteVersion = release.tag_name.replace(/^v/, '');
-          if (!firmwareVersion || firmwareVersion === 'dev') {
-            dom.btnCheckUpdate.textContent = 'Dev build';
-          } else if (compareVersions(firmwareVersion, remoteVersion) < 0) {
-            dom.updateMessage.textContent = 'Update available: v' + remoteVersion;
-            dom.updateBanner.style.display = '';
-            dom.btnCheckUpdate.textContent = 'v' + remoteVersion + ' available';
-          } else {
-            dom.btnCheckUpdate.textContent = 'Up to date';
-          }
-        })
-        .catch(function (err) {
-          console.warn('Update check failed:', err);
-          dom.btnCheckUpdate.textContent = 'Check failed';
-        });
+      checkForUpdate(true);
     });
   }
 

@@ -58,7 +58,8 @@ void BBQWebServer::begin(bool startListening) {
     _server->on("/api/version", HTTP_GET, [](AsyncWebServerRequest* request) {
         char json[128];
         snprintf(json, sizeof(json),
-                 "{\"version\":\"%s\",\"board\":\"wt32_sc01_plus\"}", FIRMWARE_VERSION);
+                 "{\"version\":\"%s\",\"board\":\"wt32_sc01_plus\",\"releaseUpdatesEnabled\":%s}",
+                 FIRMWARE_VERSION, ENABLE_RELEASE_UPDATES ? "true" : "false");
         request->send(200, "application/json", json);
     });
 

@@ -73,6 +73,7 @@ static float display_temp(float f) {
 static void on_setpoint(float sp) {
     if (g_model) {
         g_model->setpoint = sp;
+        ui_update_setpoint(display_temp(g_model->setpoint));
         printf("[SIM] Setpoint changed to %.0f via touchscreen\n", sp);
     }
 }
@@ -539,8 +540,7 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        // LVGL tick + timer handler (always, regardless of phase)
-        lv_tick_inc(5);
+        // SDL supplies LVGL's clock; service events in every phase.
         lv_timer_handler();
 
         // Tick web server (non-blocking)
