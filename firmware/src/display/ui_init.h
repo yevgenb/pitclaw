@@ -14,7 +14,7 @@ enum class Screen : uint8_t {
     SETTINGS
 };
 
-// Callback typedefs for UI actions
+// Temperature action callbacks always return Fahrenheit, including in Celsius mode.
 typedef void (*UiSetpointCb)(float setpoint);
 typedef void (*UiMeatTargetCb)(uint8_t probe, float target);  // probe 1 or 2, target=0 means clear
 typedef void (*UiAlarmAckCb)();

@@ -28,7 +28,7 @@ void ui_wizard_set_callbacks(WizardFanTestCb fanCb,
                               WizardUnitsCb unitsCb,
                               WizardCompleteCb completeCb);
 
-// Update live probe readings on the probe check screen.
+// Update live probe readings on the probe check screen (inputs in Fahrenheit).
 // Call from the main loop while wizard is active.
 void ui_wizard_update_probes(float pit, float meat1, float meat2,
                               bool pitConn, bool meat1Conn, bool meat2Conn);

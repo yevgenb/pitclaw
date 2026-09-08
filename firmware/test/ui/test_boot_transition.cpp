@@ -116,18 +116,23 @@ int main() {
     ui_boot_splash_cleanup();
     ui_switch_screen(Screen::DASHBOARD);
 
-    // Real pointer events, including the former dead areas at edges and gaps.
+    // Real pointer events at each rounded tab's rectangular touch bounds.
     for (unsigned source = 0; source < 3; ++source) {
         for (unsigned target = 0; target < 3; ++target) {
             auto from = static_cast<Screen>(source);
-            const int left = static_cast<int>(target) * 160;
-            tap_tab(from, target, left, 270);
-            tap_tab(from, target, left + 159, 319);
-            tap_tab(from, target, left + 80, 271);
-            tap_tab(from, target, left + 80, 318);
-            tap_tab(from, target, left + 80, 295);
-            tap_tab(from, target, left + 80, 295, 12);
-            tap_tab(from, target, left + 80, 295, -12);
+            ui_switch_screen(from);
+            lv_obj_update_layout(lv_screen_active());
+            lv_area_t bounds;
+            lv_obj_get_coords(nav_btns[source][target], &bounds);
+            const int center = (bounds.x1 + bounds.x2) / 2;
+            const int middle_y = (bounds.y1 + bounds.y2) / 2;
+            tap_tab(from, target, bounds.x1, bounds.y1);
+            tap_tab(from, target, bounds.x2, bounds.y2);
+            tap_tab(from, target, center, bounds.y1 + 1);
+            tap_tab(from, target, center, bounds.y2 - 1);
+            tap_tab(from, target, center, middle_y);
+            tap_tab(from, target, center, middle_y, 12);
+            tap_tab(from, target, center, middle_y, -12);
         }
     }
     // Follow-up taps arrive without waiting out a screen transition.

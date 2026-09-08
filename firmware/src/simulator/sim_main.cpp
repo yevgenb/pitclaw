@@ -62,10 +62,6 @@ static void sim_clear_setup() {
     remove(SIM_SETUP_FILE);
 }
 
-static float display_temp(float f) {
-    return g_is_fahrenheit ? f : fahrenheitToCelsius(f);
-}
-
 // --------------------------------------------------------------------------
 // UI callbacks — wired to thermal model and local state
 // --------------------------------------------------------------------------
@@ -73,7 +69,7 @@ static float display_temp(float f) {
 static void on_setpoint(float sp) {
     if (g_model) {
         g_model->setpoint = sp;
-        ui_update_setpoint(display_temp(g_model->setpoint));
+        ui_update_setpoint(g_model->setpoint);
         printf("[SIM] Setpoint changed to %.0f via touchscreen\n", sp);
     }
 }
@@ -107,14 +103,14 @@ static void on_units(bool isFahrenheit) {
 
     // Re-display all temperatures in the new unit
     if (g_model) {
-        ui_update_setpoint(display_temp(g_model->setpoint));
-        ui_update_temps(display_temp(g_model->pitTemp),
-                        display_temp(g_model->meat1Temp),
-                        display_temp(g_model->meat2Temp),
+        ui_update_setpoint(g_model->setpoint);
+        ui_update_temps(g_model->pitTemp,
+                        g_model->meat1Temp,
+                        g_model->meat2Temp,
                         true, g_model->meat1Connected, g_model->meat2Connected);
     }
-    ui_update_meat1_target(g_meat1_target > 0 ? display_temp(g_meat1_target) : 0);
-    ui_update_meat2_target(g_meat2_target > 0 ? display_temp(g_meat2_target) : 0);
+    ui_update_meat1_target(g_meat1_target > 0 ? g_meat1_target : 0);
+    ui_update_meat2_target(g_meat2_target > 0 ? g_meat2_target : 0);
 
     printf("[SIM] Units changed to %s\n", isFahrenheit ? "F" : "C");
 }
@@ -417,9 +413,9 @@ int main(int argc, char* argv[]) {
                 if (now - lastUpdate >= 1000) {
                     lastUpdate = now;
                     ui_wizard_update_probes(
-                        display_temp(model.pitTemp),
-                        display_temp(model.meat1Temp),
-                        display_temp(model.meat2Temp),
+                        model.pitTemp,
+                        model.meat1Temp,
+                        model.meat2Temp,
                         true, model.meat1Connected, model.meat2Connected);
                 }
             } else {
@@ -457,17 +453,17 @@ int main(int argc, char* argv[]) {
                 float dt = (float)speed;
                 SimResult result = model.update(dt);
 
-                // Dashboard temperatures (converted to display units)
-                ui_update_temps(display_temp(result.pitTemp),
-                                display_temp(result.meat1Temp),
-                                display_temp(result.meat2Temp),
+                // UI converts canonical Fahrenheit values to the selected display units.
+                ui_update_temps(result.pitTemp,
+                                result.meat1Temp,
+                                result.meat2Temp,
                                 true, result.meat1Connected, result.meat2Connected);
 
                 // Output bars — model already applies split-range logic
                 ui_update_output_bars(result.fanPercent, result.damperPercent);
 
                 // Setpoint (may have changed via events)
-                ui_update_setpoint(display_temp(model.setpoint));
+                ui_update_setpoint(model.setpoint);
 
                 // Cook timer (session-relative)
                 ui_update_cook_timer(0, (uint32_t)(model.simTime - g_sessionStartSimTime), 0);
@@ -531,11 +527,12 @@ int main(int argc, char* argv[]) {
 
             // Update graph less frequently (every 5 real seconds)
             if (now - lastGraph >= 5000) {
-                ui_graph_add_point(display_temp(model.pitTemp),
-                                   display_temp(model.meat1Temp),
-                                   display_temp(model.meat2Temp),
-                                   display_temp(model.setpoint),
-                                   false, !model.meat1Connected, !model.meat2Connected);
+                ui_graph_add_point(model.pitTemp,
+                                   model.meat1Temp,
+                                   model.meat2Temp,
+                                   model.setpoint,
+                                   false, !model.meat1Connected, !model.meat2Connected,
+                                   (uint32_t)(model.simTime - g_sessionStartSimTime));
                 lastGraph = now;
             }
         }

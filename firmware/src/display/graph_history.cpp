@@ -3,7 +3,11 @@
 GraphHistory::GraphHistory() : _count(0) {}
 
 void GraphHistory::addPoint(float pit, float meat1, float meat2, float setpoint,
-                             bool pitDisc, bool meat1Disc, bool meat2Disc) {
+                             bool pitDisc, bool meat1Disc, bool meat2Disc, uint32_t elapsedSec) {
+    if (elapsedSec == UINT32_MAX) elapsedSec = _count ? _endSec + 5 : 0;
+    if (_count && elapsedSec < _endSec) elapsedSec = _endSec;
+    if (!_count) _startSec = elapsedSec;
+    _endSec = elapsedSec;
     if (_count >= GRAPH_HISTORY_SIZE) {
         condense();
     }
@@ -16,15 +20,17 @@ void GraphHistory::addPoint(float pit, float meat1, float meat2, float setpoint,
     slot.pitValid = !pitDisc;
     slot.meat1Valid = !meat1Disc;
     slot.meat2Valid = !meat2Disc;
+    slot.elapsedSec = elapsedSec;
     _count++;
 }
 
 void GraphHistory::clear() {
     _count = 0;
+    _startSec = _endSec = 0;
 }
 
 const GraphSlot& GraphHistory::getSlot(uint16_t index) const {
-    static const GraphSlot empty = {0, 0, 0, 0, false, false, false};
+    static const GraphSlot empty = {0, 0, 0, 0, false, false, false, 0};
     if (index >= _count) return empty;
     return _buffer[index];
 }
@@ -57,6 +63,7 @@ void GraphHistory::condense() {
             out.meat1 = mergeValues(a.meat1, a.meat1Valid, b.meat1, b.meat1Valid, out.meat1Valid);
             out.meat2 = mergeValues(a.meat2, a.meat2Valid, b.meat2, b.meat2Valid, out.meat2Valid);
             out.setpoint = (a.setpoint + b.setpoint) * 0.5f;
+            out.elapsedSec = a.elapsedSec + (b.elapsedSec - a.elapsedSec) / 2;
         } else {
             _buffer[dst] = _buffer[i];
         }

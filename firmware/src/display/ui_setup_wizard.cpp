@@ -7,6 +7,8 @@
 #include <cstring>
 
 #include "ui_colors.h"
+#include "ui_styles.h"
+#include "ui_state.h"
 
 // --------------------------------------------------------------------------
 // State
@@ -17,6 +19,10 @@ static uint8_t wizard_step = 0;  // 0=welcome, 1=units, 2=wifi, 3=probes, 4=hwte
 
 // Wizard screens (one per step)
 static lv_obj_t* wiz_screens[6] = { nullptr };
+static lv_obj_t* wiz_units_buttons[2] = {};
+static lv_obj_t* wiz_test_buttons[3] = {};
+static lv_obj_t* lbl_test_status = nullptr;
+static lv_timer_t* test_timer = nullptr;
 
 static lv_obj_t* lbl_wiz_wifi_title = nullptr;
 static lv_obj_t* lbl_wiz_wifi_instructions = nullptr;
@@ -69,8 +75,13 @@ static void go_to_step(uint8_t step) {
         if (cb_complete) cb_complete();
     }
 
+    if (step == 1) {
+        UiStyle::selected(wiz_units_buttons[0], ui_state.fahrenheit);
+        UiStyle::selected(wiz_units_buttons[1], !ui_state.fahrenheit);
+    }
     if (wiz_screens[step]) {
         lv_screen_load(wiz_screens[step]);
+        ui_refresh_alert_layout();
     }
 }
 
@@ -78,20 +89,18 @@ static void go_to_step(uint8_t step) {
 // Helper: create a "Next" button at the bottom of a screen
 // --------------------------------------------------------------------------
 
+static void back_btn_cb(lv_event_t*) {
+    if (wizard_step > 0) go_to_step(wizard_step - 1);
+}
+static void add_back_button(lv_obj_t* parent) {
+    auto back = UiStyle::button(parent, LV_SYMBOL_LEFT " Back", 16, 256, 212, 56);
+    lv_obj_add_event_cb(back, back_btn_cb, LV_EVENT_CLICKED, nullptr);
+}
 static lv_obj_t* add_next_button(lv_obj_t* parent, const char* text) {
-    lv_obj_t* btn = lv_btn_create(parent);
-    lv_obj_set_size(btn, 140, 44);
-    lv_obj_align(btn, LV_ALIGN_BOTTOM_MID, 0, -16);
-    lv_obj_set_style_bg_color(btn, COLOR_ORANGE, 0);
-    lv_obj_set_style_radius(btn, 8, 0);
+    bool welcome = parent == wiz_screens[0];
+    if (!welcome) add_back_button(parent);
+    auto btn = UiStyle::button(parent, text, welcome ? 134 : 252, 256, 212, 56, UiStyle::Button::Primary);
     lv_obj_add_event_cb(btn, next_btn_cb, LV_EVENT_CLICKED, nullptr);
-
-    lv_obj_t* lbl = lv_label_create(btn);
-    lv_label_set_text(lbl, text);
-    lv_obj_set_style_text_color(lbl, COLOR_TEXT, 0);
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_18, 0);
-    lv_obj_center(lbl);
-
     return btn;
 }
 
@@ -131,12 +140,14 @@ static void create_step_welcome() {
 
 static void units_f_cb(lv_event_t* e) {
     (void)e;
+    ui_set_units(true);
     if (cb_units) cb_units(true);
     go_to_step(2);
 }
 
 static void units_c_cb(lv_event_t* e) {
     (void)e;
+    ui_set_units(false);
     if (cb_units) cb_units(false);
     go_to_step(2);
 }
@@ -152,33 +163,11 @@ static void create_step_units() {
     lv_obj_set_style_text_font(lbl, &lv_font_montserrat_24, 0);
     lv_obj_align(lbl, LV_ALIGN_TOP_MID, 0, 30);
 
-    // Fahrenheit button
-    lv_obj_t* btn_f = lv_btn_create(scr);
-    lv_obj_set_size(btn_f, 180, 80);
-    lv_obj_align(btn_f, LV_ALIGN_CENTER, -100, 20);
-    lv_obj_set_style_bg_color(btn_f, COLOR_ORANGE, 0);
-    lv_obj_set_style_radius(btn_f, 12, 0);
-    lv_obj_add_event_cb(btn_f, units_f_cb, LV_EVENT_CLICKED, nullptr);
-
-    lbl = lv_label_create(btn_f);
-    lv_label_set_text(lbl, LV_SYMBOL_OK " \xC2\xB0" "F");
-    lv_obj_set_style_text_color(lbl, COLOR_TEXT, 0);
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_36, 0);
-    lv_obj_center(lbl);
-
-    // Celsius button
-    lv_obj_t* btn_c = lv_btn_create(scr);
-    lv_obj_set_size(btn_c, 180, 80);
-    lv_obj_align(btn_c, LV_ALIGN_CENTER, 100, 20);
-    lv_obj_set_style_bg_color(btn_c, COLOR_CARD_BG, 0);
-    lv_obj_set_style_radius(btn_c, 12, 0);
-    lv_obj_add_event_cb(btn_c, units_c_cb, LV_EVENT_CLICKED, nullptr);
-
-    lbl = lv_label_create(btn_c);
-    lv_label_set_text(lbl, "\xC2\xB0" "C");
-    lv_obj_set_style_text_color(lbl, COLOR_TEXT, 0);
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_36, 0);
-    lv_obj_center(lbl);
+    wiz_units_buttons[0] = UiStyle::button(scr, "\xC2\xB0" "F", 50, 140, 180, 80, UiStyle::Button::Secondary, &lv_font_montserrat_36);
+    wiz_units_buttons[1] = UiStyle::button(scr, "\xC2\xB0" "C", 250, 140, 180, 80, UiStyle::Button::Secondary, &lv_font_montserrat_36);
+    lv_obj_add_event_cb(wiz_units_buttons[0], units_f_cb, LV_EVENT_CLICKED, nullptr);
+    lv_obj_add_event_cb(wiz_units_buttons[1], units_c_cb, LV_EVENT_CLICKED, nullptr);
+    add_back_button(scr);
 }
 
 // --------------------------------------------------------------------------
@@ -299,20 +288,24 @@ static void create_step_probes() {
 // Step 4: Hardware Test
 // --------------------------------------------------------------------------
 
-static void fan_test_cb(lv_event_t* e) {
-    (void)e;
-    if (cb_fan_test) cb_fan_test();
+static void start_hardware_test(unsigned index) {
+    if (test_timer) return;
+    for (auto button : wiz_test_buttons) lv_obj_add_state(button, LV_STATE_DISABLED);
+    const char* names[] = {"Fan", "Servo", "Buzzer"};
+    lv_label_set_text_fmt(lbl_test_status, "%s test running...", names[index]);
+    if (index == 0 && cb_fan_test) cb_fan_test();
+    if (index == 1 && cb_servo_test) cb_servo_test();
+    if (index == 2 && cb_buzzer_test) cb_buzzer_test();
+    test_timer = lv_timer_create([](lv_timer_t* timer) {
+        for (auto button : wiz_test_buttons) lv_obj_remove_state(button, LV_STATE_DISABLED);
+        lv_label_set_text(lbl_test_status, "Test sent. Check that it worked.");
+        test_timer = nullptr;
+        lv_timer_delete(timer);
+    }, 1200, nullptr);
 }
-
-static void servo_test_cb(lv_event_t* e) {
-    (void)e;
-    if (cb_servo_test) cb_servo_test();
-}
-
-static void buzzer_test_cb(lv_event_t* e) {
-    (void)e;
-    if (cb_buzzer_test) cb_buzzer_test();
-}
+static void fan_test_cb(lv_event_t*) { start_hardware_test(0); }
+static void servo_test_cb(lv_event_t*) { start_hardware_test(1); }
+static void buzzer_test_cb(lv_event_t*) { start_hardware_test(2); }
 
 static void create_step_hwtest() {
     lv_obj_t* scr = lv_obj_create(nullptr);
@@ -330,49 +323,13 @@ static void create_step_hwtest() {
     lv_obj_set_style_text_color(lbl, COLOR_TEXT_DIM, 0);
     lv_obj_align(lbl, LV_ALIGN_TOP_MID, 0, 44);
 
-    // Test buttons in a row
-    int btn_y = 100;
-    int btn_w = 120;
-    int btn_h = 60;
-
-    // Fan test
-    lv_obj_t* btn = lv_btn_create(scr);
-    lv_obj_set_size(btn, btn_w, btn_h);
-    lv_obj_set_pos(btn, 30, btn_y);
-    lv_obj_set_style_bg_color(btn, COLOR_CARD_BG, 0);
-    lv_obj_set_style_radius(btn, 8, 0);
-    lv_obj_add_event_cb(btn, fan_test_cb, LV_EVENT_CLICKED, nullptr);
-    lbl = lv_label_create(btn);
-    lv_label_set_text(lbl, LV_SYMBOL_REFRESH "\nFan");
-    lv_obj_set_style_text_color(lbl, COLOR_TEXT, 0);
-    lv_obj_set_style_text_align(lbl, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_center(lbl);
-
-    // Servo test
-    btn = lv_btn_create(scr);
-    lv_obj_set_size(btn, btn_w, btn_h);
-    lv_obj_set_pos(btn, 175, btn_y);
-    lv_obj_set_style_bg_color(btn, COLOR_CARD_BG, 0);
-    lv_obj_set_style_radius(btn, 8, 0);
-    lv_obj_add_event_cb(btn, servo_test_cb, LV_EVENT_CLICKED, nullptr);
-    lbl = lv_label_create(btn);
-    lv_label_set_text(lbl, LV_SYMBOL_SETTINGS "\nServo");
-    lv_obj_set_style_text_color(lbl, COLOR_TEXT, 0);
-    lv_obj_set_style_text_align(lbl, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_center(lbl);
-
-    // Buzzer test
-    btn = lv_btn_create(scr);
-    lv_obj_set_size(btn, btn_w, btn_h);
-    lv_obj_set_pos(btn, 320, btn_y);
-    lv_obj_set_style_bg_color(btn, COLOR_CARD_BG, 0);
-    lv_obj_set_style_radius(btn, 8, 0);
-    lv_obj_add_event_cb(btn, buzzer_test_cb, LV_EVENT_CLICKED, nullptr);
-    lbl = lv_label_create(btn);
-    lv_label_set_text(lbl, LV_SYMBOL_BELL "\nBuzzer");
-    lv_obj_set_style_text_color(lbl, COLOR_TEXT, 0);
-    lv_obj_set_style_text_align(lbl, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_center(lbl);
+    const char* texts[] = {LV_SYMBOL_REFRESH "\nFan", LV_SYMBOL_SETTINGS "\nServo", LV_SYMBOL_BELL "\nBuzzer"};
+    lv_event_cb_t callbacks[] = {fan_test_cb, servo_test_cb, buzzer_test_cb};
+    for (int i = 0; i < 3; ++i) {
+        wiz_test_buttons[i] = UiStyle::button(scr, texts[i], 30 + i * 145, 100, 120, 60, UiStyle::Button::Secondary, &lv_font_montserrat_16);
+        lv_obj_add_event_cb(wiz_test_buttons[i], callbacks[i], LV_EVENT_CLICKED, nullptr);
+    }
+    lbl_test_status = UiStyle::label(scr, "", 20, 190, &lv_font_montserrat_16, COLOR_TEXT_DIM, 440, LV_TEXT_ALIGN_CENTER);
 
     add_next_button(scr, "Finish");
 }
@@ -409,6 +366,8 @@ static void create_step_done() {
 // --------------------------------------------------------------------------
 
 void ui_wizard_init() {
+    if (test_timer) { lv_timer_delete(test_timer); test_timer = nullptr; }
+    for (auto& screen : wiz_screens) { if (screen) lv_obj_delete(screen); screen = nullptr; }
     wizard_active = true;
     wizard_step = 0;
 
@@ -419,8 +378,14 @@ void ui_wizard_init() {
     create_step_hwtest();
     create_step_done();
 
+    for (int i = 1; i < 5; ++i) {
+        char step[12]; snprintf(step, sizeof(step), "%d / 5", i + 1);
+        UiStyle::label(wiz_screens[i], step, 418, 16, &lv_font_montserrat_14, COLOR_TEXT_DIM, 50, LV_TEXT_ALIGN_RIGHT);
+        lv_obj_remove_flag(wiz_screens[i], LV_OBJ_FLAG_SCROLLABLE);
+    }
     // Show the welcome screen
     lv_screen_load(wiz_screens[0]);
+    ui_refresh_alert_layout();
 }
 
 bool ui_wizard_is_active() {
@@ -494,7 +459,7 @@ void ui_wizard_update_probes(float pit, float meat1, float meat2,
 
     if (lbl_wiz_pit) {
         if (pitConn) {
-            snprintf(buf, sizeof(buf), "%.0f", pit);
+            snprintf(buf, sizeof(buf), "%.0f\xC2\xB0%s", ui_display_temp(pit), ui_unit_suffix());
             lv_label_set_text(lbl_wiz_pit, buf);
             lv_obj_set_style_text_color(lbl_wiz_pit, COLOR_GREEN, 0);
         } else {
@@ -505,7 +470,7 @@ void ui_wizard_update_probes(float pit, float meat1, float meat2,
 
     if (lbl_wiz_meat1) {
         if (meat1Conn) {
-            snprintf(buf, sizeof(buf), "%.0f", meat1);
+            snprintf(buf, sizeof(buf), "%.0f\xC2\xB0%s", ui_display_temp(meat1), ui_unit_suffix());
             lv_label_set_text(lbl_wiz_meat1, buf);
             lv_obj_set_style_text_color(lbl_wiz_meat1, COLOR_GREEN, 0);
         } else {
@@ -516,7 +481,7 @@ void ui_wizard_update_probes(float pit, float meat1, float meat2,
 
     if (lbl_wiz_meat2) {
         if (meat2Conn) {
-            snprintf(buf, sizeof(buf), "%.0f", meat2);
+            snprintf(buf, sizeof(buf), "%.0f\xC2\xB0%s", ui_display_temp(meat2), ui_unit_suffix());
             lv_label_set_text(lbl_wiz_meat2, buf);
             lv_obj_set_style_text_color(lbl_wiz_meat2, COLOR_GREEN, 0);
         } else {

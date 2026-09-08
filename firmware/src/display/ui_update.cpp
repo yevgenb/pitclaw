@@ -1,410 +1,195 @@
 #include "ui_update.h"
-
 #if !defined(NATIVE_BUILD) || defined(SIMULATOR_BUILD)
-
-#include <lvgl.h>
+#include "ui_styles.h"
+#include "ui_state.h"
+#include "graph_history.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <math.h>
 
-#include "ui_colors.h"
-#include "graph_history.h"
+extern lv_obj_t *lbl_wifi_icon, *lbl_elapsed, *lbl_units;
+extern lv_obj_t *lbl_pit_temp, *lbl_setpoint;
+extern lv_obj_t *lbl_meat1_temp, *lbl_meat2_temp, *lbl_meat1_target, *lbl_meat2_target, *lbl_meat1_est, *lbl_meat2_est;
+extern lv_obj_t *meat_edit_icons[2];
+extern lv_obj_t *bar_fan, *bar_damper, *lbl_fan_bar, *lbl_damper_bar;
+extern lv_obj_t *alert_banner, *lbl_alert_text, *btn_alert_ack;
+extern lv_obj_t *chart_temps, *lbl_graph_title, *lbl_graph_span;
+extern lv_chart_series_t *ser_pit, *ser_meat1, *ser_meat2, *ser_setpoint;
+extern lv_obj_t *graph_y_labels[5], *graph_x_labels[3];
+extern lv_obj_t *btn_units_f, *btn_units_c, *btn_fan_only, *btn_fan_damper, *btn_damper_pri;
+extern lv_obj_t *lbl_wifi_status, *lbl_wifi_ssid, *lbl_wifi_ip, *lbl_wifi_signal, *btn_wifi_action, *lbl_wifi_action;
 
-// --------------------------------------------------------------------------
-// External widget references (defined in ui_init.cpp)
-// --------------------------------------------------------------------------
-
-// Dashboard — top bar
-extern lv_obj_t* lbl_wifi_icon;
-extern lv_obj_t* lbl_start_time;
-extern lv_obj_t* lbl_elapsed;
-extern lv_obj_t* lbl_done_time;
-
-// Dashboard — output bars
-extern lv_obj_t* bar_fan;
-extern lv_obj_t* lbl_fan_bar;
-extern lv_obj_t* bar_damper;
-extern lv_obj_t* lbl_damper_bar;
-
-// Dashboard — pit card
-extern lv_obj_t* lbl_pit_temp;
-extern lv_obj_t* lbl_setpoint;
-
-// Dashboard — meat cards
-extern lv_obj_t* lbl_meat1_temp;
-extern lv_obj_t* lbl_meat1_target;
-extern lv_obj_t* lbl_meat1_est;
-extern lv_obj_t* lbl_meat2_temp;
-extern lv_obj_t* lbl_meat2_target;
-extern lv_obj_t* lbl_meat2_est;
-
-// Dashboard — alert banner
-extern lv_obj_t* alert_banner;
-extern lv_obj_t* lbl_alert_text;
-
-// Graph
-extern lv_obj_t* chart_temps;
-extern lv_chart_series_t* ser_pit;
-extern lv_chart_series_t* ser_meat1;
-extern lv_chart_series_t* ser_meat2;
-extern lv_chart_series_t* ser_setpoint;
-extern lv_obj_t* graph_y_labels[5];
-
-// Settings
-extern lv_obj_t* btn_units_f;
-extern lv_obj_t* btn_units_c;
-extern lv_obj_t* btn_fan_only;
-extern lv_obj_t* btn_fan_damper;
-extern lv_obj_t* btn_damper_pri;
-
-// Settings — Wi-Fi info
-extern lv_obj_t* lbl_wifi_status;
-extern lv_obj_t* lbl_wifi_ssid;
-extern lv_obj_t* lbl_wifi_ip;
-extern lv_obj_t* lbl_wifi_signal;
-extern lv_obj_t* btn_wifi_action;
-extern lv_obj_t* lbl_wifi_action;
-
-// --------------------------------------------------------------------------
-// Unit state
-// --------------------------------------------------------------------------
-
-static bool s_fahrenheit = true;
-
-void ui_set_units(bool fahrenheit) {
-    s_fahrenheit = fahrenheit;
-}
-
-static const char* unit_suffix() {
-    return s_fahrenheit ? "F" : "C";
-}
-
-// --------------------------------------------------------------------------
-// Public API
-// --------------------------------------------------------------------------
-
-void ui_update_temps(float pit, float meat1, float meat2,
-                     bool pitConn, bool meat1Conn, bool meat2Conn) {
-    if (!lbl_pit_temp) return;
-
-    char buf[16];
-
-    if (pitConn) {
-        snprintf(buf, sizeof(buf), "%.0f\xC2\xB0", pit);
-        lv_label_set_text(lbl_pit_temp, buf);
-        lv_obj_set_style_text_color(lbl_pit_temp, COLOR_ORANGE, 0);
-    } else {
-        lv_label_set_text(lbl_pit_temp, "---");
-        lv_obj_set_style_text_color(lbl_pit_temp, COLOR_TEXT_DIM, 0);
-    }
-
-    if (lbl_meat1_temp) {
-        if (meat1Conn) {
-            snprintf(buf, sizeof(buf), "%.0f\xC2\xB0", meat1);
-            lv_label_set_text(lbl_meat1_temp, buf);
-            lv_obj_set_style_text_color(lbl_meat1_temp, COLOR_RED, 0);
-        } else {
-            lv_label_set_text(lbl_meat1_temp, "---");
-            lv_obj_set_style_text_color(lbl_meat1_temp, COLOR_TEXT_DIM, 0);
-        }
-    }
-
-    if (lbl_meat2_temp) {
-        if (meat2Conn) {
-            snprintf(buf, sizeof(buf), "%.0f\xC2\xB0", meat2);
-            lv_label_set_text(lbl_meat2_temp, buf);
-            lv_obj_set_style_text_color(lbl_meat2_temp, COLOR_BLUE, 0);
-        } else {
-            lv_label_set_text(lbl_meat2_temp, "---");
-            lv_obj_set_style_text_color(lbl_meat2_temp, COLOR_TEXT_DIM, 0);
-        }
-    }
-}
-
-void ui_update_setpoint(float sp) {
-    if (!lbl_setpoint) return;
-
-    char buf[24];
-    snprintf(buf, sizeof(buf), "Set: %.0f\xC2\xB0%s", sp, unit_suffix());
-    lv_label_set_text(lbl_setpoint, buf);
-}
-
-void ui_update_cook_timer(uint32_t startEpoch, uint32_t elapsedSec, uint32_t estDoneEpoch) {
-    // Elapsed time (center, hero element)
-    if (lbl_elapsed) {
-        uint32_t h = elapsedSec / 3600;
-        uint32_t m = (elapsedSec % 3600) / 60;
-        uint32_t s = elapsedSec % 60;
-        char buf[16];
-        snprintf(buf, sizeof(buf), "%02lu:%02lu:%02lu",
-                 (unsigned long)h, (unsigned long)m, (unsigned long)s);
-        lv_label_set_text(lbl_elapsed, buf);
-    }
-
-    // Start time
-    if (lbl_start_time) {
-        if (startEpoch > 0) {
-            time_t t = (time_t)startEpoch;
-            struct tm* tm = localtime(&t);
-            if (tm) {
-                char buf[24];
-                snprintf(buf, sizeof(buf), "Start %02d:%02d", tm->tm_hour, tm->tm_min);
-                lv_label_set_text(lbl_start_time, buf);
-            }
-        } else {
-            lv_label_set_text(lbl_start_time, "");
-        }
-    }
-
-    // Estimated done time
-    if (lbl_done_time) {
-        if (estDoneEpoch > 0) {
-            time_t t = (time_t)estDoneEpoch;
-            struct tm* tm = localtime(&t);
-            if (tm) {
-                char buf[24];
-                snprintf(buf, sizeof(buf), "Done ~%d:%02d", tm->tm_hour, tm->tm_min);
-                lv_label_set_text(lbl_done_time, buf);
-            }
-        } else {
-            lv_label_set_text(lbl_done_time, "");
-        }
-    }
-}
-
-void ui_update_meat1_target(float target) {
-    if (!lbl_meat1_target) return;
-
-    if (target > 0) {
-        char buf[24];
-        snprintf(buf, sizeof(buf), "Target: %.0f\xC2\xB0%s", target, unit_suffix());
-        lv_label_set_text(lbl_meat1_target, buf);
-    } else {
-        lv_label_set_text(lbl_meat1_target, "Target: ---");
-    }
-}
-
-void ui_update_meat2_target(float target) {
-    if (!lbl_meat2_target) return;
-
-    if (target > 0) {
-        char buf[24];
-        snprintf(buf, sizeof(buf), "Target: %.0f\xC2\xB0%s", target, unit_suffix());
-        lv_label_set_text(lbl_meat2_target, buf);
-    } else {
-        lv_label_set_text(lbl_meat2_target, "Target: ---");
-    }
-}
-
-void ui_update_meat1_estimate(uint32_t estEpoch) {
-    if (!lbl_meat1_est) return;
-
-    if (estEpoch > 0) {
-        time_t t = (time_t)estEpoch;
-        struct tm* tm = localtime(&t);
-        if (tm) {
-            char buf[32];
-            snprintf(buf, sizeof(buf), "Est: %d:%02d PM", tm->tm_hour % 12 ? tm->tm_hour % 12 : 12, tm->tm_min);
-            lv_label_set_text(lbl_meat1_est, buf);
-        }
-    } else {
-        lv_label_set_text(lbl_meat1_est, "");
-    }
-}
-
-void ui_update_meat2_estimate(uint32_t estEpoch) {
-    if (!lbl_meat2_est) return;
-
-    if (estEpoch > 0) {
-        time_t t = (time_t)estEpoch;
-        struct tm* tm = localtime(&t);
-        if (tm) {
-            char buf[32];
-            snprintf(buf, sizeof(buf), "Est: %d:%02d PM", tm->tm_hour % 12 ? tm->tm_hour % 12 : 12, tm->tm_min);
-            lv_label_set_text(lbl_meat2_est, buf);
-        }
-    } else {
-        lv_label_set_text(lbl_meat2_est, "");
-    }
-}
-
-void ui_update_alerts(uint8_t alarmType, bool lidOpen, bool fireOut, uint8_t probeErrors) {
-    if (!alert_banner || !lbl_alert_text) return;
-
-    // Priority: Alarm > Fire > Lid > Probe errors
-    // alarmType: 0=none, 1=pit_high, 2=pit_low, 3=meat1_done, 4=meat2_done
-    if (alarmType == 3) {
-        lv_label_set_text(lbl_alert_text, "MEAT 1 DONE - Tap to silence");
-        lv_obj_set_style_bg_color(alert_banner, COLOR_RED, 0);
-        lv_obj_remove_flag(alert_banner, LV_OBJ_FLAG_HIDDEN);
-    } else if (alarmType == 4) {
-        lv_label_set_text(lbl_alert_text, "MEAT 2 DONE - Tap to silence");
-        lv_obj_set_style_bg_color(alert_banner, COLOR_RED, 0);
-        lv_obj_remove_flag(alert_banner, LV_OBJ_FLAG_HIDDEN);
-    } else if (alarmType == 1) {
-        lv_label_set_text(lbl_alert_text, "PIT HIGH - Tap to silence");
-        lv_obj_set_style_bg_color(alert_banner, COLOR_RED, 0);
-        lv_obj_remove_flag(alert_banner, LV_OBJ_FLAG_HIDDEN);
-    } else if (alarmType == 2) {
-        lv_label_set_text(lbl_alert_text, "PIT LOW - Tap to silence");
-        lv_obj_set_style_bg_color(alert_banner, COLOR_RED, 0);
-        lv_obj_remove_flag(alert_banner, LV_OBJ_FLAG_HIDDEN);
-    } else if (fireOut) {
-        lv_label_set_text(lbl_alert_text, "FIRE MAY BE OUT");
-        lv_obj_set_style_bg_color(alert_banner, COLOR_RED, 0);
-        lv_obj_remove_flag(alert_banner, LV_OBJ_FLAG_HIDDEN);
-    } else if (lidOpen) {
-        lv_label_set_text(lbl_alert_text, "LID OPEN");
-        lv_obj_set_style_bg_color(alert_banner, COLOR_ORANGE, 0);
-        lv_obj_remove_flag(alert_banner, LV_OBJ_FLAG_HIDDEN);
-    } else if (probeErrors) {
-        char buf[40] = "PROBE ERROR:";
-        if (probeErrors & 0x01) strcat(buf, " Pit");
-        if (probeErrors & 0x02) strcat(buf, " Meat1");
-        if (probeErrors & 0x04) strcat(buf, " Meat2");
-        lv_label_set_text(lbl_alert_text, buf);
-        lv_obj_set_style_bg_color(alert_banner, COLOR_ORANGE, 0);
-        lv_obj_remove_flag(alert_banner, LV_OBJ_FLAG_HIDDEN);
-    } else {
-        lv_obj_add_flag(alert_banner, LV_OBJ_FLAG_HIDDEN);
-    }
-}
-
-void ui_update_output_bars(float fanPct, float damperPct) {
-    if (lbl_fan_bar) {
-        char buf[16];
-        snprintf(buf, sizeof(buf), "FAN %.0f%%", fanPct);
-        lv_label_set_text(lbl_fan_bar, buf);
-    }
-    if (bar_fan) {
-        lv_bar_set_value(bar_fan, (int32_t)(fanPct + 0.5f), LV_ANIM_OFF);
-    }
-    if (lbl_damper_bar) {
-        char buf[16];
-        snprintf(buf, sizeof(buf), "DAMPER %.0f%%", damperPct);
-        lv_label_set_text(lbl_damper_bar, buf);
-    }
-    if (bar_damper) {
-        lv_bar_set_value(bar_damper, (int32_t)(damperPct + 0.5f), LV_ANIM_OFF);
-    }
-}
-
-void ui_update_wifi(bool connected) {
-    if (lbl_wifi_icon) {
-        lv_obj_set_style_text_color(lbl_wifi_icon,
-            connected ? COLOR_GREEN : COLOR_RED, 0);
-    }
-}
-
-// --------------------------------------------------------------------------
-// Graph — adaptive condensing with external arrays
-// --------------------------------------------------------------------------
-
+UiState ui_state;
 static GraphHistory s_history;
-static int32_t s_pit_arr[GRAPH_HISTORY_SIZE];
-static int32_t s_meat1_arr[GRAPH_HISTORY_SIZE];
-static int32_t s_meat2_arr[GRAPH_HISTORY_SIZE];
-static int32_t s_sp_arr[GRAPH_HISTORY_SIZE];
+static int32_t s_values[4][GRAPH_HISTORY_SIZE];
+static int32_t s_times[GRAPH_HISTORY_SIZE];
+static void sync_graph_arrays();
 
-// Sync GraphHistory buffer → LVGL external arrays, auto-scale Y axis
+void ui_update_temps(float pit, float m1, float m2, bool pc, bool m1c, bool m2c) {
+    float values[] = {pit, m1, m2}; bool connected[] = {pc, m1c, m2c};
+    lv_obj_t* labels[] = {lbl_pit_temp, lbl_meat1_temp, lbl_meat2_temp};
+    lv_color_t colors[] = {COLOR_ORANGE, COLOR_RED, COLOR_BLUE};
+    for (int i = 0; i < 3; ++i) {
+        ui_state.temps[i] = values[i]; ui_state.connected[i] = connected[i] && isfinite(values[i]);
+        if (!labels[i]) continue;
+        if (ui_state.connected[i]) UiStyle::text_fmt(labels[i], "%.0f\xC2\xB0", ui_display_temp(values[i]));
+        else lv_label_set_text(labels[i], "---");
+        lv_obj_set_style_text_color(labels[i], ui_state.connected[i] ? colors[i] : COLOR_TEXT_DIM, 0);
+    }
+}
+void ui_update_setpoint(float sp) {
+    if (!isfinite(sp)) return;
+    ui_state.setpoint = sp;
+    if (lbl_setpoint) UiStyle::text_fmt(lbl_setpoint, "Target %.0f\xC2\xB0%s", ui_display_temp(sp), ui_unit_suffix());
+}
+static void update_target(int probe, float target) {
+    if (!isfinite(target)) return;
+    ui_state.targets[probe] = target;
+    auto lbl = probe == 0 ? lbl_meat1_target : lbl_meat2_target;
+    if (!lbl) return;
+    if (target > 0) UiStyle::text_fmt(lbl, "%.0f\xC2\xB0%s", ui_display_temp(target), ui_unit_suffix());
+    else lv_label_set_text(lbl, "---");
+}
+void ui_update_meat1_target(float target) { update_target(0, target); }
+void ui_update_meat2_target(float target) { update_target(1, target); }
+void ui_set_units(bool fahrenheit) {
+    ui_state.fahrenheit = fahrenheit;
+    UiStyle::selected(btn_units_f, fahrenheit); UiStyle::selected(btn_units_c, !fahrenheit);
+    if (lbl_units) UiStyle::text_fmt(lbl_units, "\xC2\xB0%s", ui_unit_suffix());
+    ui_update_temps(ui_state.temps[0], ui_state.temps[1], ui_state.temps[2], ui_state.connected[0], ui_state.connected[1], ui_state.connected[2]);
+    ui_update_setpoint(ui_state.setpoint);
+    update_target(0, ui_state.targets[0]); update_target(1, ui_state.targets[1]);
+    ui_refresh_editors(); sync_graph_arrays();
+}
+void ui_update_cook_timer(uint32_t, uint32_t elapsed, uint32_t) {
+    if (lbl_elapsed) UiStyle::text_fmt(lbl_elapsed, "%02lu:%02lu:%02lu", (unsigned long)(elapsed / 3600), (unsigned long)(elapsed / 60 % 60), (unsigned long)(elapsed % 60));
+}
+static void estimate(int probe, uint32_t epoch) {
+    auto label = probe == 0 ? lbl_meat1_est : lbl_meat2_est;
+    if (!label) return;
+    if (epoch) {
+        time_t t = epoch; struct tm* tm = localtime(&t);
+        if (tm) UiStyle::text_fmt(label, "~%02d:%02d", tm->tm_hour, tm->tm_min);
+        lv_obj_add_flag(meat_edit_icons[probe], LV_OBJ_FLAG_HIDDEN);
+    } else {
+        lv_label_set_text(label, ""); lv_obj_remove_flag(meat_edit_icons[probe], LV_OBJ_FLAG_HIDDEN);
+    }
+}
+void ui_update_meat1_estimate(uint32_t epoch) { estimate(0, epoch); }
+void ui_update_meat2_estimate(uint32_t epoch) { estimate(1, epoch); }
+
+void ui_update_alerts(uint8_t alarm, bool lidOpen, bool fireOut, uint8_t errors) {
+    if (!alert_banner) return;
+    const char* text = nullptr; bool acknowledge = alarm >= 1 && alarm <= 4;
+    switch (alarm) {
+        case 1: text = LV_SYMBOL_WARNING " PIT HIGH"; break;
+        case 2: text = LV_SYMBOL_WARNING " PIT LOW"; break;
+        case 3: text = LV_SYMBOL_WARNING " MEAT 1 DONE"; break;
+        case 4: text = LV_SYMBOL_WARNING " MEAT 2 DONE"; break;
+    }
+    bool warning = false;
+    char message[64];
+    if (!text && fireOut) text = LV_SYMBOL_WARNING " FIRE MAY BE OUT";
+    if (!text && lidOpen) { text = "LID OPEN"; warning = true; }
+    if (!text && errors) {
+        snprintf(message, sizeof(message), "Probe error:%s%s%s", errors & 1 ? " Pit" : "", errors & 2 ? " Meat 1" : "", errors & 4 ? " Meat 2" : "");
+        text = message; warning = true;
+    }
+    if (text) {
+        lv_label_set_text(lbl_alert_text, text);
+        lv_obj_set_width(lbl_alert_text, acknowledge ? 314 : 440);
+        lv_obj_align(lbl_alert_text, LV_ALIGN_LEFT_MID, 12, 0);
+        lv_obj_set_style_bg_color(alert_banner, warning ? COLOR_ORANGE : COLOR_DANGER, 0);
+        lv_obj_set_style_text_color(lbl_alert_text, warning ? COLOR_BG : COLOR_TEXT, 0);
+    }
+    if (acknowledge) lv_obj_remove_flag(btn_alert_ack, LV_OBJ_FLAG_HIDDEN);
+    else lv_obj_add_flag(btn_alert_ack, LV_OBJ_FLAG_HIDDEN);
+    ui_layout_alert(text != nullptr);
+}
+void ui_update_output_bars(float fan, float damper) {
+    if (!isfinite(fan)) fan = 0;
+    if (!isfinite(damper)) damper = 0;
+    fan = fminf(100, fmaxf(0, fan)); damper = fminf(100, fmaxf(0, damper));
+    if (lbl_fan_bar) UiStyle::text_fmt(lbl_fan_bar, "FAN %.0f%%", fan);
+    if (lbl_damper_bar) UiStyle::text_fmt(lbl_damper_bar, "DAMPER %.0f%%", damper);
+    if (bar_fan) lv_bar_set_value(bar_fan, lroundf(fan), LV_ANIM_OFF);
+    if (bar_damper) lv_bar_set_value(bar_damper, lroundf(damper), LV_ANIM_OFF);
+}
+void ui_update_wifi(bool connected) {
+    if (!lbl_wifi_icon) return;
+    lv_label_set_text(lbl_wifi_icon, connected ? LV_SYMBOL_WIFI : LV_SYMBOL_CLOSE);
+    lv_obj_set_style_text_color(lbl_wifi_icon, connected ? COLOR_GREEN : COLOR_RED, 0);
+}
+
+static int32_t graph_min = 50, graph_max = 250;
+void ui_graph_refresh_layout() {
+    if (!chart_temps) return;
+    // Styles are lazy in LVGL, including on an inactive screen. Resolve a
+    // height change before positioning the external labels beside the grid.
+    lv_obj_update_layout(chart_temps);
+    int height = lv_obj_get_height(chart_temps);
+    for (int i = 0; i < 5; ++i) {
+        UiStyle::text_fmt(graph_y_labels[i], "%ld", (long)(graph_max - (graph_max - graph_min) * i / 4));
+        lv_obj_set_y(graph_y_labels[i], 32 + (height - 1) * i / 4);
+    }
+}
+static void format_elapsed(char* text, size_t size, uint32_t seconds) {
+    if (seconds >= 3600) snprintf(text, size, "%luh %02lum", (unsigned long)(seconds / 3600), (unsigned long)(seconds / 60 % 60));
+    else if (seconds >= 60) snprintf(text, size, "%.1f min", seconds / 60.0f);
+    else snprintf(text, size, "%lu s", (unsigned long)seconds);
+}
 static void sync_graph_arrays() {
     if (!chart_temps) return;
-
     uint16_t count = s_history.getCount();
-
-    // Dynamically set point count so data spans the full chart width.
-    // Min 2 to avoid division-by-zero in LVGL's x-position math.
-    uint16_t displayCount = count < 2 ? 2 : count;
-    lv_chart_set_point_count(chart_temps, displayCount);
-
-    // Clear only the used portion of arrays
-    for (uint16_t i = 0; i < displayCount; i++) {
-        s_pit_arr[i]   = LV_CHART_POINT_NONE;
-        s_meat1_arr[i] = LV_CHART_POINT_NONE;
-        s_meat2_arr[i] = LV_CHART_POINT_NONE;
-        s_sp_arr[i]    = LV_CHART_POINT_NONE;
-    }
-
-    // Left-align data: index 0 = oldest point
-    float yMinF = 9999.0f, yMaxF = -9999.0f;
-
-    for (uint16_t i = 0; i < count; i++) {
-        const GraphSlot& slot = s_history.getSlot(i);
-
-        if (slot.pitValid) {
-            s_pit_arr[i] = (int32_t)(slot.pit + 0.5f);
-            if (slot.pit < yMinF) yMinF = slot.pit;
-            if (slot.pit > yMaxF) yMaxF = slot.pit;
-        }
-        if (slot.meat1Valid) {
-            s_meat1_arr[i] = (int32_t)(slot.meat1 + 0.5f);
-            if (slot.meat1 < yMinF) yMinF = slot.meat1;
-            if (slot.meat1 > yMaxF) yMaxF = slot.meat1;
-        }
-        if (slot.meat2Valid) {
-            s_meat2_arr[i] = (int32_t)(slot.meat2 + 0.5f);
-            if (slot.meat2 < yMinF) yMinF = slot.meat2;
-            if (slot.meat2 > yMaxF) yMaxF = slot.meat2;
-        }
-        // Setpoint is always valid
-        s_sp_arr[i] = (int32_t)(slot.setpoint + 0.5f);
-        if (slot.setpoint < yMinF) yMinF = slot.setpoint;
-        if (slot.setpoint > yMaxF) yMaxF = slot.setpoint;
-    }
-
-    // Auto-scale Y axis with 15-degree padding, rounded to 25-degree steps
-    if (count > 0 && yMinF < 9000.0f) {
-        int32_t yMin = (int32_t)(floorf((yMinF - 15.0f) / 25.0f)) * 25;
-        int32_t yMax = (int32_t)(ceilf((yMaxF + 15.0f) / 25.0f)) * 25;
-        if (yMax - yMin < 150) yMax = yMin + 150;  // minimum 150-degree range
-        if (yMin < 0) yMin = 0;
-
-        lv_chart_set_range(chart_temps, LV_CHART_AXIS_PRIMARY_Y, yMin, yMax);
-
-        // Update Y-axis labels at each of the 5 division line positions
-        for (int i = 0; i < 5; i++) {
-            if (graph_y_labels[i]) {
-                int temp = yMax - (yMax - yMin) * (i + 1) / 6;
-                char buf[8];
-                snprintf(buf, sizeof(buf), "%d", temp);
-                lv_label_set_text(graph_y_labels[i], buf);
-            }
+    lv_chart_set_point_count(chart_temps, count < 2 ? 2 : count);
+    float lo = INFINITY, hi = -INFINITY;
+    for (uint16_t i = 0; i < (count < 2 ? 2 : count); ++i) {
+        s_times[i] = 0;
+        for (auto& values : s_values) values[i] = LV_CHART_POINT_NONE;
+        if (i >= count) continue;
+        const auto& slot = s_history.getSlot(i);
+        s_times[i] = slot.elapsedSec - s_history.getStartSec();
+        float f[] = {slot.pit, slot.meat1, slot.meat2, slot.setpoint};
+        bool valid[] = {slot.pitValid, slot.meat1Valid, slot.meat2Valid, true};
+        for (int j = 0; j < 4; ++j) if (valid[j] && isfinite(f[j])) {
+            float value = ui_display_temp(f[j]);
+            s_values[j][i] = lroundf(value);
+            lo = fminf(lo, value); hi = fmaxf(hi, value);
         }
     }
-
-    lv_chart_refresh(chart_temps);
+    if (isfinite(lo)) {
+        float step = ui_state.fahrenheit ? 25 : 10;
+        float padding = ui_state.fahrenheit ? 15 : 8;
+        graph_min = floorf((lo - padding) / step) * step;
+        int range = (int)(ceilf((hi + padding - graph_min) / (4 * step)) * (4 * step));
+        graph_max = graph_min + (range > 0 ? range : (int)(4 * step));
+    } else { graph_min = ui_state.fahrenheit ? 50 : 0; graph_max = ui_state.fahrenheit ? 250 : 120; }
+    lv_chart_set_range(chart_temps, LV_CHART_AXIS_PRIMARY_Y, graph_min, graph_max);
+    uint32_t duration = count ? s_history.getEndSec() - s_history.getStartSec() : 0;
+    lv_chart_set_range(chart_temps, LV_CHART_AXIS_PRIMARY_X, 0, duration ? duration : 60);
+    for (int i = 0; i < 3; ++i) {
+        char label[32]; format_elapsed(label, sizeof(label), duration * (uint64_t)i / 2);
+        lv_label_set_text(graph_x_labels[i], label);
+    }
+    char span[32]; format_elapsed(span, sizeof(span), duration);
+    lv_label_set_text(lbl_graph_span, count ? span : "No data");
+    UiStyle::text_fmt(lbl_graph_title, "Temperature history (\xC2\xB0%s)", ui_unit_suffix());
+    ui_graph_refresh_layout(); lv_chart_refresh(chart_temps);
 }
-
 void ui_graph_init() {
-    if (!chart_temps) return;
-
-    // Initialize arrays to LV_CHART_POINT_NONE
-    for (int i = 0; i < GRAPH_HISTORY_SIZE; i++) {
-        s_pit_arr[i]   = LV_CHART_POINT_NONE;
-        s_meat1_arr[i] = LV_CHART_POINT_NONE;
-        s_meat2_arr[i] = LV_CHART_POINT_NONE;
-        s_sp_arr[i]    = LV_CHART_POINT_NONE;
+    lv_chart_series_t* series[] = {ser_pit, ser_meat1, ser_meat2, ser_setpoint};
+    for (int i = 0; i < 4; ++i) {
+        for (auto& value : s_values[i]) value = LV_CHART_POINT_NONE;
+        lv_chart_set_ext_y_array(chart_temps, series[i], s_values[i]);
+        lv_chart_set_ext_x_array(chart_temps, series[i], s_times);
     }
-
-    // Bind external arrays to chart series
-    lv_chart_set_ext_y_array(chart_temps, ser_pit,      s_pit_arr);
-    lv_chart_set_ext_y_array(chart_temps, ser_meat1,    s_meat1_arr);
-    lv_chart_set_ext_y_array(chart_temps, ser_meat2,    s_meat2_arr);
-    lv_chart_set_ext_y_array(chart_temps, ser_setpoint, s_sp_arr);
-}
-
-void ui_graph_add_point(float pit, float meat1, float meat2, float setpoint,
-                        bool pitDisc, bool meat1Disc, bool meat2Disc) {
-    s_history.addPoint(pit, meat1, meat2, setpoint, pitDisc, meat1Disc, meat2Disc);
     sync_graph_arrays();
 }
-
-void ui_graph_clear() {
-    s_history.clear();
-    sync_graph_arrays();
+void ui_graph_add_point(float pit, float meat1, float meat2, float sp, bool pd, bool m1d, bool m2d, uint32_t elapsed) {
+    s_history.addPoint(pit, meat1, meat2, sp, pd, m1d, m2d, elapsed); sync_graph_arrays();
 }
-
+void ui_graph_clear() { s_history.clear(); sync_graph_arrays(); }
 static const char* rssi_quality(int rssi) {
     if (rssi == 0)    return "N/A";
     if (rssi >= -50)  return "Excellent";
@@ -469,27 +254,12 @@ void ui_update_wifi_info(const WifiInfo& info) {
     }
 }
 
-void ui_update_settings_state(bool isFahrenheit, const char* fanMode) {
-    if (btn_units_f && btn_units_c) {
-        lv_obj_set_style_bg_color(btn_units_f, isFahrenheit ? COLOR_ORANGE : COLOR_BAR_BG, 0);
-        lv_obj_set_style_bg_color(btn_units_c, isFahrenheit ? COLOR_BAR_BG : COLOR_ORANGE, 0);
-    }
-
-    if (btn_fan_only && btn_fan_damper && btn_damper_pri && fanMode) {
-        lv_obj_set_style_bg_color(btn_fan_only, COLOR_BAR_BG, 0);
-        lv_obj_set_style_bg_color(btn_fan_damper, COLOR_BAR_BG, 0);
-        lv_obj_set_style_bg_color(btn_damper_pri, COLOR_BAR_BG, 0);
-
-        if (strcmp(fanMode, "fan_only") == 0) {
-            lv_obj_set_style_bg_color(btn_fan_only, COLOR_ORANGE, 0);
-        } else if (strcmp(fanMode, "fan_and_damper") == 0) {
-            lv_obj_set_style_bg_color(btn_fan_damper, COLOR_ORANGE, 0);
-        } else if (strcmp(fanMode, "damper_primary") == 0) {
-            lv_obj_set_style_bg_color(btn_damper_pri, COLOR_ORANGE, 0);
-        }
-    }
+void ui_update_settings_state(bool fahrenheit, const char* mode) {
+    ui_set_units(fahrenheit);
+    UiStyle::selected(btn_fan_only, mode && strcmp(mode, "fan_only") == 0);
+    UiStyle::selected(btn_fan_damper, mode && strcmp(mode, "fan_and_damper") == 0);
+    UiStyle::selected(btn_damper_pri, mode && strcmp(mode, "damper_primary") == 0);
 }
-
 #else // NATIVE_BUILD && !SIMULATOR_BUILD
 // Native test stubs
 void ui_update_temps(float, float, float, bool, bool, bool) {}
@@ -504,7 +274,7 @@ void ui_update_output_bars(float, float) {}
 void ui_update_wifi(bool) {}
 void ui_update_wifi_info(const WifiInfo&) {}
 void ui_graph_init() {}
-void ui_graph_add_point(float, float, float, float, bool, bool, bool) {}
+void ui_graph_add_point(float, float, float, float, bool, bool, bool, uint32_t) {}
 void ui_graph_clear() {}
 void ui_update_settings_state(bool, const char*) {}
 void ui_set_units(bool) {}

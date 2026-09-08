@@ -40,6 +40,8 @@ static float    g_prevSetpoint   = 225.0f;   // Previous setpoint for change det
 static bool     g_pitReached     = false;     // Has pit ever reached setpoint?
 static bool     g_pitControlReady = false;    // Valid PID compute since last probe fault
 static uint32_t g_cookStartTime  = 0;         // Epoch when cook timer started
+static unsigned long g_graphStartMs = 0;
+static uint32_t g_graphRecoveredSec = 0;
 static unsigned long g_lastPidMs = 0;         // Last PID computation timestamp
 
 // --- Boot phase state machine ---
@@ -105,6 +107,8 @@ static void ws_onSession(const char* action, const char* format) {
         g_cookStartTime = 0;
         g_pitReached = false;
         ui_graph_clear();
+        g_graphStartMs = millis();
+        g_graphRecoveredSec = 0;
     }
 }
 
@@ -135,7 +139,7 @@ static void ui_cb_alarm_ack() {
 
 static void ui_cb_units(bool isFahrenheit) {
     configManager.setUnits(isFahrenheit ? "F" : "C");
-    tempManager.setUseFahrenheit(isFahrenheit);
+    ui_set_units(isFahrenheit);
 }
 
 static void ui_cb_fan_mode(const char* mode) {
@@ -148,6 +152,8 @@ static void ui_cb_new_session() {
     g_cookStartTime = 0;
     g_pitReached = false;
     ui_graph_clear();
+    g_graphStartMs = millis();
+    g_graphRecoveredSec = 0;
 }
 
 static void ui_cb_factory_reset() {
@@ -232,7 +238,9 @@ void setup() {
         tempManager.setCoefficients(i, ps.a, ps.b, ps.c);
         tempManager.setOffset(i, ps.offset);
     }
-    tempManager.setUseFahrenheit(configManager.isFahrenheit());
+    // Controller, alarms, stored history and web payloads always use Fahrenheit.
+    tempManager.setUseFahrenheit(true);
+    ui_set_units(configManager.isFahrenheit());
 
     // 5. Initialize PID controller with saved tunings
     pidController.begin(cfg.pid.kp, cfg.pid.ki, cfg.pid.kd);
@@ -285,10 +293,13 @@ void setup() {
 
     // Pre-populate graph from recovered session data
     {
-        uint32_t sessionPoints = cookSession.getTotalPointCount();
+        uint32_t sessionPoints = cookSession.getPointCount();
+        const DataPoint* firstPoint = cookSession.getPoint(0);
+        uint32_t graphOrigin = firstPoint ? firstPoint->timestamp : 0;
         for (uint32_t i = 0; i < sessionPoints; i++) {
             const DataPoint* dp = cookSession.getPoint(i);
             if (dp) {
+                g_graphRecoveredSec = dp->timestamp >= graphOrigin ? dp->timestamp - graphOrigin : g_graphRecoveredSec;
                 ui_graph_add_point(
                     dp->pitTemp / 10.0f,
                     dp->meat1Temp / 10.0f,
@@ -296,11 +307,14 @@ void setup() {
                     g_setpoint,
                     (dp->flags & DP_FLAG_PIT_DISC) != 0,
                     (dp->flags & DP_FLAG_MEAT1_DISC) != 0,
-                    (dp->flags & DP_FLAG_MEAT2_DISC) != 0
+                    (dp->flags & DP_FLAG_MEAT2_DISC) != 0,
+                    g_graphRecoveredSec
                 );
             }
         }
     }
+
+    g_graphStartMs = millis();
 
     // 15. Log "Setup complete" with IP address
     Serial.println();
@@ -566,7 +580,8 @@ void loop() {
                            g_setpoint,
                            !tempManager.isConnected(PROBE_PIT),
                            !tempManager.isConnected(PROBE_MEAT1),
-                           !tempManager.isConnected(PROBE_MEAT2));
+                           !tempManager.isConnected(PROBE_MEAT2),
+                           g_graphRecoveredSec + (uint32_t)(now - g_graphStartMs) / 1000);
     }
 
     // 12. Service LVGL; its tick callback reads the real hardware clock.

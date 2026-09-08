@@ -3,6 +3,7 @@
 #include "../config.h"
 #include <stdint.h>
 
+// All temperatures passed to the UI are Fahrenheit, independent of display units.
 // Update temperature displays on the dashboard.
 // Shows "---" for disconnected probes.
 void ui_update_temps(float pit, float meat1, float meat2,
@@ -11,8 +12,8 @@ void ui_update_temps(float pit, float meat1, float meat2,
 // Update the setpoint display (dashboard card + modal initial value).
 void ui_update_setpoint(float sp);
 
-// Update cook timer: top bar start time, elapsed, and estimated done.
-// startEpoch=0 means no NTP. estDoneEpoch=0 means no estimate.
+// Update the elapsed cook timer in the top bar. Epoch parameters are retained
+// for callers; per-probe estimates are displayed through the functions below.
 void ui_update_cook_timer(uint32_t startEpoch, uint32_t elapsedSec, uint32_t estDoneEpoch);
 
 // Update meat target display on dashboard cards. target=0 means no target.
@@ -50,8 +51,10 @@ void ui_graph_init();
 
 // Add a data point to the graph with adaptive condensing.
 // Disconnected probes are marked invalid (pass true for disconnected).
+// elapsedSec is monotonic session time; omitting it assumes five-second samples.
 void ui_graph_add_point(float pit, float meat1, float meat2, float setpoint,
-                        bool pitDisc, bool meat1Disc, bool meat2Disc);
+                        bool pitDisc, bool meat1Disc, bool meat2Disc,
+                        uint32_t elapsedSec = UINT32_MAX);
 
 // Clear graph history (e.g., on new session).
 void ui_graph_clear();

@@ -4,6 +4,7 @@
 
 #include <lvgl.h>
 #include "ui_colors.h"
+#include "ui_state.h"
 
 // --------------------------------------------------------------------------
 // State
@@ -91,6 +92,7 @@ void ui_boot_splash_init() {
     lv_obj_align(lbl_hold_hint, LV_ALIGN_BOTTOM_MID, 0, -16);
 
     lv_screen_load(scr_splash);
+    ui_refresh_alert_layout();
 }
 
 void ui_boot_splash_restart_timer() {
