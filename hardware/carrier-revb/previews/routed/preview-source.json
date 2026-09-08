@@ -1,0 +1,46 @@
+{
+  "board": "/Users/eugene.borokhov/Documents/Code/pitclaw/hardware/carrier-revb/pitclaw-carrier.kicad_pcb",
+  "sha256": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+  "artifacts": [
+    {
+      "file": "carrier-front-copper.svg",
+      "layers": "F.Cu,F.Silkscreen,Edge.Cuts",
+      "view": "component side",
+      "png": "carrier-front-copper.png",
+      "svg_sha256": "c5b80ae61c02ade37a1419e59d20f7e4ecdf020be2ec2e42396fe8f91346b291",
+      "png_sha256": "0aab8aeaf01ccc9ff024f392eecb631c0e963743a66a7e97779d6a308c4022f7"
+    },
+    {
+      "file": "carrier-back-copper.svg",
+      "layers": "B.Cu,B.Silkscreen,Edge.Cuts",
+      "view": "solder side (mirrored)",
+      "png": "carrier-back-copper.png",
+      "svg_sha256": "e82f43154edad4552af78a02f2305c2faf754d186f0629c30a257b1a4fdc0d1d",
+      "png_sha256": "385f8168e3bd87ec28068e2afd3054b0b37f4cddc3cbe78b0881079f37d4f7fd"
+    },
+    {
+      "file": "carrier-assembly.svg",
+      "png": "carrier-assembly.png",
+      "layers": "F.Fab,Edge.Cuts",
+      "view": "component side",
+      "review_annotation": "Footprint reference labels added to native fabrication geometry at their current silkscreen positions; duplicate fabrication references omitted. Main PCB unchanged.",
+      "svg_sha256": "1e1f254547998e749c11e3551414ab790fa3d37b8b53a22fa3a5e6ffdb23becd",
+      "png_sha256": "8f38214c38853fdcce6944fc8a6ed7f17aaaa8d77b3b4b7f7bedfa1436f65550"
+    },
+    {
+      "file": "carrier-routing-overview.svg",
+      "png": "carrier-routing-overview.png",
+      "view": "front and mirrored back trace review",
+      "description": "Composite of native trace-only views. Ground fills omitted for readability; back references are a review overlay.",
+      "inputs_sha256": {
+        "traces/carrier-front-copper.svg": "c0a10140b849d801368c2cef9085d3bf4a3da55548e11dc986af334964a0ed9e",
+        "traces/carrier-back-copper.svg": "78d7302396346bdf9d143416b1f742ce483e54e6637fd1aeec4066622b7af6ca"
+      },
+      "svg_sha256": "9b582c2e1456a4e86f2ac032a4f92626b495f612cc76dc7329b3d847f80d9eee",
+      "png_sha256": "5593173b91e31133e33ae7334c5723d852a765cb4746404d2ab04df5e31353ac"
+    }
+  ],
+  "description": "Native KiCad layer plots; front and back copper are separate views.",
+  "project_sha256": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf",
+  "export_isolation": "All native exports and annotated derivatives were loaded from byte-identical PCB and matching project copies. Both original hashes were checked unchanged after export."
+}

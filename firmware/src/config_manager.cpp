@@ -18,7 +18,7 @@ ConfigManager::ConfigManager()
 
 bool ConfigManager::begin() {
 #ifndef NATIVE_BUILD
-    if (!LittleFS.begin(true)) {  // true = format on fail
+    if (!LittleFS.begin(true, FILESYSTEM_MOUNT_PATH)) {  // true = format on fail
         Serial.println("[CFG] LittleFS mount failed!");
         _mounted = false;
         return false;

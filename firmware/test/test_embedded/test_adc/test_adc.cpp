@@ -12,7 +12,7 @@
 #include <Wire.h>
 #include <Adafruit_ADS1X15.h>
 
-#include "../../src/config.h"
+#include "config.h"
 
 static Adafruit_ADS1115 ads;
 
@@ -53,27 +53,17 @@ void test_adc_reads_within_range(void) {
 }
 
 void test_adc_probe_open_circuit(void) {
-    // With no probe plugged in, the voltage divider floats high.
-    // The ADC should read near maximum value (>32000).
-    // This test assumes at least one probe jack has no probe inserted.
-    // We check all 3 probe channels — at least one should be open.
+    // Fixture requirement: unplug the PIT probe before running this test.
+    // The pull-up reaches the 3.3 V excitation rail (~26400), not ADC full scale.
+    const int16_t rawSupply = ads.readADC_SingleEnded(ADC_CHANNEL_SUPPLY);
+    TEST_ASSERT_INT16_WITHIN_MESSAGE(
+        (ADC_SUPPLY_MAX_RAW - ADC_SUPPLY_MIN_RAW) / 2,
+        (ADC_SUPPLY_MAX_RAW + ADC_SUPPLY_MIN_RAW) / 2, rawSupply,
+        "AIN3 excitation reference must be 3.0-3.6 V");
 
-    bool foundOpen = false;
-    for (uint8_t ch = 0; ch < 3; ch++) {
-        int16_t raw = ads.readADC_SingleEnded(ch);
-        if (raw > ERROR_PROBE_OPEN_THRESHOLD) {
-            foundOpen = true;
-            break;
-        }
-    }
-
-    // If all 3 probes are connected, this test is inconclusive.
-    // We still pass but log a note.
-    if (!foundOpen) {
-        Serial.println("[NOTE] All 3 probes appear connected. "
-                       "Unplug at least one to validate open-circuit detection.");
-    }
-    TEST_ASSERT_TRUE_MESSAGE(true, "Open circuit check completed (see serial output)");
+    const int16_t raw = ads.readADC_SingleEnded(ADC_CHANNEL_PIT);
+    TEST_ASSERT_TRUE_MESSAGE(raw >= ERROR_PROBE_OPEN_RATIO * rawSupply,
+        "Unplugged PIT probe must read at least 98% of excitation");
 }
 
 void test_adc_channels_independent(void) {
@@ -103,19 +93,19 @@ void test_adc_channels_independent(void) {
 }
 
 void test_adc_read_rate(void) {
-    // Verify we can read all 3 probe channels within 100ms
+    // Verify all 3 probe channels plus excitation can be read within 100ms
     unsigned long start = millis();
 
-    for (uint8_t ch = 0; ch < 3; ch++) {
+    for (uint8_t ch = 0; ch < 4; ch++) {
         ads.readADC_SingleEnded(ch);
     }
 
     unsigned long elapsed = millis() - start;
 
-    // ADS1115 at default 128 SPS: ~8ms per conversion, 3 channels ~24ms
+    // ADS1115 at default 128 SPS: ~8ms per conversion, 4 channels ~32ms
     // Allow up to 100ms for I2C overhead
     TEST_ASSERT_LESS_OR_EQUAL_UINT32_MESSAGE(100, elapsed,
-        "Reading 3 ADC channels took too long (>100ms)");
+        "Reading 4 ADC channels took too long (>100ms)");
 }
 
 // --------------------------------------------------------------------------

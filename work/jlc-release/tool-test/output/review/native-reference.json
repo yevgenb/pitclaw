@@ -1,0 +1,3005 @@
+{
+  "pcb_sha256": "840c11c3e28433627a1e354930466fa1f9d8e84eff38cdc0448c9a3b6abdc8dd",
+  "board_size_mm": [
+    60,
+    92
+  ],
+  "thickness_mm": 1.6,
+  "copper_layers": 2,
+  "outline_segments": [
+    [
+      [
+        100.0,
+        -142.0
+      ],
+      [
+        100.0,
+        -50.0
+      ]
+    ],
+    [
+      [
+        100.0,
+        -142.0
+      ],
+      [
+        160.0,
+        -142.0
+      ]
+    ],
+    [
+      [
+        100.0,
+        -50.0
+      ],
+      [
+        160.0,
+        -50.0
+      ]
+    ],
+    [
+      [
+        160.0,
+        -142.0
+      ],
+      [
+        160.0,
+        -50.0
+      ]
+    ]
+  ],
+  "holes": [
+    {
+      "ref": "J7",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          140.0,
+          -62.0
+        ],
+        [
+          140.0,
+          -62.0
+        ]
+      ]
+    },
+    {
+      "ref": "J7",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          142.5,
+          -62.0
+        ],
+        [
+          142.5,
+          -62.0
+        ]
+      ]
+    },
+    {
+      "ref": "C12",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.9,
+      "endpoints_mm": [
+        [
+          115.0,
+          -104.0
+        ],
+        [
+          115.0,
+          -104.0
+        ]
+      ]
+    },
+    {
+      "ref": "C12",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.9,
+      "endpoints_mm": [
+        [
+          120.0,
+          -104.0
+        ],
+        [
+          120.0,
+          -104.0
+        ]
+      ]
+    },
+    {
+      "ref": "C11",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.9,
+      "endpoints_mm": [
+        [
+          115.0,
+          -96.0
+        ],
+        [
+          115.0,
+          -96.0
+        ]
+      ]
+    },
+    {
+      "ref": "C11",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.9,
+      "endpoints_mm": [
+        [
+          120.0,
+          -96.0
+        ],
+        [
+          120.0,
+          -96.0
+        ]
+      ]
+    },
+    {
+      "ref": "J5",
+      "pin": "",
+      "plated": false,
+      "diameter_mm": 1.2,
+      "endpoints_mm": [
+        [
+          130.0,
+          -53.5
+        ],
+        [
+          130.0,
+          -53.5
+        ]
+      ]
+    },
+    {
+      "ref": "J5",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.5,
+      "endpoints_mm": [
+        [
+          129.5,
+          -58.1
+        ],
+        [
+          130.5,
+          -58.1
+        ]
+      ]
+    },
+    {
+      "ref": "J5",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.5,
+      "endpoints_mm": [
+        [
+          128.2,
+          -56.5
+        ],
+        [
+          128.2,
+          -55.5
+        ]
+      ]
+    },
+    {
+      "ref": "J5",
+      "pin": "3",
+      "plated": true,
+      "diameter_mm": 0.5,
+      "endpoints_mm": [
+        [
+          131.8,
+          -56.5
+        ],
+        [
+          131.8,
+          -55.5
+        ]
+      ]
+    },
+    {
+      "ref": "D3",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 1.1,
+      "endpoints_mm": [
+        [
+          155.0,
+          -81.0
+        ],
+        [
+          155.0,
+          -81.0
+        ]
+      ]
+    },
+    {
+      "ref": "D3",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 1.1,
+      "endpoints_mm": [
+        [
+          155.0,
+          -91.16
+        ],
+        [
+          155.0,
+          -91.16
+        ]
+      ]
+    },
+    {
+      "ref": "R12",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          115.0,
+          -108.0
+        ],
+        [
+          115.0,
+          -108.0
+        ]
+      ]
+    },
+    {
+      "ref": "R12",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          122.62,
+          -108.0
+        ],
+        [
+          122.62,
+          -108.0
+        ]
+      ]
+    },
+    {
+      "ref": "R4",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          103.0,
+          -75.0
+        ],
+        [
+          103.0,
+          -75.0
+        ]
+      ]
+    },
+    {
+      "ref": "R4",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          103.0,
+          -82.62
+        ],
+        [
+          103.0,
+          -82.62
+        ]
+      ]
+    },
+    {
+      "ref": "R3",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          103.0,
+          -102.0
+        ],
+        [
+          103.0,
+          -102.0
+        ]
+      ]
+    },
+    {
+      "ref": "R3",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          110.62,
+          -102.0
+        ],
+        [
+          110.62,
+          -102.0
+        ]
+      ]
+    },
+    {
+      "ref": "R16",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          126.0,
+          -92.0
+        ],
+        [
+          126.0,
+          -92.0
+        ]
+      ]
+    },
+    {
+      "ref": "R16",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          133.62,
+          -92.0
+        ],
+        [
+          133.62,
+          -92.0
+        ]
+      ]
+    },
+    {
+      "ref": "BZ1",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          104.3,
+          -93.0
+        ],
+        [
+          104.3,
+          -93.0
+        ]
+      ]
+    },
+    {
+      "ref": "BZ1",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          109.3,
+          -93.0
+        ],
+        [
+          109.3,
+          -93.0
+        ]
+      ]
+    },
+    {
+      "ref": "C3",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          153.25,
+          -64.5
+        ],
+        [
+          153.25,
+          -64.5
+        ]
+      ]
+    },
+    {
+      "ref": "C3",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          156.75,
+          -64.5
+        ],
+        [
+          156.75,
+          -64.5
+        ]
+      ]
+    },
+    {
+      "ref": "H4",
+      "pin": "",
+      "plated": false,
+      "diameter_mm": 3.2,
+      "endpoints_mm": [
+        [
+          155.5,
+          -112.5
+        ],
+        [
+          155.5,
+          -112.5
+        ]
+      ]
+    },
+    {
+      "ref": "H3",
+      "pin": "",
+      "plated": false,
+      "diameter_mm": 3.2,
+      "endpoints_mm": [
+        [
+          104.5,
+          -112.5
+        ],
+        [
+          104.5,
+          -112.5
+        ]
+      ]
+    },
+    {
+      "ref": "U2",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          117.0,
+          -121.5
+        ],
+        [
+          117.0,
+          -121.5
+        ]
+      ]
+    },
+    {
+      "ref": "U2",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          119.54,
+          -121.5
+        ],
+        [
+          119.54,
+          -121.5
+        ]
+      ]
+    },
+    {
+      "ref": "U2",
+      "pin": "3",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          122.08,
+          -121.5
+        ],
+        [
+          122.08,
+          -121.5
+        ]
+      ]
+    },
+    {
+      "ref": "J1",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          154.0,
+          -101.0
+        ],
+        [
+          154.0,
+          -101.0
+        ]
+      ]
+    },
+    {
+      "ref": "J1",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          156.5,
+          -101.0
+        ],
+        [
+          156.5,
+          -101.0
+        ]
+      ]
+    },
+    {
+      "ref": "J4",
+      "pin": "",
+      "plated": false,
+      "diameter_mm": 1.2,
+      "endpoints_mm": [
+        [
+          113.0,
+          -53.5
+        ],
+        [
+          113.0,
+          -53.5
+        ]
+      ]
+    },
+    {
+      "ref": "J4",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.5,
+      "endpoints_mm": [
+        [
+          112.5,
+          -58.1
+        ],
+        [
+          113.5,
+          -58.1
+        ]
+      ]
+    },
+    {
+      "ref": "J4",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.5,
+      "endpoints_mm": [
+        [
+          111.2,
+          -56.5
+        ],
+        [
+          111.2,
+          -55.5
+        ]
+      ]
+    },
+    {
+      "ref": "J4",
+      "pin": "3",
+      "plated": true,
+      "diameter_mm": 0.5,
+      "endpoints_mm": [
+        [
+          114.8,
+          -56.5
+        ],
+        [
+          114.8,
+          -55.5
+        ]
+      ]
+    },
+    {
+      "ref": "H1",
+      "pin": "",
+      "plated": false,
+      "diameter_mm": 3.2,
+      "endpoints_mm": [
+        [
+          104.5,
+          -54.5
+        ],
+        [
+          104.5,
+          -54.5
+        ]
+      ]
+    },
+    {
+      "ref": "C1",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          143.0,
+          -109.0
+        ],
+        [
+          143.0,
+          -109.0
+        ]
+      ]
+    },
+    {
+      "ref": "C1",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          148.0,
+          -109.0
+        ],
+        [
+          148.0,
+          -109.0
+        ]
+      ]
+    },
+    {
+      "ref": "J9",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          126.15,
+          -129.9
+        ],
+        [
+          126.85,
+          -129.9
+        ]
+      ]
+    },
+    {
+      "ref": "J9",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          126.15,
+          -135.8
+        ],
+        [
+          126.85,
+          -135.8
+        ]
+      ]
+    },
+    {
+      "ref": "J9",
+      "pin": "3",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          131.2,
+          -133.05
+        ],
+        [
+          131.2,
+          -132.35
+        ]
+      ]
+    },
+    {
+      "ref": "R14",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          126.0,
+          -95.0
+        ],
+        [
+          126.0,
+          -95.0
+        ]
+      ]
+    },
+    {
+      "ref": "R14",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          126.0,
+          -102.62
+        ],
+        [
+          126.0,
+          -102.62
+        ]
+      ]
+    },
+    {
+      "ref": "Q1",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 1.4,
+      "endpoints_mm": [
+        [
+          143.3,
+          -91.0
+        ],
+        [
+          143.3,
+          -91.0
+        ]
+      ]
+    },
+    {
+      "ref": "Q1",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 1.4,
+      "endpoints_mm": [
+        [
+          145.84,
+          -91.0
+        ],
+        [
+          145.84,
+          -91.0
+        ]
+      ]
+    },
+    {
+      "ref": "Q1",
+      "pin": "3",
+      "plated": true,
+      "diameter_mm": 1.4,
+      "endpoints_mm": [
+        [
+          148.38,
+          -91.0
+        ],
+        [
+          148.38,
+          -91.0
+        ]
+      ]
+    },
+    {
+      "ref": "J2",
+      "pin": "",
+      "plated": false,
+      "diameter_mm": 3.25,
+      "endpoints_mm": [
+        [
+          115.85,
+          -138.42
+        ],
+        [
+          115.85,
+          -138.42
+        ]
+      ]
+    },
+    {
+      "ref": "J2",
+      "pin": "",
+      "plated": false,
+      "diameter_mm": 3.25,
+      "endpoints_mm": [
+        [
+          103.15,
+          -138.42
+        ],
+        [
+          103.15,
+          -138.42
+        ]
+      ]
+    },
+    {
+      "ref": "J2",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.89,
+      "endpoints_mm": [
+        [
+          113.06,
+          -135.88
+        ],
+        [
+          113.06,
+          -135.88
+        ]
+      ]
+    },
+    {
+      "ref": "J2",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.89,
+      "endpoints_mm": [
+        [
+          112.044,
+          -134.1
+        ],
+        [
+          112.044,
+          -134.1
+        ]
+      ]
+    },
+    {
+      "ref": "J2",
+      "pin": "3",
+      "plated": true,
+      "diameter_mm": 0.89,
+      "endpoints_mm": [
+        [
+          111.028,
+          -135.88
+        ],
+        [
+          111.028,
+          -135.88
+        ]
+      ]
+    },
+    {
+      "ref": "J2",
+      "pin": "4",
+      "plated": true,
+      "diameter_mm": 0.89,
+      "endpoints_mm": [
+        [
+          110.012,
+          -134.1
+        ],
+        [
+          110.012,
+          -134.1
+        ]
+      ]
+    },
+    {
+      "ref": "J2",
+      "pin": "5",
+      "plated": true,
+      "diameter_mm": 0.89,
+      "endpoints_mm": [
+        [
+          108.996,
+          -135.88
+        ],
+        [
+          108.996,
+          -135.88
+        ]
+      ]
+    },
+    {
+      "ref": "J2",
+      "pin": "6",
+      "plated": true,
+      "diameter_mm": 0.89,
+      "endpoints_mm": [
+        [
+          107.98,
+          -134.1
+        ],
+        [
+          107.98,
+          -134.1
+        ]
+      ]
+    },
+    {
+      "ref": "J2",
+      "pin": "7",
+      "plated": true,
+      "diameter_mm": 0.89,
+      "endpoints_mm": [
+        [
+          106.964,
+          -135.88
+        ],
+        [
+          106.964,
+          -135.88
+        ]
+      ]
+    },
+    {
+      "ref": "J2",
+      "pin": "8",
+      "plated": true,
+      "diameter_mm": 0.89,
+      "endpoints_mm": [
+        [
+          105.948,
+          -134.1
+        ],
+        [
+          105.948,
+          -134.1
+        ]
+      ]
+    },
+    {
+      "ref": "JP1",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          155.0,
+          -73.5
+        ],
+        [
+          155.0,
+          -73.5
+        ]
+      ]
+    },
+    {
+      "ref": "JP1",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          155.0,
+          -76.04
+        ],
+        [
+          155.0,
+          -76.04
+        ]
+      ]
+    },
+    {
+      "ref": "J8",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          113.0,
+          -83.0
+        ],
+        [
+          113.0,
+          -83.0
+        ]
+      ]
+    },
+    {
+      "ref": "J8",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          115.54,
+          -83.0
+        ],
+        [
+          115.54,
+          -83.0
+        ]
+      ]
+    },
+    {
+      "ref": "J8",
+      "pin": "3",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          118.08,
+          -83.0
+        ],
+        [
+          118.08,
+          -83.0
+        ]
+      ]
+    },
+    {
+      "ref": "J8",
+      "pin": "4",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          120.62,
+          -83.0
+        ],
+        [
+          120.62,
+          -83.0
+        ]
+      ]
+    },
+    {
+      "ref": "J8",
+      "pin": "5",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          123.16,
+          -83.0
+        ],
+        [
+          123.16,
+          -83.0
+        ]
+      ]
+    },
+    {
+      "ref": "J8",
+      "pin": "6",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          125.7,
+          -83.0
+        ],
+        [
+          125.7,
+          -83.0
+        ]
+      ]
+    },
+    {
+      "ref": "J8",
+      "pin": "7",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          128.24,
+          -83.0
+        ],
+        [
+          128.24,
+          -83.0
+        ]
+      ]
+    },
+    {
+      "ref": "J8",
+      "pin": "8",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          130.78,
+          -83.0
+        ],
+        [
+          130.78,
+          -83.0
+        ]
+      ]
+    },
+    {
+      "ref": "J8",
+      "pin": "9",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          133.32,
+          -83.0
+        ],
+        [
+          133.32,
+          -83.0
+        ]
+      ]
+    },
+    {
+      "ref": "J8",
+      "pin": "10",
+      "plated": true,
+      "diameter_mm": 1.0,
+      "endpoints_mm": [
+        [
+          135.86,
+          -83.0
+        ],
+        [
+          135.86,
+          -83.0
+        ]
+      ]
+    },
+    {
+      "ref": "R2",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          107.0,
+          -64.0
+        ],
+        [
+          107.0,
+          -64.0
+        ]
+      ]
+    },
+    {
+      "ref": "R2",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          107.0,
+          -71.62
+        ],
+        [
+          107.0,
+          -71.62
+        ]
+      ]
+    },
+    {
+      "ref": "R5",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          103.0,
+          -106.0
+        ],
+        [
+          103.0,
+          -106.0
+        ]
+      ]
+    },
+    {
+      "ref": "R5",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          110.62,
+          -106.0
+        ],
+        [
+          110.62,
+          -106.0
+        ]
+      ]
+    },
+    {
+      "ref": "R6",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          107.0,
+          -75.0
+        ],
+        [
+          107.0,
+          -75.0
+        ]
+      ]
+    },
+    {
+      "ref": "R6",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          107.0,
+          -82.62
+        ],
+        [
+          107.0,
+          -82.62
+        ]
+      ]
+    },
+    {
+      "ref": "R13",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          126.0,
+          -88.0
+        ],
+        [
+          126.0,
+          -88.0
+        ]
+      ]
+    },
+    {
+      "ref": "R13",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          133.62,
+          -88.0
+        ],
+        [
+          133.62,
+          -88.0
+        ]
+      ]
+    },
+    {
+      "ref": "H6",
+      "pin": "",
+      "plated": false,
+      "diameter_mm": 2.4,
+      "endpoints_mm": [
+        [
+          151.993,
+          -137.817
+        ],
+        [
+          151.993,
+          -137.817
+        ]
+      ]
+    },
+    {
+      "ref": "C2",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.9,
+      "endpoints_mm": [
+        [
+          115.0,
+          -115.0
+        ],
+        [
+          115.0,
+          -115.0
+        ]
+      ]
+    },
+    {
+      "ref": "C2",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.9,
+      "endpoints_mm": [
+        [
+          120.0,
+          -115.0
+        ],
+        [
+          120.0,
+          -115.0
+        ]
+      ]
+    },
+    {
+      "ref": "R10",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          115.0,
+          -92.0
+        ],
+        [
+          115.0,
+          -92.0
+        ]
+      ]
+    },
+    {
+      "ref": "R10",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          122.62,
+          -92.0
+        ],
+        [
+          122.62,
+          -92.0
+        ]
+      ]
+    },
+    {
+      "ref": "J3",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.95,
+      "endpoints_mm": [
+        [
+          112.0,
+          -62.0
+        ],
+        [
+          112.0,
+          -62.0
+        ]
+      ]
+    },
+    {
+      "ref": "J3",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.95,
+      "endpoints_mm": [
+        [
+          114.5,
+          -62.0
+        ],
+        [
+          114.5,
+          -62.0
+        ]
+      ]
+    },
+    {
+      "ref": "J3",
+      "pin": "3",
+      "plated": true,
+      "diameter_mm": 0.95,
+      "endpoints_mm": [
+        [
+          117.0,
+          -62.0
+        ],
+        [
+          117.0,
+          -62.0
+        ]
+      ]
+    },
+    {
+      "ref": "J3",
+      "pin": "4",
+      "plated": true,
+      "diameter_mm": 0.95,
+      "endpoints_mm": [
+        [
+          119.5,
+          -62.0
+        ],
+        [
+          119.5,
+          -62.0
+        ]
+      ]
+    },
+    {
+      "ref": "J3",
+      "pin": "5",
+      "plated": true,
+      "diameter_mm": 0.95,
+      "endpoints_mm": [
+        [
+          122.0,
+          -62.0
+        ],
+        [
+          122.0,
+          -62.0
+        ]
+      ]
+    },
+    {
+      "ref": "J3",
+      "pin": "6",
+      "plated": true,
+      "diameter_mm": 0.95,
+      "endpoints_mm": [
+        [
+          124.5,
+          -62.0
+        ],
+        [
+          124.5,
+          -62.0
+        ]
+      ]
+    },
+    {
+      "ref": "J3",
+      "pin": "7",
+      "plated": true,
+      "diameter_mm": 0.95,
+      "endpoints_mm": [
+        [
+          127.0,
+          -62.0
+        ],
+        [
+          127.0,
+          -62.0
+        ]
+      ]
+    },
+    {
+      "ref": "J3",
+      "pin": "8",
+      "plated": true,
+      "diameter_mm": 0.95,
+      "endpoints_mm": [
+        [
+          129.5,
+          -62.0
+        ],
+        [
+          129.5,
+          -62.0
+        ]
+      ]
+    },
+    {
+      "ref": "H5",
+      "pin": "",
+      "plated": false,
+      "diameter_mm": 2.4,
+      "endpoints_mm": [
+        [
+          136.753,
+          -137.817
+        ],
+        [
+          136.753,
+          -137.817
+        ]
+      ]
+    },
+    {
+      "ref": "C4",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.9,
+      "endpoints_mm": [
+        [
+          130.5,
+          -120.0
+        ],
+        [
+          130.5,
+          -120.0
+        ]
+      ]
+    },
+    {
+      "ref": "C4",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.9,
+      "endpoints_mm": [
+        [
+          130.5,
+          -125.0
+        ],
+        [
+          130.5,
+          -125.0
+        ]
+      ]
+    },
+    {
+      "ref": "R11",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          115.0,
+          -100.0
+        ],
+        [
+          115.0,
+          -100.0
+        ]
+      ]
+    },
+    {
+      "ref": "R11",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          122.62,
+          -100.0
+        ],
+        [
+          122.62,
+          -100.0
+        ]
+      ]
+    },
+    {
+      "ref": "J6",
+      "pin": "",
+      "plated": false,
+      "diameter_mm": 1.2,
+      "endpoints_mm": [
+        [
+          147.0,
+          -53.5
+        ],
+        [
+          147.0,
+          -53.5
+        ]
+      ]
+    },
+    {
+      "ref": "J6",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.5,
+      "endpoints_mm": [
+        [
+          146.5,
+          -58.1
+        ],
+        [
+          147.5,
+          -58.1
+        ]
+      ]
+    },
+    {
+      "ref": "J6",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.5,
+      "endpoints_mm": [
+        [
+          145.2,
+          -56.5
+        ],
+        [
+          145.2,
+          -55.5
+        ]
+      ]
+    },
+    {
+      "ref": "J6",
+      "pin": "3",
+      "plated": true,
+      "diameter_mm": 0.5,
+      "endpoints_mm": [
+        [
+          148.8,
+          -56.5
+        ],
+        [
+          148.8,
+          -55.5
+        ]
+      ]
+    },
+    {
+      "ref": "R15",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          126.0,
+          -106.0
+        ],
+        [
+          126.0,
+          -106.0
+        ]
+      ]
+    },
+    {
+      "ref": "R15",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          126.0,
+          -113.62
+        ],
+        [
+          126.0,
+          -113.62
+        ]
+      ]
+    },
+    {
+      "ref": "H2",
+      "pin": "",
+      "plated": false,
+      "diameter_mm": 3.2,
+      "endpoints_mm": [
+        [
+          155.5,
+          -54.5
+        ],
+        [
+          155.5,
+          -54.5
+        ]
+      ]
+    },
+    {
+      "ref": "R1",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          103.0,
+          -64.5
+        ],
+        [
+          103.0,
+          -64.5
+        ]
+      ]
+    },
+    {
+      "ref": "R1",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          103.0,
+          -72.12
+        ],
+        [
+          103.0,
+          -72.12
+        ]
+      ]
+    },
+    {
+      "ref": "K1",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 1.3,
+      "endpoints_mm": [
+        [
+          130.34,
+          -96.33
+        ],
+        [
+          130.34,
+          -96.33
+        ]
+      ]
+    },
+    {
+      "ref": "K1",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 1.3,
+      "endpoints_mm": [
+        [
+          130.34,
+          -106.49
+        ],
+        [
+          130.34,
+          -106.49
+        ]
+      ]
+    },
+    {
+      "ref": "K1",
+      "pin": "3",
+      "plated": true,
+      "diameter_mm": 1.3,
+      "endpoints_mm": [
+        [
+          130.34,
+          -114.11
+        ],
+        [
+          130.34,
+          -114.11
+        ]
+      ]
+    },
+    {
+      "ref": "K1",
+      "pin": "4",
+      "plated": true,
+      "diameter_mm": 1.3,
+      "endpoints_mm": [
+        [
+          137.96,
+          -111.57
+        ],
+        [
+          137.96,
+          -111.57
+        ]
+      ]
+    },
+    {
+      "ref": "K1",
+      "pin": "5",
+      "plated": true,
+      "diameter_mm": 1.3,
+      "endpoints_mm": [
+        [
+          137.96,
+          -96.33
+        ],
+        [
+          137.96,
+          -96.33
+        ]
+      ]
+    },
+    {
+      "ref": "C10",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.9,
+      "endpoints_mm": [
+        [
+          115.0,
+          -88.0
+        ],
+        [
+          115.0,
+          -88.0
+        ]
+      ]
+    },
+    {
+      "ref": "C10",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.9,
+      "endpoints_mm": [
+        [
+          120.0,
+          -88.0
+        ],
+        [
+          120.0,
+          -88.0
+        ]
+      ]
+    },
+    {
+      "ref": "D2",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 1.1,
+      "endpoints_mm": [
+        [
+          141.5,
+          -95.5
+        ],
+        [
+          141.5,
+          -95.5
+        ]
+      ]
+    },
+    {
+      "ref": "D2",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 1.1,
+      "endpoints_mm": [
+        [
+          151.66,
+          -95.5
+        ],
+        [
+          151.66,
+          -95.5
+        ]
+      ]
+    },
+    {
+      "ref": "Q2",
+      "pin": "1",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          105.5,
+          -124.0
+        ],
+        [
+          105.5,
+          -124.0
+        ]
+      ]
+    },
+    {
+      "ref": "Q2",
+      "pin": "2",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          108.04,
+          -124.0
+        ],
+        [
+          108.04,
+          -124.0
+        ]
+      ]
+    },
+    {
+      "ref": "Q2",
+      "pin": "3",
+      "plated": true,
+      "diameter_mm": 0.8,
+      "endpoints_mm": [
+        [
+          110.58,
+          -124.0
+        ],
+        [
+          110.58,
+          -124.0
+        ]
+      ]
+    },
+    {
+      "ref": "via",
+      "pin": "",
+      "plated": true,
+      "diameter_mm": 0.4,
+      "endpoints_mm": [
+        [
+          100.95,
+          -104.214
+        ],
+        [
+          100.95,
+          -104.214
+        ]
+      ]
+    },
+    {
+      "ref": "via",
+      "pin": "",
+      "plated": true,
+      "diameter_mm": 0.4,
+      "endpoints_mm": [
+        [
+          138.6185,
+          -85.5361
+        ],
+        [
+          138.6185,
+          -85.5361
+        ]
+      ]
+    },
+    {
+      "ref": "via",
+      "pin": "",
+      "plated": true,
+      "diameter_mm": 0.6,
+      "endpoints_mm": [
+        [
+          135.4855,
+          -78.7117
+        ],
+        [
+          135.4855,
+          -78.7117
+        ]
+      ]
+    },
+    {
+      "ref": "via",
+      "pin": "",
+      "plated": true,
+      "diameter_mm": 0.6,
+      "endpoints_mm": [
+        [
+          121.0625,
+          -78.8511
+        ],
+        [
+          121.0625,
+          -78.8511
+        ]
+      ]
+    },
+    {
+      "ref": "via",
+      "pin": "",
+      "plated": true,
+      "diameter_mm": 0.6,
+      "endpoints_mm": [
+        [
+          115.05,
+          -110.0832
+        ],
+        [
+          115.05,
+          -110.0832
+        ]
+      ]
+    },
+    {
+      "ref": "via",
+      "pin": "",
+      "plated": true,
+      "diameter_mm": 0.4,
+      "endpoints_mm": [
+        [
+          133.217,
+          -94.49
+        ],
+        [
+          133.217,
+          -94.49
+        ]
+      ]
+    },
+    {
+      "ref": "via",
+      "pin": "",
+      "plated": true,
+      "diameter_mm": 0.4,
+      "endpoints_mm": [
+        [
+          133.7771,
+          -99.2927
+        ],
+        [
+          133.7771,
+          -99.2927
+        ]
+      ]
+    },
+    {
+      "ref": "via",
+      "pin": "",
+      "plated": true,
+      "diameter_mm": 0.4,
+      "endpoints_mm": [
+        [
+          120.0051,
+          -81.2139
+        ],
+        [
+          120.0051,
+          -81.2139
+        ]
+      ]
+    },
+    {
+      "ref": "via",
+      "pin": "",
+      "plated": true,
+      "diameter_mm": 0.4,
+      "endpoints_mm": [
+        [
+          109.2887,
+          -81.8853
+        ],
+        [
+          109.2887,
+          -81.8853
+        ]
+      ]
+    },
+    {
+      "ref": "via",
+      "pin": "",
+      "plated": true,
+      "diameter_mm": 0.4,
+      "endpoints_mm": [
+        [
+          112.4888,
+          -101.8867
+        ],
+        [
+          112.4888,
+          -101.8867
+        ]
+      ]
+    },
+    {
+      "ref": "via",
+      "pin": "",
+      "plated": true,
+      "diameter_mm": 0.4,
+      "endpoints_mm": [
+        [
+          120.1953,
+          -109.1793
+        ],
+        [
+          120.1953,
+          -109.1793
+        ]
+      ]
+    },
+    {
+      "ref": "via",
+      "pin": "",
+      "plated": true,
+      "diameter_mm": 0.4,
+      "endpoints_mm": [
+        [
+          109.0,
+          -130.6
+        ],
+        [
+          109.0,
+          -130.6
+        ]
+      ]
+    }
+  ],
+  "pads": [
+    {
+      "id": "J7:1",
+      "net": "/+3V3_A",
+      "center_mm": [
+        140.0,
+        -62.0
+      ]
+    },
+    {
+      "id": "J7:2",
+      "net": "/GND",
+      "center_mm": [
+        142.5,
+        -62.0
+      ]
+    },
+    {
+      "id": "C12:1",
+      "net": "/AIN2",
+      "center_mm": [
+        115.0,
+        -104.0
+      ]
+    },
+    {
+      "id": "C12:2",
+      "net": "/GND",
+      "center_mm": [
+        120.0,
+        -104.0
+      ]
+    },
+    {
+      "id": "C11:1",
+      "net": "/AIN1",
+      "center_mm": [
+        115.0,
+        -96.0
+      ]
+    },
+    {
+      "id": "C11:2",
+      "net": "/GND",
+      "center_mm": [
+        120.0,
+        -96.0
+      ]
+    },
+    {
+      "id": "J5:1",
+      "net": "/GND",
+      "center_mm": [
+        130.0,
+        -58.1
+      ]
+    },
+    {
+      "id": "J5:2",
+      "net": "/PROBE1",
+      "center_mm": [
+        128.2,
+        -56.0
+      ]
+    },
+    {
+      "id": "J5:3",
+      "net": "/PROBE1",
+      "center_mm": [
+        131.8,
+        -56.0
+      ]
+    },
+    {
+      "id": "D3:1",
+      "net": "/WALL_12V",
+      "center_mm": [
+        155.0,
+        -81.0
+      ]
+    },
+    {
+      "id": "D3:2",
+      "net": "/GND",
+      "center_mm": [
+        155.0,
+        -91.16
+      ]
+    },
+    {
+      "id": "R12:1",
+      "net": "/+3V3_A",
+      "center_mm": [
+        115.0,
+        -108.0
+      ]
+    },
+    {
+      "id": "R12:2",
+      "net": "/PROBE2",
+      "center_mm": [
+        122.62,
+        -108.0
+      ]
+    },
+    {
+      "id": "R4:1",
+      "net": "/GPIO13_SERVO",
+      "center_mm": [
+        103.0,
+        -75.0
+      ]
+    },
+    {
+      "id": "R4:2",
+      "net": "/SERVO_SIG",
+      "center_mm": [
+        103.0,
+        -82.62
+      ]
+    },
+    {
+      "id": "R3:1",
+      "net": "/FAN_BASE",
+      "center_mm": [
+        103.0,
+        -102.0
+      ]
+    },
+    {
+      "id": "R3:2",
+      "net": "/GND",
+      "center_mm": [
+        110.62,
+        -102.0
+      ]
+    },
+    {
+      "id": "R16:1",
+      "net": "/+3V3_A",
+      "center_mm": [
+        126.0,
+        -92.0
+      ]
+    },
+    {
+      "id": "R16:2",
+      "net": "/AIN3",
+      "center_mm": [
+        133.62,
+        -92.0
+      ]
+    },
+    {
+      "id": "BZ1:1",
+      "net": "/BUZZ_DIRECT",
+      "center_mm": [
+        104.3,
+        -93.0
+      ]
+    },
+    {
+      "id": "BZ1:2",
+      "net": "/GND",
+      "center_mm": [
+        109.3,
+        -93.0
+      ]
+    },
+    {
+      "id": "C3:1",
+      "net": "/+5V",
+      "center_mm": [
+        153.25,
+        -64.5
+      ]
+    },
+    {
+      "id": "C3:2",
+      "net": "/GND",
+      "center_mm": [
+        156.75,
+        -64.5
+      ]
+    },
+    {
+      "id": "U2:1",
+      "net": "/+12V",
+      "center_mm": [
+        117.0,
+        -121.5
+      ]
+    },
+    {
+      "id": "U2:2",
+      "net": "/GND",
+      "center_mm": [
+        119.54,
+        -121.5
+      ]
+    },
+    {
+      "id": "U2:3",
+      "net": "/+5V",
+      "center_mm": [
+        122.08,
+        -121.5
+      ]
+    },
+    {
+      "id": "J1:1",
+      "net": "/PD_12V",
+      "center_mm": [
+        154.0,
+        -101.0
+      ]
+    },
+    {
+      "id": "J1:2",
+      "net": "/GND",
+      "center_mm": [
+        156.5,
+        -101.0
+      ]
+    },
+    {
+      "id": "J4:1",
+      "net": "/GND",
+      "center_mm": [
+        113.0,
+        -58.1
+      ]
+    },
+    {
+      "id": "J4:2",
+      "net": "/PROBE0",
+      "center_mm": [
+        111.2,
+        -56.0
+      ]
+    },
+    {
+      "id": "J4:3",
+      "net": "/PROBE0",
+      "center_mm": [
+        114.8,
+        -56.0
+      ]
+    },
+    {
+      "id": "C1:1",
+      "net": "/+12V",
+      "center_mm": [
+        143.0,
+        -109.0
+      ]
+    },
+    {
+      "id": "C1:2",
+      "net": "/GND",
+      "center_mm": [
+        148.0,
+        -109.0
+      ]
+    },
+    {
+      "id": "J9:1",
+      "net": "/WALL_12V",
+      "center_mm": [
+        126.5,
+        -129.9
+      ]
+    },
+    {
+      "id": "J9:2",
+      "net": "/GND",
+      "center_mm": [
+        126.5,
+        -135.8
+      ]
+    },
+    {
+      "id": "J9:3",
+      "net": "unconnected-(J9-Pad3)",
+      "center_mm": [
+        131.2,
+        -132.7
+      ]
+    },
+    {
+      "id": "R14:1",
+      "net": "/PROBE1",
+      "center_mm": [
+        126.0,
+        -95.0
+      ]
+    },
+    {
+      "id": "R14:2",
+      "net": "/AIN1",
+      "center_mm": [
+        126.0,
+        -102.62
+      ]
+    },
+    {
+      "id": "Q1:1",
+      "net": "/FAN_GATE",
+      "center_mm": [
+        143.3,
+        -91.0
+      ]
+    },
+    {
+      "id": "Q1:2",
+      "net": "/FAN_OUT",
+      "center_mm": [
+        145.84,
+        -91.0
+      ]
+    },
+    {
+      "id": "Q1:3",
+      "net": "/+12V",
+      "center_mm": [
+        148.38,
+        -91.0
+      ]
+    },
+    {
+      "id": "J2:1",
+      "net": "unconnected-(J2-NC-Pad1)",
+      "center_mm": [
+        113.06,
+        -135.88
+      ]
+    },
+    {
+      "id": "J2:2",
+      "net": "unconnected-(J2-NC-Pad2)",
+      "center_mm": [
+        112.044,
+        -134.1
+      ]
+    },
+    {
+      "id": "J2:3",
+      "net": "/+5V",
+      "center_mm": [
+        111.028,
+        -135.88
+      ]
+    },
+    {
+      "id": "J2:4",
+      "net": "/GND",
+      "center_mm": [
+        110.012,
+        -134.1
+      ]
+    },
+    {
+      "id": "J2:5",
+      "net": "/FAN_OUT",
+      "center_mm": [
+        108.996,
+        -135.88
+      ]
+    },
+    {
+      "id": "J2:6",
+      "net": "/SERVO_SIG",
+      "center_mm": [
+        107.98,
+        -134.1
+      ]
+    },
+    {
+      "id": "J2:7",
+      "net": "unconnected-(J2-NC-Pad7)",
+      "center_mm": [
+        106.964,
+        -135.88
+      ]
+    },
+    {
+      "id": "J2:8",
+      "net": "unconnected-(J2-NC-Pad8)",
+      "center_mm": [
+        105.948,
+        -134.1
+      ]
+    },
+    {
+      "id": "JP1:1",
+      "net": "/+5V",
+      "center_mm": [
+        155.0,
+        -73.5
+      ]
+    },
+    {
+      "id": "JP1:2",
+      "net": "/+5V_WT32",
+      "center_mm": [
+        155.0,
+        -76.04
+      ]
+    },
+    {
+      "id": "J8:1",
+      "net": "/+3V3_A",
+      "center_mm": [
+        113.0,
+        -83.0
+      ]
+    },
+    {
+      "id": "J8:2",
+      "net": "/GND",
+      "center_mm": [
+        115.54,
+        -83.0
+      ]
+    },
+    {
+      "id": "J8:3",
+      "net": "/SCL",
+      "center_mm": [
+        118.08,
+        -83.0
+      ]
+    },
+    {
+      "id": "J8:4",
+      "net": "/SDA",
+      "center_mm": [
+        120.62,
+        -83.0
+      ]
+    },
+    {
+      "id": "J8:5",
+      "net": "/GND",
+      "center_mm": [
+        123.16,
+        -83.0
+      ]
+    },
+    {
+      "id": "J8:6",
+      "net": "unconnected-(J8-ALRT-Pad6)",
+      "center_mm": [
+        125.7,
+        -83.0
+      ]
+    },
+    {
+      "id": "J8:7",
+      "net": "/AIN0",
+      "center_mm": [
+        128.24,
+        -83.0
+      ]
+    },
+    {
+      "id": "J8:8",
+      "net": "/AIN1",
+      "center_mm": [
+        130.78,
+        -83.0
+      ]
+    },
+    {
+      "id": "J8:9",
+      "net": "/AIN2",
+      "center_mm": [
+        133.32,
+        -83.0
+      ]
+    },
+    {
+      "id": "J8:10",
+      "net": "/AIN3",
+      "center_mm": [
+        135.86,
+        -83.0
+      ]
+    },
+    {
+      "id": "R2:1",
+      "net": "/GPIO12_FAN",
+      "center_mm": [
+        107.0,
+        -64.0
+      ]
+    },
+    {
+      "id": "R2:2",
+      "net": "/FAN_BASE",
+      "center_mm": [
+        107.0,
+        -71.62
+      ]
+    },
+    {
+      "id": "R5:1",
+      "net": "/SERVO_SIG",
+      "center_mm": [
+        103.0,
+        -106.0
+      ]
+    },
+    {
+      "id": "R5:2",
+      "net": "/GND",
+      "center_mm": [
+        110.62,
+        -106.0
+      ]
+    },
+    {
+      "id": "R6:1",
+      "net": "/GPIO14_BUZZ",
+      "center_mm": [
+        107.0,
+        -75.0
+      ]
+    },
+    {
+      "id": "R6:2",
+      "net": "/BUZZ_DIRECT",
+      "center_mm": [
+        107.0,
+        -82.62
+      ]
+    },
+    {
+      "id": "R13:1",
+      "net": "/PROBE0",
+      "center_mm": [
+        126.0,
+        -88.0
+      ]
+    },
+    {
+      "id": "R13:2",
+      "net": "/AIN0",
+      "center_mm": [
+        133.62,
+        -88.0
+      ]
+    },
+    {
+      "id": "C2:1",
+      "net": "/+12V",
+      "center_mm": [
+        115.0,
+        -115.0
+      ]
+    },
+    {
+      "id": "C2:2",
+      "net": "/GND",
+      "center_mm": [
+        120.0,
+        -115.0
+      ]
+    },
+    {
+      "id": "R10:1",
+      "net": "/+3V3_A",
+      "center_mm": [
+        115.0,
+        -92.0
+      ]
+    },
+    {
+      "id": "R10:2",
+      "net": "/PROBE0",
+      "center_mm": [
+        122.62,
+        -92.0
+      ]
+    },
+    {
+      "id": "J3:1",
+      "net": "/+5V_WT32",
+      "center_mm": [
+        112.0,
+        -62.0
+      ]
+    },
+    {
+      "id": "J3:2",
+      "net": "/GND",
+      "center_mm": [
+        114.5,
+        -62.0
+      ]
+    },
+    {
+      "id": "J3:3",
+      "net": "/SDA",
+      "center_mm": [
+        117.0,
+        -62.0
+      ]
+    },
+    {
+      "id": "J3:4",
+      "net": "/SCL",
+      "center_mm": [
+        119.5,
+        -62.0
+      ]
+    },
+    {
+      "id": "J3:5",
+      "net": "/GPIO12_FAN",
+      "center_mm": [
+        122.0,
+        -62.0
+      ]
+    },
+    {
+      "id": "J3:6",
+      "net": "/GPIO13_SERVO",
+      "center_mm": [
+        124.5,
+        -62.0
+      ]
+    },
+    {
+      "id": "J3:7",
+      "net": "/GPIO14_BUZZ",
+      "center_mm": [
+        127.0,
+        -62.0
+      ]
+    },
+    {
+      "id": "J3:8",
+      "net": "unconnected-(J3-GPIO21_SPARE-Pad8)",
+      "center_mm": [
+        129.5,
+        -62.0
+      ]
+    },
+    {
+      "id": "C4:1",
+      "net": "/+5V",
+      "center_mm": [
+        130.5,
+        -120.0
+      ]
+    },
+    {
+      "id": "C4:2",
+      "net": "/GND",
+      "center_mm": [
+        130.5,
+        -125.0
+      ]
+    },
+    {
+      "id": "R11:1",
+      "net": "/+3V3_A",
+      "center_mm": [
+        115.0,
+        -100.0
+      ]
+    },
+    {
+      "id": "R11:2",
+      "net": "/PROBE1",
+      "center_mm": [
+        122.62,
+        -100.0
+      ]
+    },
+    {
+      "id": "J6:1",
+      "net": "/GND",
+      "center_mm": [
+        147.0,
+        -58.1
+      ]
+    },
+    {
+      "id": "J6:2",
+      "net": "/PROBE2",
+      "center_mm": [
+        145.2,
+        -56.0
+      ]
+    },
+    {
+      "id": "J6:3",
+      "net": "/PROBE2",
+      "center_mm": [
+        148.8,
+        -56.0
+      ]
+    },
+    {
+      "id": "R15:1",
+      "net": "/PROBE2",
+      "center_mm": [
+        126.0,
+        -106.0
+      ]
+    },
+    {
+      "id": "R15:2",
+      "net": "/AIN2",
+      "center_mm": [
+        126.0,
+        -113.62
+      ]
+    },
+    {
+      "id": "R1:1",
+      "net": "/+12V",
+      "center_mm": [
+        103.0,
+        -64.5
+      ]
+    },
+    {
+      "id": "R1:2",
+      "net": "/FAN_GATE",
+      "center_mm": [
+        103.0,
+        -72.12
+      ]
+    },
+    {
+      "id": "K1:1",
+      "net": "/WALL_12V",
+      "center_mm": [
+        130.34,
+        -96.33
+      ]
+    },
+    {
+      "id": "K1:2",
+      "net": "/+12V",
+      "center_mm": [
+        130.34,
+        -106.49
+      ]
+    },
+    {
+      "id": "K1:3",
+      "net": "/WALL_12V",
+      "center_mm": [
+        130.34,
+        -114.11
+      ]
+    },
+    {
+      "id": "K1:4",
+      "net": "/PD_12V",
+      "center_mm": [
+        137.96,
+        -111.57
+      ]
+    },
+    {
+      "id": "K1:5",
+      "net": "/GND",
+      "center_mm": [
+        137.96,
+        -96.33
+      ]
+    },
+    {
+      "id": "C10:1",
+      "net": "/AIN0",
+      "center_mm": [
+        115.0,
+        -88.0
+      ]
+    },
+    {
+      "id": "C10:2",
+      "net": "/GND",
+      "center_mm": [
+        120.0,
+        -88.0
+      ]
+    },
+    {
+      "id": "D2:1",
+      "net": "/FAN_OUT",
+      "center_mm": [
+        141.5,
+        -95.5
+      ]
+    },
+    {
+      "id": "D2:2",
+      "net": "/GND",
+      "center_mm": [
+        151.66,
+        -95.5
+      ]
+    },
+    {
+      "id": "Q2:1",
+      "net": "/GND",
+      "center_mm": [
+        105.5,
+        -124.0
+      ]
+    },
+    {
+      "id": "Q2:2",
+      "net": "/FAN_BASE",
+      "center_mm": [
+        108.04,
+        -124.0
+      ]
+    },
+    {
+      "id": "Q2:3",
+      "net": "/FAN_GATE",
+      "center_mm": [
+        110.58,
+        -124.0
+      ]
+    }
+  ],
+  "vias": [
+    {
+      "net": "/+12V",
+      "center_mm": [
+        100.95,
+        -104.214
+      ]
+    },
+    {
+      "net": "/+3V3_A",
+      "center_mm": [
+        138.6185,
+        -85.5361
+      ]
+    },
+    {
+      "net": "/+5V",
+      "center_mm": [
+        135.4855,
+        -78.7117
+      ]
+    },
+    {
+      "net": "/+5V",
+      "center_mm": [
+        121.0625,
+        -78.8511
+      ]
+    },
+    {
+      "net": "/+5V",
+      "center_mm": [
+        115.05,
+        -110.0832
+      ]
+    },
+    {
+      "net": "/PROBE1",
+      "center_mm": [
+        133.217,
+        -94.49
+      ]
+    },
+    {
+      "net": "/PROBE2",
+      "center_mm": [
+        133.7771,
+        -99.2927
+      ]
+    },
+    {
+      "net": "/SCL",
+      "center_mm": [
+        120.0051,
+        -81.2139
+      ]
+    },
+    {
+      "net": "/SERVO_SIG",
+      "center_mm": [
+        109.2887,
+        -81.8853
+      ]
+    },
+    {
+      "net": "/SERVO_SIG",
+      "center_mm": [
+        112.4888,
+        -101.8867
+      ]
+    },
+    {
+      "net": "/SERVO_SIG",
+      "center_mm": [
+        120.1953,
+        -109.1793
+      ]
+    },
+    {
+      "net": "/SERVO_SIG",
+      "center_mm": [
+        109.0,
+        -130.6
+      ]
+    }
+  ]
+}

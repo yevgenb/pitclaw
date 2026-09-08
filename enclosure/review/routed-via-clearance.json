@@ -1,0 +1,137 @@
+{
+  "source_sha256": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+  "via_count": 16,
+  "minimum_boss_sweep_clearance_mm": 4.1144,
+  "minimum_support_sweep_clearance_mm": 10.4632,
+  "assumption": "Plated vias have no protruding wire or solder tails; do not build solder mounds on them. Copper diameters are checked against the full 4 mm installation sweep.",
+  "vias": [
+    {
+      "x_mm": 0.95,
+      "y_mm": 54.214,
+      "copper_diameter_mm": 0.8,
+      "net": "/+12V",
+      "boss_sweep_clearance_mm": 4.1144,
+      "support_sweep_clearance_mm": 36.1011
+    },
+    {
+      "x_mm": 38.6185,
+      "y_mm": 35.5361,
+      "copper_diameter_mm": 0.8,
+      "net": "/+3V3_A",
+      "boss_sweep_clearance_mm": 26.9125,
+      "support_sweep_clearance_mm": 57.4375
+    },
+    {
+      "x_mm": 15.05,
+      "y_mm": 60.0832,
+      "copper_diameter_mm": 1.2,
+      "net": "/+5V",
+      "boss_sweep_clearance_mm": 5.7233,
+      "support_sweep_clearance_mm": 31.6241
+    },
+    {
+      "x_mm": 21.0625,
+      "y_mm": 28.8511,
+      "copper_diameter_mm": 1.2,
+      "net": "/+5V",
+      "boss_sweep_clearance_mm": 21.139,
+      "support_sweep_clearance_mm": 63.3006
+    },
+    {
+      "x_mm": 35.4855,
+      "y_mm": 28.7117,
+      "copper_diameter_mm": 1.2,
+      "net": "/+5V",
+      "boss_sweep_clearance_mm": 23.3446,
+      "support_sweep_clearance_mm": 64.6947
+    },
+    {
+      "x_mm": 18.0,
+      "y_mm": 78.5,
+      "copper_diameter_mm": 1.2,
+      "net": "/GND",
+      "boss_sweep_clearance_mm": 12.9624,
+      "support_sweep_clearance_mm": 17.2281
+    },
+    {
+      "x_mm": 20.0,
+      "y_mm": 78.5,
+      "copper_diameter_mm": 1.2,
+      "net": "/GND",
+      "boss_sweep_clearance_mm": 14.5023,
+      "support_sweep_clearance_mm": 18.7349
+    },
+    {
+      "x_mm": 33.217,
+      "y_mm": 44.49,
+      "copper_diameter_mm": 0.8,
+      "net": "/PROBE1",
+      "boss_sweep_clearance_mm": 23.7512,
+      "support_sweep_clearance_mm": 51.1212
+    },
+    {
+      "x_mm": 33.7771,
+      "y_mm": 49.2927,
+      "copper_diameter_mm": 0.8,
+      "net": "/PROBE2",
+      "boss_sweep_clearance_mm": 20.5228,
+      "support_sweep_clearance_mm": 46.5938
+    },
+    {
+      "x_mm": 20.0051,
+      "y_mm": 31.2139,
+      "copper_diameter_mm": 0.8,
+      "net": "/SCL",
+      "boss_sweep_clearance_mm": 22.6014,
+      "support_sweep_clearance_mm": 60.9494
+    },
+    {
+      "x_mm": 3.0,
+      "y_mm": 78.0,
+      "copper_diameter_mm": 0.8,
+      "net": "/SERVO_SIG",
+      "boss_sweep_clearance_mm": 6.6974,
+      "support_sweep_clearance_mm": 12.3
+    },
+    {
+      "x_mm": 9.0,
+      "y_mm": 80.6,
+      "copper_diameter_mm": 0.8,
+      "net": "/SERVO_SIG",
+      "boss_sweep_clearance_mm": 9.9007,
+      "support_sweep_clearance_mm": 10.4632
+    },
+    {
+      "x_mm": 9.2887,
+      "y_mm": 31.8853,
+      "copper_diameter_mm": 0.8,
+      "net": "/SERVO_SIG",
+      "boss_sweep_clearance_mm": 18.9706,
+      "support_sweep_clearance_mm": 58.5709
+    },
+    {
+      "x_mm": 12.4888,
+      "y_mm": 51.8867,
+      "copper_diameter_mm": 0.8,
+      "net": "/SERVO_SIG",
+      "boss_sweep_clearance_mm": 8.3839,
+      "support_sweep_clearance_mm": 39.1292
+    },
+    {
+      "x_mm": 20.1953,
+      "y_mm": 59.1793,
+      "copper_diameter_mm": 0.8,
+      "net": "/SERVO_SIG",
+      "boss_sweep_clearance_mm": 11.1427,
+      "support_sweep_clearance_mm": 34.5922
+    },
+    {
+      "x_mm": 23.4444,
+      "y_mm": 66.5,
+      "copper_diameter_mm": 0.8,
+      "net": "/SERVO_SIG",
+      "boss_sweep_clearance_mm": 14.0444,
+      "support_sweep_clearance_mm": 30.0276
+    }
+  ]
+}

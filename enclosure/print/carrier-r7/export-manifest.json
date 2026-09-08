@@ -1,0 +1,88 @@
+{
+  "sources_sha256": {
+    "enclosure/carrier-case.scad": "020d5e0470524c1742362970488d83ba45f6cac7366a4743800ca568c94a07bf",
+    "enclosure/carrier-interface.scad": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c"
+  },
+  "exports": [
+    {
+      "file": "carrier-top.stl",
+      "sha256": "daeef5a0447248caef9e0bc6aaa04e9f58be82226e528c0b52ca2ee4c3c2ab49",
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/print/carrier-r7/carrier-top.stl",
+        "-D",
+        "part=\"top\"",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/carrier-case.scad"
+      ]
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "sha256": "01a54e90b99fc2d1460c9da24e997a7a7fce5433b012b7d4c2108a7c8051e988",
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/print/carrier-r7/carrier-bottom.stl",
+        "-D",
+        "part=\"bottom\"",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/carrier-case.scad"
+      ]
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "sha256": "78eddd6edbd03655eac90aca33991da4cdf6f804bca3bf04a1e1b94c004bf004",
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/print/carrier-r7/carrier-retainer.stl",
+        "-D",
+        "part=\"retainer\"",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/carrier-case.scad"
+      ]
+    },
+    {
+      "file": "fit-coupon.stl",
+      "sha256": "c4508b22489b88617b3773595fbe2312d8edffdcca63d35d4fe0efcc517be0da",
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/print/carrier-r7/fit-coupon.stl",
+        "-D",
+        "part=\"fit-coupon\"",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/carrier-case.scad"
+      ]
+    },
+    {
+      "file": "insert-coupon.stl",
+      "sha256": "ae7ea4d04560875b8cd0fe6083c8da4c2cd6aeab0f6031d84b585f22d1df8b9e",
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/print/carrier-r7/insert-coupon.stl",
+        "-D",
+        "part=\"insert-coupon\"",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/carrier-case.scad"
+      ]
+    }
+  ]
+}

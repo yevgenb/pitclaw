@@ -1,0 +1,31 @@
+{
+  "disposition": "PASS - small bare-PCB prototype order",
+  "date": "2026-09-06",
+  "pcb_sha256": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+  "project_rules_sha256": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf",
+  "archive": "pitclaw-carrier-jlcpcb.zip",
+  "archive_sha256": "d75ea76ef0e9b0892459d3f8e0c6367630f1d467716bc774757389a562409497",
+  "native_erc_drc_parity_unconnected": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "independent_cam_result": "PASS; 31 nets; no opens/shorts; all drills/slots match",
+  "visual_inspection": "Both exact-archive Gerber faces inspected; legend, mask, plated slots, mounting holes and layer orientation agree with intended design.",
+  "mechanical_source_hashes_verified": true,
+  "review_artifacts_sha256": {
+    "hardware/carrier-revb/verification/jlc-dfm-review.md": "36fa6c26fae6db033a3ff7bce15097f80f7a0ffd62db2d1622837cdf227852e6",
+    "hardware/carrier-revb/verification/jlc-footprint-review.md": "fb87cce544e2ebeafeb31543c1eeeed3baae5afccdd25cbcae892470eff3b0cd",
+    "hardware/carrier-revb/verification/jlc-mechanical-review.md": "b3bac0747cc6b27591615861e1af41a429a0f1897ba4f61afc606d5207866a90",
+    "hardware/carrier-revb/verification/final-electrical-review.md": "057c96d3a1d29585559a42f9d3acd476df03c6c79fde41c871c7101f14c862ce",
+    "hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/review/cam-audit.json": "65a9f6d0caef6fa353a552049be9b762aec0401506da03c81e1dbfe9d7ac49c5",
+    "hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/review/manufacturing-preview.png": "65e0b040717343b0a9ca95d6918987ee6070389049e4e4c6a23ef01f9eabc5a3",
+    "enclosure/review/verification.json": "52ba4ccd2c9b1b9830844dcaff87a830edb8a149bfe5bff19377afedf8f7ff18",
+    "hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/README.md": "b726b868b97372db1b23292730031241b3ae14c7bfdf721d9b34acf230ec3a63"
+  },
+  "physical_module_enclosure_fit_qualified": false,
+  "physical_load_thermal_tests_performed": false,
+  "factory_cam_acceptance_obtained": false,
+  "order_submitted": false
+}

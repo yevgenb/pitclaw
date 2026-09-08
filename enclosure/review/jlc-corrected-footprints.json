@@ -1,0 +1,32 @@
+{
+  "pcb_sha256": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+  "j9_plated_slots_mm": [
+    0.8,
+    1.6
+  ],
+  "j8_drills_mm": 1.05,
+  "u2_drills_mm": 1.4,
+  "u2_anchor_mm": [
+    17.0,
+    70.75
+  ],
+  "u2_nominal_native_body_xyxy_mm": [
+    12.54,
+    69.31,
+    26.54,
+    76.91
+  ],
+  "u2_body_tolerance_expansion_mm": 0.5,
+  "u2_expanded_case_xyxy_mm": [
+    -17.96,
+    27.31,
+    -2.96,
+    35.91
+  ],
+  "u2_reserved_fitted_height_mm": 16,
+  "u2_reserved_top_z_mm": 25.1,
+  "minimum_top_bezel_z_mm": 25.6,
+  "u2_gap_to_lowest_top_bezel_z_mm": 0.5,
+  "u2_gap_to_display_rear_reserve_mm": 3,
+  "scope": "Conservative analytic U2 bound at corrected XY. Nominal dimensions only; the existing central SCAD component witness does not cover the full U2 body. Actual fitted height must stay within the 16 mm case allowance."
+}

@@ -1,0 +1,19 @@
+02:06:46 PM: Debug: Adding duplicate image handler for 'PNG file'
+02:06:46 PM: Debug: Adding duplicate image handler for 'JPEG file'
+02:06:46 PM: Debug: Adding duplicate image handler for 'TIFF file'
+02:06:46 PM: Debug: Adding duplicate image handler for 'GIF file'
+02:06:46 PM: Debug: Adding duplicate image handler for 'PNM file'
+02:06:46 PM: Debug: Adding duplicate image handler for 'PCX file'
+02:06:46 PM: Debug: Adding duplicate image handler for 'IFF file'
+02:06:46 PM: Debug: Adding duplicate image handler for 'Windows icon file'
+02:06:46 PM: Debug: Adding duplicate image handler for 'Windows cursor file'
+02:06:46 PM: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+02:06:46 PM: Debug: Adding duplicate image handler for 'TGA file'
+02:06:46 PM: Debug: Adding duplicate image handler for 'XPM file'
+/Users/kicad/remoteroot/workspace/build-macos-kicad-release/kicad-mac-builder/build/kicad/src/kicad/libs/kimath/src/geometry/shape_poly_set.cpp(561): assert ""aOutline.IsClosed()"" failed in AddOutline(): Warning: non-closed outline added to SHAPE_POLY_SET
+/Users/kicad/remoteroot/workspace/build-macos-kicad-release/kicad-mac-builder/build/kicad/src/kicad/libs/kimath/src/geometry/shape_poly_set.cpp(561): assert ""aOutline.IsClosed()"" failed in AddOutline(): Warning: non-closed outline added to SHAPE_POLY_SET
+/Users/kicad/remoteroot/workspace/build-macos-kicad-release/kicad-mac-builder/build/kicad/src/kicad/libs/kimath/src/geometry/shape_poly_set.cpp(561): assert ""aOutline.IsClosed()"" failed in AddOutline(): Warning: non-closed outline added to SHAPE_POLY_SET
+/Users/kicad/remoteroot/workspace/build-macos-kicad-release/kicad-mac-builder/build/kicad/src/kicad/libs/kimath/src/geometry/shape_poly_set.cpp(561): assert ""aOutline.IsClosed()"" failed in AddOutline(): Warning: non-closed outline added to SHAPE_POLY_SET
+/Users/kicad/remoteroot/workspace/build-macos-kicad-release/kicad-mac-builder/build/kicad/src/kicad/libs/kimath/src/geometry/shape_poly_set.cpp(561): assert ""aOutline.IsClosed()"" failed in AddOutline(): Warning: non-closed outline added to SHAPE_POLY_SET
+/Users/kicad/remoteroot/workspace/build-macos-kicad-release/kicad-mac-builder/build/kicad/src/kicad/libs/kimath/src/geometry/shape_poly_set.cpp(561): assert ""aOutline.IsClosed()"" failed in AddOutline(): Warning: non-closed outline added to SHAPE_POLY_SET
+DSN export True

@@ -1,0 +1,74 @@
+(footprint "Mount_D3.0_CLEARANCE"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "User-confirmed WT32 pattern; carrier clearance for 2.3-2.5mm self-tapping screws")
+	(property "Reference" "H4"
+		(at 0 -3 0)
+		(layer "F.SilkS")
+		(uuid "5d55066b-c510-4f28-854e-82756be0d45b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Mount_D3.0_CLEARANCE"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "c41b24cc-c8b3-4ced-bd29-ed4c283e468d")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "e3438351-38cb-493e-ac93-7e98fd5aa051")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "49dd0cc1-6e5e-4e81-ae90-04a5e64865c8")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr board_only exclude_from_pos_files exclude_from_bom)
+	(fp_circle
+		(center 0 0)
+		(end 3 0)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "0e8b5e0e-3d81-461d-8891-d13e0cb40b50")
+	)
+	(pad "" np_thru_hole circle
+		(at 0 0)
+		(size 3 3)
+		(drill 3)
+		(layers "*.Cu" "*.Mask")
+		(uuid "8a7f5692-fe5e-45f7-983f-a973ae57840b")
+	)
+	(embedded_fonts no)
+)

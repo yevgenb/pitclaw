@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../config.h"
+#include "ui_update.h"
 #include <stdint.h>
 
 // Callback types for hardware test actions during setup wizard
@@ -16,6 +17,9 @@ void ui_wizard_init();
 
 // Check if the wizard is still active (user hasn't finished all steps yet).
 bool ui_wizard_is_active();
+
+// Keep setup instructions and QR code in sync with the actual Wi-Fi state.
+void ui_wizard_update_wifi(const WifiInfo& info);
 
 // Set callbacks for wizard hardware test actions
 void ui_wizard_set_callbacks(WizardFanTestCb fanCb,

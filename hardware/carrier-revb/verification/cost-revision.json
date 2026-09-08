@@ -1,0 +1,55 @@
+{
+  "revision": "B-T2F0-A5807-S4",
+  "status": "Current DigiKey cost snapshot; see bom-verification.json and the priced workbook.",
+  "selected_converter": {
+    "manufacturer": "Traco Power",
+    "mpn": "TSR 2-2450N",
+    "digikey": "1951-TSR2-2450N-ND",
+    "unit_usd": 6.89,
+    "pin_pitch_mm": 2.54
+  },
+  "selected_pd_module": {
+    "manufacturer": "Adafruit Industries",
+    "mpn": "5807",
+    "digikey": "1528-5807-ND",
+    "unit_usd": 5.95
+  },
+  "selected_barrel_input": {
+    "manufacturer": "Tensility International",
+    "mpn": "54-00133",
+    "digikey": "839-54-00133-ND",
+    "unit_usd": 0.9,
+    "function": "Wall input only; sleeve NC contact unused"
+  },
+  "removed_purchase_items": [
+    "Mini100 socket",
+    "Mini100 male header",
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "D1",
+    "C5",
+    "C7",
+    "JP2 header",
+    "JP2 shunt"
+  ],
+  "lower_cost_substitutions": [
+    "IRF5305PBF for FQP27P06",
+    "PS1240P02BT for CPT-1255C-090",
+    "SB140 for 1N5819-TP",
+    "common 1% 10k resistors for 0.1% probe-bias resistors",
+    "TDK FG28X7R1H104KNT06 for Vishay 100nF capacitors"
+  ],
+  "subtotal_usd": 29.21,
+  "saving_vs_previous_usd": 2.17,
+  "bare_SMD_footprints": 0,
+  "fabrication_status": "UNROUTED; physical fit, load and thermal tests remain required",
+  "source_selector": {
+    "part": "G5Q-1 DC12",
+    "coil_flyback": "SB140 D3",
+    "replaces": "JP2 header and extra shunt",
+    "change_vs_s3_usd": 1.59,
+    "selection": "K1 de-energized selects PD; wall input energizes coil and selects wall. Transfer may restart controller."
+  }
+}

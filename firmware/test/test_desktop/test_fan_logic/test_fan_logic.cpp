@@ -98,7 +98,7 @@ void test_kickstart_runs_at_kickstart_speed(void) {
     fan->setSpeed(30.0f);
     fan->update();
 
-    // During kick-start, current speed should be FAN_KICKSTART_PCT (75%)
+    // During kick-start, apply the configured full-power startup percentage.
     TEST_ASSERT_FLOAT_WITHIN(0.001f, (float)FAN_KICKSTART_PCT, fan->getCurrentSpeedPct());
 }
 

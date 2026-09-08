@@ -43,19 +43,38 @@ pcb_hole_inset_h = 3;   // Inset from PCB edge (height, approximate)
 // === Panel Mount Holes ===
 probe_jack_d = 6.2;     // 2.5mm mono jack mounting hole
 barrel_jack_d = 12.2;   // DC barrel jack mounting hole
-usb_c_w = 10;           // USB-C cutout width
-usb_c_h = 4;            // USB-C cutout height
+panel_margin = 4;       // Minimum gap from cavity wall to the panel row
+panel_gap = 3.5;        // Gap between adjacent panel openings
+// No USB-C pass-through: the WT32-SC01 Plus's port sits on the underside of the
+// board facing into the cavity, ~25mm of occupied space away from any wall. A
+// bare cutout cannot reach it. Panel USB access needs a USB-C extension pigtail
+// and a hole sized for that connector.
+
+// === Internal Stack Heights ===
+// These drive the case depth — every mm here is a mm of outer_d.
+pcb_recess_d = 2;         // Depth of the WT32 locating pocket in the bezel
+pcb_standoff_h = 3;       // Display module thickness in front of the WT32 PCB.
+                          // VERIFY against your board before printing — this sets
+                          // how far the screw bosses reach behind the glass.
+carrier_standoff_h = 5;   // Peg height under the carrier board
+carrier_pcb_t = 1.6;      // Carrier perfboard thickness
+board_gap = 2;            // Clearance between WT32 back face and carrier components
+carrier_y_offset = 4;     // Shift carrier board away from the panel-jack wall
 
 // === Derived Dimensions ===
-inner_w = wt32_pcb_w + tolerance * 2;
-inner_h = wt32_pcb_h + tolerance * 2;
-inner_d = wt32_pcb_d + carrier_d + tolerance * 2;
+// Width/height: the cavity holds the WT32 *plus* the bezel's snap rim around it.
+// Leaving the rim out of this sum is what detached the rim from the bezel plate.
+inner_w = wt32_pcb_w + tolerance * 2 + (snap_rim_wall + snap_rim_gap) * 2;
+inner_h = wt32_pcb_h + tolerance * 2 + (snap_rim_wall + snap_rim_gap) * 2;
+
+// Depth: both boards stack in series, and both sit on standoffs.
+inner_d = carrier_standoff_h + carrier_pcb_t + carrier_d + board_gap + wt32_pcb_d;
 
 outer_w = inner_w + wall * 2;
 outer_h = inner_h + wall * 2;
-outer_d = inner_d + wall * 2;
+outer_d = inner_d + pcb_recess_d + wall * 2;
 
-bezel_d = wall + 2;     // Bezel plate depth (wall + PCB lip)
+bezel_d = wall + pcb_recess_d;  // Bezel plate depth (front face + PCB pocket)
 shell_d = outer_d - bezel_d;
 
 // Snap rim dimensions (fits inside shell cavity)
@@ -68,12 +87,53 @@ snap_rim_inner_h = snap_rim_outer_h - snap_rim_wall * 2;
 rim_outer_r = max(corner_r - wall - snap_rim_gap, 1);
 rim_inner_r = max(rim_outer_r - snap_rim_wall, 0.5);
 
+// Bottom-edge panel openings: chained left to right so they cannot overlap,
+// and the whole row centred on the edge.
+panel_row_w = probe_jack_d * 3 + panel_gap * 3 + barrel_jack_d;
+probe1_x = -panel_row_w/2 + probe_jack_d/2;
+probe2_x = probe1_x + probe_jack_d + panel_gap;
+probe3_x = probe2_x + probe_jack_d + panel_gap;
+barrel_x = probe3_x + probe_jack_d/2 + panel_gap + barrel_jack_d/2;
+
+// === Sanity Checks ===
+// These fire at render time, so a bad edit fails the build instead of shipping
+// a broken STL. Each one guards a bug that actually shipped once.
+
+// The display board must fit through the bezel's snap rim, or the rim has to be
+// cut away to make room — which severs it from the bezel plate.
+assert(snap_rim_inner_w >= wt32_pcb_w,
+       "snap rim opening is narrower than the WT32 board");
+assert(snap_rim_inner_h >= wt32_pcb_h,
+       "snap rim opening is shorter than the WT32 board");
+
+// The PCB pocket must not undercut the base of the rim.
+assert(wt32_pcb_w + tolerance * 2 <= snap_rim_outer_w,
+       "PCB pocket undercuts the snap rim base");
+assert(pcb_recess_d <= bezel_d - wall,
+       "PCB pocket is deeper than the bezel plate");
+
+// Both boards stack in series inside the cavity, each on its own standoffs.
+assert(inner_d >= carrier_standoff_h + carrier_pcb_t + carrier_d + wt32_pcb_d,
+       "cavity is too shallow to hold both boards");
+
+// Panel openings must not merge into each other or run off the wall.
+assert(barrel_x - barrel_jack_d/2 >= probe3_x + probe_jack_d/2,
+       "panel row: barrel jack overlaps probe 3");
+assert(panel_row_w <= inner_w - panel_margin * 2,
+       "panel row is wider than the bottom edge");
+
 // === Kickstand ===
+// Press-fit hinge: the rod is pushed into the back-wall slot from inside the
+// shell during assembly and held by friction. The arm doubles as the web that
+// passes through the slot, so nothing on the rod may be wider than the slot.
 ks_w = 25;
 ks_h = outer_h * 0.65;
 ks_thick = 3;
-ks_hinge_d = 5;
-ks_hinge_slot_w = ks_w + 1;
+ks_hinge_d = 5;                       // Hinge rod diameter
+ks_rod_len = ks_w - ks_hinge_d;       // Rod length along X
+ks_hinge_slot_w = ks_hinge_d - 0.4;   // Slot narrower than the rod = the press fit
+ks_slot_len = ks_rod_len + 0.6;       // Just long enough to admit the rod
+ks_hinge_y = -outer_h/2 + ks_h * 0.4 + 10;
 
 $fn = 40;
 
@@ -130,10 +190,10 @@ pcb_mount_positions = [
 // Carrier board standoff positions (3mm inset from 50x70mm board edges)
 carrier_mount_inset = 3;
 carrier_positions = [
-    [ (carrier_w/2 - carrier_mount_inset),  (carrier_h/2 - carrier_mount_inset)],
-    [-(carrier_w/2 - carrier_mount_inset),  (carrier_h/2 - carrier_mount_inset)],
-    [ (carrier_w/2 - carrier_mount_inset), -(carrier_h/2 - carrier_mount_inset)],
-    [-(carrier_w/2 - carrier_mount_inset), -(carrier_h/2 - carrier_mount_inset)]
+    [ (carrier_w/2 - carrier_mount_inset),  (carrier_h/2 - carrier_mount_inset) + carrier_y_offset],
+    [-(carrier_w/2 - carrier_mount_inset),  (carrier_h/2 - carrier_mount_inset) + carrier_y_offset],
+    [ (carrier_w/2 - carrier_mount_inset), -(carrier_h/2 - carrier_mount_inset) + carrier_y_offset],
+    [-(carrier_w/2 - carrier_mount_inset), -(carrier_h/2 - carrier_mount_inset) + carrier_y_offset]
 ];
 
 // ============================================================
@@ -141,8 +201,6 @@ carrier_positions = [
 // ============================================================
 
 module front_bezel() {
-    pcb_standoff_h = 3;
-
     // Z position of catch flat face (module origin)
     // catch_pos is distance from rim tip to ramp end
     catch_z = bezel_d + snap_rim_h - snap_catch_pos - snap_catch_h;
@@ -180,11 +238,6 @@ module front_bezel() {
                 rotate([0, 0, 90])
                     snap_catch_wedge();
 
-            // --- PCB mounting standoffs ---
-            for (pos = pcb_mount_positions) {
-                translate([pos[0], pos[1], bezel_d])
-                    cylinder(d = screw_d + 2.5, h = pcb_standoff_h);
-            }
         }
 
         // --- Display cutout (through bezel plate) ---
@@ -193,16 +246,24 @@ module front_bezel() {
                 rounded_rect_2d(display_w, display_h, 1.5);
 
         // --- PCB recess on back of bezel ---
-        // The PCB edge sits in this step; components extend into the cavity
+        // Pocket the display glass sits in, so only `wall` of plastic covers it.
+        // Must stop at the plate's inner face: any deeper and it eats the base
+        // of the snap rim and severs it from the plate.
         translate([0, 0, wall])
-            linear_extrude(height = bezel_d)
-                rounded_rect_2d(wt32_pcb_w + tolerance, wt32_pcb_h + tolerance, 1);
+            linear_extrude(height = pcb_recess_d)
+                rounded_rect_2d(wt32_pcb_w + tolerance * 2, wt32_pcb_h + tolerance * 2, 1);
+    }
 
-        // --- PCB standoff screw holes ---
-        for (pos = pcb_mount_positions) {
-            translate([pos[0], pos[1], bezel_d - 0.5])
-                cylinder(d = screw_d * 0.8, h = pcb_standoff_h + 1);
-        }
+    // --- PCB mounting standoffs ---
+    // Unioned after the recess cut, rising from the recess floor. Inside the
+    // difference above they would be cut away by the recess.
+    for (pos = pcb_mount_positions) {
+        translate([pos[0], pos[1], wall])
+            difference() {
+                cylinder(d = screw_d + 2.5, h = pcb_standoff_h);
+                // Blind bore for a self-tapping M3 — does not breach the front face
+                cylinder(d = screw_d * 0.8, h = pcb_standoff_h + 0.01);
+            }
     }
 }
 
@@ -211,8 +272,6 @@ module front_bezel() {
 // ============================================================
 
 module rear_shell() {
-    carrier_standoff_h = 5;
-
     // Groove position in shell Z coordinates
     // Must align with catch position when bezel is fully seated
     groove_z = shell_d - snap_rim_h + snap_catch_pos;
@@ -229,8 +288,8 @@ module rear_shell() {
                     rounded_box(inner_w, inner_h, shell_d, max(corner_r - wall/2, 1));
             }
 
-            // --- Carrier board standoffs (plain pegs, no screws) ---
-            // Board rests on pegs; panel-mount hardware and case closure hold it
+            // --- Carrier board standoffs ---
+            // Screwed down: nothing else in the case reaches the carrier board
             for (pos = carrier_positions) {
                 translate([pos[0], pos[1], wall])
                     cylinder(d = screw_d + 2.5, h = carrier_standoff_h);
@@ -255,28 +314,27 @@ module rear_shell() {
         translate([-inner_w/2 - 0.5, -groove_w/2, groove_z])
             cube([groove_depth + 0.5, groove_w, groove_h]);
 
+        // --- Carrier board screw bores ---
+        // Blind holes for self-tapping M3 — stop short of the back wall
+        for (pos = carrier_positions) {
+            translate([pos[0], pos[1], wall])
+                cylinder(d = screw_d * 0.8, h = carrier_standoff_h + 0.01);
+        }
+
         // --- Bottom edge panel-mount holes ---
-        // Bottom edge is at Y = -outer_h/2, holes through the wall in Y direction
+        // Bottom edge is at Y = -outer_h/2, holes through the wall in Y direction.
+        // X positions come from the chain in the derived-dimensions block, which
+        // is asserted non-overlapping.
         bottom_y = -outer_h/2;
         hole_z = wall + 8;  // Hole center height above shell floor
 
-        // USB-C cutout (leftmost — for debug/reflash access)
-        usb_x = -inner_w/2 + 12;
-        translate([usb_x, bottom_y, hole_z])
-            rotate([90, 0, 0])
-                linear_extrude(height = wall + 2, center = true)
-                    square([usb_c_w, usb_c_h], center = true);
-
-        // 3x Probe jack holes (centered group, 14mm spacing)
-        probe_spacing = 14;
-        probe_start_x = -probe_spacing;
-        for (i = [0:2]) {
-            translate([probe_start_x + i * probe_spacing, bottom_y, hole_z])
+        // 3x Probe jack holes
+        for (px = [probe1_x, probe2_x, probe3_x]) {
+            translate([px, bottom_y, hole_z])
                 panel_hole(probe_jack_d, wall);
         }
 
         // DC barrel jack (rightmost)
-        barrel_x = inner_w/2 - 12;
         translate([barrel_x, bottom_y, hole_z])
             panel_hole(barrel_jack_d, wall);
 
@@ -304,21 +362,27 @@ module rear_shell() {
         vent_spacing = 5;
         vent_start_y = outer_h/2 - 20;
 
+        // Cut through the back wall (Z = 0), not the open front edge
         for (i = [0 : vent_count - 1]) {
             // Left vent group
-            translate([-inner_w/4, vent_start_y - i * vent_spacing, shell_d - wall - 0.5])
+            translate([-inner_w/4, vent_start_y - i * vent_spacing, -0.5])
                 vent_slot(vent_len, vent_w, wall);
             // Right vent group
-            translate([inner_w/4, vent_start_y - i * vent_spacing, shell_d - wall - 0.5])
+            translate([inner_w/4, vent_start_y - i * vent_spacing, -0.5])
                 vent_slot(vent_len, vent_w, wall);
         }
 
         // --- Kickstand hinge slot (through back wall) ---
-        translate([0, -outer_h/2 + ks_h * 0.4 + 10, -0.5])
+        // Narrower than the hinge rod: the rod press-fits and the wall grips it,
+        // which is the only thing retaining the kickstand. Slot length matches the
+        // rod so it cannot skew and walk out.
+        translate([0, ks_hinge_y, -0.5])
             linear_extrude(height = wall + 1)
                 hull() {
-                    translate([-ks_hinge_slot_w/2, 0]) circle(d = ks_hinge_d + 1);
-                    translate([ ks_hinge_slot_w/2, 0]) circle(d = ks_hinge_d + 1);
+                    translate([-(ks_slot_len - ks_hinge_slot_w)/2, 0])
+                        circle(d = ks_hinge_slot_w);
+                    translate([ (ks_slot_len - ks_hinge_slot_w)/2, 0])
+                        circle(d = ks_hinge_slot_w);
                 }
     }
 }
@@ -330,25 +394,14 @@ module rear_shell() {
 module kickstand() {
     hinge_r = ks_hinge_d / 2;
 
-    difference() {
-        union() {
-            // Flat arm body
-            translate([-ks_w/2, 0, 0])
-                cube([ks_w, ks_h, ks_thick]);
+    // Flat arm body — also the web that passes through the hinge slot
+    translate([-ks_w/2, 0, 0])
+        cube([ks_w, ks_h, ks_thick]);
 
-            // Rounded hinge tab at one end
-            translate([0, 0, ks_thick/2])
-                hull() {
-                    translate([-ks_w/2 + hinge_r, 0, 0])
-                        rotate([0, 90, 0])
-                            cylinder(r = hinge_r, h = ks_w - ks_hinge_d);
-                }
-        }
-
-        // Snap-fit groove near hinge (lets hinge click into slot)
-        translate([-ks_w/2 - 0.5, -hinge_r, ks_thick/2 - 0.4])
-            cube([ks_w + 1, 1.5, 0.8]);
-    }
+    // Hinge rod at the arm's mid-plane, so the web is symmetric in the slot
+    translate([-ks_rod_len/2, 0, ks_thick/2])
+        rotate([0, 90, 0])
+            cylinder(r = hinge_r, h = ks_rod_len);
 
     // Anti-slip foot at the bottom end
     translate([-ks_w/2, ks_h - 1, 0])

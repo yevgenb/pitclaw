@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="1180" viewBox="0 0 1320 1180" role="img" aria-labelledby="title desc">
+<title id="title">Superseded Pit Claw Rev A.2 board-mounted connector placement</title>
+<desc id="desc">Historical 50 by 70 mm perfboard illustration retained for comparison. It does not describe the current B-T2F0-A5807-S3 PCB.</desc>
+<defs>
+  <pattern id="holes" width="30.48" height="30.48" patternUnits="userSpaceOnUse"><circle cx="15.24" cy="15.24" r="1.6" fill="#d6dee3"/></pattern>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#536773"/></marker>
+  <style>
+    text{font-family:Arial,sans-serif;fill:#172b35}
+    .title{font-size:27px;font-weight:bold}.h{font-size:19px;font-weight:bold}.t{font-size:16px}.s{font-size:13px}
+    .jack{fill:#e9e1f5;stroke:#70509a;stroke-width:2.5}.usb{fill:#fff0dc;stroke:#bc7221;stroke-width:2.5}
+    .zone{fill:#eef2f5;fill-opacity:.9;stroke:#8597a2;stroke-width:2;stroke-dasharray:7 5}
+    .analog{fill:#e8f3e7;stroke:#568152;stroke-width:2;stroke-dasharray:7 5}
+    .leader{fill:none;stroke:#536773;stroke-width:1.7}.dim{fill:none;stroke:#8597a2;stroke-width:1.5}
+    .note{fill:#f7f9fa;stroke:#d4dce1;stroke-width:1}
+  </style>
+</defs>
+<rect width="1320" height="1180" fill="white"/>
+<text x="40" y="46" class="title">SUPERSEDED / Pit Claw Rev A.2 perfboard layout</text>
+<text x="40" y="75" class="t">Component side. Separate jack bodies are now allocated; component fit and perfboard holes remain provisional.</text>
+
+<!-- 12 pixels per mm. Origin is top-left corner of the nominal 50 x 70 mm carrier. -->
+<rect x="90" y="150" width="600" height="840" fill="url(#holes)" stroke="#172b35" stroke-width="3"/>
+<path d="M90 128H690M90 120V136M690 120V136" class="dim"/>
+<text x="390" y="119" text-anchor="middle" class="t">50 mm</text>
+<path d="M62 150V990M54 150H70M54 990H70" class="dim"/>
+<text x="42" y="570" text-anchor="middle" transform="rotate(-90 42 570)" class="t">70 mm</text>
+<text x="94" y="173" class="s">0,0</text>
+
+<!-- Provisional electronics zones: not individual component footprints. -->
+<rect x="114" y="186" width="192" height="96" rx="5" class="zone"/>
+<text x="210" y="215" text-anchor="middle" class="h">Q1 / Q2 driver</text>
+<text x="210" y="239" text-anchor="middle" class="s">upper-left power zone</text>
+<text x="210" y="262" text-anchor="middle" class="s">TO-220 height to verify</text>
+<rect x="354" y="174" width="240" height="60" rx="5" class="zone"/>
+<text x="474" y="199" text-anchor="middle" class="h">J3 WT32 EXT</text>
+<text x="474" y="221" text-anchor="middle" class="s">internal display cable</text>
+<rect x="618" y="174" width="48" height="60" rx="4" class="zone"/>
+<text x="642" y="199" text-anchor="middle" class="s">J7</text>
+<text x="642" y="220" text-anchor="middle" class="s">3V3</text>
+
+<rect x="102" y="306" width="228" height="288" rx="5" class="zone"/>
+<text x="216" y="357" text-anchor="middle" class="h">U2 buck</text>
+<text x="216" y="388" text-anchor="middle" class="t">19 x 24 mm reserve</text>
+<text x="216" y="415" text-anchor="middle" class="s">rotated from prior layout</text>
+<text x="216" y="456" text-anchor="middle" class="s">Mini100 dimensions /</text>
+<text x="216" y="479" text-anchor="middle" class="s">pad order still needed</text>
+<text x="216" y="553" text-anchor="middle" class="s">Keep switching node left</text>
+
+<rect x="330" y="258" width="186" height="306" rx="5" class="analog"/>
+<text x="423" y="300" text-anchor="middle" class="h">U4 ADS1115</text>
+<text x="423" y="329" text-anchor="middle" class="s">15.5 x 25.5 mm reserve</text>
+<text x="423" y="356" text-anchor="middle" class="s">verify actual breakout</text>
+<text x="423" y="400" text-anchor="middle" class="s">Socketed at 3.3 V</text>
+<rect x="342" y="576" width="168" height="168" rx="5" class="analog"/>
+<text x="426" y="615" text-anchor="middle" class="h">Probe filters</text>
+<text x="426" y="644" text-anchor="middle" class="s">R10-R18 / C7</text>
+<text x="426" y="669" text-anchor="middle" class="s">C10-C13</text>
+<text x="426" y="709" text-anchor="middle" class="s">individual fit pending</text>
+<rect x="114" y="618" width="204" height="180" rx="5" class="zone"/>
+<text x="216" y="659" text-anchor="middle" class="h">Protection / bulk</text>
+<text x="216" y="688" text-anchor="middle" class="s">F1-F4, D1-D2, C1-C5</text>
+<text x="216" y="721" text-anchor="middle" class="s">Parts may need underside</text>
+<text x="216" y="744" text-anchor="middle" class="s">space or a larger carrier</text>
+<text x="216" y="776" text-anchor="middle" class="s">Not a verified packing plan</text>
+<rect x="366" y="810" width="120" height="120" rx="5" class="zone"/>
+<text x="426" y="848" text-anchor="middle" class="h">BZ1 / Q3</text>
+<text x="426" y="877" text-anchor="middle" class="s">fit / height TBD</text>
+
+<!-- MJ1-2503A: 8 mm plastic body, 5.1 mm wide, 3 mm projecting barrel.
+     Bodies span x=42..50 mm. Axes y=12,24,36 mm. -->
+<g id="J4" data-part="MJ1-2503A" data-mm-body="42,9.45,8,5.1">
+  <rect x="594" y="263.4" width="96" height="61.2" rx="3" class="jack"/>
+  <rect x="690" y="270" width="36" height="48" rx="3" fill="#d9e0e5" stroke="#70509a" stroke-width="2"/>
+  <text x="642" y="300" text-anchor="middle" class="h">J4</text>
+</g>
+<g id="J5" data-part="MJ1-2503A" data-mm-body="42,21.45,8,5.1">
+  <rect x="594" y="407.4" width="96" height="61.2" rx="3" class="jack"/>
+  <rect x="690" y="414" width="36" height="48" rx="3" fill="#d9e0e5" stroke="#70509a" stroke-width="2"/>
+  <text x="642" y="444" text-anchor="middle" class="h">J5</text>
+</g>
+<g id="J6" data-part="MJ1-2503A" data-mm-body="42,33.45,8,5.1">
+  <rect x="594" y="551.4" width="96" height="61.2" rx="3" class="jack"/>
+  <rect x="690" y="558" width="36" height="48" rx="3" fill="#d9e0e5" stroke="#70509a" stroke-width="2"/>
+  <text x="642" y="588" text-anchor="middle" class="h">J6</text>
+</g>
+<path d="M733 294H780M733 438H780M733 582H780" class="leader" marker-end="url(#arrow)"/>
+<text x="798" y="293" class="h">PIT / J4</text><text x="798" y="318" class="t">2.5 mm mono probe</text>
+<text x="798" y="437" class="h">MEAT 1 / J5</text><text x="798" y="462" class="t">2.5 mm mono probe</text>
+<text x="798" y="581" class="h">MEAT 2 / J6</text><text x="798" y="606" class="t">2.5 mm mono probe</text>
+
+<!-- RJHSE-5080 nominal housing 15.75 wide x 14.99 deep x 13.21 high. -->
+<g id="J2" data-part="RJHSE-5080" data-mm-body="3,55.01,15.75,14.99">
+  <rect x="126" y="810.12" width="189" height="179.88" rx="5" class="jack"/>
+  <text x="220" y="850" text-anchor="middle" class="h">J2 RJ45</text>
+  <text x="220" y="879" text-anchor="middle" class="s">RJHSE-5080</text>
+  <text x="220" y="905" text-anchor="middle" class="s">No magnetics</text>
+  <text x="220" y="931" text-anchor="middle" class="s">NOT ETHERNET</text>
+  <rect x="145" y="972" width="151" height="18" rx="2" fill="#70509a"/>
+</g>
+<!-- Trigger rotated so its USB receptacle is on the bottom-facing short edge.
+     Seller's 23 x 11.5 mm module envelope must be measured on the actual unit. -->
+<g id="U1" data-part="B0D5QRDLQV" data-mm-body="35,47,11.5,23">
+  <rect x="510" y="714" width="138" height="276" rx="5" class="usb"/>
+  <text x="579" y="754" text-anchor="middle" class="h">U1 trigger</text>
+  <text x="579" y="783" text-anchor="middle" class="s">11.5 x 23 mm</text>
+  <text x="579" y="812" text-anchor="middle" class="s">Secure clamp</text>
+  <text x="579" y="837" text-anchor="middle" class="s">+ insulated base</text>
+  <text x="579" y="878" text-anchor="middle" class="s">12 V selected</text>
+  <rect x="527" y="955" width="104" height="35" rx="9" fill="#d9e0e5" stroke="#bc7221" stroke-width="2"/>
+</g>
+<path d="M220 997V1040M579 997V1040" class="leader" marker-end="url(#arrow)"/>
+<text x="220" y="1066" text-anchor="middle" class="h">BLOWER / DAMPER</text>
+<text x="579" y="1066" text-anchor="middle" class="h">USB-C POWER</text>
+<text x="579" y="1090" text-anchor="middle" class="s">PD input only; not a programming port</text>
+
+<rect x="788" y="135" width="492" height="105" rx="6" class="note"/>
+<text x="808" y="165" class="h">Every external socket is on the carrier</text>
+<text x="808" y="193" class="t">No panel-mounted probe jacks or power pigtail.</text>
+<text x="808" y="218" class="t">Probe barrels project 3 mm past the board edge.</text>
+<rect x="788" y="667" width="492" height="348" rx="6" class="note"/>
+<text x="808" y="699" class="h">Before drilling or printing</text>
+<text x="808" y="733" class="t">1. Jacks do not match a 2.54 mm perfboard grid.</text>
+<text x="827" y="760" class="t">Use secured adapters or accurately drilled areas.</text>
+<text x="808" y="800" class="t">2. Verify plug-body and RJ45 latch clearance.</text>
+<text x="827" y="827" class="t">Keep cable insertion loads off solder joints.</text>
+<text x="808" y="867" class="t">3. Align carrier edges with the enclosure walls.</text>
+<text x="827" y="894" class="t">Existing standoffs / cutouts do not match.</text>
+<text x="808" y="934" class="t">4. Measure Mini100, ADC, capacitors and mounts.</text>
+<text x="827" y="961" class="t">50 x 70 mm overall fit is not yet confirmed.</text>
+<text x="827" y="988" class="t">No hole coordinates are released in this drawing.</text>
+<path d="M40 1122H1280" class="dim"/>
+<text x="40" y="1147" class="s">Solid outlines: nominal connector/module bodies. Dashed outlines: provisional internal zones, not proven footprints. Solder side is mirrored.</text>
+</svg>

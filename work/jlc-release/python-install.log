@@ -1,0 +1,73 @@
+WARNING: The directory '/Users/eugene.borokhov/Library/Caches/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Collecting gerbonara
+  Downloading gerbonara-1.6.3-py3-none-any.whl.metadata (2.6 kB)
+Collecting shapely
+  Downloading shapely-2.1.2-cp312-cp312-macosx_11_0_arm64.whl.metadata (6.8 kB)
+Collecting scipy
+  Downloading scipy-1.18.1-cp312-cp312-macosx_14_0_arm64.whl.metadata (62 kB)
+Collecting click (from gerbonara)
+  Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting rtree (from gerbonara)
+  Downloading rtree-1.4.1-py3-none-macosx_11_0_arm64.whl.metadata (2.1 kB)
+Collecting quart (from gerbonara)
+  Downloading quart-0.22.0-py3-none-any.whl.metadata (4.1 kB)
+Collecting numpy>=1.21 (from shapely)
+  Downloading numpy-2.5.3-cp312-cp312-macosx_14_0_arm64.whl.metadata (6.6 kB)
+Collecting aiofiles (from quart->gerbonara)
+  Downloading aiofiles-25.1.0-py3-none-any.whl.metadata (6.3 kB)
+Collecting blinker>=1.6 (from quart->gerbonara)
+  Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+Collecting flask>=3.0 (from quart->gerbonara)
+  Downloading flask-3.1.3-py3-none-any.whl.metadata (3.2 kB)
+Collecting hypercorn>=0.11.2 (from quart->gerbonara)
+  Downloading hypercorn-0.18.0-py3-none-any.whl.metadata (5.1 kB)
+Collecting itsdangerous (from quart->gerbonara)
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting jinja2 (from quart->gerbonara)
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting markupsafe (from quart->gerbonara)
+  Downloading markupsafe-3.0.3-cp312-cp312-macosx_11_0_arm64.whl.metadata (2.7 kB)
+Collecting werkzeug>=3.0 (from quart->gerbonara)
+  Downloading werkzeug-3.1.8-py3-none-any.whl.metadata (4.0 kB)
+Collecting h11 (from hypercorn>=0.11.2->quart->gerbonara)
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting h2>=4.3.0 (from hypercorn>=0.11.2->quart->gerbonara)
+  Downloading h2-4.4.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting priority (from hypercorn>=0.11.2->quart->gerbonara)
+  Downloading priority-2.0.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting wsproto>=0.14.0 (from hypercorn>=0.11.2->quart->gerbonara)
+  Downloading wsproto-1.3.2-py3-none-any.whl.metadata (5.2 kB)
+Collecting hyperframe<7,>=6.1 (from h2>=4.3.0->hypercorn>=0.11.2->quart->gerbonara)
+  Downloading hyperframe-6.1.0-py3-none-any.whl.metadata (4.3 kB)
+Collecting hpack<5,>=4.2 (from h2>=4.3.0->hypercorn>=0.11.2->quart->gerbonara)
+  Downloading hpack-4.2.0-py3-none-any.whl.metadata (3.3 kB)
+Downloading gerbonara-1.6.3-py3-none-any.whl (1.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 3.6 MB/s eta 0:00:00
+Downloading shapely-2.1.2-cp312-cp312-macosx_11_0_arm64.whl (1.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 5.6 MB/s eta 0:00:00
+Downloading scipy-1.18.1-cp312-cp312-macosx_14_0_arm64.whl (20.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.5/20.5 MB 6.4 MB/s eta 0:00:00
+Downloading numpy-2.5.3-cp312-cp312-macosx_14_0_arm64.whl (5.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 4.8 MB/s eta 0:00:00
+Downloading click-8.5.0-py3-none-any.whl (125 kB)
+Downloading quart-0.22.0-py3-none-any.whl (78 kB)
+Downloading rtree-1.4.1-py3-none-macosx_11_0_arm64.whl (436 kB)
+Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Downloading flask-3.1.3-py3-none-any.whl (103 kB)
+Downloading hypercorn-0.18.0-py3-none-any.whl (61 kB)
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading markupsafe-3.0.3-cp312-cp312-macosx_11_0_arm64.whl (12 kB)
+Downloading werkzeug-3.1.8-py3-none-any.whl (226 kB)
+Downloading aiofiles-25.1.0-py3-none-any.whl (14 kB)
+Downloading h2-4.4.1-py3-none-any.whl (62 kB)
+Downloading wsproto-1.3.2-py3-none-any.whl (24 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading priority-2.0.0-py3-none-any.whl (8.9 kB)
+Downloading hpack-4.2.0-py3-none-any.whl (34 kB)
+Downloading hyperframe-6.1.0-py3-none-any.whl (13 kB)
+Installing collected packages: rtree, priority, numpy, markupsafe, itsdangerous, hyperframe, hpack, h11, click, blinker, aiofiles, wsproto, werkzeug, shapely, scipy, jinja2, h2, hypercorn, flask, quart, gerbonara
+Successfully installed aiofiles-25.1.0 blinker-1.9.0 click-8.5.0 flask-3.1.3 gerbonara-1.6.3 h11-0.16.0 h2-4.4.1 hpack-4.2.0 hypercorn-0.18.0 hyperframe-6.1.0 itsdangerous-2.2.0 jinja2-3.1.6 markupsafe-3.0.3 numpy-2.5.3 priority-2.0.0 quart-0.22.0 rtree-1.4.1 scipy-1.18.1 shapely-2.1.2 werkzeug-3.1.8 wsproto-1.3.2
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: /tmp/pitclaw-fab-env/bin/python -m pip install --upgrade pip

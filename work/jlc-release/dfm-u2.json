@@ -1,0 +1,195 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-06T15:58:19-0700",
+    "kicad_version": "9.0.6",
+    "schematic_parity": [],
+    "source": "pitclaw-carrier.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Items shorting two nets (nets /GND and /+12V)",
+            "items": [
+                {
+                    "description": "Track [/GND] on B.Cu, length 3.7477 mm",
+                    "pos": {
+                        "x": 113.2629,
+                        "y": 122.7983
+                    },
+                    "uuid": "1a2eebc4-0602-480b-b289-0cac5cccc0da"
+                },
+                {
+                    "description": "PTH pad 1 [/+12V] of U2",
+                    "pos": {
+                        "x": 117.0,
+                        "y": 120.75
+                    },
+                    "uuid": "dba1b364-be09-4b57-92cf-8747cad446e5"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Items shorting two nets (nets /GND and /+12V)",
+            "items": [
+                {
+                    "description": "Track [/GND] on B.Cu, length 2.2754 mm",
+                    "pos": {
+                        "x": 115.9129,
+                        "y": 120.1483
+                    },
+                    "uuid": "57d4bf46-4a70-44c2-9b79-185728211cc9"
+                },
+                {
+                    "description": "PTH pad 1 [/+12V] of U2",
+                    "pos": {
+                        "x": 117.0,
+                        "y": 120.75
+                    },
+                    "uuid": "dba1b364-be09-4b57-92cf-8747cad446e5"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Clearance violation (netclass 'Power5' clearance 0.3000 mm; actual 0.2144 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 3 [/+5V] of U2",
+                    "pos": {
+                        "x": 122.08,
+                        "y": 120.75
+                    },
+                    "uuid": "5583a4db-931a-4dc9-b7d1-43779b177383"
+                },
+                {
+                    "description": "Track [/SERVO_SIG] on F.Cu, length 10.3240 mm",
+                    "pos": {
+                        "x": 123.4444,
+                        "y": 112.4284
+                    },
+                    "uuid": "8346e6d5-da7a-4889-b4e2-e99dbe0387ae"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (netclass 'Power12' clearance 0.3000 mm; actual 0.0383 mm)",
+            "items": [
+                {
+                    "description": "Track [/GND] on B.Cu, length 1.4796 mm",
+                    "pos": {
+                        "x": 118.1883,
+                        "y": 120.1483
+                    },
+                    "uuid": "d88bc061-8b97-4121-a9ed-3af0493d4d85"
+                },
+                {
+                    "description": "PTH pad 1 [/+12V] of U2",
+                    "pos": {
+                        "x": 117.0,
+                        "y": 120.75
+                    },
+                    "uuid": "dba1b364-be09-4b57-92cf-8747cad446e5"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Track [/GND] on B.Cu, length 3.7477 mm",
+                    "pos": {
+                        "x": 113.2629,
+                        "y": 122.7983
+                    },
+                    "uuid": "1a2eebc4-0602-480b-b289-0cac5cccc0da"
+                },
+                {
+                    "description": "PTH pad 1 [/+12V] of U2",
+                    "pos": {
+                        "x": 117.0,
+                        "y": 120.75
+                    },
+                    "uuid": "dba1b364-be09-4b57-92cf-8747cad446e5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Track [/GND] on B.Cu, length 2.2754 mm",
+                    "pos": {
+                        "x": 115.9129,
+                        "y": 120.1483
+                    },
+                    "uuid": "57d4bf46-4a70-44c2-9b79-185728211cc9"
+                },
+                {
+                    "description": "PTH pad 1 [/+12V] of U2",
+                    "pos": {
+                        "x": 117.0,
+                        "y": 120.75
+                    },
+                    "uuid": "dba1b364-be09-4b57-92cf-8747cad446e5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Silkscreen overlap (board setup constraints silk clearance 0.1500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Segment of U2 on F.Silkscreen",
+                    "pos": {
+                        "x": 126.54,
+                        "y": 126.91
+                    },
+                    "uuid": "c15af18b-eb40-4874-bd76-15616f71663b"
+                },
+                {
+                    "description": "Reference field of J9",
+                    "pos": {
+                        "x": 126.5,
+                        "y": 127.2
+                    },
+                    "uuid": "e46d821a-b4e4-44fc-ba43-0d32e2b92c66"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap (board setup constraints silk clearance 0.1500 mm; actual 0.0957 mm)",
+            "items": [
+                {
+                    "description": "Segment of U2 on F.Silkscreen",
+                    "pos": {
+                        "x": 126.54,
+                        "y": 119.31
+                    },
+                    "uuid": "bc83872f-e260-4900-b137-0060052bdc20"
+                },
+                {
+                    "description": "Reference field of J9",
+                    "pos": {
+                        "x": 126.5,
+                        "y": 127.2
+                    },
+                    "uuid": "e46d821a-b4e4-44fc-ba43-0d32e2b92c66"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

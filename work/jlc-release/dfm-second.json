@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-06T15:36:57-0700",
+    "kicad_version": "9.0.6",
+    "schematic_parity": [],
+    "source": "pitclaw-carrier.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Footprint 'Tensility_54-00133_Horizontal' does not match copy in library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint J9",
+                    "pos": {
+                        "x": 126.5,
+                        "y": 129.9
+                    },
+                    "uuid": "634d9420-8768-4960-b0ee-e483474e4d0b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

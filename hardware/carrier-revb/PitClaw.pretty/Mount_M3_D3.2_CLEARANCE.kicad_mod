@@ -1,0 +1,85 @@
+(footprint "Mount_M3_D3.2_CLEARANCE"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "Independent carrier-to-base M3 mount; 7mm top hardware envelope, 9mm underside insert boss")
+	(property "Reference" "H4"
+		(at 0 -3 0)
+		(layer "F.SilkS")
+		(uuid "35ac67b6-7f04-49bd-9aad-4eafdc4fbec3")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Mount_M3_D3.2_CLEARANCE"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "c45bbd39-24bd-49e0-8c18-a7488771d0e6")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "57b1d67c-8ced-4e61-b352-8ae392bc3773")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "74c13e5e-eaf4-41d4-91c4-e2eb43916c3c")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr board_only exclude_from_pos_files exclude_from_bom)
+	(fp_circle
+		(center 0 0)
+		(end 4.5 0)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "B.CrtYd")
+		(uuid "def39f3d-1fe8-4ae6-9ec0-9e2aa006d536")
+	)
+	(fp_circle
+		(center 0 0)
+		(end 3.5 0)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "62475c1e-dc8b-487b-9e64-95bfbba37d49")
+	)
+	(pad "" np_thru_hole circle
+		(at 0 0)
+		(size 3.2 3.2)
+		(drill 3.2)
+		(layers "*.Cu" "*.Mask")
+		(uuid "7b9225f7-cc29-4fb5-83ef-c7f1e07e6631")
+	)
+	(embedded_fonts no)
+)

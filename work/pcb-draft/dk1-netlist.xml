@@ -1,0 +1,1626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/eugene.borokhov/Documents/Code/pitclaw/hardware/carrier-revb/pitclaw-carrier.kicad_sch</source>
+    <date>2026-09-04T19:20:18-0700</date>
+    <tool>Eeschema 9.0.6</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>Pit Claw Rev B-DK1 - UNROUTED ENGINEERING DRAFT</title>
+        <company/>
+        <rev>B-DK1</rev>
+        <date>2026-09-04</date>
+        <source>pitclaw-carrier.kicad_sch</source>
+        <comment number="1" value="NOT FOR FABRICATION - MODULES, MOUNTING AND LOADS REQUIRE CONFIRMATION"/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="BZ1">
+      <value>CPT-1255C-090 / PIEZO</value>
+      <footprint>PitClaw:Piezo_CPT-1255C-090_D12_P5</footprint>
+      <fields>
+        <field name="Manufacturer">Same Sky</field>
+        <field name="MPN">CPT-1255C-090</field>
+        <field name="DigiKey">102-3752-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/cui-inc/CPT-1255C-090/6012423</field>
+        <field name="Footprint">PitClaw:Piezo_CPT-1255C-090_D12_P5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="Speaker" description="Speaker"/>
+      <property name="Manufacturer" value="Same Sky"/>
+      <property name="MPN" value="CPT-1255C-090"/>
+      <property name="DigiKey" value="102-3752-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/cui-inc/CPT-1255C-090/6012423"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="speaker sound"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>74fee5fc-9f24-51d5-a6ce-09a88dd24db8</tstamps>
+    </comp>
+    <comp ref="C1">
+      <value>470u / 35V</value>
+      <footprint>Capacitor_THT:CP_Radial_D10.0mm_P5.00mm</footprint>
+      <fields>
+        <field name="Manufacturer">Rubycon</field>
+        <field name="MPN">35PX470MEFC10X12.5</field>
+        <field name="DigiKey">1189-1280-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/rubycon/35PX470MEFC10X12-5/3134236</field>
+        <field name="Footprint">Capacitor_THT:CP_Radial_D10.0mm_P5.00mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Manufacturer" value="Rubycon"/>
+      <property name="MPN" value="35PX470MEFC10X12.5"/>
+      <property name="DigiKey" value="1189-1280-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/rubycon/35PX470MEFC10X12-5/3134236"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9a5091db-44c2-5dc8-a36d-719623dd9f8f</tstamps>
+    </comp>
+    <comp ref="C2">
+      <value>100n / 50V</value>
+      <footprint>PitClaw:C_Vishay_K104K15X7RF5TH5_P5</footprint>
+      <fields>
+        <field name="Manufacturer">Vishay</field>
+        <field name="MPN">K104K15X7RF5TH5</field>
+        <field name="DigiKey">BC1101CT-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF5TH5/286723</field>
+        <field name="Footprint">PitClaw:C_Vishay_K104K15X7RF5TH5_P5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="C" description="Unpolarized capacitor"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="MPN" value="K104K15X7RF5TH5"/>
+      <property name="DigiKey" value="BC1101CT-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF5TH5/286723"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8ca3e98c-9e39-5558-81cf-efa61ce521a2</tstamps>
+    </comp>
+    <comp ref="C3">
+      <value>220u / 16V</value>
+      <footprint>Capacitor_THT:CP_Radial_D6.3mm_P2.50mm</footprint>
+      <fields>
+        <field name="Manufacturer">Rubycon</field>
+        <field name="MPN">16ZLH220MEFCT16.3X11</field>
+        <field name="DigiKey">1189-4157-1-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/rubycon/16ZLH220MEFCT16-3X11/3568112</field>
+        <field name="Footprint">Capacitor_THT:CP_Radial_D6.3mm_P2.50mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Manufacturer" value="Rubycon"/>
+      <property name="MPN" value="16ZLH220MEFCT16.3X11"/>
+      <property name="DigiKey" value="1189-4157-1-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/rubycon/16ZLH220MEFCT16-3X11/3568112"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>76771934-ddb5-5468-9d0f-21485c65300f</tstamps>
+    </comp>
+    <comp ref="C4">
+      <value>100n / 50V</value>
+      <footprint>PitClaw:C_Vishay_K104K15X7RF5TH5_P5</footprint>
+      <fields>
+        <field name="Manufacturer">Vishay</field>
+        <field name="MPN">K104K15X7RF5TH5</field>
+        <field name="DigiKey">BC1101CT-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF5TH5/286723</field>
+        <field name="Footprint">PitClaw:C_Vishay_K104K15X7RF5TH5_P5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="C" description="Unpolarized capacitor"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="MPN" value="K104K15X7RF5TH5"/>
+      <property name="DigiKey" value="BC1101CT-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF5TH5/286723"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>67a794ea-ab1f-56fc-999c-fa765190c61b</tstamps>
+    </comp>
+    <comp ref="C5">
+      <value>100u / 16V</value>
+      <footprint>Capacitor_THT:CP_Radial_D5.0mm_P2.00mm</footprint>
+      <fields>
+        <field name="Manufacturer">Rubycon</field>
+        <field name="MPN">16ZLH100MEFC5X11</field>
+        <field name="DigiKey">1189-1148-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/rubycon/16ZLH100MEFC5X11/3134106</field>
+        <field name="Footprint">Capacitor_THT:CP_Radial_D5.0mm_P2.00mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Manufacturer" value="Rubycon"/>
+      <property name="MPN" value="16ZLH100MEFC5X11"/>
+      <property name="DigiKey" value="1189-1148-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/rubycon/16ZLH100MEFC5X11/3134106"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>13f3d598-949b-5c87-bad6-bfbe93a46e35</tstamps>
+    </comp>
+    <comp ref="C7">
+      <value>4.7u / 100V</value>
+      <footprint>Capacitor_THT:CP_Radial_D5.0mm_P2.00mm</footprint>
+      <fields>
+        <field name="Manufacturer">Rubycon</field>
+        <field name="MPN">100YXJ4R7M5X11</field>
+        <field name="DigiKey">1189-1030-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/rubycon/100YXJ4R7M5X11/3133958</field>
+        <field name="Footprint">Capacitor_THT:CP_Radial_D5.0mm_P2.00mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Manufacturer" value="Rubycon"/>
+      <property name="MPN" value="100YXJ4R7M5X11"/>
+      <property name="DigiKey" value="1189-1030-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/rubycon/100YXJ4R7M5X11/3133958"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8c1c2bf3-241f-5e20-b6f5-c7735f45b460</tstamps>
+    </comp>
+    <comp ref="C10">
+      <value>100n / 50V</value>
+      <footprint>PitClaw:C_Vishay_K104K15X7RF5TH5_P5</footprint>
+      <fields>
+        <field name="Manufacturer">Vishay</field>
+        <field name="MPN">K104K15X7RF5TH5</field>
+        <field name="DigiKey">BC1101CT-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF5TH5/286723</field>
+        <field name="Footprint">PitClaw:C_Vishay_K104K15X7RF5TH5_P5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="C" description="Unpolarized capacitor"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="MPN" value="K104K15X7RF5TH5"/>
+      <property name="DigiKey" value="BC1101CT-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF5TH5/286723"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3dd6545d-e7e7-5f8e-b713-c5040f8a47d9</tstamps>
+    </comp>
+    <comp ref="C11">
+      <value>100n / 50V</value>
+      <footprint>PitClaw:C_Vishay_K104K15X7RF5TH5_P5</footprint>
+      <fields>
+        <field name="Manufacturer">Vishay</field>
+        <field name="MPN">K104K15X7RF5TH5</field>
+        <field name="DigiKey">BC1101CT-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF5TH5/286723</field>
+        <field name="Footprint">PitClaw:C_Vishay_K104K15X7RF5TH5_P5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="C" description="Unpolarized capacitor"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="MPN" value="K104K15X7RF5TH5"/>
+      <property name="DigiKey" value="BC1101CT-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF5TH5/286723"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ccf0cb97-a7fe-55ee-95da-c649493328fe</tstamps>
+    </comp>
+    <comp ref="C12">
+      <value>100n / 50V</value>
+      <footprint>PitClaw:C_Vishay_K104K15X7RF5TH5_P5</footprint>
+      <fields>
+        <field name="Manufacturer">Vishay</field>
+        <field name="MPN">K104K15X7RF5TH5</field>
+        <field name="DigiKey">BC1101CT-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF5TH5/286723</field>
+        <field name="Footprint">PitClaw:C_Vishay_K104K15X7RF5TH5_P5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="C" description="Unpolarized capacitor"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="MPN" value="K104K15X7RF5TH5"/>
+      <property name="DigiKey" value="BC1101CT-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF5TH5/286723"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8f266c08-52b1-5900-add1-4781b3e5245c</tstamps>
+    </comp>
+    <comp ref="C13">
+      <value>100n / 50V</value>
+      <footprint>PitClaw:C_Vishay_K104K15X7RF5TH5_P5</footprint>
+      <fields>
+        <field name="Manufacturer">Vishay</field>
+        <field name="MPN">K104K15X7RF5TH5</field>
+        <field name="DigiKey">BC1101CT-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF5TH5/286723</field>
+        <field name="Footprint">PitClaw:C_Vishay_K104K15X7RF5TH5_P5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="C" description="Unpolarized capacitor"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="MPN" value="K104K15X7RF5TH5"/>
+      <property name="DigiKey" value="BC1101CT-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/K104K15X7RF5TH5/286723"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d87f7f70-fd78-5479-a038-68a197a56733</tstamps>
+    </comp>
+    <comp ref="D1">
+      <value>P6KE18A</value>
+      <footprint>Diode_THT:D_DO-15_P12.70mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">MCC</field>
+        <field name="MPN">P6KE18A-TP</field>
+        <field name="DigiKey">P6KE18A-TPMSCT-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/mcc-micro-commercial-components/P6KE18A-TP/1959216</field>
+        <field name="Footprint">Diode_THT:D_DO-15_P12.70mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="D_Zener" description="Zener diode"/>
+      <property name="Manufacturer" value="MCC"/>
+      <property name="MPN" value="P6KE18A-TP"/>
+      <property name="DigiKey" value="P6KE18A-TPMSCT-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/mcc-micro-commercial-components/P6KE18A-TP/1959216"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="diode"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7a2f3f8f-32d2-5c8c-bd20-7ae17b826589</tstamps>
+    </comp>
+    <comp ref="D2">
+      <value>1N5819</value>
+      <footprint>Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">MCC</field>
+        <field name="MPN">1N5819-TP</field>
+        <field name="DigiKey">1N5819-TPCT-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/mcc-micro-commercial-components/1N5819-TP/950588</field>
+        <field name="Footprint">Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="D_Schottky" description="Schottky diode"/>
+      <property name="Manufacturer" value="MCC"/>
+      <property name="MPN" value="1N5819-TP"/>
+      <property name="DigiKey" value="1N5819-TPCT-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/mcc-micro-commercial-components/1N5819-TP/950588"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="diode Schottky"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>09d8b4d7-09f6-53b0-80b0-5230d0914eed</tstamps>
+    </comp>
+    <comp ref="F1">
+      <value>2A HOLD / MF-RHT200/32</value>
+      <footprint>PitClaw:PTC_Bourns_MF-RHT200-32_P5.1</footprint>
+      <fields>
+        <field name="Manufacturer">Bourns</field>
+        <field name="MPN">MF-RHT200/32-2</field>
+        <field name="DigiKey">118-MF-RHT200/32-2CT-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/bourns-inc/MF-RHT200-32-2/7804098</field>
+        <field name="Footprint">PitClaw:PTC_Bourns_MF-RHT200-32_P5.1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="Fuse" description="Fuse"/>
+      <property name="Manufacturer" value="Bourns"/>
+      <property name="MPN" value="MF-RHT200/32-2"/>
+      <property name="DigiKey" value="118-MF-RHT200/32-2CT-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/bourns-inc/MF-RHT200-32-2/7804098"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="fuse"/>
+      <property name="ki_fp_filters" value="*Fuse*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>82e17942-bdf2-51fa-b128-2e306bb9534f</tstamps>
+    </comp>
+    <comp ref="F2">
+      <value>0.75A HOLD / MF-R075</value>
+      <footprint>PitClaw:PTC_Bourns_MF-R075_P5.1</footprint>
+      <fields>
+        <field name="Manufacturer">Bourns</field>
+        <field name="MPN">MF-R075</field>
+        <field name="DigiKey">MF-R075-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/bourns-inc/MF-R075/259967</field>
+        <field name="Footprint">PitClaw:PTC_Bourns_MF-R075_P5.1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="Fuse" description="Fuse"/>
+      <property name="Manufacturer" value="Bourns"/>
+      <property name="MPN" value="MF-R075"/>
+      <property name="DigiKey" value="MF-R075-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/bourns-inc/MF-R075/259967"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="fuse"/>
+      <property name="ki_fp_filters" value="*Fuse*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c713f649-a6f5-50c8-8271-f8a9477c2a47</tstamps>
+    </comp>
+    <comp ref="F3">
+      <value>0.5A HOLD / MF-R050</value>
+      <footprint>PitClaw:PTC_Bourns_MF-R050_P5.1</footprint>
+      <fields>
+        <field name="Manufacturer">Bourns</field>
+        <field name="MPN">MF-R050</field>
+        <field name="DigiKey">MF-R050-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/bourns-inc/MF-R050/259965</field>
+        <field name="Footprint">PitClaw:PTC_Bourns_MF-R050_P5.1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="Fuse" description="Fuse"/>
+      <property name="Manufacturer" value="Bourns"/>
+      <property name="MPN" value="MF-R050"/>
+      <property name="DigiKey" value="MF-R050-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/bourns-inc/MF-R050/259965"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="fuse"/>
+      <property name="ki_fp_filters" value="*Fuse*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>834e54b3-af39-554d-99b8-43a43b2ae3cd</tstamps>
+    </comp>
+    <comp ref="F4">
+      <value>0.5A HOLD / MF-R050</value>
+      <footprint>PitClaw:PTC_Bourns_MF-R050_P5.1</footprint>
+      <fields>
+        <field name="Manufacturer">Bourns</field>
+        <field name="MPN">MF-R050</field>
+        <field name="DigiKey">MF-R050-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/bourns-inc/MF-R050/259965</field>
+        <field name="Footprint">PitClaw:PTC_Bourns_MF-R050_P5.1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="Fuse" description="Fuse"/>
+      <property name="Manufacturer" value="Bourns"/>
+      <property name="MPN" value="MF-R050"/>
+      <property name="DigiKey" value="MF-R050-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/bourns-inc/MF-R050/259965"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="fuse"/>
+      <property name="ki_fp_filters" value="*Fuse*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2309c753-9e79-5ff0-a0ae-d50bc9651a87</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>PD module output / 12V ONLY</value>
+      <footprint>Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical</footprint>
+      <fields>
+        <field name="Manufacturer">JST</field>
+        <field name="MPN">B2B-XH-A</field>
+        <field name="DigiKey">455-B2B-XH-A-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/jst-sales-america-inc/B2B-XH-A/1651045</field>
+        <field name="Footprint">Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="PowerIn" description=""/>
+      <property name="Manufacturer" value="JST"/>
+      <property name="MPN" value="B2B-XH-A"/>
+      <property name="DigiKey" value="455-B2B-XH-A-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/jst-sales-america-inc/B2B-XH-A/1651045"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>50a7f7d7-7c50-5da4-9cad-8f8c53b8b4cc</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>RJHSE-5080 / CHECK FOOTPRINT</value>
+      <footprint>PitClaw:RJHSE-5080_DRAFT</footprint>
+      <fields>
+        <field name="Manufacturer">Amphenol ICC</field>
+        <field name="MPN">RJHSE5080</field>
+        <field name="DigiKey">664-RJHSE5080-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/amphenol-cs-commercial-products/RJHSE5080/1242687</field>
+        <field name="Footprint">PitClaw:RJHSE-5080_DRAFT</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="RJ45" description=""/>
+      <property name="Manufacturer" value="Amphenol ICC"/>
+      <property name="MPN" value="RJHSE5080"/>
+      <property name="DigiKey" value="664-RJHSE5080-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/amphenol-cs-commercial-products/RJHSE5080/1242687"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>dc30ad9f-0b83-543a-a4a0-7e180f5d5686</tstamps>
+    </comp>
+    <comp ref="J3">
+      <value>WT32 EXT harness</value>
+      <footprint>Connector_JST:JST_XH_B8B-XH-A_1x08_P2.50mm_Vertical</footprint>
+      <fields>
+        <field name="Manufacturer">JST</field>
+        <field name="MPN">B8B-XH-A</field>
+        <field name="DigiKey">455-B8B-XH-A-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/jst-sales-america-inc/B8B-XH-A/1651049</field>
+        <field name="Footprint">Connector_JST:JST_XH_B8B-XH-A_1x08_P2.50mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="EXT" description=""/>
+      <property name="Manufacturer" value="JST"/>
+      <property name="MPN" value="B8B-XH-A"/>
+      <property name="DigiKey" value="455-B8B-XH-A-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/jst-sales-america-inc/B8B-XH-A/1651049"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>03ee9588-4a42-50b7-8add-3d98c17df09e</tstamps>
+    </comp>
+    <comp ref="J4">
+      <value>MJ1-2503A / PIT</value>
+      <footprint>PitClaw:MJ1-2503A</footprint>
+      <fields>
+        <field name="Manufacturer">Same Sky</field>
+        <field name="MPN">MJ1-2503A</field>
+        <field name="DigiKey">CP1-2503AM-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/MJ1-2503A/738679</field>
+        <field name="Footprint">PitClaw:MJ1-2503A</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="Probe" description=""/>
+      <property name="Manufacturer" value="Same Sky"/>
+      <property name="MPN" value="MJ1-2503A"/>
+      <property name="DigiKey" value="CP1-2503AM-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/MJ1-2503A/738679"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3586ac79-fb28-5805-890b-f25ebdd81179</tstamps>
+    </comp>
+    <comp ref="J5">
+      <value>MJ1-2503A / MEAT 1</value>
+      <footprint>PitClaw:MJ1-2503A</footprint>
+      <fields>
+        <field name="Manufacturer">Same Sky</field>
+        <field name="MPN">MJ1-2503A</field>
+        <field name="DigiKey">CP1-2503AM-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/MJ1-2503A/738679</field>
+        <field name="Footprint">PitClaw:MJ1-2503A</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="Probe" description=""/>
+      <property name="Manufacturer" value="Same Sky"/>
+      <property name="MPN" value="MJ1-2503A"/>
+      <property name="DigiKey" value="CP1-2503AM-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/MJ1-2503A/738679"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>650f4b45-bf83-5778-baa8-1d4c9af3af83</tstamps>
+    </comp>
+    <comp ref="J6">
+      <value>MJ1-2503A / MEAT 2</value>
+      <footprint>PitClaw:MJ1-2503A</footprint>
+      <fields>
+        <field name="Manufacturer">Same Sky</field>
+        <field name="MPN">MJ1-2503A</field>
+        <field name="DigiKey">CP1-2503AM-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/MJ1-2503A/738679</field>
+        <field name="Footprint">PitClaw:MJ1-2503A</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="Probe" description=""/>
+      <property name="Manufacturer" value="Same Sky"/>
+      <property name="MPN" value="MJ1-2503A"/>
+      <property name="DigiKey" value="CP1-2503AM-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/MJ1-2503A/738679"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>da3c6e00-5aa4-514d-97b6-8f36364aafa5</tstamps>
+    </comp>
+    <comp ref="J7">
+      <value>WT32 DEBUG 2 / 7 ONLY</value>
+      <footprint>Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical</footprint>
+      <fields>
+        <field name="Manufacturer">JST</field>
+        <field name="MPN">B2B-XH-A</field>
+        <field name="DigiKey">455-B2B-XH-A-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/jst-sales-america-inc/B2B-XH-A/1651045</field>
+        <field name="Footprint">Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="Debug3V3" description=""/>
+      <property name="Manufacturer" value="JST"/>
+      <property name="MPN" value="B2B-XH-A"/>
+      <property name="DigiKey" value="455-B2B-XH-A-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/jst-sales-america-inc/B2B-XH-A/1651045"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0a96ec6f-3dd7-51d3-b333-97b8082c786b</tstamps>
+    </comp>
+    <comp ref="J8">
+      <value>ADS1115 BLUE / 1x10 SOCKET</value>
+      <footprint>PitClaw:ADS1115_Blue_1x10_DRAFT</footprint>
+      <fields>
+        <field name="Manufacturer">Sullins</field>
+        <field name="MPN">PPPC101LFBN-RC</field>
+        <field name="DigiKey">S7043-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPPC101LFBN-RC/810182</field>
+        <field name="Footprint">PitClaw:ADS1115_Blue_1x10_DRAFT</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="ADC_1x10" description=""/>
+      <property name="Manufacturer" value="Sullins"/>
+      <property name="MPN" value="PPPC101LFBN-RC"/>
+      <property name="DigiKey" value="S7043-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPPC101LFBN-RC/810182"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2aea70fb-c005-54b8-9a5b-2c65eabf4516</tstamps>
+    </comp>
+    <comp ref="JP1">
+      <value>REMOVE FOR WT32 USB</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <fields>
+        <field name="Manufacturer">Amphenol ICC</field>
+        <field name="MPN">68000-102HLF</field>
+        <field name="DigiKey">609-3500-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/amphenol-cs-fci/68000-102HLF/1493545</field>
+        <field name="Footprint">Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="Jumper" description=""/>
+      <property name="Manufacturer" value="Amphenol ICC"/>
+      <property name="MPN" value="68000-102HLF"/>
+      <property name="DigiKey" value="609-3500-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/amphenol-cs-fci/68000-102HLF/1493545"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9bccfb41-75b4-5b62-a41f-09b1910dc913</tstamps>
+    </comp>
+    <comp ref="Q1">
+      <value>FQP27P06</value>
+      <footprint>Package_TO_SOT_THT:TO-220-3_Vertical</footprint>
+      <fields>
+        <field name="Manufacturer">onsemi</field>
+        <field name="MPN">FQP27P06</field>
+        <field name="DigiKey">FQP27P06-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/onsemi/FQP27P06/965349</field>
+        <field name="Footprint">Package_TO_SOT_THT:TO-220-3_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="FQP27P06" description="-27A Id, -60V Vds, QFET P-Channel MOSFET, TO-220"/>
+      <property name="Manufacturer" value="onsemi"/>
+      <property name="MPN" value="FQP27P06"/>
+      <property name="DigiKey" value="FQP27P06-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/onsemi/FQP27P06/965349"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="QFET P-Channel MOSFET"/>
+      <property name="ki_fp_filters" value="TO?220*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8ee3711f-1a23-5b55-9a10-3332c2f6769e</tstamps>
+    </comp>
+    <comp ref="Q2">
+      <value>2N3904</value>
+      <footprint>Package_TO_SOT_THT:TO-92_Inline_Wide</footprint>
+      <fields>
+        <field name="Manufacturer">onsemi</field>
+        <field name="MPN">2N3904BU</field>
+        <field name="DigiKey">2N3904FS-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/onsemi/2N3904BU/1413</field>
+        <field name="Footprint">Package_TO_SOT_THT:TO-92_Inline_Wide</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="2N3904" description="0.2A Ic, 40V Vce, Small Signal NPN Transistor, TO-92"/>
+      <property name="Manufacturer" value="onsemi"/>
+      <property name="MPN" value="2N3904BU"/>
+      <property name="DigiKey" value="2N3904FS-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/onsemi/2N3904BU/1413"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="NPN Transistor"/>
+      <property name="ki_fp_filters" value="TO?92*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ed2a0b20-b80e-59b3-a2b8-1524617d5281</tstamps>
+    </comp>
+    <comp ref="Q3">
+      <value>2N3904</value>
+      <footprint>Package_TO_SOT_THT:TO-92_Inline_Wide</footprint>
+      <fields>
+        <field name="Manufacturer">onsemi</field>
+        <field name="MPN">2N3904BU</field>
+        <field name="DigiKey">2N3904FS-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/onsemi/2N3904BU/1413</field>
+        <field name="Footprint">Package_TO_SOT_THT:TO-92_Inline_Wide</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="2N3904" description="0.2A Ic, 40V Vce, Small Signal NPN Transistor, TO-92"/>
+      <property name="Manufacturer" value="onsemi"/>
+      <property name="MPN" value="2N3904BU"/>
+      <property name="DigiKey" value="2N3904FS-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/onsemi/2N3904BU/1413"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="NPN Transistor"/>
+      <property name="ki_fp_filters" value="TO?92*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>dc80fd77-8f8e-58db-934f-8cb3967f07c0</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>1k / 0.25W</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-1K</field>
+        <field name="DigiKey">1.00KXBK-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-1K"/>
+      <property name="DigiKey" value="1.00KXBK-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8db001ce-5b6f-5008-8e8c-3f7806a8d6db</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>2.2k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-2K2</field>
+        <field name="DigiKey">MFR-25FBF52-2K2-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-2K2/9138108</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-2K2"/>
+      <property name="DigiKey" value="MFR-25FBF52-2K2-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-2K2/9138108"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>abb6253f-6875-5e08-9513-43672537d730</tstamps>
+    </comp>
+    <comp ref="R3">
+      <value>100k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-100K</field>
+        <field name="DigiKey">100KXBK-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-100K/13473</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-100K"/>
+      <property name="DigiKey" value="100KXBK-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-100K/13473"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>561d58ea-8e32-58d9-8542-7e15a6f29689</tstamps>
+    </comp>
+    <comp ref="R4">
+      <value>220R</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-220R</field>
+        <field name="DigiKey">MFR-25FBF52-220R-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-220R/9138097</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-220R"/>
+      <property name="DigiKey" value="MFR-25FBF52-220R-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-220R/9138097"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>701ae976-c53f-5b72-88f3-65e0fa79bf26</tstamps>
+    </comp>
+    <comp ref="R5">
+      <value>10k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-10K</field>
+        <field name="DigiKey">10.0KXBK-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-10K/13219</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-10K"/>
+      <property name="DigiKey" value="10.0KXBK-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-10K/13219"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>625196bf-2e12-51d6-b39e-c3664bd2099d</tstamps>
+    </comp>
+    <comp ref="R6">
+      <value>2.2k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-2K2</field>
+        <field name="DigiKey">MFR-25FBF52-2K2-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-2K2/9138108</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-2K2"/>
+      <property name="DigiKey" value="MFR-25FBF52-2K2-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-2K2/9138108"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>093130d1-6cf7-5718-9893-7865201b1d19</tstamps>
+    </comp>
+    <comp ref="R7">
+      <value>100k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-100K</field>
+        <field name="DigiKey">100KXBK-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-100K/13473</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-100K"/>
+      <property name="DigiKey" value="100KXBK-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-100K/13473"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0af3934a-a3d5-5fb7-8133-501c17d2858a</tstamps>
+    </comp>
+    <comp ref="R10">
+      <value>10k / 0.1%</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFP-25BRD52-10K</field>
+        <field name="DigiKey">10KADCT-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFP-25BRD52-10K/2058797</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFP-25BRD52-10K"/>
+      <property name="DigiKey" value="10KADCT-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFP-25BRD52-10K/2058797"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>79968f0d-c2f5-51fc-a5a3-744d43b8657c</tstamps>
+    </comp>
+    <comp ref="R11">
+      <value>10k / 0.1%</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFP-25BRD52-10K</field>
+        <field name="DigiKey">10KADCT-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFP-25BRD52-10K/2058797</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFP-25BRD52-10K"/>
+      <property name="DigiKey" value="10KADCT-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFP-25BRD52-10K/2058797"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>02208adf-bae8-5035-8d59-9a7d72f5258c</tstamps>
+    </comp>
+    <comp ref="R12">
+      <value>10k / 0.1%</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFP-25BRD52-10K</field>
+        <field name="DigiKey">10KADCT-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFP-25BRD52-10K/2058797</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFP-25BRD52-10K"/>
+      <property name="DigiKey" value="10KADCT-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFP-25BRD52-10K/2058797"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>59a002ea-7806-58cd-b3fd-030df0c454bb</tstamps>
+    </comp>
+    <comp ref="R13">
+      <value>1k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-1K</field>
+        <field name="DigiKey">1.00KXBK-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-1K"/>
+      <property name="DigiKey" value="1.00KXBK-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>497a2598-fbbc-5a32-b59a-dca7487599dc</tstamps>
+    </comp>
+    <comp ref="R14">
+      <value>1k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-1K</field>
+        <field name="DigiKey">1.00KXBK-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-1K"/>
+      <property name="DigiKey" value="1.00KXBK-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8cea7608-fdb9-5a30-af4c-d5a1479f921b</tstamps>
+    </comp>
+    <comp ref="R15">
+      <value>1k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-1K</field>
+        <field name="DigiKey">1.00KXBK-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-1K"/>
+      <property name="DigiKey" value="1.00KXBK-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ac8f41a7-a3da-55fc-9a8f-6dc32714581a</tstamps>
+    </comp>
+    <comp ref="R16">
+      <value>1k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-1K</field>
+        <field name="DigiKey">1.00KXBK-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-1K"/>
+      <property name="DigiKey" value="1.00KXBK-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a0137bcd-a817-5fce-9b74-135e216b99df</tstamps>
+    </comp>
+    <comp ref="R17">
+      <value>4.7k DNP</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-4K7</field>
+        <field name="DigiKey">MFR-25FBF52-4K7-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-4K7/9138176</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-4K7"/>
+      <property name="DigiKey" value="MFR-25FBF52-4K7-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-4K7/9138176"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="dnp"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a924d331-fc3f-51b3-b5b9-fee0b9b3de34</tstamps>
+    </comp>
+    <comp ref="R18">
+      <value>4.7k DNP</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-4K7</field>
+        <field name="DigiKey">MFR-25FBF52-4K7-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-4K7/9138176</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-4K7"/>
+      <property name="DigiKey" value="MFR-25FBF52-4K7-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-4K7/9138176"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="dnp"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>29f8a3dd-45d2-5630-af9c-a2d52bb4a452</tstamps>
+    </comp>
+    <comp ref="R19">
+      <value>1k / PIEZO DISCHARGE</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <fields>
+        <field name="Manufacturer">YAGEO</field>
+        <field name="MPN">MFR-25FBF52-1K</field>
+        <field name="DigiKey">1.00KXBK-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="YAGEO"/>
+      <property name="MPN" value="MFR-25FBF52-1K"/>
+      <property name="DigiKey" value="1.00KXBK-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5d91e2bf-0a80-5301-a0cb-bcf545e32a95</tstamps>
+    </comp>
+    <comp ref="U2">
+      <value>TSR 2-2450N / 5V 2A</value>
+      <footprint>Converter_DCDC:Converter_DCDC_TRACO_TSR2-24xxN_TSR2-24xxxN_THT</footprint>
+      <fields>
+        <field name="Manufacturer">Traco Power</field>
+        <field name="MPN">TSR 2-2450N</field>
+        <field name="DigiKey">1951-TSR2-2450N-ND</field>
+        <field name="Source">https://www.digikey.com/en/products/detail/traco-power/TSR-2-2450N/25903121</field>
+        <field name="Footprint">Converter_DCDC:Converter_DCDC_TRACO_TSR2-24xxN_TSR2-24xxxN_THT</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="PitClaw" part="Buck5V" description=""/>
+      <property name="Manufacturer" value="Traco Power"/>
+      <property name="MPN" value="TSR 2-2450N"/>
+      <property name="DigiKey" value="1951-TSR2-2450N-ND"/>
+      <property name="Source" value="https://www.digikey.com/en/products/detail/traco-power/TSR-2-2450N/25903121"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pitclaw-carrier.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ac922f5c-5f8d-5058-b9df-8d5ab9286278</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="PitClaw" part="2N3904">
+      <description>0.2A Ic, 40V Vce, Small Signal NPN Transistor, TO-92</description>
+      <docs>https://www.onsemi.com/pub/Collateral/2N3903-D.PDF</docs>
+      <footprints>
+        <fp>TO?92*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">2N3904</field>
+        <field name="Footprint">Package_TO_SOT_THT:TO-92_Inline</field>
+        <field name="Datasheet">https://www.onsemi.com/pub/Collateral/2N3903-D.PDF</field>
+        <field name="Description">0.2A Ic, 40V Vce, Small Signal NPN Transistor, TO-92</field>
+      </fields>
+      <pins>
+        <pin num="1" name="E" type="passive"/>
+        <pin num="2" name="B" type="input"/>
+        <pin num="3" name="C" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="ADC_1x10">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">ADC_1x10</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VDD" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="SCL" type="input"/>
+        <pin num="4" name="SDA" type="bidirectional"/>
+        <pin num="5" name="ADDR" type="input"/>
+        <pin num="6" name="ALRT" type="open_collector"/>
+        <pin num="7" name="A0" type="input"/>
+        <pin num="8" name="A1" type="input"/>
+        <pin num="9" name="A2" type="input"/>
+        <pin num="10" name="A3" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="Buck5V">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Buck5V</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VIN" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="5VOUT" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">~</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="C_Polarized">
+      <description>Polarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C_Polarized</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">~</field>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="D_Schottky">
+      <description>Schottky diode</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">D_Schottky</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">~</field>
+        <field name="Description">Schottky diode</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="D_Zener">
+      <description>Zener diode</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">D_Zener</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">~</field>
+        <field name="Description">Zener diode</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="Debug3V3">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Debug3V3</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="DEBUG_2_3V3" type="power_out"/>
+        <pin num="2" name="DEBUG_7_GND" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="EXT">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">EXT</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="WT32_5V" type="power_in"/>
+        <pin num="2" name="GND" type="passive"/>
+        <pin num="3" name="GPIO10_SDA" type="bidirectional"/>
+        <pin num="4" name="GPIO11_SCL" type="output"/>
+        <pin num="5" name="GPIO12_FAN" type="output"/>
+        <pin num="6" name="GPIO13_SERVO" type="output"/>
+        <pin num="7" name="GPIO14_BUZZ" type="output"/>
+        <pin num="8" name="GPIO21_SPARE" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="FQP27P06">
+      <description>-27A Id, -60V Vds, QFET P-Channel MOSFET, TO-220</description>
+      <docs>https://www.onsemi.com/pub/Collateral/FQP27P06-D.PDF</docs>
+      <footprints>
+        <fp>TO?220*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">FQP27P06</field>
+        <field name="Footprint">Package_TO_SOT_THT:TO-220-3_Vertical</field>
+        <field name="Datasheet">https://www.onsemi.com/pub/Collateral/FQP27P06-D.PDF</field>
+        <field name="Description">-27A Id, -60V Vds, QFET P-Channel MOSFET, TO-220</field>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="D" type="passive"/>
+        <pin num="3" name="S" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="Fuse">
+      <description>Fuse</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>*Fuse*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">F</field>
+        <field name="Value">Fuse</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">~</field>
+        <field name="Description">Fuse</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="Jumper">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Jumper</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="5V_FUSED" type="passive"/>
+        <pin num="2" name="WT32_5V" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="PowerIn">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">PowerIn</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="PD_OUT+" type="power_out"/>
+        <pin num="2" name="GND" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="Probe">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Probe</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="SLEEVE" type="passive"/>
+        <pin num="2" name="TIP_A" type="passive"/>
+        <pin num="3" name="TIP_B" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">~</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="RJ45">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">RJ45</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="NC" type="passive"/>
+        <pin num="2" name="NC" type="passive"/>
+        <pin num="3" name="SERVO_5V" type="passive"/>
+        <pin num="4" name="COMMON_GND" type="passive"/>
+        <pin num="5" name="FAN_12V_SW" type="passive"/>
+        <pin num="6" name="SERVO_PWM" type="passive"/>
+        <pin num="7" name="NC" type="passive"/>
+        <pin num="8" name="NC" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="PitClaw" part="Speaker">
+      <description>Speaker</description>
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">LS</field>
+        <field name="Value">Speaker</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">~</field>
+        <field name="Description">Speaker</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="input"/>
+        <pin num="2" name="2" type="input"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="PitClaw">
+      <uri>/Users/eugene.borokhov/Documents/Code/pitclaw/hardware/carrier-revb/PitClaw.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="/+3V3_A" class="Default">
+      <node ref="C13" pin="1" pintype="passive"/>
+      <node ref="C7" pin="1" pintype="passive"/>
+      <node ref="J7" pin="1" pinfunction="DEBUG_2_3V3" pintype="power_out"/>
+      <node ref="J8" pin="1" pinfunction="VDD" pintype="power_in"/>
+      <node ref="R10" pin="1" pintype="passive"/>
+      <node ref="R11" pin="1" pintype="passive"/>
+      <node ref="R12" pin="1" pintype="passive"/>
+      <node ref="R16" pin="1" pintype="passive"/>
+      <node ref="R17" pin="1" pintype="passive"/>
+      <node ref="R18" pin="1" pintype="passive"/>
+    </net>
+    <net code="2" name="/+5V" class="Default">
+      <node ref="BZ1" pin="1" pinfunction="1" pintype="input"/>
+      <node ref="C3" pin="1" pintype="passive"/>
+      <node ref="C4" pin="1" pintype="passive"/>
+      <node ref="F2" pin="1" pintype="passive"/>
+      <node ref="F3" pin="1" pintype="passive"/>
+      <node ref="R19" pin="1" pintype="passive"/>
+      <node ref="U2" pin="3" pinfunction="5VOUT" pintype="power_out"/>
+    </net>
+    <net code="3" name="/+5V_SERVO" class="Default">
+      <node ref="C5" pin="1" pintype="passive"/>
+      <node ref="F3" pin="2" pintype="passive"/>
+      <node ref="J2" pin="3" pinfunction="SERVO_5V" pintype="passive"/>
+    </net>
+    <net code="4" name="/+5V_WT32" class="Default">
+      <node ref="J3" pin="1" pinfunction="WT32_5V" pintype="power_in"/>
+      <node ref="JP1" pin="2" pinfunction="WT32_5V" pintype="passive"/>
+    </net>
+    <net code="5" name="/+5V_WT_FUSED" class="Default">
+      <node ref="F2" pin="2" pintype="passive"/>
+      <node ref="JP1" pin="1" pinfunction="5V_FUSED" pintype="passive"/>
+    </net>
+    <net code="6" name="/+12V" class="Default">
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="C2" pin="1" pintype="passive"/>
+      <node ref="D1" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="F1" pin="2" pintype="passive"/>
+      <node ref="Q1" pin="3" pinfunction="S" pintype="passive"/>
+      <node ref="R1" pin="1" pintype="passive"/>
+      <node ref="U2" pin="1" pinfunction="VIN" pintype="power_in"/>
+    </net>
+    <net code="7" name="/AIN0" class="Default">
+      <node ref="C10" pin="1" pintype="passive"/>
+      <node ref="J8" pin="7" pinfunction="A0" pintype="input"/>
+      <node ref="R13" pin="2" pintype="passive"/>
+    </net>
+    <net code="8" name="/AIN1" class="Default">
+      <node ref="C11" pin="1" pintype="passive"/>
+      <node ref="J8" pin="8" pinfunction="A1" pintype="input"/>
+      <node ref="R14" pin="2" pintype="passive"/>
+    </net>
+    <net code="9" name="/AIN2" class="Default">
+      <node ref="C12" pin="1" pintype="passive"/>
+      <node ref="J8" pin="9" pinfunction="A2" pintype="input"/>
+      <node ref="R15" pin="2" pintype="passive"/>
+    </net>
+    <net code="10" name="/AIN3" class="Default">
+      <node ref="J8" pin="10" pinfunction="A3" pintype="input"/>
+      <node ref="R16" pin="2" pintype="passive"/>
+    </net>
+    <net code="11" name="/BUZZ_BASE" class="Default">
+      <node ref="Q3" pin="2" pinfunction="B" pintype="input"/>
+      <node ref="R6" pin="2" pintype="passive"/>
+      <node ref="R7" pin="1" pintype="passive"/>
+    </net>
+    <net code="12" name="/BUZZ_LOW" class="Default">
+      <node ref="BZ1" pin="2" pinfunction="2" pintype="input"/>
+      <node ref="Q3" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="R19" pin="2" pintype="passive"/>
+    </net>
+    <net code="13" name="/FAN_BASE" class="Default">
+      <node ref="Q2" pin="2" pinfunction="B" pintype="input"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+    </net>
+    <net code="14" name="/FAN_GATE" class="Default">
+      <node ref="Q1" pin="1" pinfunction="G" pintype="input"/>
+      <node ref="Q2" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+    </net>
+    <net code="15" name="/FAN_OUT" class="Default">
+      <node ref="D2" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="F4" pin="2" pintype="passive"/>
+      <node ref="J2" pin="5" pinfunction="FAN_12V_SW" pintype="passive"/>
+    </net>
+    <net code="16" name="/FAN_SW" class="Default">
+      <node ref="F4" pin="1" pintype="passive"/>
+      <node ref="Q1" pin="2" pinfunction="D" pintype="passive"/>
+    </net>
+    <net code="17" name="/GND" class="Default">
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="C10" pin="2" pintype="passive"/>
+      <node ref="C11" pin="2" pintype="passive"/>
+      <node ref="C12" pin="2" pintype="passive"/>
+      <node ref="C13" pin="2" pintype="passive"/>
+      <node ref="C2" pin="2" pintype="passive"/>
+      <node ref="C3" pin="2" pintype="passive"/>
+      <node ref="C4" pin="2" pintype="passive"/>
+      <node ref="C5" pin="2" pintype="passive"/>
+      <node ref="C7" pin="2" pintype="passive"/>
+      <node ref="D1" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="D2" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="J1" pin="2" pinfunction="GND" pintype="power_out"/>
+      <node ref="J2" pin="4" pinfunction="COMMON_GND" pintype="passive"/>
+      <node ref="J3" pin="2" pinfunction="GND" pintype="passive"/>
+      <node ref="J4" pin="1" pinfunction="SLEEVE" pintype="passive"/>
+      <node ref="J5" pin="1" pinfunction="SLEEVE" pintype="passive"/>
+      <node ref="J6" pin="1" pinfunction="SLEEVE" pintype="passive"/>
+      <node ref="J7" pin="2" pinfunction="DEBUG_7_GND" pintype="passive"/>
+      <node ref="J8" pin="2" pinfunction="GND" pintype="power_in"/>
+      <node ref="J8" pin="5" pinfunction="ADDR" pintype="input"/>
+      <node ref="Q2" pin="1" pinfunction="E" pintype="passive"/>
+      <node ref="Q3" pin="1" pinfunction="E" pintype="passive"/>
+      <node ref="R3" pin="2" pintype="passive"/>
+      <node ref="R5" pin="2" pintype="passive"/>
+      <node ref="R7" pin="2" pintype="passive"/>
+      <node ref="U2" pin="2" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="18" name="/GPIO12_FAN" class="Default">
+      <node ref="J3" pin="5" pinfunction="GPIO12_FAN" pintype="output"/>
+      <node ref="R2" pin="1" pintype="passive"/>
+    </net>
+    <net code="19" name="/GPIO13_SERVO" class="Default">
+      <node ref="J3" pin="6" pinfunction="GPIO13_SERVO" pintype="output"/>
+      <node ref="R4" pin="1" pintype="passive"/>
+    </net>
+    <net code="20" name="/GPIO14_BUZZ" class="Default">
+      <node ref="J3" pin="7" pinfunction="GPIO14_BUZZ" pintype="output"/>
+      <node ref="R6" pin="1" pintype="passive"/>
+    </net>
+    <net code="21" name="/PD12_RAW" class="Default">
+      <node ref="F1" pin="1" pintype="passive"/>
+      <node ref="J1" pin="1" pinfunction="PD_OUT+" pintype="power_out"/>
+    </net>
+    <net code="22" name="/PROBE0" class="Default">
+      <node ref="J4" pin="2" pinfunction="TIP_A" pintype="passive"/>
+      <node ref="J4" pin="3" pinfunction="TIP_B" pintype="passive"/>
+      <node ref="R10" pin="2" pintype="passive"/>
+      <node ref="R13" pin="1" pintype="passive"/>
+    </net>
+    <net code="23" name="/PROBE1" class="Default">
+      <node ref="J5" pin="2" pinfunction="TIP_A" pintype="passive"/>
+      <node ref="J5" pin="3" pinfunction="TIP_B" pintype="passive"/>
+      <node ref="R11" pin="2" pintype="passive"/>
+      <node ref="R14" pin="1" pintype="passive"/>
+    </net>
+    <net code="24" name="/PROBE2" class="Default">
+      <node ref="J6" pin="2" pinfunction="TIP_A" pintype="passive"/>
+      <node ref="J6" pin="3" pinfunction="TIP_B" pintype="passive"/>
+      <node ref="R12" pin="2" pintype="passive"/>
+      <node ref="R15" pin="1" pintype="passive"/>
+    </net>
+    <net code="25" name="/SCL" class="Default">
+      <node ref="J3" pin="4" pinfunction="GPIO11_SCL" pintype="output"/>
+      <node ref="J8" pin="3" pinfunction="SCL" pintype="input"/>
+      <node ref="R18" pin="2" pintype="passive"/>
+    </net>
+    <net code="26" name="/SDA" class="Default">
+      <node ref="J3" pin="3" pinfunction="GPIO10_SDA" pintype="bidirectional"/>
+      <node ref="J8" pin="4" pinfunction="SDA" pintype="bidirectional"/>
+      <node ref="R17" pin="2" pintype="passive"/>
+    </net>
+    <net code="27" name="/SERVO_SIG" class="Default">
+      <node ref="J2" pin="6" pinfunction="SERVO_PWM" pintype="passive"/>
+      <node ref="R4" pin="2" pintype="passive"/>
+      <node ref="R5" pin="1" pintype="passive"/>
+    </net>
+    <net code="28" name="unconnected-(J2-NC-Pad1)" class="Default">
+      <node ref="J2" pin="1" pinfunction="NC" pintype="passive+no_connect"/>
+    </net>
+    <net code="29" name="unconnected-(J2-NC-Pad2)" class="Default">
+      <node ref="J2" pin="2" pinfunction="NC" pintype="passive+no_connect"/>
+    </net>
+    <net code="30" name="unconnected-(J2-NC-Pad7)" class="Default">
+      <node ref="J2" pin="7" pinfunction="NC" pintype="passive+no_connect"/>
+    </net>
+    <net code="31" name="unconnected-(J2-NC-Pad8)" class="Default">
+      <node ref="J2" pin="8" pinfunction="NC" pintype="passive+no_connect"/>
+    </net>
+    <net code="32" name="unconnected-(J3-GPIO21_SPARE-Pad8)" class="Default">
+      <node ref="J3" pin="8" pinfunction="GPIO21_SPARE" pintype="passive+no_connect"/>
+    </net>
+    <net code="33" name="unconnected-(J8-ALRT-Pad6)" class="Default">
+      <node ref="J8" pin="6" pinfunction="ALRT" pintype="open_collector+no_connect"/>
+    </net>
+  </nets>
+</export>

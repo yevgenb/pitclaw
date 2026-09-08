@@ -1,0 +1,183 @@
+(footprint "Tensility_54-00133_Horizontal"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "Tensility54-00133 RevA exact nominal outline14.4x9mm,13.6mm front-to-pinA; 9x10.8mm front face, bore axis6.5mm abovePCB. Manufacturer0.8x1.5mm slots extended to0.8x1.6mm for JLCPCB2:1 slot aspect; sample fit required.")
+	(property "Reference" "REF**"
+		(at 0 -3 0)
+		(layer "F.SilkS")
+		(uuid "c1cd0b9f-0b8c-48c8-a114-8586decd9ac6")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Tensility_54-00133_Horizontal"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "fc730cf8-adeb-4e66-b8f5-8b51d6d5907d")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "bc6b99e8-3ba1-4ec6-8faa-af7d6c2e4a16")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "4c3ac658-1847-49fa-841f-58891fcef647")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -11.5 -4.6)
+		(end 0.8 -4.6)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "331d0bc1-9dad-486d-8dbe-f268a4d3850c")
+	)
+	(fp_line
+		(start -11.5 4.6)
+		(end -4.5 4.6)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "6c45e572-ec79-4577-8141-b0427b980966")
+	)
+	(fp_line
+		(start -14.1 -5)
+		(end 1.3 -5)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "5eb7fbaf-c8ac-432d-96a3-7247d8f49388")
+	)
+	(fp_line
+		(start -14.1 5.95)
+		(end -14.1 -5)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "ce5414c9-55e4-48fc-a314-231f05176d24")
+	)
+	(fp_line
+		(start 1.3 -5)
+		(end 1.3 5.95)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "277e0ec9-7660-4c85-8b58-648f4b0877ed")
+	)
+	(fp_line
+		(start 1.3 5.95)
+		(end -14.1 5.95)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "1a172d0e-199b-4fc8-9e68-4d2d449b6504")
+	)
+	(fp_line
+		(start -13.6 -4.5)
+		(end 0.8 -4.5)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "0d1dc971-c3ad-4e87-9af9-dccc2988783e")
+	)
+	(fp_line
+		(start -13.6 4.5)
+		(end -13.6 -4.5)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "30114f94-c462-40d8-a429-02b42c1022cc")
+	)
+	(fp_line
+		(start 0.8 -4.5)
+		(end 0.8 4.5)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "0a3ec21a-837a-40a1-a806-f4569637ed92")
+	)
+	(fp_line
+		(start 0.8 4.5)
+		(end -13.6 4.5)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "a783737d-54f2-4428-9824-8f4a85df0fb4")
+	)
+	(pad "1" thru_hole rect
+		(at 0 0)
+		(size 1.8 2.5)
+		(drill oval 0.8 1.6)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 45)
+		(uuid "3ed3de21-afb0-4a34-899b-f86179d9c4aa")
+	)
+	(pad "2" thru_hole oval
+		(at -5.9 0)
+		(size 1.8 2.5)
+		(drill oval 0.8 1.6)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 45)
+		(uuid "c8df1718-0bed-42a3-bc4a-c884b86b6bc6")
+	)
+	(pad "3" thru_hole oval
+		(at -2.8 4.7)
+		(size 2.5 1.8)
+		(drill oval 1.6 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 45)
+		(uuid "732e1019-a6d9-478a-9131-20f1e0d32207")
+	)
+	(embedded_fonts no)
+)

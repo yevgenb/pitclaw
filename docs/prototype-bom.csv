@@ -1,0 +1,26 @@
+Ref,Qty,Part,Minimum specification,Notes
+MOD1,1,Adafruit 5807 HUSB238 USB-C PD breakout,12 V / 3 A request selected; use a compliant source/cable,"Mount through H5/H6 on 3 mm nylon spacers; USB face projects 1.143 mm past carrier edge; connect V+/GND to J1"
+J9,1,Tensility 54-00133 switched DC jack,5.5 x 2.1 mm center-positive; 48 V 6 A; right-angle THT,"Pin 1/A +12V, pin 2/B GND, pin 3/C PD_12V; empty passes PD and inserted plug selects wall adapter; do not hot-switch"
+U2,1,Traco Power TSR 2-2450N,Fixed 5 V 2 A; 6.5-36 V input; SIP-3 THT,"Pin 1 VIN, pin 2 GND, pin 3 VOUT; not a Mini100 footprint"
+U4,1,Owned ADS1115 breakout,3.3 V supply; 10-pin socketed module,Verify actual pitch/orientation/pull-ups and add free-edge support
+Q1,1,IRF5305PBF P-channel MOSFET,55 V TO-220AB,High-side blower switch
+Q2,1,2N3904 NPN transistor,TO-92,Q1 gate driver
+D2,1,SB140 Schottky diode,1 A 40 V DO-41,Blower flyback clamp; cathode at FAN_OUT
+R1,1,1 k ohm 1/4 W,1%,Q1 gate-to-source pull-up
+R2,1,2.2 k ohm 1/4 W,1%,GPIO12 to Q2 base
+R3,1,100 k ohm 1/4 W,1%,Q2 base pull-down
+R4,1,220 ohm 1/4 W,1%,GPIO13 to servo signal
+R5/R10-R12,4,10 k ohm 1/4 W,1%,Servo pull-down and three calibrated probe-divider pull-ups
+R6,1,330 ohm 1/4 W,1%,GPIO14 to passive piezo
+R13-R16,4,1 k ohm 1/4 W,1%,ADC input series resistors including AIN3 rail measurement
+C1,1,470 uF 35 V electrolytic,105 C,12 V bulk
+C2/C4/C10-C12,5,TDK FG28X7R1H104KNT06,100 nF 50 V X7R radial,Supply bypass and ADC filters
+C3,1,Rubycon 16ZLH470MEFC8X11.5,470 uF 16 V low-impedance 105 C,Consolidated 5 V bulk
+BZ1,1,TDK PS1240P02BT,Passive 3 V 4 kHz piezo,Direct GPIO14 drive through R6
+J1/J7,2,JST B2B-XH-A,2-pin 2.50 mm THT,"J1 is 12 V; J7 is 3.3 V; label to prevent interchange"
+J2,1,Amphenol RJHSE5080,8P8C unmagnetized right-angle THT,HeaterMeter output; NOT ETHERNET
+J3,1,JST B8B-XH-A,8-pin 2.50 mm THT,Carrier end of WT32 EXT harness
+J4-J6,3,Same Sky MJ1-2503A,2.5 mm mono right-angle THT,Pin 1 sleeve; pins 2 and 3 tip
+J8,1,Sullins PPPC101LFBN-RC,1x10 female 2.54 mm socket,For owned ADS1115 module
+JP1,1,2-pin 2.54 mm header plus shunt,At least 1 A,Remove shunt for WT32 USB programming
+PCB1,1,Rev B-T2F0-A5807-S2 carrier,60 x 92 mm two-layer FR-4,Currently unrouted and not fabrication-ready

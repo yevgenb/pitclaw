@@ -1,0 +1,759 @@
+          CO                           AUTOMOTIVE
+                                                                      Features                                                   Additional Information
+              M
+     G E & PL I
+                                            G R A DE                  n Radial Leaded Devices                                    Click these links for more information:
+        N         AN                   (SOME MODELS)
+          FR        T*
+   HS        EE
+               **                                                     n Cured, flame retardant epoxy polymer
+                                                                           insulating material meets UL 94V-0
+ Ro
+       LO                      R11
+                               71800
+     HA                            T
+
+
+                                                                           requirements                                           PRODUCT TECHNICAL INVENTORY SAMPLES           CONTACT
+                                                                                                                                  SELECTOR LIBRARY
+                                                                      n RoHS compliant* and halogen free**
+                                                                      n Agency recognition:
+                                                       NT
+                                                   IA
+                                                  PL
+
+                                                                      MF-R Series - PTC Resettable Fuses
+                                                CO M
+                                              S
+                                           oH
+                                         *R
+
+
+  Electrical Characteristic
+
+                                                                                      1 Hour (R1)                           Tripped
+                                                                       Initial
+                                                                          EE
+                                                 Ihold      Itrip     FR               Post-Trip    Max. Time To Trip        Power           Agency Recognition
+                                                                     Resistance                                                                                           AEC-Q200
+                                                                    AD
+                                                                                      Resistance                          Dissipation
+                         Vmax.          Imax.                       LE
+                                                                                                                                                                          Compliant/
+      Model
+                                                                          Ohms          Ohms                                 Watts                                        Automotive
+                                                   at 23 °C                                                 at 23 °C                          cUL             TÜV           Grade
+                                                                         at 23 °C      at 23 °C                             at 23 °C
+
+                         Volts         Amps            Amps         Min.       Max.      Max.        Amps      Seconds         Typ.         E174545       R50366745
+
+MF-R005                   60             40       0.05      0.10     7.3       11.1      22.0         0.5         5.0         0.22              3              3
+MF-R010                   60             40       0.10      0.20    2.50       4.50        Ro VER LEA
+                                                                                         7.50         0.5         4.0         0.38              3              3
+                                                                                             HS SI D F
+                                                                                               CO ON RE
+MF-R017                   60             40       0.17      0.34    2.00       3.20      8.00    M SA E
+                                                                                                     0.85
+                                                                                                   PL R           3.0         0.48              3              3
+                                                                                                      IA E
+                                                                                                        NT
+MF-R020                   60             40       0.20      0.40    1.50       2.84      4.40         1.0  *      2.2         0.40              3              3                3
+MF-R025                   60             40       0.25      0.50    1.00       1.95      3.00        1.25         2.5         0.45              3              3                3
+MF-R030                   60             40       0.30      0.60    0.76       1.36      2.10         1.5         3.0         0.50              3              3                3
+MF-R040                   60             40       0.40      0.80    0.52       0.86      1.29         2.0         3.8         0.55              3              3                3
+MF-R050                   60             40       0.50      1.00    0.41       0.77      1.17         2.5         4.0         0.75              3              3                3
+MF-R065                   60             40       0.65      1.30    0.27       0.48      0.72        3.25         5.3         0.90              3              3                3
+MF-R075                   60             40       0.75      1.50    0.18       0.40      0.60        3.75         6.3         0.90              3              3                3
+MF-R090                   60             40       0.90      1.80    0.14       0.31      0.47         4.5         7.2         1.00              3              3                3
+MF-R090-0-9               30             40       0.90      1.80    0.07       0.12      0.22         4.5         5.9         0.60              3              3                3
+MF-R110                   30             40       1.10      2.20    0.10       0.18      0.27         5.5         6.6         0.70              3              3                3
+MF-R135                   30             40       1.35      2.70 0.065 0.115             0.17        6.75         7.3         0.80              3              3                3
+MF-R160                   30             40       1.60      3.20 0.055 0.105             0.15         8.0         8.0         0.90              3              3                3
+MF-R185                   30             40       1.85      3.70 0.040         0.07      0.11        9.25         8.7         1.00              3              3                3
+MF-R250                   30             40       2.50      5.00 0.025 0.048             0.07        12.5         10.3        1.20              3              3                3
+MF-R250-0-10              30             40       2.50      5.00 0.025 0.048             0.07        12.5         10.3        1.20              3              3                3
+MF-R300                   30             40       3.00      6.00 0.020         0.05      0.08        15.0         10.8        2.00              3              3                3
+MF-R400                   30             40       4.00      8.00 0.010         0.03      0.05        20.0         12.7        2.50              3              3                3
+MF-R500                   30             40       5.00 10.00 0.010             0.03      0.05        25.0         14.5        3.00              3              3                3
+MF-R600                   30             40       6.00 12.00 0.005             0.02      0.04        30.0         16.0        3.50              3              3                3
+MF-R700                   30             40       7.00 14.00 0.005             0.02      0.03        35.0         17.5        3.80              3              3                3
+MF-R800                   30             40       8.00 16.00 0.005             0.02      0.03        40.0         18.8        4.00              3              3                3
+MF-R900                   30             40       9.00 18.00 0.005             0.01      0.02        40.0         20.0        4.20              3              3                3
+MF-R1100                  16            100      11.00 22.00 0.003             0.01     0.014        40.0         20.0        4.50              3              3
+
+
+
+
+           CALIFORNIA WARNING: Can expose you to lead, a carcinogen and reproductive toxicant.
+            See www.P65Warnings.ca.gov
+* RoHS Directive 2015/863, Mar 31, 2015 and Annex.
+** Bourns considers a product to be “halogen free” if (a) the Bromine (Br) content is 900 ppm or less; (b) the Chlorine (Cl) content is 900 ppm or less; and (c) the total Bromine (Br)
+   and Chlorine (Cl) content is 1500 ppm or less.
+Specifications are subject to change without notice. Users should verify actual device performance in their specific applications.
+The products described herein and this document are subject to specific legal disclaimers as set forth on the last page of this document, and at www.bourns.com/docs/legal/disclaimer.pdf.
+Applications
+Almost anywhere there is a low voltage
+power supply and a load to be protected,
+including:
+n Computers & peripherals
+n General electronics
+
+
+
+
+        MF-R Series – PTC Resettable Fuses
+
+  Environmental Characteristics
+
+ Item                                                            Condition                                                         Criteria
+ Operating Temperature                                           -40 °C to +85 °C
+ Recommended Storage                                             +40 °C max. / 70 % RH max.
+ Passive Aging                                                   +85 °C, 1000 hours                                                ±5 % typical resistance change
+ Humidity Aging                                                  +85 °C, 85 % R.H. 1000 hours                                      ±5 % typical resistance change
+ Thermal Shock                                                   -40 °C to +85 °C, 10 times                                        ±10 % typical resistance change
+ Solvent Resistance                                              MIL-STD-202, Method 215                                           No change (marking still legible)
+ Vibration                                                       MIL-STD-883C, Method 2007.1 Condition A                           No change (Rmin < R < R1max)
+ Moisture Sensitivity Level (MSL)                                See Note
+
+ ESD Classiﬁcation                                               Class 6 (per AEC-Q200-2, HBM)
+
+
+  Test Procedures and Requirements
+
+ Item                                                             Test Condition                                                   Accept/Reject Criteria
+ Visual/Mechanical                                                Verify dimensions and materials                                  Per MF physical description
+ Resistance                                                       In still air @ 23 °C                                             Rmin ≤ R ≤ Rmax
+ Time to Trip                                                     At specified current, Vmax, 23 °C, still air                     T ≤ max. time to trip (seconds)
+ Hold Current                                                     30 min. at Ihold                                                 No trip
+ Trip Cycle Life                                                  Vmax, Imax, 100 cycles                                           No arcing or burning
+ Trip Endurance                                                   Vmax, 48 hours                                                   No arcing or burning
+ Solderability                                                    245 °C ±5 °C, 5 seconds                                          95 % min. coverage
+
+
+
+
+Specifications are subject to change without notice.
+Users should verify actual device performance in their specific applications.
+The products described herein and this document are subject to specific legal disclaimers as set forth on the last page of this document, and at www.bourns.com/docs/legal/disclaimer.pdf.
+       MF-R Series – PTC Resettable Fuses
+
+  Product Dimensions (see next page for outline drawing)
+
+                                A                 B                           C                         D                E                    Physical Characteristics
+ Model
+                               Max.              Max.             Nom.              Tol. ±             Min.             Max.              Style         Lead Dia.          Material
+                                 8.0               8.3              5.1              0.7               7.6               3.1                              0.405
+ MF-R005                                                                                                                                    4                              Sn/NiCu
+                              (0.315)           (0.327)          (0.201)           (0.028)           (0.299)           (0.122)                           (0.016)
+                                 7.4              12.7              5.1              0.7               7.6               3.1                               0.51
+ MF-R010                                                                                                                                    1                              Sn/NiCu
+                              (0.291)            (0.5)           (0.201)           (0.028)           (0.299)           (0.122)                           (0.020)
+                                 7.4              12.7              5.1              0.7               7.6               3.1                               0.51
+ MF-R017                                                                                                                                    1                              Sn/CuFe
+                              (0.291)            (0.5)           (0.201)           (0.028)           (0.299)           (0.122)                           (0.020)
+                                 7.4              12.7              5.1              0.7               7.6               3.1                               0.51
+ MF-R020                                                                                                                                    1                              Sn/CuFe
+                              (0.291)            (0.5)           (0.201)           (0.028)           (0.299)           (0.122)                           (0.020)
+                                 7.4              12.7              5.1              0.7               7.6               3.1                               0.51
+ MF-R025                                                                                                                                    1                              Sn/CuFe
+                              (0.291)            (0.5)           (0.201)           (0.028)           (0.299)           (0.122)                           (0.020)
+                                 7.4              13.4              5.1              0.7               7.6               3.1                               0.51
+ MF-R030                                                                                                                                    1                              Sn/CuFe
+                              (0.291)           (0.528)          (0.201)           (0.028)           (0.299)           (0.122)                           (0.020)
+                                 7.4              13.7              5.1              0.7               7.6               3.1                               0.51
+ MF-R040                                                                                                                                    1                              Sn/CuFe
+                              (0.291)           (0.539)          (0.201)           (0.028)           (0.299)           (0.122)                           (0.020)
+                                 7.9              13.7              5.1              0.7               7.6               3.1                               0.51
+ MF-R050                                                                                                                                    1                               Sn/Cu
+                              (0.311)           (0.539)          (0.201)           (0.028)           (0.299)           (0.122)                           (0.020)
+                                 9.7              15.2              5.1              0.7               7.6               3.1                               0.51
+ MF-R065                                                                                                                                    1                               Sn/Cu
+                              (0.382)           (0.598)          (0.201)           (0.028)           (0.299)           (0.122)                           (0.020)
+                                10.4              16.0              5.1              0.7               7.6               3.1                               0.51
+ MF-R075                                                                                                                                    1                               Sn/Cu
+                              (0.409)           (0.630)          (0.201)           (0.028)           (0.299)           (0.122)                           (0.020)
+                                11.7              16.7              5.1              0.7               7.6               3.1                               0.51
+ MF-R090                                                                                                                                    1                               Sn/Cu
+                              (0.461)           (0.657)          (0.201)           (0.028)           (0.299)           (0.122)                           (0.020)
+                                 7.4              12.2              5.1              0.7               7.6               3.0                               0.51
+ MF-R090-0-9                                                                                                                                3                              Sn/CuFe
+                              (0.291)           (0.480)          (0.201)           (0.028)           (0.299)           (0.118)                           (0.020)
+                                 8.9              14.0              5.1              0.7               7.6               3.0                               0.51
+ MF-R110                                                                                                                                    1                               Sn/Cu
+                              (0.350)           (0.551)          (0.201)           (0.028)           (0.299)           (0.118)                           (0.020)
+                                 8.9              18.9              5.1              0.7               7.6               3.0                               0.51
+ MF-R135                                                                                                                                    1                               Sn/Cu
+                              (0.350)           (0.744)          (0.201)           (0.028)           (0.299)           (0.118)                           (0.020)
+                                10.2              16.8              5.1              0.7               7.6               3.0                               0.51
+ MF-R160                                                                                                                                    1                               Sn/Cu
+                              (0.402)           (0.661)          (0.201)           (0.028)           (0.299)           (0.118)                           (0.020)
+                                12.0              18.4              5.1              0.7               7.6               3.0                               0.51
+ MF-R185                                                                                                                                    1                               Sn/Cu
+                              (0.472)           (0.724)          (0.201)           (0.028)           (0.299)           (0.118)                           (0.020)
+                                12.0              18.3              5.1              0.7               7.6               3.0                               0.81
+ MF-R250                                                                                                                                    2                               Sn/Cu
+                              (0.472)           (0.720)          (0.201)           (0.028)           (0.299)           (0.118)                           (0.032)
+                                12.0              18.3              5.1              0.7               7.6               3.0                               0.51
+ MF-R250-0-10                                                                                                                               3                              Sn/CuFe
+                              (0.472)           (0.720)          (0.201)           (0.028)           (0.299)           (0.118)                           (0.020)
+                                12.0              18.3              5.1              0.7               7.6               3.0                               0.81
+ MF-R300                                                                                                                                    2                               Sn/Cu
+                              (0.472)           (0.720)          (0.201)           (0.028)           (0.299)           (0.118)                           (0.032)
+                                14.4              24.8              5.1              0.7               7.6               3.0                               0.81
+ MF-R400                                                                                                                                    2                               Sn/Cu
+                              (0.567)           (0.976)          (0.201)           (0.028)           (0.299)           (0.118)                           (0.032)
+                                17.4              24.9             10.2              0.7               7.6               3.0                               0.81
+ MF-R500                                                                                                                                    2                               Sn/Cu
+                              (0.685)           (0.980)          (0.402)           (0.028)           (0.299)           (0.118)                           (0.032)
+                                19.3              31.9             10.2              0.7               7.6               3.0                               0.81
+ MF-R600                                                                                                                                    2                               Sn/Cu
+                              (0.760)           (1.256)          (0.402)           (0.028)           (0.299)           (0.118)                           (0.032)
+                                22.1              29.8             10.2              0.7               7.6               3.0                               0.81
+ MF-R700                                                                                                                                    2                               Sn/Cu
+                              (0.870)           (1.173)          (0.402)           (0.028)           (0.299)           (0.118)                           (0.032)
+                                24.2              32.9             10.2              0.7               7.6               3.0                               0.81
+ MF-R800                                                                                                                                    2                               Sn/Cu
+                              (0.953)           (1.295)          (0.402)           (0.028)           (0.299)           (0.118)                           (0.032)
+                                24.2              32.9             10.2              0.7               7.6               3.0                               0.81
+ MF-R900                                                                                                                                    2                               Sn/Cu
+                              (0.953)           (1.295)          (0.402)           (0.028)           (0.299)           (0.118)                           (0.032)
+                                24.2              32.9             10.2              0.7               7.6               3.0                               0.81
+ MF-R1100                                                                                                                                   2                               Sn/Cu
+                              (0.953)           (1.295)          (0.402)           (0.028)           (0.299)           (0.118)                           (0.032)
+                                                                                                                                                                                 MM
+                                                                                                                                                             DIMENSIONS:
+                                                                                                                                                                              (INCHES)
+Specifications are subject to change without notice.
+Users should verify actual device performance in their specific applications.
+The products described herein and this document are subject to specific legal disclaimers as set forth on the last page of this document, and at www.bourns.com/docs/legal/disclaimer.pdf.
+       MF-R Series – PTC Resettable Fuses
+
+  Product Dimensions (see previous page for dimensions)
+  Style 1                                        Style 2                                         Style 3                                      Style 4
+
+          A               E                            A               E                               A             E                               A                        E
+
+
+
+
+                                                                   B
+                      B                                                                                          B                                             B
+
+
+
+
+                                                                                                                                                               D
+
+                                                                                                                                                     C
+                                                                   D
+
+                      D                                                                                          D
+
+
+
+                  C                                           C                                              C
+
+
+NOTE: Straight lead option (-17) is           NOTE: Kinked lead option (-14) is             NOTE: Straight lead option (-17) is
+also available, e.g. MF-R020-2-17.            also available, e.g. MF-R250-2-14.            also available, e.g. MF-R250-0-10-17.
+(Refer to “How to Order” section.)            (Refer to “How to Order” section.)            (Refer to “How to Order” section.)
+
+
+
+  Thermal Derating Table - Ihold / Itrip (Amps)
+
+                                                                                    Ambient Operating Temperature
+ Model
+                                -40 ºC           -20 ºC              0 ºC             23 ºC       40 ºC       50 ºC                       60 ºC             70 ºC            85 ºC
+ MF-R005                      0.08 / 0.16     0.07 / 0.14         0.06 / 0.12      0.05 / 0.10 0.04 / 0.08 0.04 / 0.08                 0.03 / 0.07       0.03 / 0.07      0.02 / 0.05
+ MF-R010                      0.16 / 0.32     0.14 / 0.28         0.12 / 0.24      0.10 / 0.20 0.08 / 0.16 0.07 / 0.14                 0.06 / 0.12       0.05 / 0.10      0.04 / 0.08
+ MF-R017                      0.26 / 0.52     0.23 / 0.46         0.20 / 0.40      0.17 / 0.34 0.14 / 0.28 0.12 / 0.24                 0.11 / 0.22       0.09 / 0.18      0.07 / 0.14
+ MF-R020                      0.31 / 0.62     0.27 / 0.54         0.24 / 0.48      0.20 / 0.40 0.16 / 0.32 0.14 / 0.28                 0.13 / 0.26       0.11 / 0.22      0.08 / 0.16
+ MF-R025                      0.39 / 0.78     0.34 / 0.68         0.30 / 0.60      0.25 / 0.50 0.20 / 0.40 0.18 / 0.36                 0.16 / 0.32       0.14 / 0.28      0.10 / 0.20
+ MF-R030                      0.47 / 0.94     0.41 / 0.82         0.36 / 0.72      0.30 / 0.60 0.24 / 0.48 0.22 / 0.44                 0.19 / 0.38       0.16 / 0.32      0.12 / 0.24
+ MF-R040                      0.62 / 1.24     0.54 / 1.08         0.48 / 0.96      0.40 / 0.80 0.32 / 0.64 0.29 / 0.58                 0.25 / 0.50       0.22 / 0.44      0.16 / 0.32
+ MF-R050                      0.78 / 1.56     0.68 / 1.36         0.60 / 1.20      0.50 / 1.00 0.41 / 0.82 0.36 / 0.72                 0.32 / 0.64       0.27 / 0.54      0.20 / 0.40
+ MF-R065                      1.01 / 2.02     0.88 / 1.76         0.77 / 1.54      0.65 / 1.30 0.53 / 1.06 0.47 / 0.94                 0.41 / 0.82       0.35 / 0.70      0.26 / 0.52
+ MF-R075                      1.16 / 2.32     1.02 / 2.04         0.89 / 1.78      0.75 / 1.50 0.61 / 1.22 0.54 / 1.08                 0.47 / 0.94       0.41 / 0.82      0.30 / 0.60
+ MF-R090                      1.40 / 2.80     1.22 / 2.44         1.07 / 2.14      0.90 / 1.80 0.73 / 1.46 0.65 / 1.30                 0.57 / 1.14       0.49 / 0.98      0.36 / 0.72
+ MF-R090-0-9                  1.40 / 2.80     1.22 / 2.44         1.07 / 2.14      0.90 / 1.80 0.73 / 1.46 0.65 / 1.30                 0.57 / 1.14       0.49 / 0.98      0.36 / 0.72
+ MF-R110                      1.60 / 3.20     1.43 / 2.86         1.27 / 2.54      1.10 / 2.20 0.91 / 1.82 0.85 / 1.70                 0.75 / 1.50       0.67 / 1.34      0.57 / 1.14
+ MF-R135                      1.96 / 3.92     1.76 / 3.52         1.55 / 3.10      1.35 / 2.70 1.12 / 2.24 1.04 / 2.08                 0.92 / 1.84       0.82 / 1.64      0.70 / 1.40
+ MF-R160                      2.32 / 4.64     2.08 / 4.16         1.84 / 3.68      1.60 / 3.20 1.33 / 2.66 1.23 / 2.46                 1.09 / 2.18       0.98 / 1.96      0.83 / 1.66
+ MF-R185                      2.68 / 5.36     2.41 / 4.82         2.13 / 4.26      1.85 / 3.70 1.54 / 3.08 1.42 / 2.84                 1.26 / 2.52       1.13 / 2.26      0.96 / 1.92
+ MF-R250                      3.63 / 7.26      3.25 / 6.50        2.88 / 5.76      2.50 / 5.00 2.08 / 4.16 1.93 / 3.86                 1.70 / 3.40       1.53 / 3.06      1.30 / 2.60
+ MF-R250-0-10                 3.63 / 7.26      3.25 / 6.50        2.88 / 5.76      2.50 / 5.00 2.08 / 4.16 1.93 / 3.86                 1.70 / 3.40       1.53 / 3.06      1.30 / 2.60
+ MF-R300                      4.35 / 8.70     3.90 / 7.80         3.45 / 6.90      3.00 / 6.00 2.49 / 4.98 2.31 / 4.62                 2.04 / 4.08       1.83 / 3.66      1.56 / 3.12
+ MF-R400                      5.80 / 11.6     5.20 / 10.4         4.60 / 9.20      4.00 / 8.00 3.32 / 6.64 3.08 / 6.16                 2.72 / 5.44       2.44 / 4.88      2.08 / 4.16
+ MF-R500                      7.25 / 14.5     6.50 / 13.0         5.75 / 11.5      5.00 / 10.0 4.15 / 8.30 3.85 / 7.70                 3.40 / 6.80       3.05 / 6.10      2.60 / 5.20
+ MF-R600                      8.70 / 17.4     7.80 / 15.6         6.90 / 13.8      6.00 / 12.0 4.98 / 9.96 4.62 / 9.24                 4.08 / 8.16       3.66 / 7.32      3.12 / 6.24
+ MF-R700                      10.1 / 20.3     9.10 / 18.2         8.05 / 16.1      7.00 / 14.0 5.81 / 11.6 5.39 / 10.7                 4.76 / 9.52       4.27 / 9.44      3.64 / 7.28
+ MF-R800                      11.6 / 23.2     10.4 / 20.8         9.20 / 18.4      8.00 / 16.0 6.64 / 13.2 6.16 / 12.3                 5.44 / 10.8       4.88 / 9.76      4.16 / 8.32
+ MF-R900                      13.0 / 26.1     11.7 / 23.4         10.3 / 20.7      9.00 / 18.0 7.47 / 14.9 6.93 / 12.7                 6.12 / 12.2       5.49 / 10.9      4.68 / 9.36
+ MF-R1100                     16.1 / 32.0     14.6 / 29.2         13.1 / 26.2      11.0 / 22.1 9.40 / 18.4 8.80 / 17.6                 7.80 / 15.6       6.90 / 13.8      5.20 / 10.4
+Specifications are subject to change without notice.
+Users should verify actual device performance in their specific applications.
+The products described herein and this document are subject to specific legal disclaimers as set forth on the last page of this document, and at www.bourns.com/docs/legal/disclaimer.pdf.
+                           MF-R Series – PTC Resettable Fuses
+
+                 Typical Time to Trip at 23 ºC
+                                       MF -R
+                                       M F 005
+                                          -R0
+                                       MF -R0
+                                       M F 17 10
+                                          -R
+                                       M F 020
+                                          -R
+                                       M F 025
+                                          -R
+                                       M F 030
+                                          -R
+                                       M F 040
+                                          -R
+                                       M F 050
+                                          -R
+                                       M F 065
+                                          -R
+                                       M F 075
+                                          -R0 90
+
+
+
+
+                                                                                                  The Time to Trip curves represent typical performance of
+                          100
+                                                                                                  a device in a simulated application environment. Actual
+                                                                                                  performance in specific customer applications may differ from
+
+
+
+
+Time to trip (Seconds)
+                           10
+                                                                                                  these values due to the influence of other variables.
+
+
+
+                            1
+
+
+                           0.1
+
+
+                          0.01
+
+
+                         0.001
+                                 0.1         1                 10                      100
+
+                                        Fault Current (Amps)
+                                        MF
+                                        -0--R09
+                                        MF 9 0
+                                           -R
+                                        MF 110
+                                           -R
+                                        MF 135
+                                           -R
+                                        MF 160
+                                           -R
+                                        MF 185
+                                           -R
+                                        250 250,
+                                            -0
+                                        MF -10
+                                           -R3
+                                        MF 00
+                                           -R
+                                        MF 400
+                                           -R
+                                        MF 500
+                                           -R
+                                        MF 600
+                                           -R7
+                                        MF 00
+                                           -R
+                                        MF 800
+                                           -R
+                                        MF 900
+                                           -R1 100
+
+
+
+
+                          100
+
+
+
+
+Time to trip (Seconds)
+                           10
+
+
+                            1
+
+
+                           0.1
+
+
+                          0.01
+
+
+                         0.001
+                                 1                   10                                100
+
+                                        Fault Current (Amps)
+  Specifications are subject to change without notice.
+  Users should verify actual device performance in their specific applications.
+  The products described herein and this document are subject to specific legal disclaimers as set forth on the last page of this document, and at www.bourns.com/docs/legal/disclaimer.pdf.
+       MF-R Series – PTC Resettable Fuses
+
+  How to Order                                                     Typical Part Marking: MF-R005 - R025                             Typical Part Marking: MF-R030 - R1100
+                            MF - R 110 - 0 - 14                 Represents total content. Layout may vary.                       Represents total content. Layout may vary.
+Multifuse®                                                                 PART                                                                                         MANUFACTURER'S
+Product Designator                                                         IDENTIFICATION                                                                               TRADEMARK
+                                                                                                                                  PART
+Series                                                                                                                            IDENTIFICATION
+ R = Radial Leaded Component                                                                  R005                                                        R250          MANUFACTURING
+                                                                                                 7A                                                       7180 S        LOCATION:
+Hold Current, Ihold                                                   MANUFACTURER'S
+                                                                                                                                                                        S = CHINA
+                                                                      TRADEMARK
+ 005-1100 (0.05 Amps - 11.0 Amps)
+Packaging Options                                                             DATE CODE:                                                  DATE CODE:
+                                                                              WEEK 1 OF 2017 = 7A (YEAR & WEEK)                           FIRST DIGIT = LAST DIGIT OF YEAR;
+ - __ = Bulk Packaging without part number                                    WEEK 27 OF 2017 = A7 (WEEK & YEAR)                          NEXT THREE DIGITS = DAY OF YEAR
+		 suffix option
+ - 0 = Bulk Packaging with part number
+		 suffix option                                                   Packaging Quantity
+     - 2 = Tape and Reel*
+    - AP = Ammo-Pak*                                                                                                                            Unit Quantity
+                                                                     Packaging Options                             Models                                                     Unit
+Part Number Suffix Option
+                                                                                                                                                   (Pcs.)
+ - 14 = Kinked leads where straight leads                                      Bulk                              All models                           500                     Bag
+		 are standard
+ - 17 = Straight leads where kinked leads                                                                 MF-R005 ~ MF-R160                           3000
+		 are standard
+ - 99 = RoHS Compliancy                                                   Tape & Reel                     MF-R185 ~ MF-R400                           1500                    Reel
+		     As of date code April 1, 2005 all MF-R
+        models are RoHS compliant. The                                                                   MF-R500 ~ MF-R1100                           1000
+        suffix “-99” was originally provided to
+        help customers distinguish between                                                                MF-R005 ~ MF-R160                           2000
+        RoHS compliant and non-RoHS
+        compliant products, but the -99 suffix                            Ammo-Pack                       MF-R185 ~ MF-R400                           1000                    Pack
+        option is no longer necessary. The
+        -99 suffix option will no longer be                                                              MF-R500 ~ MF-R1100                           500
+        available starting January 1, 2020.
+        See Note for more details.
+*Packaged per EIA-468
+
+
+
+
+Specifications are subject to change without notice.
+Users should verify actual device performance in their specific applications.
+The products described herein and this document are subject to specific legal disclaimers as set forth on the last page of this document, and at www.bourns.com/docs/legal/disclaimer.pdf.
+         MF-R Series Tape and Reel Specifications
+
+Devices taped using EIA-468/IEC 60286-2 standards. See table below and figures for details.
+
+                                                                                                         IEC                   EIA
+Dimension Description                                                                                    Mark                  Mark              Dimensions             Tolerance
+                                                                                                                                                       18                +1.0/-0.5
+Carrier tape width                                                                                         W                     W
+                                                                                                                                                     (.709)            (+.039/-.020)
+                                                                                                                                                        5
+Hold down tape width                                                                                      W0                    W0                                          min.
+                                                                                                                                                     (.197)
+
+Hold down tape                                                                                                        No protrusion beyond the carrier tape
+
+                                                                                                                                                        3
+Adhesive tape position                                                                                    W2                    W2                                          max.
+                                                                                                                                                     (.118)
+                                                                                                                                                        9               +0.75/-0.5
+Sprocket hole position                                                                                    W1                    W1
+                                                                                                                                                     (.354)            (+.030/-.020)
+                                                                                                                                                        4                  ±0.2
+Sprocket hole diameter                                                                                    D0                     D0
+                                                                                                                                                     (.157)              (±.0078)
+                                                                                                                                                    18 ~ 20
+Height to seating plane (straight lead)                                                                    H                     H
+                                                                                                                                                 (.709 ~ .787)
+                                                                                                                                                       16                   ±0.5
+Height to seating plane (formed lead)                                                                     H0                     H0
+                                                                                                                                                     (.630)               (±.020)
+                                                                                                                                                      38.5
+Overall height above abscissa (MF-R005 ~ MF-R500)                                                         H1                     H1                                         max.
+                                                                                                                                                     (1.52)
+                                                                                                                                                      43.5
+Overall height above abscissa (MF-R600 ~ MF-R1100)                                                        H1                     H1                                         max.
+                                                                                                                                                     (1.71)
+                                                                                                                                                       11
+Cutout length                                                                                                                     L                                         max.
+                                                                                                                                                     (.433)
+                                                                                                                                                      12.7                  ±0.3
+Sprocket hole pitch                                                                                       P0                     P0
+                                                                                                                                                     (.500)               (±.012)
+                                                                                                                                                      12.7                  ±0.3
+Device pitch: MF-R005 ~ MF-R185                                                                            P                     P
+                                                                                                                                                     (.500)               (±.012)
+                                                                                                                                                      25.4                  ±0.6
+Device pitch: MF-R250 ~ MF-R1100                                                                           P                     P
+                                                                                                                                                     (1.00)               (±.024)
+                                                                                                                                                                             ±1
+Pitch tolerance                                                                                                                                20 consecutive
+                                                                                                                                                                          (±.039)
+                                                                                                                                                       0.9
+Composite tape thickness                                                                                    t                     t                                         max.
+                                                                                                                                                     (.035)
+                                                                                                                                                       2.0
+Overall tape and lead thickness: MF-R005 ~ MF-R185                                                         t1                    t1                                         max.
+                                                                                                                                                     (.079)
+                                                                                                                                                       2.3
+Overall tape and lead thickness: MF-R250 ~ MF-R1100                                                        t1                    t1                                         max.
+                                                                                                                                                     (.091)
+                                                                                                                                                                            ±0.3
+Splice sprocket hole alignment                                                                                                                          0
+                                                                                                                                                                          (±.012)
+                                                                                                                                                                            ±1.0
+Front-to-back deviation                                                                                   Δh                     Δh                     0
+                                                                                                                                                                          (±.039)
+                                                                                                                                                                            ±1.3
+Side-to-side deviation                                                                                    Δp                     Δp                     0
+                                                                                                                                                                          (±.051)
+                                                                                                                                                      3.81                  ±0.7
+Ordinate to adjacent component lead: MF-R005 ~ MF-R400                                                    P1                     P1
+                                                                                                                                                     (.150)               (±.028)
+                                                                                                                                                      7.62                  ±0.7
+Ordinate to adjacent component lead: MF-R500 ~ MF-R1100                                                   P1                     P1
+                                                                                                                                                     (.300)               (±.028)
+                                                                                                                                                      5.08               +0.6/-0.2
+Lead spacing: MF-R005 ~ MF-R400                                                                            F                     F
+                                                                                                                                                     (.200)            (+.024/-.008)
+                                                                                                                                                      10.2               +0.6/-0.2
+Lead spacing: MF-R500 ~ MF-R1100                                                                           F                     F
+                                                                                                                                                     (.400)            (+.024/-.008)
+
+                                                                         — Continued on next page —                                                           DIMENSIONS:
+                                                                                                                                                                                 MM
+                                                                                                                                                                              (INCHES)
+
+
+
+
+Specifications are subject to change without notice.
+Users should verify actual device performance in their specific applications.
+The products described herein and this document are subject to specific legal disclaimers as set forth on the last page of this document, and at www.bourns.com/docs/legal/disclaimer.pdf.
+         MF-R Series Tape and Reel Specifications
+
+Devices taped using EIA-468/IEC 60286-2 standards. See table below and figures for details.
+
+                                                                                                        IEC                           EIA
+Dimension Description                                                                                   Mark                          Mark                     Dimensions                        Tolerance
+                                                                                                                                                                     62.0
+Reel width including flanges and hub                                                                       W4                          w2                                                          max
+                                                                                                                                                                    (2.44)
+
+Dimension between flanges (measured at hub)                                                                W3                          w1                    allow proper reeling and unreeling
+
+                                                                                                                                                                    370.0
+Reel diameter                                                                                               A                              a                                                       max.
+                                                                                                                                                                   (14.57)
+                                                                                                                                                                     4.75                          ±3.25
+Space between flanges (at hub, excluding device)
+                                                                                                                                                                    (.187)                        (±.128)
+                                                                                                                                                                    26.0                           ±12.0
+Arbor hole diameter                                                                                         C                              c
+                                                                                                                                                                   (1.024)                        (±.472)
+                                                                                                                                                                      80
+Core diameter                                                                                               N                              n                                                       min.
+                                   h               h                                                                                                                (3.15)                   p              p
+                                                                                                                                                            62 x 372 x 372
+Box dimensions                                                                                                                                                                                     max.
+                                                                                                                                                          (2.44 x 14.6 x 14.6)
+
+Consecutive missing places                                                                                 Reference plane                                                3                        max.
+
+                                                    H1                   P1
+Empty places per reel                                                                                                      W2                                Less than 0.1 H
+                                                                                                                                                                           %1
+                                                                                                             F
+                                                                                                                                                                              H
+                                                                                                                                H0                                                                      MM
+Taped Component Dimensions -                                L                              A           B                              W1                                          DIMENSIONS:
+                                                                                                                                                                                                     (INCHES)
+per EIA Mark -                                                                                                        W0
+                                                                                                                                           W
+Figure 1
+                      h                             h                                                                                                                                        p               p
+
+
+                                                                                                                                                    User direction of feed
+                                                                        P0                                     D0
+                                                                                                            Reference plane                t1       Cross section A - B       t
+
+                                                       H1                    P1                                                                                                        H1
+                                                                                                                 F         W2
+                                                                                                                                                                              H
+                                                                                            A                                    H0
+                                                                L                                       B                             W1
+                                                                                                                          W0
+                                                                                                                                                W
+
+
+
+                                                                                                                                                     User direction of feed
+                                                                         P0                                          D0
+                                                                                                                                            t1        Cross section A - B         t
+
+
+
+
+Reel Dimensions - per EIA Mark -
+Figure 2
+                                                                                                                                                                                  Reel
+                                                                                                                                                                                                     Upper side
+                                                                             n
+                                                                                                                                                                                                   Tape
+                                                                                                           User
+                                                                                                 a    direction
+                                                                                                             of
+                                                                                                           feed
+                                                                                  c                                                                                                                  Lower side
+
+
+                                                                                                                                                                                      Reel
+                                           w1
+                                           w2                                                                                                                                                             Upper side
+                                                                              n
+                                                                                                                                                                                                    Tape
+                                                                                                            User
+MF-R SERIES, REV. AQ, 05/26                                                                            direction
+                                                                                                  a
+Specifications are subject to change without notice.                                                          of
+Users should verify actual device performance in their specific applications.                               feed
+The products described herein and this document are subject to specific legal disclaimers as set forth on the last page of this document, and at www.bourns.com/docs/legal/disclaimer.pdf.
+                                                                                      c                                                                                                                   Lower side
+       Bourns
+       3312     Multifuse
+            - ®2 mm  SMD® PPTC Resettable
+                          Trimming        Fuses
+                                   Potentiometer
+  Application Notice
+
+• Users are responsible for independent and adequate evaluation of Bourns® Multifuse® Polymer PTC devices in the user’s
+  application, including the PPTC device characteristics stated in the applicable data sheet.
+
+• Polymer PTC devices must not be allowed to operate beyond their stated maximum ratings. Operation in excess of such
+  maximum ratings could result in damage to the PTC device and possibly lead to electrical arcing and/or fire. Circuits with
+  inductance may generate a voltage above the rated voltage of the polymer PTC device and should be thoroughly evaluated
+  within the user’s application during the PTC selection and qualification process.
+
+• Polymer PTC devices are intended to protect against adverse effects of temporary overcurrent or overtemperature
+  conditions up to rated limits and are not intended to serve as protective devices where overcurrent or overvoltage conditions
+  are expected to be repetitive or prolonged.
+
+• In normal operation, polymer PTC devices experience thermal expansion under fault conditions. Thus, a polymer PTC
+  device must be protected against mechanical stress, and must be given adequate clearance within the user’s application to
+  accommodate such thermal expansion. Rigid potting materials or fixed housings or coverings that do not provide adequate
+  clearance should be thoroughly examined and tested by the user, as they may result in the malfunction of polymer PTC
+  devices if the thermal expansion is inhibited.
+
+• Exposure to lubricants, silicon-based oils, solvents, gels, electrolytes, acids, and other related or similar materials may
+  adversely affect the performance of polymer PTC devices.
+
+• Aggressive solvents may adversely affect the performance of polymer PTC devices. Conformal coating, encapsulating,
+  potting, molding, and sealing materials may contain aggressive solvents including but not limited to xylene and toluene,
+  which are known to cause adverse effects on the performance of polymer PTCs. Such aggressive solvents must be
+  thoroughly cured or baked to ensure their complete removal from polymer PTCs to minimize the possible adverse effect
+  on the device.
+
+• Recommended storage conditions should be followed at all times. Such conditions can be found on the applicable data
+  sheet and on the Multifuse® Polymer PTC Moisture/Reflow Sensitivity Classification (MSL) note:
+  https://www.bourns.com/docs/RoHS-MSL/msl_mf.pdf
+
+
+
+
+MFAN 12/18
+Specifications are subject to change without notice.
+Users should verify actual device performance in their specific applications.
+The products described herein and this document are subject to specific legal disclaimers as set forth on the last page of this document, and at www.bourns.com/docs/legal/disclaimer.pdf.
+        Legal Disclaimer Notice
+
+This legal disclaimer applies to purchasers and users of Bourns® products manufactured by or on behalf of Bourns, Inc. and its affiliates (collectively,
+“Bourns”).
+
+Unless otherwise expressly indicated in writing, Bourns® products and data sheets relating thereto are subject to change without notice. Users should check
+for and obtain the latest relevant information and verify that such information is current and complete before placing orders for Bourns® products.
+
+The characteristics and parameters of a Bourns® product set forth in its data sheet are based on laboratory conditions, and statements regarding the
+suitability of products for certain “typical” applications are based on Bourns’ knowledge of typical requirements in generic applications. Bourns assumes
+that “typical” applications include failsafe/backup features to address critical risks to users and are designed to allow rework of Bourns® product to
+avoid scrap of a device solely due to malfunctioning Bourns® product. The characteristics and parameters of a Bourns® product in a user application
+may vary from the data sheet characteristics and parameters due to (i) the combination of the Bourns® product with other components in the user’s
+application, or (ii) the environment of the user application itself. The characteristics and parameters of a Bourns® product also can and do vary in
+different applications and actual performance may vary over time. Thus, users should always verify the actual performance of the Bourns® product in
+their specific devices and applications and make their own independent judgments regarding the suitability of Bourns® product and the amount of
+additional test margin to design into their device or application to compensate for differences between laboratory and real-world conditions.
+
+Unless Bourns has explicitly designated an individual Bourns® product as meeting the requirements of a particular industry standard (e.g., IATF
+16949) or a particular qualification (e.g., UL listed or recognized), Bourns is not responsible for any failure of an individual Bourns® product to meet
+the requirements of such industry standard or particular qualification even if such industry standard or qualification is a “state of art”. Users of Bourns®
+products are responsible for ensuring compliance with safety-related requirements and standards applicable to their devices or applications.
+
+Bourns® products are not recommended, authorized or intended for use in applications where failure or malfunction may result in personal injury,
+death, or severe property or environmental damage, such as without limitation nuclear, life-critical medical and certain automotive and aviation
+applications. Except as set forth in the bullet points below or unless expressly and specifically approved in writing on a case-by-case basis by an
+authorized Bourns’ representative, use of any Bourns® products in such unauthorized high-risk applications is at the user’s sole risk.
+
+     • Bourns considers implantable/invasive devices and devices/procedures designed as life-supporting or life-sustaining by the U.S. Food and Drug
+       Administration or equivalent organizations outside of the United States as “life-critical” medical applications. Bourns expressly identifies those
+       Bourns® standard products that are suitable for use in typical medical applications that are not life-critical in its publication entitled “Bourns
+       Medical Grade Component Guide.”
+
+     • Bourns expressly identifies those Bourns® standard products that are suitable for use in typical automotive applications associated with any
+       Automate Safety Integrity Level (ASIL) in its publication entitled “Bourns Automotive Grade Component Guide.” Bourns’ designation of Bourns®
+       product as compliant with the AEC-Q standard does not by itself mean that Bourns has approved such product for use in an automotive
+       application.
+
+     • Bourns expressly identifies Bourns® standard products that are suitable for use in the typical aviation applications/systems requiring System
+       Design Assurance Level (RTCA DO-254 DAL) of C, D or E in its publication entitled “Bourns Civilian Aerospace/Aviation Grade Component Guide.”
+       Bourns does not test its products for compliance with United States Federal Aviation Administration standards or any other generally equivalent
+       governmental organization standard applicable to products designed or manufactured for use in aviation applications. Use of Bourns® standard
+       components in aviation applications associated with RTCA DO-254 DAL A or B without proper approval noted above shall be at the user’s sole
+       risk.
+
+     • Bourns will review and authorize on a case-by-case basis the use of Bourns® standard products which are at least AEC-Q compliant in space-
+       related civil applications (rockets, satellites) with a negotiated cross-waiver and indemnity agreement.
+
+The use and level of testing applicable to Bourns® custom products shall be negotiated on a case-by-case basis by Bourns and the user for which such
+Bourns® custom products are specially designed. Absent a written agreement between Bourns and the user regarding the use and level of such testing,
+the above provisions applicable to Bourns® standard products shall also apply to such Bourns® custom products.
+
+Use of Bourns® products or Bourns’ technology in military/defense applications must be reviewed with Bourns for compliance with applicable export
+control laws and embargoes. Users shall not sell, transfer, export or re-export (which includes transfers within a country) any Bourns® products or
+technology or technical data for use in activities which involve the design, development, production, use or stockpiling of nuclear, chemical or
+biological weapons or missiles, nor shall they use Bourns® products or technology or technical data in any facility which engages in activities relating
+to such devices. Further, Bourns® products and Bourns’ technology and technical data may not under any circumstance be exported or re-exported to
+countries subject to international sanctions or embargoes. Bourns® products and technology may not, without prior authorization from Bourns and/or
+the Government of a country where such product/technology is designed and/or manufactured, be resold, transferred, or re-exported (including within
+the same country) to any party not eligible to receive commodities, software, and technical data originating in such country.
+
+To the maximum extent permitted by applicable law, Bourns disclaims (i) any and all liability for special, punitive, consequential, incidental or indirect
+damages or lost revenues or lost profits, and (ii) any and all implied warranties (those not based on parameters specified in Bourns’ data sheets and/or
+specifications), including implied warranties of fitness for particular purpose, non-infringement and merchantability.
+
+For your convenience, copies of this Legal Disclaimer Notice with German, Spanish, Japanese, Traditional Chinese and Simplified Chinese bilingual versions are
+available at:
+                                         Web Page: https://www.bourns.com/legal/disclaimers-terms-and-policies
+                                                PDF: https://www.bourns.com/docs/Legal/disclaimer.pdf
+
+
+
+
+                                                                                                                                                    K2540 05/26R
+

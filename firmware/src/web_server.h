@@ -37,7 +37,10 @@ public:
 #endif
 
     // Initialize HTTP server and WebSocket. Call once from setup().
-    void begin();
+    void begin(bool startListening = true);
+
+    // The Wi-Fi captive portal owns port 80 while network setup is active.
+    void setEnabled(bool enabled);
 
     // Periodic update: broadcast data to all connected WebSocket clients.
     // Respects WS_SEND_INTERVAL internally. Call every loop().
@@ -83,6 +86,7 @@ private:
 #ifndef NATIVE_BUILD
     AsyncWebServer* _server;
     AsyncWebSocket* _ws;
+    bool _listening = false;
 #endif
 
     // Module references

@@ -1,0 +1,135 @@
+{
+  "status": "PASS: FIT PROTOTYPE",
+  "revision": "carrier-enclosure-r7",
+  "created_utc": "2026-09-07T20:42:15.002666+00:00",
+  "sources_sha256": {
+    "enclosure/carrier-case.scad": "20f824e51545342fb861066ead64b624b30e759c0d08f154a1783ccc1a419476",
+    "enclosure/carrier-interface.scad": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c",
+    "hardware/carrier-revb/mechanical/enclosure-interface.json": "c3d2a1c13a2d40900a9e7675c95b366caa14fc4d8c3e863a2435210c97a4db4b",
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pcb": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pro": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf",
+    "hardware/carrier-revb/verification/drc.json": "1bdf6a51c1d0be4ac81ad53075849833396be83ad85382b675db2a12859c32cb"
+  },
+  "verifier_sha256": "87e5151078ee643fbc6508725610baedd701f9e10ad31969f1c98ad06514fadb",
+  "scope": "Declared nominal geometry and explicit tolerance scenarios; no physical print or purchased-part fit test.",
+  "assumptions": [
+    "Carrier PCB and USB module thickness 1.44\u20131.76 mm; USB spacer 2.9\u20133.1 mm.",
+    "Board edge growth 0.2 mm and USB module lateral placement shift \u00b10.2 mm.",
+    "Purchased USB-module/spacer tolerances are design allowances requiring sample measurement.",
+    "Case geometry stays nominal; printer dimensional error is not silently added to witnesses.",
+    "The programmed 0.3 mm installation lift, clipped solder tails, and declared M2 hardware envelopes apply.",
+    "No modeled tolerance establishes OEM screw suitability, glass-pad preload, cable reach, or thermal/weather qualification."
+  ],
+  "geometry_checks": {},
+  "meshes": {
+    "top": {
+      "file": "carrier-top.stl",
+      "sha256": "daeef5a0447248caef9e0bc6aaa04e9f58be82226e528c0b52ca2ee4c3c2ab49",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -43.0,
+          -52.0,
+          0.0
+        ],
+        [
+          43.0,
+          52.0,
+          19.299999237060547
+        ]
+      ],
+      "size_mm": [
+        86.0,
+        104.0,
+        19.299999237060547
+      ],
+      "volume_mm3": 29029.541,
+      "triangles": 9934,
+      "result": "PASS"
+    },
+    "bottom": {
+      "file": "carrier-bottom.stl",
+      "sha256": "01a54e90b99fc2d1460c9da24e997a7a7fce5433b012b7d4c2108a7c8051e988",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -43.0,
+          -52.0,
+          0.0
+        ],
+        [
+          43.0,
+          52.0,
+          27.600000381469727
+        ]
+      ],
+      "size_mm": [
+        86.0,
+        104.0,
+        27.600000381469727
+      ],
+      "volume_mm3": 49139.521,
+      "triangles": 5212,
+      "result": "PASS"
+    },
+    "retainer": {
+      "file": "carrier-retainer.stl",
+      "sha256": "78eddd6edbd03655eac90aca33991da4cdf6f804bca3bf04a1e1b94c004bf004",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -40.0,
+          -48.0,
+          0.0
+        ],
+        [
+          40.0,
+          48.0,
+          2.5
+        ]
+      ],
+      "size_mm": [
+        80.0,
+        96.0,
+        2.5
+      ],
+      "volume_mm3": 3048.371,
+      "triangles": 2652,
+      "result": "PASS"
+    },
+    "coupon": {
+      "file": "fit-coupon.stl",
+      "sha256": "c4508b22489b88617b3773595fbe2312d8edffdcca63d35d4fe0efcc517be0da",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -43.0,
+          -11.0,
+          0.0
+        ],
+        [
+          43.0,
+          11.0,
+          27.600000381469727
+        ]
+      ],
+      "size_mm": [
+        86.0,
+        22.0,
+        27.600000381469727
+      ],
+      "volume_mm3": 11571.955,
+      "triangles": 1668,
+      "result": "PASS"
+    }
+  },
+  "sources_unchanged": true
+}

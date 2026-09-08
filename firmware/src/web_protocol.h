@@ -15,7 +15,9 @@ struct DataPayload {
     float meat1Target, meat2Target; // 0 = not set
     uint32_t est;                   // 0 = not available
     const char* fanMode;            // "fan_only", "fan_and_damper", "damper_primary"
-    const char* errors[8];
+    // Own the snapshot text; the error manager's temporary vector is destroyed
+    // before this payload is serialized by the web server.
+    char errors[8][48];
     uint8_t errorCount;
 };
 

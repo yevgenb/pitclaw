@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">Superseded Pit Claw Rev A.2 functional wiring diagram</title>
+  <desc id="desc">Historical Rev A.2 illustration retained for comparison. It does not describe the current B-T2F0-A5807-S3 fuse-free PCB.</desc>
+  <defs>
+    <style>
+      .w{fill:none;stroke:#263238;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.v12{fill:none;stroke:#c62828;stroke-width:4}.v5{fill:none;stroke:#ef6c00;stroke-width:4}.v33{fill:none;stroke:#2e7d32;stroke-width:4}.sig{fill:none;stroke:#1565c0;stroke-width:3}.box{fill:#fafafa;stroke:#263238;stroke-width:2}.mod{fill:#eef4f8;stroke:#37474f;stroke-width:2}.prot{fill:#fff8e1;stroke:#6d4c41;stroke-width:2}.out{fill:#f3e5f5;stroke:#6a1b9a;stroke-width:2}.ana{fill:#e8f5e9;stroke:#2e7d32;stroke-width:2}.h{font:600 18px system-ui,sans-serif;fill:#172025}.t{font:14px system-ui,sans-serif;fill:#263238}.s{font:12px system-ui,sans-serif;fill:#263238}.n{font:600 13px ui-monospace,monospace;fill:#172025}.note{font:italic 13px system-ui,sans-serif;fill:#455a64}
+    </style>
+  </defs>
+  <rect x="12" y="12" width="1376" height="876" rx="8" fill="#fff" stroke="#90a4ae" stroke-width="2"/>
+  <text x="40" y="50" class="h" style="font-size:26px">SUPERSEDED — Pit Claw Rev A.2 historical diagram</text>
+  <text x="40" y="76" class="note">All grounds are common. Analog return via DEBUG pin 7; keep blower/servo current out of the analog harness. See wiring.md.</text>
+
+  <!-- power -->
+  <rect x="40" y="115" width="160" height="105" rx="8" class="mod"/><text x="120" y="145" text-anchor="middle" class="h">U1 PD trigger</text><text x="120" y="175" text-anchor="middle" class="t">USB-C → 12 V</text><text x="120" y="201" text-anchor="middle" class="n">METER VERIFY</text>
+  <rect x="235" y="132" width="85" height="65" rx="5" class="prot"/><text x="278" y="158" text-anchor="middle" class="h">F1</text><text x="278" y="182" text-anchor="middle" class="t">2 A</text>
+  <path d="M200 165H235M320 165H405" class="v12"/><text x="345" y="151" class="n">+12V</text>
+  <rect x="405" y="105" width="195" height="120" rx="8" class="prot"/><text x="503" y="135" text-anchor="middle" class="h">Input protection</text><text x="425" y="166" class="t">D1 SMBJ15A TVS</text><text x="425" y="191" class="t">C1 470u/25V + C2 100n</text>
+  <path d="M503 225V256M465 256H541M478 266H528M491 276H515" class="w"/><text x="550" y="271" class="n">GND</text>
+  <path d="M600 165H655" class="v12"/>
+  <rect x="655" y="105" width="205" height="120" rx="8" class="mod"/><text x="758" y="135" text-anchor="middle" class="h">U2 step-down</text><text x="758" y="167" text-anchor="middle" class="t">12 V → 5.00 V</text><text x="758" y="194" text-anchor="middle" class="s">≥2 A continuous; ≥3 A peak</text>
+  <path d="M860 165H975" class="v5"/><text x="887" y="151" class="n">+5V</text>
+  <rect x="975" y="105" width="170" height="120" rx="8" class="prot"/><text x="1060" y="135" text-anchor="middle" class="h">5 V reservoir</text><text x="995" y="168" class="t">C3 470u/10V</text><text x="995" y="194" class="t">C4 100n</text>
+  <path d="M1060 225V256M1022 256H1098M1035 266H1085M1048 276H1072" class="w"/>
+
+  <!-- fan driver -->
+  <rect x="40" y="320" width="500" height="235" rx="10" class="out"/><text x="290" y="354" text-anchor="middle" class="h">High-side blower switch / shared RJ45 ground</text>
+  <text x="70" y="401" class="n">+12V</text><path d="M120 396H190" class="v12"/>
+  <rect x="190" y="370" width="155" height="55" rx="5" class="box"/><text x="268" y="393" text-anchor="middle" class="h">Q1 FQP27P06</text><text x="268" y="414" text-anchor="middle" class="s">P-MOS: S=12V, D=F4</text>
+  <path d="M345 396H385" class="v12"/><rect x="385" y="371" width="75" height="50" rx="4" class="prot"/><text x="423" y="401" text-anchor="middle" class="t">F4 1.1 A</text><path d="M460 396H515" class="v12"/><text x="466" y="382" class="n">FAN+</text>
+  <text x="68" y="445" class="s">R1 1k: Q1 gate → source. Q2 2N3904: collector → Q1 gate.</text><text x="68" y="465" class="s">Q2 emitter → GND. GPIO12 → R2 2.2k → Q2 base.</text><text x="68" y="485" class="s">R3 100k: Q2 base → GND.</text><text x="68" y="507" class="s">D2 1N5819: anode GND, cathode FAN+ (after F4).</text><text x="68" y="532" class="s">GPIO high = blower on; R1 holds Q1 off during reset.</text>
+
+  <!-- controller -->
+  <rect x="605" y="300" width="335" height="270" rx="10" class="mod"/><text x="772" y="335" text-anchor="middle" class="h">WT32-SC01 Plus EXT</text>
+  <text x="635" y="377" class="t">1  +5V_WT32</text><text x="635" y="405" class="t">2  GND</text><text x="635" y="433" class="t">3  GPIO10 / SDA</text><text x="635" y="461" class="t">4  GPIO11 / SCL</text><text x="635" y="489" class="t">5  GPIO12 / FAN</text><text x="635" y="517" class="t">6  GPIO13 / SERVO</text><text x="800" y="377" class="s">7 GPIO14 / BUZZER</text><text x="800" y="405" class="s">8 GPIO21 / TP</text><text x="772" y="552" text-anchor="middle" class="note">3.3 V from separate DEBUG header → J7</text>
+  <path d="M1145 165H1190V270H1120M1000 270H910V300" class="v5"/><rect x="1000" y="243" width="120" height="48" rx="4" class="prot"/><text x="1060" y="263" text-anchor="middle" class="s">F2 1 A + JP1</text><text x="1060" y="281" text-anchor="middle" class="s">remove for USB flash</text>
+  <path d="M605 489H515" class="sig"/><text x="518" y="477" class="n">R2</text>
+
+  <!-- RJ45 -->
+  <rect x="1185" y="315" width="175" height="275" rx="8" class="out"/><text x="1272" y="348" text-anchor="middle" class="h">J2 RJ45</text><text x="1210" y="388" class="t">1  NC</text><text x="1210" y="416" class="t">2  NC</text><text x="1210" y="444" class="t">3  +5V_SERVO</text><text x="1210" y="472" class="t">4  GND</text><text x="1210" y="500" class="t">5  FAN+</text><text x="1210" y="528" class="t">6  SERVO_SIG</text><text x="1210" y="556" class="t">7,8 NC</text><text x="1272" y="580" text-anchor="middle" class="n">NOT ETHERNET</text>
+  <path d="M515 396H565V285H1158V500H1185" class="v12"/>
+  <path d="M940 517H1115V528H1185" class="sig"/><text x="950" y="505" class="n">R4 220; R5 10k→GND</text>
+  <path d="M1145 165H1170V399H1118V414M1165 444H1185" class="v5"/><rect x="1070" y="414" width="95" height="58" rx="4" class="prot"/><text x="1118" y="435" text-anchor="middle" class="s">F3 1.1 A</text><text x="1118" y="454" text-anchor="middle" class="s">C5 100u</text>
+  <path d="M1120 620H1272V590" class="w"/><path d="M1085 620H1155M1097 630H1143M1109 640H1131" class="w"/><path d="M1120 620V472H1185" class="w"/>
+
+  <!-- analog -->
+  <rect x="40" y="625" width="900" height="225" rx="10" class="ana"/><text x="65" y="660" class="h">Probe front end and ratiometric ADC</text>
+  <rect x="65" y="690" width="165" height="110" rx="6" class="mod"/><text x="148" y="717" text-anchor="middle" class="h">DEBUG → J7</text><text x="148" y="744" text-anchor="middle" class="s">pin 2 → J7.1: +3V3_A</text><text x="148" y="768" text-anchor="middle" class="s">pin 7 → J7.2: GND</text><text x="148" y="790" text-anchor="middle" class="s">No external 3.3 V input</text><path d="M230 744H275" class="v33"/>
+  <rect x="275" y="680" width="265" height="140" rx="6" class="mod"/><text x="408" y="711" text-anchor="middle" class="h">U4 ADS1115 @ 3.3 V</text><text x="298" y="743" class="t">AIN0  Pit</text><text x="298" y="768" class="t">AIN1  Meat 1</text><text x="298" y="793" class="t">AIN2  Meat 2</text><text x="415" y="743" class="t">AIN3  3.3 V ref</text><text x="415" y="768" class="t">SDA  GPIO10</text><text x="415" y="793" class="t">SCL  GPIO11</text>
+  <rect x="575" y="680" width="335" height="140" rx="6" class="box"/><text x="743" y="709" text-anchor="middle" class="h">J4 / J5 / J6: MJ1-2503A</text><text x="590" y="737" class="s">3.3 V → 10k 0.1% → node → jack pins 2+3</text><text x="590" y="763" class="s">node → 1k → AINx; 100n from AINx to GND</text><text x="590" y="789" class="s">jack pin 1 (sleeve) → quiet analog ground</text><text x="590" y="809" class="s">Three board-mounted 2.5 mm mono jacks</text><path d="M540 744H575" class="v33"/>
+  <text x="65" y="840" class="s">C7 4.7u + C13 100n: VDD to GND at ADC. U3/C6 omitted. DEBUG load rating unspecified: bench-validate rail/noise.</text>
+  <path d="M605 433H560V768H540M605 461H550V793H540" class="sig"/>
+
+  <!-- buzzer -->
+  <rect x="975" y="690" width="385" height="130" rx="8" class="box"/><text x="1168" y="722" text-anchor="middle" class="h">Buzzer driver</text><text x="1000" y="758" class="t">+5V → passive BZ1 → Q3 collector</text><text x="1000" y="786" class="t">GPIO14 → R6 2.2k → base; R7 100k → GND</text>
+  <path d="M940 377H960V755H975" class="sig"/>
+
+  <text x="40" y="880" class="note">U1 USB-C, J2 RJHSE-5080 and J4-J6 mount on carrier. Wiring.md defines nets; separate layout defines placement. Not a drill template.</text>
+</svg>

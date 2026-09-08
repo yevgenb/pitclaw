@@ -1,0 +1,32 @@
+{
+  "revision": "B-T2F0-A5807-S4",
+  "compared_to": "B-T2F0-A5807-S1",
+  "removed_references": [
+    "C13",
+    "C5",
+    "C7",
+    "D1",
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "Q3",
+    "R17",
+    "R18",
+    "R7",
+    "R19",
+    "JP2"
+  ],
+  "electrical_footprints_after": 37,
+  "populated_references_after": 37,
+  "dnp_references_after": 0,
+  "logical_pin_checks_after": 104,
+  "named_nets_after": 24,
+  "fuses_after": 0,
+  "power_assumption": "Protected/current-limited regulated 12 V input sources rated no more than 3 A; no onboard or branch-selective overcurrent protection.",
+  "source_selector_after": "K1 G5Q-1 DC12 SPDT relay: PD default, automatic wall priority. D3 coil flyback; J9 sleeve switch unused. JP2 removed.",
+  "pd_module_after": "Adafruit 5807 HUSB238, two-hole direct mount",
+  "bom_total_usd": 29.21,
+  "bom_saving_usd": 2.17,
+  "routing_status": "Zero tracks; engineering draft, not for fabrication."
+}

@@ -1,4 +1,5 @@
 #include "cook_session.h"
+#include "storage_files.h"
 #include <string.h>
 
 #ifndef NATIVE_BUILD
@@ -185,6 +186,8 @@ void CookSession::flush() {
 
 bool CookSession::loadFromFlash() {
 #ifndef NATIVE_BUILD
+    // A new device has no session file; avoid an ESP32 VFS error for normal startup.
+    if (!storageFileExists(SESSION_FILE_PATH)) return false;
     File file = LittleFS.open(SESSION_FILE_PATH, "r");
     if (!file) return false;
 

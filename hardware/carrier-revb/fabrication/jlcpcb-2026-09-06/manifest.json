@@ -1,0 +1,30 @@
+{
+  "status": "BARE-PCB PROTOTYPE FABRICATION PACKAGE; PHYSICAL QUALIFICATION PENDING",
+  "pcb_sha256": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+  "schematic_sha256": "a4fff313bdfc015b015319d72fcf36141c30ada3bcf789706539fcdeef5e9dc4",
+  "project_rules_sha256": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf",
+  "verification_summary_sha256": "6c259339d66ac1b9b139ec18a704ba5778e9f620ff41ff1e410f8f301c2893a6",
+  "archive": "pitclaw-carrier-jlcpcb.zip",
+  "archive_sha256": "d75ea76ef0e9b0892459d3f8e0c6367630f1d467716bc774757389a562409497",
+  "files_sha256": {
+    "pitclaw-carrier-B_Cu.gbl": "7a0e86459d35356748c96931921ae7be0bd45e201e156a98aa6fa5886b91f9f9",
+    "pitclaw-carrier-B_Mask.gbs": "21bf19ea9940851071050cf9e0600ba44c70d2ba03b4449d4fe3b4b6acbc1825",
+    "pitclaw-carrier-B_Silkscreen.gbo": "e8a1dc0b9d8cbfd7ca62557d3937eb6f5cc91a0474915fae30fd99e620647a70",
+    "pitclaw-carrier-Edge_Cuts.gm1": "73f6439ad775d2c78ba4c70457d1e77b783bbabbcea1d980b36470d97340a46f",
+    "pitclaw-carrier-F_Cu.gtl": "e4c23eaa947c9a3b9c7c086ad56cf4bb4de0ce011ddf1c591b461384b00e7a5a",
+    "pitclaw-carrier-F_Mask.gts": "ba32346a3c80a1a308cf2179df54034ac2cf410a3d7d3455aed0dcac4e06e385",
+    "pitclaw-carrier-F_Silkscreen.gto": "09bd603dbfd29d71e965661a7c492eac85a196ff252ff50e134ec459ce73ed7d",
+    "pitclaw-carrier-NPTH.drl": "0a21bf25d670db78e3176570471e40d5bcbdf47b78479bac0be29a786d8b16de",
+    "pitclaw-carrier-PTH.drl": "69b4218d1527ec0f85d7fa2eeeb5014eaab45803e24408b52e07f33b2120ca34"
+  },
+  "board_mm": [
+    60,
+    92,
+    1.6
+  ],
+  "copper_layers": 2,
+  "copper_weight_oz": 1,
+  "kicad_version": "9.0.6",
+  "order_submitted": false,
+  "assembly_service_package": false
+}

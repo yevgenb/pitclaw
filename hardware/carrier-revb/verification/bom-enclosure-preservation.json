@@ -1,0 +1,21 @@
+{
+  "revision": "carrier-enclosure-r6",
+  "baseline_workbook": "/tmp/pitclaw-before-usb-shell-r6.xlsx",
+  "unchanged": [
+    "Order values/formulas/styles and subtotal",
+    "Parts values/formulas/styles",
+    "All other Other items values and formatting",
+    "Workbook sheet order, styles, validations, panes and relationships",
+    "Electrical purchasing selection and subtotal"
+  ],
+  "changed_other_items_cells": [
+    "A3",
+    "D10",
+    "D14"
+  ],
+  "electrical_subtotal_usd": 29.21,
+  "formula_errors": 0,
+  "changed_ranges_visually_reviewed": true,
+  "current_and_delivery_identical": true,
+  "workbook_sha256": "069b5b3ccec13b9c701f4a77ff6bae7e5903a9ca5ab7f65c7cabddcaebdd1000"
+}

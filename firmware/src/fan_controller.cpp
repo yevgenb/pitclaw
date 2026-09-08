@@ -15,13 +15,19 @@ FanController::FanController()
     , _longPulseCycleStartMs(0)
     , _wasOff(true)
     , _manualMode(false)
+    , _pwmReady(false)
 {
 }
 
 void FanController::begin() {
 #ifndef NATIVE_BUILD
-    // Configure LEDC for PWM output
-    ledcSetup(FAN_PWM_CHANNEL, FAN_PWM_FREQ, FAN_PWM_RESOLUTION);
+    pinMode(PIN_FAN_PWM, OUTPUT);
+    digitalWrite(PIN_FAN_PWM, LOW);
+    _pwmReady = ledcSetup(FAN_PWM_CHANNEL, FAN_PWM_FREQ, FAN_PWM_RESOLUTION) != 0;
+    if (!_pwmReady) {
+        Serial.println("[FAN] PWM setup failed; blower output remains off.");
+        return;
+    }
     ledcAttachPin(PIN_FAN_PWM, FAN_PWM_CHANNEL);
     ledcWrite(FAN_PWM_CHANNEL, 0);
 
@@ -174,7 +180,11 @@ void FanController::setManualDuty(uint8_t duty) {
 
 void FanController::writePWM(uint8_t duty) {
 #ifndef NATIVE_BUILD
-    ledcWrite(FAN_PWM_CHANNEL, duty);
+    if (_pwmReady) {
+        // Keep the public duty range at 0..255 while using a wider hardware timer.
+        const uint32_t maxDuty = (1U << FAN_PWM_RESOLUTION) - 1;
+        ledcWrite(FAN_PWM_CHANNEL, (uint32_t(duty) * maxDuty + 127) / 255);
+    }
 #endif
 }
 

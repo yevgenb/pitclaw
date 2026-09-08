@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 #include "config.h"
-#include "split_range.h"
+#include "control_outputs.h"
 
 // --- Module headers ---
 #include "temp_manager.h"
@@ -38,6 +38,7 @@ OtaManager      otaManager;
 static float    g_setpoint       = 225.0f;   // Default pit setpoint (degrees F)
 static float    g_prevSetpoint   = 225.0f;   // Previous setpoint for change detection
 static bool     g_pitReached     = false;     // Has pit ever reached setpoint?
+static bool     g_pitControlReady = false;    // Valid PID compute since last probe fault
 static uint32_t g_cookStartTime  = 0;         // Epoch when cook timer started
 static unsigned long g_lastPidMs = 0;         // Last PID computation timestamp
 
@@ -201,6 +202,8 @@ void setup() {
     Serial.println("  Board: WT32-SC01 Plus (ESP32-S3)");
     Serial.println("========================================");
     Serial.println();
+    Serial.printf("[BOOT] PSRAM: %u bytes, free heap: %u bytes\n",
+                  ESP.getPsramSize(), ESP.getFreeHeap());
 
     // 2. Load configuration from LittleFS
     configManager.begin();
@@ -241,10 +244,11 @@ void setup() {
     errorManager.begin();
 
     // 10. Connect WiFi (splash screen visible during connection)
+    wifiManager.onPortalStart([]() { webServer.setEnabled(false); });
     wifiManager.begin();
 
     // 11. Start HTTP server and WebSocket, pass module references
-    webServer.begin();
+    webServer.begin(!wifiManager.isAPMode());
     webServer.setModules(&tempManager, &pidController, &fanController,
                          &servoController, &configManager, &cookSession,
                          &alarmManager, &errorManager);
@@ -293,7 +297,7 @@ void setup() {
 
     // 15. Log "Setup complete" with IP address
     Serial.println();
-    Serial.printf("[BOOT] Setup complete. IP: %s\n", wifiManager.getIPAddress());
+    Serial.printf("[BOOT] Setup complete. IP: %s\n", wifiManager.getIPAddress().c_str());
     Serial.println();
 
     g_lastPidMs = millis();
@@ -306,6 +310,10 @@ void setup() {
 // ---------------------------------------------------------------------------
 void loop() {
     unsigned long now = millis();
+
+    // Service provisioning in every boot phase; never let two servers bind port 80.
+    wifiManager.update();
+    webServer.setEnabled(!wifiManager.isAPMode());
 
     // --- Boot splash phase: only process LVGL and splash logic ---
     if (g_bootPhase == BootPhase::SPLASH) {
@@ -339,7 +347,6 @@ void loop() {
     // --- Setup wizard phase: process LVGL, temp readings, and WiFi ---
     if (g_bootPhase == BootPhase::WIZARD) {
         tempManager.update();
-        wifiManager.update();
 
         // Handle hardware test timeouts (non-blocking)
         if (g_hwTest != HwTest::NONE) {
@@ -372,6 +379,10 @@ void loop() {
         if (ui_wizard_is_active()) {
             if (now - g_lastDisplayMs >= 1000) {
                 g_lastDisplayMs = now;
+                String ssid = wifiManager.getSSID();
+                String ip = wifiManager.getIPAddress();
+                ui_wizard_update_wifi({wifiManager.isConnected(), wifiManager.isAPMode(),
+                                       ssid.c_str(), ip.c_str(), wifiManager.getRSSI()});
                 ui_wizard_update_probes(
                     tempManager.getPitTemp(),
                     tempManager.getMeat1Temp(),
@@ -400,6 +411,16 @@ void loop() {
     // 1. Read temperatures from all probes (internally gated at TEMP_SAMPLE_INTERVAL_MS)
     tempManager.update();
 
+    // Stop outputs on the first failed sample, independently of the PID timer.
+    const bool pitConnected = tempManager.isConnected(PROBE_PIT);
+    if (!pitConnected) {
+        if (g_pitControlReady) {
+            pidController.resetIntegrator();
+            g_pitReached = false;
+        }
+        g_pitControlReady = false;
+    }
+
     // 2. PID computation (every PID_SAMPLE_MS)
     if (now - g_lastPidMs >= PID_SAMPLE_MS) {
         g_lastPidMs = now;
@@ -411,11 +432,11 @@ void loop() {
             g_prevSetpoint = g_setpoint;
         }
 
-        // Only compute PID when pit probe is connected. When disconnected,
-        // _pidOutput retains its last value to maintain current fire management.
-        if (tempManager.isConnected(PROBE_PIT)) {
+        // After a probe fault, keep outputs stopped until a valid computation.
+        if (pitConnected) {
             float pitTemp = tempManager.getPitTemp();
             pidController.compute(pitTemp, g_setpoint);
+            g_pitControlReady = true;
 
             // Track whether pit has ever reached setpoint (within 5 degrees F).
             if (!g_pitReached) {
@@ -427,13 +448,9 @@ void loop() {
     }
 
     // 3. Mode-aware fan + damper from PID output (split-range coordination)
-    {
-        SplitRangeOutput sr = splitRange(pidController.getOutput(),
-                                         configManager.getFanMode(),
-                                         configManager.getFanOnThreshold());
-        servoController.setPosition(sr.damperPercent);
-        fanController.setSpeed(sr.fanPercent);
-    }
+    applyControlOutputs(fanController, servoController, g_pitControlReady,
+                        pidController.getOutput(), configManager.getFanMode(),
+                        configManager.getFanOnThreshold());
 
     // 4. Fan controller update (kick-start timing, long-pulse cycling)
     fanController.update();
@@ -466,9 +483,6 @@ void loop() {
     // 8. Web server update (broadcasts to WebSocket clients at WS_SEND_INTERVAL)
     webServer.setSetpoint(g_setpoint);
     webServer.update();
-
-    // 9. WiFi manager (handles reconnection)
-    wifiManager.update();
 
     // 10. OTA manager (handles OTA progress)
     otaManager.update();

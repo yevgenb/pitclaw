@@ -62,7 +62,7 @@ void test_fan_kickstart_activates(void) {
     fan->setSpeed(50.0f);
     fan->update();
 
-    // Should be in kick-start mode (75% duty)
+    // Should be in kick-start mode (full-power duty)
     TEST_ASSERT_TRUE_MESSAGE(fan->isKickStarting(),
         "Fan should be in kick-start phase after going from 0 to 50%");
 
@@ -101,8 +101,8 @@ void test_fan_pwm_frequency(void) {
     uint32_t freq = ledcReadFreq(FAN_PWM_CHANNEL);
 
     // Allow 10% tolerance on PWM frequency
-    TEST_ASSERT_UINT32_WITHIN_MESSAGE(2500, FAN_PWM_FREQ, freq,
-        "PWM frequency not within 10% of target 25kHz");
+    TEST_ASSERT_UINT32_WITHIN_MESSAGE(FAN_PWM_FREQ / 10, FAN_PWM_FREQ, freq,
+        "PWM frequency not within 10% of FAN_PWM_FREQ");
 }
 
 // --------------------------------------------------------------------------

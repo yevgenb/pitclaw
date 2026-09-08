@@ -1,4 +1,5 @@
 #include "web_server.h"
+#include "storage_files.h"
 
 #ifndef NATIVE_BUILD
 #include <Arduino.h>
@@ -40,7 +41,7 @@ BBQWebServer::BBQWebServer()
 {
 }
 
-void BBQWebServer::begin() {
+void BBQWebServer::begin(bool startListening) {
 #ifndef NATIVE_BUILD
     _server = new AsyncWebServer(WEB_PORT);
     _ws = new AsyncWebSocket(WS_PATH);
@@ -62,17 +63,38 @@ void BBQWebServer::begin() {
     });
 
     // Serve static files from LittleFS (web UI)
-    _server->serveStatic("/", LittleFS, "/").setDefaultFile("index.html");
+    _server->serveStatic("/", LittleFS, "/")
+        .setDefaultFile("index.html")
+        .setTryGzipFirst(false)
+        .setFilter([](AsyncWebServerRequest* request) {
+            String path = request->url();
+            if (path.endsWith("/")) path += "index.html";
+            // The data/ assets are uncompressed. Missing requests go straight to 404.
+            return storageFileExists(path.c_str());
+        });
 
     // Fallback 404
     _server->onNotFound([](AsyncWebServerRequest* request) {
         request->send(404, "text/plain", "Not Found");
     });
 
-    _server->begin();
     _lastBroadcastMs = millis();
+    setEnabled(startListening);
+#endif
+}
 
-    Serial.printf("[WEB] Server started on port %d, WebSocket at %s\n", WEB_PORT, WS_PATH);
+void BBQWebServer::setEnabled(bool enabled) {
+#ifndef NATIVE_BUILD
+    if (!_server || enabled == _listening) return;
+    if (enabled) {
+        _server->begin();
+        Serial.printf("[WEB] Server started on port %d, WebSocket at %s\n", WEB_PORT, WS_PATH);
+    } else {
+        if (_ws) _ws->closeAll();
+        _server->end();
+        Serial.println("[WEB] Server paused for Wi-Fi setup portal.");
+    }
+    _listening = enabled;
 #endif
 }
 
@@ -174,7 +196,8 @@ bbq_protocol::DataPayload BBQWebServer::buildDataPayload() {
     if (_error) {
         auto activeErrors = _error->getErrors();
         for (size_t i = 0; i < activeErrors.size() && payload.errorCount < 8; i++) {
-            payload.errors[payload.errorCount++] = activeErrors[i].message;
+            char* message = payload.errors[payload.errorCount++];
+            snprintf(message, sizeof(payload.errors[0]), "%s", activeErrors[i].message);
         }
     }
 #endif

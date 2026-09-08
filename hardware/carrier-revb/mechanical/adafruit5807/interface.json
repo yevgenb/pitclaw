@@ -1,0 +1,32 @@
+{
+  "revision": "Adafruit-5807-direct-mount-r4-recess",
+  "source_board_outline_mm": [
+    20.32,
+    23.495
+  ],
+  "source_mount_holes_from_rear_left_mm": [
+    [
+      2.413,
+      20.955
+    ],
+    [
+      17.653,
+      20.955
+    ]
+  ],
+  "module_mount_hole_diameter_mm": 2.5,
+  "carrier_hole_diameter_mm": 2.4,
+  "carrier_anchor_mm": {
+    "center_x": 44.5,
+    "pcb_front_y": 90.357,
+    "usb_facing": "+Y"
+  },
+  "usb_connector_face_overhang_mm": 1.143,
+  "keepout_margin_mm": 0.5,
+  "mount_courtyard_radius_mm": 2.65,
+  "mount_hardware_max_diameter_mm": 5.0,
+  "module_pcb_thickness_assumed_mm": 1.6,
+  "nylon_spacer_length_mm": 3.0,
+  "provisional_screw_length_mm": 10.0,
+  "carrier_placement_changes": {}
+}

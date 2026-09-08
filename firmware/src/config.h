@@ -12,7 +12,7 @@
 #define ADC_CHANNEL_PIT   0
 #define ADC_CHANNEL_MEAT1 1
 #define ADC_CHANNEL_MEAT2 2
-#define ADC_CHANNEL_SPARE 3
+#define ADC_CHANNEL_SUPPLY 3  // Carrier AIN3 measures probe excitation (+3V3_A)
 
 // --- ADS1115 ---
 #define ADS1115_ADDR    0x48
@@ -24,6 +24,8 @@
 #define REFERENCE_RESISTANCE  10000.0   // 10K ohm reference resistor
 #define ADC_MAX_VOLTAGE       4.096     // ADS1115 at GAIN_ONE
 #define ADC_MAX_VALUE         32767     // 16-bit signed
+#define ADC_SUPPLY_MIN_RAW    24000     // 3.0 V at GAIN_ONE (125 uV/count)
+#define ADC_SUPPLY_MAX_RAW    28800     // 3.6 V at GAIN_ONE
 
 // --- Steinhart-Hart Coefficients (Thermoworks Pro-Series) ---
 #define THERM_A  7.3431401e-04
@@ -39,10 +41,12 @@
 #define PID_OUTPUT_MAX  100.0
 
 // --- Fan Control ---
-#define FAN_PWM_FREQ       25000   // 25 kHz
+#define FAN_PWM_FREQ       100     // Provisional two-wire power PWM; bench-verify blower
 #define FAN_PWM_CHANNEL    0
-#define FAN_PWM_RESOLUTION 8       // 8-bit (0-255)
-#define FAN_KICKSTART_PCT  75      // Kick-start at 75%
+#define FAN_PWM_RESOLUTION 10      // 100 Hz needs >=9 bits with the S3 40 MHz LEDC clock
+#define SERVO_PWM_TIMER    1       // Reserve LEDC timer 1 if ESP32Servo uses LEDC
+#define BUZZER_PWM_CHANNEL 4       // Timer 2; fan uses timer 0, backlight uses timer 3
+#define FAN_KICKSTART_PCT  100     // Full supply voltage for reliable startup
 #define FAN_KICKSTART_MS   500     // for 500ms
 #define FAN_MIN_SPEED      15      // Minimum sustained speed %
 #define FAN_LONGPULSE_THRESHOLD 10 // Below 10%, use long-pulse mode
@@ -73,6 +77,7 @@
 #define SESSION_FILE_PATH       "/session.dat"
 
 // --- Config ---
+#define FILESYSTEM_MOUNT_PATH "/littlefs"
 #define CONFIG_FILE_PATH  "/config.json"
 
 // --- Web Server ---
@@ -83,12 +88,12 @@
 
 // --- Alarms ---
 #define ALARM_PIT_BAND_DEFAULT  15.0    // +/- 15F
-#define ALARM_BUZZER_FREQ       2000    // 2kHz tone
+#define ALARM_BUZZER_FREQ       4000    // TDK PS1240P02BT rated frequency
 #define ALARM_BUZZER_DURATION   500     // 500ms beep
 #define ALARM_BUZZER_PAUSE      500     // 500ms pause between beeps
 
 // --- Error Detection ---
-#define ERROR_PROBE_OPEN_THRESHOLD   32000  // ADC value indicating open circuit
+#define ERROR_PROBE_OPEN_RATIO       0.98f // Relative to measured excitation
 #define ERROR_PROBE_SHORT_THRESHOLD  100    // ADC value indicating short
 #define ERROR_FIREOUT_RATE           2.0    // Degrees F per minute decline
 #define ERROR_FIREOUT_DURATION_MS    600000 // 10 minutes of decline

@@ -1,0 +1,166 @@
+{
+  "revision": "carrier-enclosure-r6",
+  "status": "FIT PROTOTYPE",
+  "outer_landscape_mm": [
+    104,
+    86,
+    44.9
+  ],
+  "meshes": {
+    "top": {
+      "sha256": "0fdde2300c8d990a9c13e6b7456d0742ae44b4386956c057f708e0ae6f8032a4",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -43.0,
+          -52.0,
+          0.0
+        ],
+        [
+          43.0,
+          52.0,
+          19.3
+        ]
+      ],
+      "volume_mm3": 29140.42
+    },
+    "bottom": {
+      "sha256": "0e5aa61aa183b59b217acee56f956aac21c33339ec6d45e3080d0628dced5d97",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -43.0,
+          -52.0,
+          0.0
+        ],
+        [
+          43.0,
+          52.0,
+          27.6
+        ]
+      ],
+      "volume_mm3": 49272.69
+    },
+    "retainer": {
+      "sha256": "76c0b5174b194fa83b8cb37ee3a9923fc2515d8948f77c4261e3948647f9c516",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -40.0,
+          -48.0,
+          0.0
+        ],
+        [
+          40.0,
+          48.0,
+          2.5
+        ]
+      ],
+      "volume_mm3": 3048.37
+    }
+  },
+  "stack_mm": {
+    "floor": 2.5,
+    "carrier_posts": 5,
+    "pcb": 1.6,
+    "fitted_carrier_envelope": 16,
+    "gap": 3,
+    "display_retainer_screws": 15.3,
+    "glass_recess": 1.5
+  },
+  "limitations": "Mesh integrity and nominal geometry only. No physical fit, material, load, thermal or weather test.",
+  "sources_sha256": {
+    "enclosure/carrier-case.scad": "4f682c886fcae5e3fee92dca5948f43269c77ec7f5361b0e4be0aa3522276097",
+    "enclosure/carrier-interface.scad": "dc19a718c7aa89431256124f31ea480d6a0e5973e2bcf92531672e36545f998b",
+    "hardware/carrier-revb/mechanical/enclosure-interface.json": "8d7374a7d389a02a67aa1b4d4e31f8c4acc3968ef2a1e513cf9dafe711c5f0a4",
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pcb": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+    "hardware/carrier-revb/verification/drc.json": "1bdf6a51c1d0be4ac81ad53075849833396be83ad85382b675db2a12859c32cb",
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pro": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf"
+  },
+  "geometry_checks": {
+    "insertion-check": {
+      "result": "Empty intersection: nominal geometric clearance passes",
+      "log": "insertion-check.log",
+      "log_sha256": "3e83d572afcb7a3de91cbefa02371e0e429da1b58b9c4cb4f0af375bca8869ac",
+      "tested_interface_sha256": "dc19a718c7aa89431256124f31ea480d6a0e5973e2bcf92531672e36545f998b"
+    },
+    "carrier-installation-check": {
+      "result": "Empty intersection: nominal geometric clearance passes",
+      "log": "carrier-installation-check.log",
+      "log_sha256": "3e83d572afcb7a3de91cbefa02371e0e429da1b58b9c4cb4f0af375bca8869ac",
+      "tested_interface_sha256": "dc19a718c7aa89431256124f31ea480d6a0e5973e2bcf92531672e36545f998b"
+    },
+    "electronics-closure-check": {
+      "result": "Empty intersection: nominal geometric clearance passes",
+      "log": "electronics-closure-check.log",
+      "log_sha256": "49a4b90ee124efdbab17b31aeaaeb0a7e27c8a5011c47f0a0c3c93ce87843b91",
+      "tested_interface_sha256": "dc19a718c7aa89431256124f31ea480d6a0e5973e2bcf92531672e36545f998b"
+    }
+  },
+  "power_faces_mm": {
+    "RJ45_y": 98,
+    "BARREL_y": 98,
+    "USB_C_y": 96,
+    "carrier_translation_y": 4.5,
+    "outer_wall_y": 98
+  },
+  "usb_exterior_recess_mm": {
+    "width": 20,
+    "height": 10,
+    "depth": 2,
+    "socket_opening": [
+      9.54,
+      4.1
+    ],
+    "opening_upward_offset": 0.15,
+    "inward_backing": 1,
+    "nominal_floor_wall": 1.5,
+    "minimum_floor_at_blind_pcb_clearance": 0.943,
+    "minimum_floor_at_blind_head_clearance": 0.983,
+    "carrier_channel_vertical_gap": 0.5,
+    "socket_behind_floor": 0,
+    "pcb_normal_inner_wall_gap": 0.643,
+    "hardware_normal_inner_wall_gap": 0.683,
+    "blind_clearance": 0.2,
+    "upper_m2_head_and_washer_height": 2
+  },
+  "carrier_installation_mm": {
+    "initial_y": 0.5,
+    "final_y": 4.5,
+    "lift": 0.3,
+    "max_solder_tail": 3,
+    "max_m2_stack_below_pcb": 3.3
+  },
+  "minimum_blind_pocket_front_skin_mm": {
+    "carrier_pcb": 1.3
+  },
+  "relay_seated_height_mm": 16.2,
+  "minimum_reserved_relay_upper_gap_mm": 2.8,
+  "unchanged_enclosure_geometry": "The PCB corrections change the exported underside pad positions and envelopes. Shell, retainer, connector and mounting geometry are unchanged; the existing STL meshes and enclosure previews remain current. All three nominal collision checks were rerun against the updated pad export.",
+  "routed_pcb_audit": {
+    "board_sha256": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+    "native_drc_report": "hardware/carrier-revb/verification/drc.json",
+    "native_drc_violations": 0,
+    "unconnected_items": 0,
+    "schematic_parity_violations": 0,
+    "via_clearance_report": "routed-via-clearance.json",
+    "via_clearance_report_sha256": "802cd6b0e356c5478046363b289698d0116b2d2b22eb64141f5042654c373ab5",
+    "via_count": 16,
+    "minimum_via_to_boss_sweep_clearance_mm": 4.1144,
+    "minimum_via_to_support_sweep_clearance_mm": 10.4632,
+    "scope": "Plated vias have no protruding wire or solder tails; do not build solder mounds on them. Copper diameters are checked against the full 4 mm installation sweep.",
+    "project_sha256": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf"
+  },
+  "corrected_u2_enclosure_audit": {
+    "report": "jlc-corrected-footprints.json",
+    "sha256": "3199406683baae55290a86f344e74517fdb92bc8fd0d371e821a16b3a65fad20",
+    "result": "PASS: corrected U2 body remains within the existing 16 mm fitted allowance and clear of the top, retainer, sidewalls and closure columns.",
+    "scope": "Conservative analytic U2 bound at corrected XY. Nominal dimensions only; the existing central SCAD component witness does not cover the full U2 body. Actual fitted height must stay within the 16 mm case allowance."
+  }
+}

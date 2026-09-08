@@ -1,0 +1,20 @@
+{
+  "revision": "B-T2F0-A5807-S4",
+  "comparedTo": "B-T2F0-A5807-S3",
+  "unchangedValueAndFormulaRanges": [
+    [
+      "Order",
+      "A4:J5"
+    ],
+    [
+      "Parts",
+      "A3:S5"
+    ]
+  ],
+  "visualBaselineReviewed": true,
+  "changedSheetsReviewed": [
+    "Order",
+    "Parts",
+    "Other items"
+  ]
+}

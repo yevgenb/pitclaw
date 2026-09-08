@@ -1,0 +1,188 @@
+(session finish
+  (base_design finish)
+  (placement
+    (resolution um 10)
+    (component "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
+      (place J7 1400000 -620000 front 0)
+      (place J1 1540000 -1010000 front 0)
+    )
+    (component PitClaw:C_TDK_FG28X7R1H104KNT06_P5
+      (place C12 1150000 -1040000 front 0)
+      (place C11 1150000 -960000 front 0)
+      (place C2 1150000 -1150000 front 0)
+      (place C10 1150000 -880000 front 0)
+    )
+    (component "PitClaw:MJ1-2503A"
+      (place J5 1300000 -500000 front 90)
+      (place J4 1130000 -500000 front 90)
+      (place J6 1470000 -500000 front 90)
+    )
+    (component "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal"
+      (place D3 1550000 -810000 front 270)
+    )
+    (component Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal
+      (place R12 1150000 -1080000 front 0)
+      (place R3 1030000 -1020000 front 0)
+      (place R16 1260000 -920000 front 0)
+      (place R5 1030000 -1060000 front 0)
+      (place R13 1260000 -880000 front 0)
+      (place R10 1150000 -920000 front 0)
+      (place R11 1150000 -1000000 front 0)
+    )
+    (component Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal::1
+      (place R4 1030000 -750000 front 270)
+      (place R14 1260000 -950000 front 270)
+      (place R2 1070000 -640000 front 270)
+      (place R6 1070000 -750000 front 270)
+      (place R15 1260000 -1060000 front 270)
+      (place R1 1030000 -645000 front 270)
+    )
+    (component PitClaw:Piezo_TDK_PS1240P02BT_D12.2_P5
+      (place BZ1 1043000 -930000 front 0)
+    )
+    (component Capacitor_THT:CP_Radial_D8.0mm_P3.50mm
+      (place C3 1532500 -645000 front 0)
+    )
+    (component PitClaw:Mount_M3_D3.2_CLEARANCE
+      (place H4 1555000 -1125000 front 0)
+      (place H3 1045000 -1125000 front 0)
+      (place H1 1045000 -545000 front 0)
+      (place H2 1555000 -545000 front 0)
+    )
+    (component PitClaw:TRACO_TSR_2N_SIP3
+      (place U2 1170000 -1215000 front 0)
+    )
+    (component Capacitor_THT:CP_Radial_D10.0mm_P5.00mm
+      (place C1 1430000 -1090000 front 0)
+    )
+    (component "PitClaw:Tensility_54-00133_Horizontal"
+      (place J9 1265000 -1299000 front 90)
+    )
+    (component PitClaw:IRF5305_TO220_Horizontal_TabDown
+      (place Q1 1433000 -910000 front 0)
+    )
+    (component "PitClaw:RJHSE-5080_DRAFT"
+      (place J2 1130600 -1358800 front 180)
+    )
+    (component Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical
+      (place JP1 1550000 -735000 front 0)
+    )
+    (component PitClaw:ADS1115_Blue_1x10_DRAFT
+      (place J8 1130000 -830000 front 0)
+    )
+    (component PitClaw:Adafruit5807_M2_Mount
+      (place H6 1519930 -1378170 front 0)
+      (place H5 1367530 -1378170 front 0)
+    )
+    (component "Connector_JST:JST_XH_B8B-XH-A_1x08_P2.50mm_Vertical"
+      (place J3 1120000 -620000 front 0)
+    )
+    (component PitClaw:C_TDK_FG28X7R1H104KNT06_P5::1
+      (place C4 1305000 -1200000 front 270)
+    )
+    (component PitClaw:Omron_G5Q1_SPDT_MaxBody
+      (place K1 1303400 -963300 front 270)
+    )
+    (component "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal::1"
+      (place D2 1415000 -955000 front 0)
+    )
+    (component "Package_TO_SOT_THT:TO-92_Inline_Wide"
+      (place Q2 1055000 -1240000 front 0)
+    )
+  )
+  (was_is
+  )
+  (routes 
+    (resolution um 10)
+    (parser
+      (host_cad "KiCad's Pcbnew")
+      (host_version 9.0.6)
+    )
+    (library_out 
+      (padstack "Via[0-1]_800:400_um"
+        (shape
+          (circle F.Cu 8000 0 0)
+        )
+        (shape
+          (circle B.Cu 8000 0 0)
+        )
+        (attach off)
+      )
+      (padstack "Via[0-1]_1200:600_um"
+        (shape
+          (circle F.Cu 12000 0 0)
+        )
+        (shape
+          (circle B.Cu 12000 0 0)
+        )
+        (attach off)
+      )
+      (padstack "Via[0-1]_800:400_um"
+        (shape
+          (circle F.Cu 8000 0 0)
+        )
+        (shape
+          (circle B.Cu 8000 0 0)
+        )
+        (attach off)
+      )
+      (padstack "Via[0-1]_1200:600_um"
+        (shape
+          (circle F.Cu 12000 0 0)
+        )
+        (shape
+          (circle B.Cu 12000 0 0)
+        )
+        (attach off)
+      )
+      (padstack "Via[0-1]_1200:600_um"
+        (shape
+          (circle F.Cu 12000 0 0)
+        )
+        (shape
+          (circle B.Cu 12000 0 0)
+        )
+        (attach off)
+      )
+      (padstack "Via[0-1]_1200:600_um"
+        (shape
+          (circle F.Cu 12000 0 0)
+        )
+        (shape
+          (circle B.Cu 12000 0 0)
+        )
+        (attach off)
+      )
+      (padstack "Via[0-1]_800:400_um"
+        (shape
+          (circle F.Cu 8000 0 0)
+        )
+        (shape
+          (circle B.Cu 8000 0 0)
+        )
+        (attach off)
+      )
+    )
+    (network_out 
+      (net /+12V
+        (wire
+          (path B.Cu 3000
+            1007715 -1042140
+            1058790 -1042140
+            1147415 -1130765
+            1187125 -1130765
+          )
+        )
+        (via "Via[0-1]_800:400_um" 1007715 -1042140
+        )
+        (wire
+          (path F.Cu 3000
+            1030000 -645000
+            1007715 -667285
+            1007715 -1042140
+          )
+        )
+      )
+    )
+  )
+)

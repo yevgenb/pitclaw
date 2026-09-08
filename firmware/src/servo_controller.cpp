@@ -12,6 +12,8 @@ ServoController::ServoController()
 
 void ServoController::begin() {
 #ifndef NATIVE_BUILD
+    // Keep the LEDC fallback away from fan, buzzer and LCD backlight timers.
+    ESP32PWM::allocateTimer(SERVO_PWM_TIMER);
     _servo.setPeriodHertz(50);  // Standard 50Hz servo frequency
     _servo.attach(PIN_SERVO, SERVO_MIN_US, SERVO_MAX_US);
     _attached = true;

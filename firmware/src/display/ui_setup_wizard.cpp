@@ -18,6 +18,12 @@ static uint8_t wizard_step = 0;  // 0=welcome, 1=units, 2=wifi, 3=probes, 4=hwte
 // Wizard screens (one per step)
 static lv_obj_t* wiz_screens[6] = { nullptr };
 
+static lv_obj_t* lbl_wiz_wifi_title = nullptr;
+static lv_obj_t* lbl_wiz_wifi_instructions = nullptr;
+static lv_obj_t* wiz_wifi_qr = nullptr;
+static lv_obj_t* wiz_wifi_qr_frame = nullptr;
+static char wiz_wifi_qr_data[128] = {};
+
 // Probe check labels (step 3)
 static lv_obj_t* lbl_wiz_pit   = nullptr;
 static lv_obj_t* lbl_wiz_meat1 = nullptr;
@@ -176,7 +182,7 @@ static void create_step_units() {
 }
 
 // --------------------------------------------------------------------------
-// Step 2: Wi-Fi (QR code + instructions)
+// Step 2: Wi-Fi (live connection state, QR code + instructions)
 // --------------------------------------------------------------------------
 
 static void create_step_wifi() {
@@ -189,31 +195,36 @@ static void create_step_wifi() {
     lv_obj_set_style_text_color(lbl, COLOR_TEXT, 0);
     lv_obj_set_style_text_font(lbl, &lv_font_montserrat_24, 0);
     lv_obj_align(lbl, LV_ALIGN_TOP_MID, 0, 10);
+    lbl_wiz_wifi_title = lbl;
 
-    // QR code for Wi-Fi auto-connect
-    // LVGL v9 qrcode: lv_qrcode_create returns an image canvas
-    lv_obj_t* qr = lv_qrcode_create(scr);
-    lv_qrcode_set_size(qr, 140);
-    lv_qrcode_set_dark_color(qr, COLOR_TEXT);
-    lv_qrcode_set_light_color(qr, COLOR_BG);
-    lv_qrcode_update(qr, "WIFI:T:WPA;S:" AP_SSID ";P:" AP_PASSWORD ";;",
-                     strlen("WIFI:T:WPA;S:" AP_SSID ";P:" AP_PASSWORD ";;"));
-    lv_obj_align(qr, LV_ALIGN_LEFT_MID, 20, 10);
+    // Use a white quiet zone and dark modules for reliable phone scanning.
+    // The caller supplies the live state before any join code is displayed.
+    wiz_wifi_qr_frame = lv_obj_create(scr);
+    lv_obj_set_size(wiz_wifi_qr_frame, 156, 156);
+    lv_obj_align(wiz_wifi_qr_frame, LV_ALIGN_LEFT_MID, 16, -8);
+    lv_obj_set_style_bg_color(wiz_wifi_qr_frame, lv_color_white(), 0);
+    lv_obj_set_style_border_width(wiz_wifi_qr_frame, 0, 0);
+    lv_obj_set_style_radius(wiz_wifi_qr_frame, 0, 0);
+    lv_obj_set_style_pad_all(wiz_wifi_qr_frame, 0, 0);
+    lv_obj_remove_flag(wiz_wifi_qr_frame, LV_OBJ_FLAG_SCROLLABLE);
+    wiz_wifi_qr = lv_qrcode_create(wiz_wifi_qr_frame);
+    lv_qrcode_set_size(wiz_wifi_qr, 140);
+    lv_qrcode_set_dark_color(wiz_wifi_qr, lv_color_black());
+    lv_qrcode_set_light_color(wiz_wifi_qr, lv_color_white());
+    lv_qrcode_set_quiet_zone(wiz_wifi_qr, true);
+    lv_obj_center(wiz_wifi_qr);
+    lv_obj_add_flag(wiz_wifi_qr_frame, LV_OBJ_FLAG_HIDDEN);
+    wiz_wifi_qr_data[0] = '\0';
 
     // Instructions
     lv_obj_t* instr = lv_label_create(scr);
-    lv_label_set_text(instr,
-        "1. Scan QR code with\n"
-        "   your phone\n\n"
-        "2. Connect to\n"
-        "   \"" AP_SSID "\" network\n\n"
-        "3. Enter your Wi-Fi\n"
-        "   credentials in the\n"
-        "   portal that opens");
+    lv_label_set_text(instr, "Checking Wi-Fi...");
     lv_obj_set_style_text_color(instr, COLOR_TEXT, 0);
-    lv_obj_set_style_text_font(instr, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(instr, &lv_font_montserrat_16, 0);
     lv_obj_set_style_text_line_space(instr, 2, 0);
-    lv_obj_align(instr, LV_ALIGN_RIGHT_MID, -20, 10);
+    lv_obj_set_width(instr, 278);
+    lv_obj_set_pos(instr, 182, 54);
+    lbl_wiz_wifi_instructions = instr;
 
     add_next_button(scr, "Next");
 }
@@ -416,6 +427,53 @@ bool ui_wizard_is_active() {
     return wizard_active;
 }
 
+void ui_wizard_update_wifi(const WifiInfo& info) {
+    if (!wizard_active || !lbl_wiz_wifi_instructions) return;
+
+    char instructions[320];
+    char qrData[sizeof(wiz_wifi_qr_data)] = {};
+    const char* title = "Wi-Fi Setup";
+    if (info.apMode) {
+        snprintf(qrData, sizeof(qrData), "WIFI:T:WPA;S:" AP_SSID ";P:" AP_PASSWORD ";;");
+        snprintf(instructions, sizeof(instructions),
+                 "Join " AP_SSID "\nPassword: " AP_PASSWORD "\n\n"
+                 "Stay connected if your phone\nsays \"No Internet\".\n"
+                 "Open http://%s", info.ip ? info.ip : "192.168.4.1");
+    } else if (info.connected) {
+        title = "Wi-Fi Connected";
+        snprintf(qrData, sizeof(qrData), "http://%s", info.ip ? info.ip : "bbq.local");
+        snprintf(instructions, sizeof(instructions),
+                 "Connected to:\n%s\n\n"
+                 "On the same Wi-Fi, scan\nthis code or open:\n%s",
+                 info.ssid ? info.ssid : "", qrData);
+    } else {
+        snprintf(instructions, sizeof(instructions),
+                 "Reconnecting to Wi-Fi...\n\n"
+                 "Setup details will appear\nwhen the hotspot is ready.\n\n"
+                 "You can also tap Next\nto continue offline.");
+    }
+
+    if (strcmp(lv_label_get_text(lbl_wiz_wifi_title), title) != 0) {
+        lv_label_set_text(lbl_wiz_wifi_title, title);
+    }
+    if (strcmp(lv_label_get_text(lbl_wiz_wifi_instructions), instructions) != 0) {
+        lv_label_set_text(lbl_wiz_wifi_instructions, instructions);
+    }
+    if (qrData[0] == '\0') {
+        lv_obj_add_flag(wiz_wifi_qr_frame, LV_OBJ_FLAG_HIDDEN);
+        wiz_wifi_qr_data[0] = '\0';
+    } else if (strcmp(wiz_wifi_qr_data, qrData) != 0) {
+        lv_result_t result = lv_qrcode_update(wiz_wifi_qr, qrData, strlen(qrData));
+        if (result == LV_RESULT_OK) {
+            snprintf(wiz_wifi_qr_data, sizeof(wiz_wifi_qr_data), "%s", qrData);
+            lv_obj_remove_flag(wiz_wifi_qr_frame, LV_OBJ_FLAG_HIDDEN);
+        } else {
+            lv_obj_add_flag(wiz_wifi_qr_frame, LV_OBJ_FLAG_HIDDEN);
+            wiz_wifi_qr_data[0] = '\0';
+        }
+    }
+}
+
 void ui_wizard_set_callbacks(WizardFanTestCb fanCb,
                               WizardServoTestCb servoCb,
                               WizardBuzzerTestCb buzzerCb,
@@ -472,6 +530,7 @@ void ui_wizard_update_probes(float pit, float meat1, float meat2,
 // Native test stubs
 void ui_wizard_init() {}
 bool ui_wizard_is_active() { return false; }
+void ui_wizard_update_wifi(const WifiInfo&) {}
 void ui_wizard_set_callbacks(WizardFanTestCb, WizardServoTestCb,
                               WizardBuzzerTestCb, WizardUnitsCb, WizardCompleteCb) {}
 void ui_wizard_update_probes(float, float, float, bool, bool, bool) {}

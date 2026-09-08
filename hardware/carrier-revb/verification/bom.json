@@ -1,0 +1,10 @@
+{
+  "revision": "B-DK1",
+  "totalUSD": 27.95,
+  "populatedPCBReferences": 45,
+  "dnpPCBReferences": 2,
+  "purchaseLines": 30,
+  "priceTierBoundaryTest": true,
+  "formulaErrors": "{\"kind\":\"notice\",\"message\":\"Cell search matched 0 entries.\"}",
+  "status": "Historical B-DK1 snapshot; current values are in bom-verification.json"
+}

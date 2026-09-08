@@ -1,0 +1,25 @@
+{
+  "board": "/Users/eugene.borokhov/Documents/Code/pitclaw/hardware/carrier-revb/pitclaw-carrier.kicad_pcb",
+  "sha256": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+  "project_sha256": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf",
+  "description": "Ground pours omitted for routing readability. Native plots from temporary review copies; original PCB unchanged. Filled copper views one directory above are authoritative.",
+  "artifacts": [
+    {
+      "file": "carrier-front-copper.svg",
+      "png": "carrier-front-copper.png",
+      "layers": "F.Cu,F.Silkscreen,Edge.Cuts",
+      "view": "component side",
+      "svg_sha256": "c0a10140b849d801368c2cef9085d3bf4a3da55548e11dc986af334964a0ed9e",
+      "png_sha256": "26010813b362b7a37b9e51c2e4e318f94631b969e10e7cfd7cb4e7b82d9d0a24"
+    },
+    {
+      "file": "carrier-back-copper.svg",
+      "png": "carrier-back-copper.png",
+      "layers": "B.Cu,B.Silkscreen,Edge.Cuts",
+      "view": "solder side (mirrored)",
+      "review_annotation": "Component reference labels added on the temporary copy for readability; these are not manufactured back silkscreen.",
+      "svg_sha256": "78d7302396346bdf9d143416b1f742ce483e54e6637fd1aeec4066622b7af6ca",
+      "png_sha256": "8865250cb3654d2397ac728cdac9e24c56ed113c0e560cea3f873e2dfa8a10ce"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "result": "PASS",
+  "archive": "pitclaw-carrier-jlcpcb.zip",
+  "pcb_sha256": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+  "gerbonara_version": "1.6.3",
+  "shapely_version": "2.1.2",
+  "profile_centerline_mm": [
+    60,
+    92
+  ],
+  "closed_profile_segments": 4,
+  "gerber_layers": [
+    "bottom/copper",
+    "bottom/mask",
+    "bottom/silk",
+    "mechanical/outline",
+    "top/copper",
+    "top/mask",
+    "top/silk"
+  ],
+  "plated_holes_and_slots": 120,
+  "nonplated_holes": 11,
+  "plated_slots": 12,
+  "drills_match_native_positions_sizes_orientations": true,
+  "maximum_drill_coordinate_rounding_mm": 0.0005,
+  "copper_bounds_mm": {
+    "top": [
+      100.5005,
+      -141.4995,
+      159.4995,
+      -50.5005
+    ],
+    "bottom": [
+      100.5005,
+      -141.4995,
+      159.4995,
+      -50.5005
+    ]
+  },
+  "copper_edge_clearance_mm": {
+    "top": 0.5005,
+    "bottom": 0.5005
+  },
+  "electrical_pad_landings": 104,
+  "via_bridges": 16,
+  "nets_checked": 31,
+  "exported_copper_shorts": {},
+  "exported_copper_opens": {},
+  "parser_warnings": [
+    "G90 header statement found after end of header",
+    "Layer \"bottom paste\" not found. Found layers: top copper, top mask, top silk, bottom copper, bottom mask, bottom silk, mechanical outline",
+    "Layer \"top paste\" not found. Found layers: top copper, top mask, top silk, bottom copper, bottom mask, bottom silk, mechanical outline"
+  ],
+  "scope": "Exact archived CAM parsed independently; approximate vector connectivity compared with native pad nets. Does not qualify thermal behavior or physical fit."
+}
+{
+  "archive": "/Users/eugene.borokhov/Documents/Code/pitclaw/hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/pitclaw-carrier-jlcpcb.zip",
+  "pcb_sha256": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+  "archive_sha256": "d75ea76ef0e9b0892459d3f8e0c6367630f1d467716bc774757389a562409497"
+}

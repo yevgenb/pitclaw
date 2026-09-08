@@ -1,0 +1,10 @@
+{
+  "missing-drill": {
+    "correctly_rejected": true,
+    "reason": "AssertionError"
+  },
+  "copper-short": {
+    "correctly_rejected": true,
+    "reason": "AssertionError: ('CAM connectivity mismatch', {\"('bottom', 27)\": ['/+5V_WT32', '/GND']}, {})"
+  }
+}

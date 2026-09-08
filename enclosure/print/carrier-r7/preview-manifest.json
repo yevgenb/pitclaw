@@ -1,0 +1,18 @@
+{
+  "renderer": "CPU orthographic triangle rasterizer with per-pixel depth buffer",
+  "renderer_sha256": "5b78e9d8863a53b5dbeacf4773472e93d8a46a5ca488d61aa44ed5437d842f90",
+  "mesh_sha256": {
+    "insert-coupon.stl": "ae7ea4d04560875b8cd0fe6083c8da4c2cd6aeab0f6031d84b585f22d1df8b9e",
+    "carrier-retainer.stl": "78eddd6edbd03655eac90aca33991da4cdf6f804bca3bf04a1e1b94c004bf004",
+    "fit-coupon.stl": "c4508b22489b88617b3773595fbe2312d8edffdcca63d35d4fe0efcc517be0da",
+    "carrier-top.stl": "daeef5a0447248caef9e0bc6aaa04e9f58be82226e528c0b52ca2ee4c3c2ab49",
+    "carrier-bottom.stl": "01a54e90b99fc2d1460c9da24e997a7a7fce5433b012b7d4c2108a7c8051e988"
+  },
+  "notes": "Actual exported meshes. Assembled image adds labeled nominal display glass only. No toolpaths.",
+  "images": [
+    "preview-assembled.png",
+    "preview-exploded.png",
+    "preview-power-face.png",
+    "preview-print-parts.png"
+  ]
+}

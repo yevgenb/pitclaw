@@ -1,5 +1,22 @@
 # Pit Claw 3D Printed Parts
 
+The current Rev B design is the [landscape carrier enclosure](carrier-case.md):
+two outer halves, display in the top, carrier in the bottom and a thin internal
+display retainer. All power connections occupy one short end, with all three
+probe jacks at the other. Its 104 × 86 × 44.9 mm geometry and exported STLs are
+r7 fit prototypes, verified against the routed carrier. Download the
+[STL package](print/carrier-r7/pitclaw-carrier-case-r7.zip) and follow the
+[0.4 mm nozzle print guide](print/carrier-r7/README.md); print the two coupons
+first to check PETG or HT-PLA fit. See the design guide for remaining measurements.
+
+## Legacy controller and fan assembly
+
+**Legacy controller enclosure only.** `bbq-case.scad` and its controller STLs target
+the 50 × 70 mm perfboard, a 44 × 64 mm carrier mounting pattern and panel-mount
+jacks. They do not fit the Rev B 60 × 92 mm carrier, its 51 × 58 mm M3 mounts
+or its PCB-mounted connectors. Do not print these as a Rev B enclosure; finish
+the carrier fit checks using `carrier-case.scad`. The fan assembly is separate.
+
 3D-printable enclosure for the Pit Claw temperature controller and fan/damper assembly for UDS (Ugly Drum Smoker). All designs are parametric OpenSCAD files.
 
 ## Files
@@ -9,6 +26,10 @@
 | `bbq-case.scad` | Controller enclosure (front bezel, rear shell, kickstand) |
 | `bbq-fan-assembly.scad` | Fan + damper housing and UDS pipe adapter |
 | `stl/` | Pre-exported STL files ready for slicing |
+
+Assembled controller enclosure: **69.5 x 101.5 x 41.4mm**. The depth is set by the internal stack — carrier standoffs, carrier board, its components, clearance, and the display board — so trimming `carrier_d` is the way to make it thinner.
+
+There is no USB pass-through. The WT32-SC01 Plus's USB-C port faces into the cavity from the underside of the board, ~25mm of occupied space away from any wall, so no cutout can reach it. USB is only needed for the initial flash (before assembly), the serial console, on-device tests, and recovery from a failed OTA — all of which mean opening the case, and the case is a snap fit. If you want panel USB access, fit a USB-C extension pigtail and size a hole for that connector.
 
 ## Print Settings
 
@@ -57,9 +78,10 @@ Fan assembly (`bbq-fan-assembly.scad`):
 
 | Qty | Item | Notes |
 |-----|------|-------|
-| 4 | M3x6mm screws | Mount WT32-SC01 Plus PCB to bezel standoffs |
+| 4 | M3x6mm self-tapping screws | Mount WT32-SC01 Plus PCB to bezel standoffs |
+| 4 | M3x8mm self-tapping screws | Mount carrier board to rear shell standoffs |
 
-The front bezel snaps onto the rear shell — no screws needed for case closure. The carrier board rests on standoffs inside the shell and is held in place by panel-mount hardware nuts and case closure.
+The front bezel snaps onto the rear shell — no screws needed for case closure. Both boards are screwed down: nothing else inside the case reaches the carrier board to hold it.
 
 ### Fan Assembly
 
@@ -77,7 +99,7 @@ The front bezel snaps onto the rear shell — no screws needed for case closure.
 
 1. **Mount the WT32-SC01 Plus**: Place the display board face-down into the front bezel. The display glass sits against the bezel lip. Secure with 4x M3x6mm screws through the PCB mounting holes into the bezel standoffs.
 
-2. **Mount the carrier board**: Place the carrier perfboard onto the standoffs inside the rear shell. The board rests on the pegs and is held by panel-mount hardware.
+2. **Mount the carrier board**: Place the carrier perfboard onto the standoffs inside the rear shell and secure with 4x M3x8mm self-tapping screws.
 
 3. **Install panel-mount connectors**: Thread the 3x 2.5mm mono probe jacks and 1x DC barrel jack through their respective holes in the rear shell bottom edge. Secure with their mounting nuts from inside.
 
@@ -85,7 +107,7 @@ The front bezel snaps onto the rear shell — no screws needed for case closure.
 
 5. **Close the enclosure**: Align the bezel's snap-fit rim with the rear shell opening and press firmly until the catches click into place. No screws needed.
 
-6. **Attach kickstand** (optional): Press the kickstand hinge tab into the slot on the rear face of the shell. The kickstand should click in and swing freely.
+6. **Attach kickstand** (optional): Before closing the case, press the kickstand's hinge rod into the slot in the shell's back wall **from inside the shell**, so the arm passes through the slot to the outside. The slot is 0.4mm narrower than the rod — it is a press fit, and that friction is what retains the kickstand and holds its angle. Verify it grips before closing the case; if the fit is loose or too tight on your printer, adjust `ks_hinge_slot_w`.
 
 ### Fan + Damper Assembly
 
@@ -130,6 +152,8 @@ Both `.scad` files have all key dimensions as variables at the top. Common reaso
 - **Different servo**: Update `servo_w`, `servo_h`, `servo_d`, `servo_tab_w`
 - **Thicker walls**: Increase `wall` (case) or `housing_wall` (fan assembly)
 - **Tighter/looser fit**: Adjust `tolerance` or `housing_tol`
+- **Case depth**: Driven by `carrier_d`, `carrier_standoff_h`, `board_gap`, `pcb_recess_d` — `outer_d` is derived from these, not set directly
+- **Display board seating**: `pcb_standoff_h` is the display module thickness in front of the WT32 PCB; measure your board and correct it before printing the bezel
 - **Different pipe size**: Update `npt_od` and `adapter_id` for your intake pipe
 
 Open the `.scad` file in OpenSCAD, modify the variables, press F5 to preview, and F6 to render.

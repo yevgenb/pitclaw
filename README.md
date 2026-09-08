@@ -29,13 +29,24 @@ Browser-based PWA with live temperature graph, predictive done-time curves, and 
 - **OTA updates**: Flash new firmware from the browser — no USB after initial setup
 - **Error detection**: Probe disconnect/short, fire-out warning, Wi-Fi auto-reconnect
 - **Calibration**: Per-probe Steinhart-Hart coefficients with offset adjustment
-- **3D printable enclosure**: PETG case with snap-fit assembly
+- **3D printable enclosure**: Landscape case prototype with screw-fastened top and bottom
 
 ## Hardware
 
-### Bill of Materials
+### Carrier PCB engineering draft
 
-All internal electronics mount on a single 50x70mm carrier perfboard behind the display. Requires basic soldering (~20 joints). Enclosure target is ~100x70x40mm.
+The active prototype design is the [Rev B-T2F0-A5807-S4 through-hole carrier](hardware/carrier-revb/README.md),
+with PCB-mounted RJ45, probe jacks and a 5.5 × 2.1 mm 12 V inlet, a screw-mounted Adafruit 5807 USB-C PD breakout, an automatic relay PD/wall selector and a
+TSR 2-2450N 5 V / 2 A converter. Its [priced DigiKey BOM](hardware/carrier-revb/bom/README.md)
+and [wiring](docs/wiring.md) intentionally omit F1–F4. The carrier has routed copper, schematic/PCB previews and a
+[JLCPCB bare-board prototype package](hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/README.md).
+Physical module/enclosure fit and load qualification remain. S3 fixes a barrel-jack wiring error that would short
+USB-PD in S2; use the current wiring. K1 now automatically selects wall power
+when present, with USB-PD as the default. No internal source-selection jumper is needed.
+
+### Legacy perfboard bill of materials
+
+All internal electronics mount on a single 50x70mm carrier perfboard behind the display. Requires basic soldering (~20 joints). Enclosure is 101.5x69.5x41.4mm.
 
 | # | Component | Product | Qty | Price | Link |
 |---|-----------|---------|-----|-------|------|
@@ -65,15 +76,18 @@ Compatible alternatives: Maverick ET-72/73 replacement probes (different Steinha
 
 ### 3D Printed Parts
 
-PETG-printed enclosure and fan assembly. All designs are parametric [OpenSCAD](https://openscad.org/) source files with pre-exported STLs ready for slicing.
+The [Rev B landscape enclosure](enclosure/carrier-case.md) puts power connections
+on one short end and three probe jacks on the other. Its top protects and retains
+the display; the carrier mounts independently in the bottom with heat-set
+inserts. The 104 × 86 × 44.9 mm model and STLs are fit prototypes.
 
-- **Front bezel** — holds the display
-- **Rear shell** — houses carrier board and panel-mount connectors
-- **Kickstand** — detachable flip-out stand
+- **Top bezel** — recessed display, with a thin internal retaining frame
+- **Bottom shell** — carrier board and connector openings
 - **Blower housing** — holds fan, servo, and butterfly damper
 - **UDS pipe adapter** — mounts to 3/4" NPT pipe nipple on drum
 
-See [3D Printed Parts](enclosure/README.md) for print settings, hardware list, and assembly instructions.
+The older snap-fit `bbq-case.scad`, controller STLs and kickstand fit the legacy
+perfboard only. See [3D Printed Parts](enclosure/README.md) for the separate guides.
 
 ## Getting Started
 
@@ -112,7 +126,7 @@ pio run -e wt32_sc01_plus --target upload
 pio run -e wt32_sc01_plus --target uploadfs
 ```
 
-After this initial flash, all future firmware updates can be done over Wi-Fi at `http://bbq.local/update`.
+Do this before closing the case — the enclosure has no USB pass-through, so the board's USB-C port is only reachable with the bezel off. After this initial flash, all future firmware and web UI updates can be done over Wi-Fi at `http://bbq.local/update`.
 
 ### 4. First Boot
 
@@ -142,7 +156,8 @@ Hold your finger on the touchscreen for 10 seconds during the boot splash screen
 |-------|--------|
 | [Firmware Development](docs/firmware-development.md) | Building, flashing, testing, architecture, configuration |
 | [Web UI Development](docs/web-development.md) | Simulator, web UI editing, cook profiles, WebSocket protocol |
-| [Wiring](docs/wiring.md) | Wiring diagram, pin assignments, carrier board layout |
+| [Wiring](docs/wiring.md) | Current PCB net list and connector pin assignments |
+| [Carrier PCB draft](hardware/carrier-revb/README.md) | KiCad design, layout assumptions, BOM and release gates |
 | [3D Printed Parts](enclosure/README.md) | Print settings, hardware list, assembly instructions, parametric customization |
 
 ## License

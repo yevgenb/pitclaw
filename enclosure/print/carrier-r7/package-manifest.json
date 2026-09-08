@@ -1,0 +1,43 @@
+{
+  "revision": "carrier-enclosure-r7",
+  "created_utc": "2026-09-07T20:59:04.063006+00:00",
+  "status": "CAD-verified fit prototype; physical fit pending",
+  "print_stl_count": 5,
+  "geometry_checks_passed": 12,
+  "protected_manufacturing_files_unchanged": {
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pcb": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pro": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf",
+    "hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/pitclaw-carrier-jlcpcb.zip": "d75ea76ef0e9b0892459d3f8e0c6367630f1d467716bc774757389a562409497"
+  },
+  "files_sha256": {
+    "carrier-top.stl": "daeef5a0447248caef9e0bc6aaa04e9f58be82226e528c0b52ca2ee4c3c2ab49",
+    "carrier-bottom.stl": "01a54e90b99fc2d1460c9da24e997a7a7fce5433b012b7d4c2108a7c8051e988",
+    "carrier-retainer.stl": "78eddd6edbd03655eac90aca33991da4cdf6f804bca3bf04a1e1b94c004bf004",
+    "fit-coupon.stl": "c4508b22489b88617b3773595fbe2312d8edffdcca63d35d4fe0efcc517be0da",
+    "insert-coupon.stl": "ae7ea4d04560875b8cd0fe6083c8da4c2cd6aeab0f6031d84b585f22d1df8b9e",
+    "README.md": "17b9303c4a5b035a2b82c90115187a9caaac64cff354db50c8c1eeab2432f891",
+    "final-review.md": "1b1153bcc2a413c5015e984d04a85cfd70ff065c28a4567c8e8bc681883d4c0d",
+    "fit-verification.json": "c4c7d365e663abd145ba36e4167bb111aba28c59d259bbd8f2ac0ba62ca8c1dc",
+    "export-manifest.json": "a982e2668f4e334dd2f90c192315e61a3efcac265178c82a2f57ee019a7cb4e8",
+    "preview-manifest.json": "287e6c5f396881693a7ceca4e8fa4150009a5be10ce9f2565984b18581ed5065",
+    "preview-assembled.png": "01827787de364a4e3e3ab92b570869bff992aee37af28e53c5e81c27439caf13",
+    "preview-exploded.png": "462e8c0791267192307c61185abf2668e5e51c4260004c622f6e883759672752",
+    "preview-power-face.png": "4d56c771c0fb445c382c4494fadff7b2948f894af23b55706ab8eb47f60ab08e",
+    "preview-print-parts.png": "1d4cd8a9c4774af640eed404a214dcb892617403650180b57ef7321aa7ac0107",
+    "source/carrier-case.scad": "020d5e0470524c1742362970488d83ba45f6cac7366a4743800ca568c94a07bf",
+    "source/carrier-interface.scad": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c",
+    "logs/nominal-insertion-check.log": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
+    "logs/nominal-electronics-closure-check.log": "27477ddd6e7e422a21159ea81e62c6adf225e249d1912907f48408d05c518228",
+    "logs/nominal-carrier-installation-check.log": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
+    "logs/low-stack-x-minus-0.2-carrier-installation-check.log": "82b718cb4e7e35dd54a2070e0ae81716c55b2c1b011bac4c8349837104e17436",
+    "logs/low-stack-x-minus-0.2-electronics-closure-check.log": "e3f926cb217dce266350f6c0fe9af8e6ea9303c7ab60753a75152551211f3b87",
+    "logs/low-stack-x-plus-0.2-electronics-closure-check.log": "bc7174d4f55b214063d75360f42686b75ff8b024166502701535e58328565353",
+    "logs/low-stack-x-plus-0.2-carrier-installation-check.log": "582b6c65cab97bdc03bef3a40784e8775afcf37c5351e59ae935e7f3c9ab1cc5",
+    "logs/nominal-shell-closure-check.log": "4a4232c1212dd89b14bc29ff06bb5c6e40dd7db1f224626a6f1268bb7a91e025",
+    "logs/high-stack-x-minus-0.2-electronics-closure-check.log": "36a4f4f0dc29d81a70f67d6371f1d621af42ee0685f6bd822613d27f58342697",
+    "logs/high-stack-x-minus-0.2-carrier-installation-check.log": "c5474c9e1237516add4f38bf22ba0b82fcff1820b994c602a375bb0ca78b0da7",
+    "logs/high-stack-x-plus-0.2-carrier-installation-check.log": "7bb6ae7d67d750dfc1f0a0595b6916722c2752087695c559c8cb329ac9f1e946",
+    "logs/high-stack-x-plus-0.2-electronics-closure-check.log": "0ca3c5029dfddb1064e5bdebb51a4150c49eff77a5b2c94f3d6fa141537f7a11"
+  },
+  "excluded": "Intermediate reports and nonprintable diagnostic intersection STL remain outside the print ZIP."
+}

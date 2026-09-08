@@ -7,7 +7,7 @@ class FanController {
 public:
     FanController();
 
-    // Configure PWM channel at 25kHz. Call once from setup().
+    // Configure power PWM at FAN_PWM_FREQ. Call once from setup().
     void begin();
 
     // Set fan speed from 0-100%. Handles kick-start, min-speed clamping,
@@ -58,4 +58,5 @@ private:
 
     // Manual override mode
     bool _manualMode;
+    bool _pwmReady;
 };

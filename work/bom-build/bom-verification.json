@@ -1,0 +1,28 @@
+{
+  "revision": "B-T2F0-A5807-S4",
+  "totalUSD": 29.21,
+  "carrierAndModuleUSD": 28.25,
+  "matesAndShuntUSD": 0.96,
+  "populatedPCBReferences": 37,
+  "dnpPCBReferences": 0,
+  "purchaseLines": 27,
+  "boardMountedModules": 1,
+  "removedReferences": [
+    "Q3",
+    "R7",
+    "R19",
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "D1",
+    "C5",
+    "C7",
+    "C13",
+    "R17",
+    "R18",
+    "JP2"
+  ],
+  "priceTierBoundaryTest": true,
+  "formulaErrors": 0
+}

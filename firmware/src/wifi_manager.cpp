@@ -24,9 +24,16 @@ void WifiManager::begin(const char* ssid, const char* password) {
     WiFi.setHostname(WIFI_HOSTNAME);
 
     // Configure WiFiManager
-    _wifiManager.setConfigPortalTimeout(180);  // 3 minute timeout on portal
+    _wifiManager.setConfigPortalTimeout(0);    // Stay available until setup is complete
     _wifiManager.setConnectTimeout(15);         // 15 second connect timeout
     _wifiManager.setDebugOutput(true);
+
+    WiFi.mode(WIFI_STA);
+    if ((ssid == nullptr || ssid[0] == '\0') && !_wifiManager.getWiFiIsSaved()) {
+        Serial.println("[WIFI] No saved network; starting setup AP.");
+        startAP();
+        return;
+    }
 
     // If explicit credentials are provided, try connecting with them first
     if (ssid != nullptr && ssid[0] != '\0') {
@@ -105,6 +112,9 @@ void WifiManager::update() {
 
         // Check if a client has connected us to a network via the portal
         if (WiFi.status() == WL_CONNECTED) {
+            // process() normally destroys the portal after saving credentials.
+            // Stopping it twice dereferences the library's released server.
+            if (_wifiManager.getConfigPortalActive()) _wifiManager.stopConfigPortal();
             _apMode = false;
             _connected = true;
             _reconnectAttempts = 0;
@@ -223,6 +233,7 @@ void WifiManager::reconnect() {
 
 void WifiManager::startAP() {
 #ifndef NATIVE_BUILD
+    if (_onPortalStart) _onPortalStart();
     Serial.println("[WIFI] Starting AP mode for configuration...");
     Serial.printf("[WIFI] AP SSID: %s, Password: %s\n", AP_SSID, AP_PASSWORD);
 

@@ -11,24 +11,26 @@
 #include <cstring>
 
 #ifndef SIMULATOR_BUILD
-#include <TFT_eSPI.h>
+#include <PanelLan.h>
 
 // --------------------------------------------------------------------------
 // Display driver (hardware)
 // --------------------------------------------------------------------------
 
-static TFT_eSPI tft = TFT_eSPI();
+static PanelLan tft(BOARD_SC01_PLUS);
 
-static lv_color_t draw_buf1[DISPLAY_WIDTH * 40];
-static lv_color_t draw_buf2[DISPLAY_WIDTH * 40];
+// LVGL 9's lv_color_t is RGB888 regardless of the display's pixel format.
+static uint16_t draw_buf1[DISPLAY_WIDTH * 40];
+static uint16_t draw_buf2[DISPLAY_WIDTH * 40];
 
 static void disp_flush_cb(lv_display_t* disp, const lv_area_t* area, uint8_t* px_map) {
     uint32_t w = area->x2 - area->x1 + 1;
     uint32_t h = area->y2 - area->y1 + 1;
 
     tft.startWrite();
-    tft.setAddrWindow(area->x1, area->y1, w, h);
-    tft.pushColors((uint16_t*)px_map, w * h, true);
+    tft.pushImage(area->x1, area->y1, w, h,
+                  reinterpret_cast<lgfx::rgb565_t*>(px_map));
+    tft.waitDMA();
     tft.endWrite();
 
     lv_display_flush_ready(disp);
@@ -1224,17 +1226,32 @@ void ui_init() {
     (void)disp;
     (void)mouse;
 #else
-    tft.begin();
+    Serial.println("[DISPLAY] Initializing WT32-SC01 Plus i8080 LCD and FT6336U touch...");
+    // LCD and touch share RESET. Pulse it once before either driver starts.
+    pinMode(4, OUTPUT);
+    digitalWrite(4, LOW);
+    delay(20);
+    digitalWrite(4, HIGH);
+    delay(150);
+    if (!tft.begin()) {
+        Serial.println("[DISPLAY] Driver initialization reported a failure.");
+    }
+    tft.setColorDepth(16);
     tft.setRotation(1);
     tft.fillScreen(TFT_BLACK);
+    tft.setBrightness(255);
 
     lv_display_t* disp = lv_display_create(DISPLAY_WIDTH, DISPLAY_HEIGHT);
+    lv_display_set_color_format(disp, LV_COLOR_FORMAT_RGB565);
     lv_display_set_buffers(disp, draw_buf1, draw_buf2, sizeof(draw_buf1), LV_DISPLAY_RENDER_MODE_PARTIAL);
     lv_display_set_flush_cb(disp, disp_flush_cb);
 
     lv_indev_t* indev = lv_indev_create();
     lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
+    lv_indev_set_display(indev, disp);
     lv_indev_set_read_cb(indev, touchpad_read_cb);
+    Serial.printf("[DISPLAY] %dx%d RGB565, backlight GPIO45, touch I2C1 GPIO6/5\n",
+                  tft.width(), tft.height());
 #endif
 
     create_dashboard_screen();
@@ -1264,7 +1281,14 @@ void ui_switch_screen(Screen screen) {
         case Screen::SETTINGS:  target = scr_settings;  break;
     }
     if (target) {
-        lv_screen_load_anim(target, LV_SCR_LOAD_ANIM_FADE_IN, 200, 0, false);
+        // Splash cleanup can leave no active screen. A fade defers activation
+        // until an animation tick; a refresh before then asserts on the null
+        // screen and halts LVGL. Load immediately in that case.
+        if (lv_screen_active() == nullptr) {
+            lv_screen_load(target);
+        } else {
+            lv_screen_load_anim(target, LV_SCR_LOAD_ANIM_FADE_IN, 200, 0, false);
+        }
         current_screen = screen;
         update_nav_highlight(screen);
     }

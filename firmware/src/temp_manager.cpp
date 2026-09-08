@@ -29,7 +29,8 @@ bool TempManager::begin() {
 #ifndef NATIVE_BUILD
     Wire.begin(PIN_SDA, PIN_SCL);
 
-    if (!_ads.begin(ADS1115_ADDR, &Wire)) {
+    _adcReady = _ads.begin(ADS1115_ADDR, &Wire);
+    if (!_adcReady) {
         Serial.println("[TEMP] ADS1115 not found at 0x48!");
         return false;
     }
@@ -45,54 +46,51 @@ bool TempManager::begin() {
 
 void TempManager::update() {
 #ifndef NATIVE_BUILD
+    if (!_adcReady) return;  // Display-only bring-up: leave all probes unavailable.
     unsigned long now = millis();
     if (now - _lastSampleMs < TEMP_SAMPLE_INTERVAL_MS) {
         return;  // Not time to sample yet
     }
     _lastSampleMs = now;
 
+    const int16_t rawSupply = _ads.readADC_SingleEnded(ADC_CHANNEL_SUPPLY);
     for (uint8_t i = 0; i < NUM_PROBES; i++) {
         // Read raw ADC value from ADS1115 single-ended
         int16_t raw = _ads.readADC_SingleEnded(_adcChannels[i]);
-        _rawADC[i] = raw;
-
-        // Check for probe errors
-        if (raw >= ERROR_PROBE_OPEN_THRESHOLD) {
-            _status[i] = ProbeStatus::OPEN_CIRCUIT;
-            _firstReading[i] = true;  // Reset EMA on reconnect
-            continue;
-        }
-        if (raw <= ERROR_PROBE_SHORT_THRESHOLD) {
-            _status[i] = ProbeStatus::SHORT_CIRCUIT;
-            _firstReading[i] = true;
-            continue;
-        }
-
-        // Convert ADC to resistance
-        float resistance = adcToResistance(raw);
-        if (resistance <= 0.0f) {
-            _status[i] = ProbeStatus::SHORT_CIRCUIT;
-            _firstReading[i] = true;
-            continue;
-        }
-
-        // Convert resistance to temperature in Celsius
-        float tempC = resistanceToTempC(resistance, _probeConfig[i]);
-
-        // Apply calibration offset
-        tempC += _probeConfig[i].offset;
-
-        // Apply EMA filter
-        if (_firstReading[i]) {
-            _filteredTempC[i] = tempC;
-            _firstReading[i] = false;
-        } else {
-            _filteredTempC[i] = _emaAlpha * tempC + (1.0f - _emaAlpha) * _filteredTempC[i];
-        }
-
-        _status[i] = ProbeStatus::OK;
+        processSample(i, raw, rawSupply);
     }
 #endif
+}
+
+void TempManager::processSample(uint8_t probe, int16_t raw, int16_t rawSupply) {
+    if (probe >= NUM_PROBES) return;
+    _rawADC[probe] = raw;
+
+    // Without a plausible excitation measurement no probe temperature is valid.
+    if (rawSupply < ADC_SUPPLY_MIN_RAW || rawSupply > ADC_SUPPLY_MAX_RAW ||
+        raw >= ERROR_PROBE_OPEN_RATIO * rawSupply) {
+        _status[probe] = ProbeStatus::OPEN_CIRCUIT;
+        _firstReading[probe] = true;
+        return;
+    }
+    if (raw <= ERROR_PROBE_SHORT_THRESHOLD) {
+        _status[probe] = ProbeStatus::SHORT_CIRCUIT;
+        _firstReading[probe] = true;
+        return;
+    }
+
+    const float resistance = adcToResistance(raw, rawSupply);
+    const float tempC = resistanceToTempC(resistance, _probeConfig[probe]) +
+                        _probeConfig[probe].offset;
+
+    if (_firstReading[probe]) {
+        _filteredTempC[probe] = tempC;
+        _firstReading[probe] = false;
+    } else {
+        _filteredTempC[probe] = _emaAlpha * tempC +
+                              (1.0f - _emaAlpha) * _filteredTempC[probe];
+    }
+    _status[probe] = ProbeStatus::OK;
 }
 
 float TempManager::getTemp(uint8_t probe) const {
@@ -150,17 +148,11 @@ void TempManager::setUseFahrenheit(bool useF) {
     _useFahrenheit = useF;
 }
 
-float TempManager::adcToResistance(int16_t raw) const {
-    // Voltage divider: Vout = Vref * R_therm / (R_ref + R_therm)
-    // ADC value proportional to voltage: raw / ADC_MAX = Vout / Vref
-    // Solving for R_therm:
-    //   R_therm = R_ref * raw / (ADC_MAX - raw)
-    // But the standard NTC voltage divider with pullup:
-    //   Vout = Vcc * R_ref / (R_ref + R_therm)
-    //   raw / ADC_MAX = R_ref / (R_ref + R_therm)
-    //   R_therm = R_ref * (ADC_MAX / raw - 1)
-    if (raw <= 0) return 0.0f;
-    return REFERENCE_RESISTANCE * ((float)ADC_MAX_VALUE / (float)raw - 1.0f);
+float TempManager::adcToResistance(int16_t raw, int16_t rawSupply) const {
+    // Carrier: +3V3_A -> 10k pull-up -> ADC/probe node -> NTC -> GND.
+    // AIN3 measures the same excitation, independent of the ADC full-scale range.
+    if (raw <= 0 || raw >= rawSupply) return 0.0f;
+    return REFERENCE_RESISTANCE * (float)raw / (float)(rawSupply - raw);
 }
 
 float TempManager::resistanceToTempC(float resistance, const ProbeConfig& cfg) const {

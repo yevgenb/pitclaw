@@ -1,0 +1,938 @@
+{
+  "status": "ROUTED ENGINEERING PROTOTYPE - PHYSICAL QUALIFICATION PENDING",
+  "logical_pin_checks": 104,
+  "pcb_sha256": "ad0ad42e490f2b99894505aeef91572deda87427d5cea64148409fd53ec4bd97",
+  "schematic_sha256": "a4fff313bdfc015b015319d72fcf36141c30ada3bcf789706539fcdeef5e9dc4",
+  "project_rules_sha256": "8d510ae09c4f76b0408100b1f81751c48e02c06dc421e472826d25bebd64861c",
+  "schematic_pin_map_sha256": "80ddba3ff031a202070c9084cdbf1d001501f4fd21a33c752aad2997ba2095a9",
+  "electrical_footprints": 37,
+  "unassigned_footprints": [],
+  "adc_socket_status": "10-pin module from user link; pitch, body offsets and fit still need physical verification",
+  "pd_module": "Adafruit 5807 HUSB238",
+  "pd_body_mm": [
+    20.32,
+    23.495
+  ],
+  "pd_body_status": "Official PCB outline/hole geometry applied; physical cable and enclosure fit testing remain",
+  "pd_mount_revision": "Adafruit-5807-direct-mount-r4-recess",
+  "pd_mount_holes_mm": [
+    [
+      36.753,
+      87.817
+    ],
+    [
+      51.993,
+      87.817
+    ]
+  ],
+  "pd_mount_drill_mm": 2.4,
+  "usb_face_overhang_mm": -0.5,
+  "pd_mount_courtyard_collisions": [],
+  "pd_mount_copper_keepout_layers": [
+    "F.Cu",
+    "B.Cu"
+  ],
+  "routed_tracks": 314,
+  "routed_vias": 16,
+  "copper_item_count": 330,
+  "track_statistics": {
+    "track_count": 314,
+    "length_mm": 1589.925,
+    "layers": {
+      "B.Cu": 165,
+      "F.Cu": 149
+    },
+    "widths": [
+      {
+        "width_mm": 0.3,
+        "count": 218,
+        "length_mm": 1119.893
+      },
+      {
+        "width_mm": 1.2,
+        "count": 62,
+        "length_mm": 305.683
+      },
+      {
+        "width_mm": 2.0,
+        "count": 34,
+        "length_mm": 164.349
+      }
+    ]
+  },
+  "power_routing": {
+    "PD_12V": {
+      "track_count": 5,
+      "length_mm": 21.58,
+      "layers": {
+        "B.Cu": 5
+      },
+      "widths": [
+        {
+          "width_mm": 2.0,
+          "count": 5,
+          "length_mm": 21.58
+        }
+      ],
+      "planned_trunk_width_mm": 2.0,
+      "length_at_or_above_trunk_width_mm": 21.58,
+      "via_count": 0,
+      "narrow_sections": []
+    },
+    "WALL_12V": {
+      "track_count": 17,
+      "length_mm": 80.02,
+      "layers": {
+        "B.Cu": 11,
+        "F.Cu": 6
+      },
+      "widths": [
+        {
+          "width_mm": 2.0,
+          "count": 17,
+          "length_mm": 80.02
+        }
+      ],
+      "planned_trunk_width_mm": 2.0,
+      "length_at_or_above_trunk_width_mm": 80.02,
+      "via_count": 0,
+      "narrow_sections": []
+    },
+    "+12V": {
+      "track_count": 16,
+      "length_mm": 119.77,
+      "layers": {
+        "B.Cu": 9,
+        "F.Cu": 7
+      },
+      "widths": [
+        {
+          "width_mm": 0.3,
+          "count": 5,
+          "length_mm": 62.071
+        },
+        {
+          "width_mm": 2.0,
+          "count": 11,
+          "length_mm": 57.699
+        }
+      ],
+      "planned_trunk_width_mm": 2.0,
+      "length_at_or_above_trunk_width_mm": 57.699,
+      "via_count": 1,
+      "narrow_sections": [
+        {
+          "width_mm": 0.3,
+          "length_mm": 37.486,
+          "layer": "F.Cu",
+          "start_mm": [
+            0.7715,
+            16.7285
+          ],
+          "end_mm": [
+            0.95,
+            54.214
+          ]
+        },
+        {
+          "width_mm": 0.3,
+          "length_mm": 3.152,
+          "layer": "F.Cu",
+          "start_mm": [
+            3.0,
+            14.5
+          ],
+          "end_mm": [
+            0.7715,
+            16.7285
+          ]
+        },
+        {
+          "width_mm": 0.3,
+          "length_mm": 3.971,
+          "layer": "B.Cu",
+          "start_mm": [
+            14.7415,
+            63.0765
+          ],
+          "end_mm": [
+            18.7125,
+            63.0765
+          ]
+        },
+        {
+          "width_mm": 0.3,
+          "length_mm": 12.533,
+          "layer": "B.Cu",
+          "start_mm": [
+            5.879,
+            54.214
+          ],
+          "end_mm": [
+            14.7415,
+            63.0765
+          ]
+        },
+        {
+          "width_mm": 0.3,
+          "length_mm": 4.929,
+          "layer": "B.Cu",
+          "start_mm": [
+            0.95,
+            54.214
+          ],
+          "end_mm": [
+            5.879,
+            54.214
+          ]
+        }
+      ]
+    },
+    "FAN_OUT": {
+      "track_count": 16,
+      "length_mm": 81.637,
+      "layers": {
+        "B.Cu": 3,
+        "F.Cu": 13
+      },
+      "widths": [
+        {
+          "width_mm": 1.2,
+          "count": 16,
+          "length_mm": 81.637
+        }
+      ],
+      "planned_trunk_width_mm": 1.2,
+      "length_at_or_above_trunk_width_mm": 81.637,
+      "via_count": 0,
+      "narrow_sections": []
+    },
+    "+5V": {
+      "track_count": 37,
+      "length_mm": 153.167,
+      "layers": {
+        "B.Cu": 28,
+        "F.Cu": 9
+      },
+      "widths": [
+        {
+          "width_mm": 1.2,
+          "count": 37,
+          "length_mm": 153.167
+        }
+      ],
+      "planned_trunk_width_mm": 1.2,
+      "length_at_or_above_trunk_width_mm": 153.167,
+      "via_count": 3,
+      "narrow_sections": []
+    },
+    "+5V_WT32": {
+      "track_count": 5,
+      "length_mm": 50.461,
+      "layers": {
+        "B.Cu": 5
+      },
+      "widths": [
+        {
+          "width_mm": 1.2,
+          "count": 5,
+          "length_mm": 50.461
+        }
+      ],
+      "planned_trunk_width_mm": 1.2,
+      "length_at_or_above_trunk_width_mm": 50.461,
+      "via_count": 0,
+      "narrow_sections": []
+    }
+  },
+  "ground_track_statistics": {
+    "track_count": 67,
+    "length_mm": 282.33,
+    "layers": {
+      "B.Cu": 33,
+      "F.Cu": 34
+    },
+    "widths": [
+      {
+        "width_mm": 0.3,
+        "count": 62,
+        "length_mm": 256.861
+      },
+      {
+        "width_mm": 1.2,
+        "count": 4,
+        "length_mm": 20.418
+      },
+      {
+        "width_mm": 2.0,
+        "count": 1,
+        "length_mm": 5.05
+      }
+    ]
+  },
+  "ground_zones": [
+    {
+      "name": "GND_FRONT",
+      "filled": true,
+      "layers": [
+        {
+          "layer": "F.Cu",
+          "filled_regions": 3,
+          "filled_area_mm2": 3071.443
+        }
+      ]
+    },
+    {
+      "name": "GND_BACK",
+      "filled": true,
+      "layers": [
+        {
+          "layer": "B.Cu",
+          "filled_regions": 4,
+          "filled_area_mm2": 2849.187
+        }
+      ]
+    }
+  ],
+  "ground_corridor_review": {
+    "method": "Saved GND fills + GND tracks + outer pad/via copper, eroded separately per layer with 0.01 mm corridor-width numerical allowance; landing tolerance is erosion distance + 0.05 mm. Power-section PTH pads and actual GND vias may join surviving regions across layers; ADC/DEBUG pads are not power-return bridges. PTH/via drill resistance, copper thickness, current sharing, temperature and voltage drop are not modeled.",
+    "corridor_width_numerical_allowance_mm": 0.01,
+    "layers": {
+      "F.Cu": {
+        "0": [
+          {
+            "area_mm2": 2887.207,
+            "landings": [
+              "C1:2",
+              "C2:2",
+              "C3:2",
+              "C4:2",
+              "D2:2",
+              "GND_via_1",
+              "GND_via_2",
+              "J1:2",
+              "J7:2",
+              "J8:2",
+              "J8:5",
+              "J9:2",
+              "U2:2"
+            ]
+          },
+          {
+            "area_mm2": 4.156,
+            "landings": [
+              "J2:4"
+            ]
+          }
+        ],
+        "0.5": [
+          {
+            "area_mm2": 2465.634,
+            "landings": [
+              "C1:2",
+              "C2:2",
+              "C3:2",
+              "C4:2",
+              "D2:2",
+              "GND_via_1",
+              "GND_via_2",
+              "J1:2",
+              "J7:2",
+              "J8:2",
+              "J8:5",
+              "J9:2",
+              "U2:2"
+            ]
+          },
+          {
+            "area_mm2": 2.247,
+            "landings": [
+              "J2:4"
+            ]
+          }
+        ],
+        "1.0": [
+          {
+            "area_mm2": 1618.896,
+            "landings": [
+              "C1:2",
+              "C3:2",
+              "C4:2",
+              "D2:2",
+              "J1:2",
+              "J7:2",
+              "J8:2",
+              "J8:5",
+              "J9:2"
+            ]
+          },
+          {
+            "area_mm2": 374.192,
+            "landings": [
+              "C2:2",
+              "GND_via_1",
+              "GND_via_2",
+              "U2:2"
+            ]
+          },
+          {
+            "area_mm2": 0.95,
+            "landings": [
+              "J2:4"
+            ]
+          }
+        ],
+        "1.2": [
+          {
+            "area_mm2": 175.959,
+            "landings": [
+              "C4:2",
+              "J9:2"
+            ]
+          },
+          {
+            "area_mm2": 327.238,
+            "landings": [
+              "C2:2",
+              "GND_via_1",
+              "GND_via_2",
+              "U2:2"
+            ]
+          },
+          {
+            "area_mm2": 0.596,
+            "landings": [
+              "J2:4"
+            ]
+          },
+          {
+            "area_mm2": 1351.139,
+            "landings": [
+              "C1:2",
+              "C3:2",
+              "D2:2",
+              "J1:2",
+              "J7:2",
+              "J8:2",
+              "J8:5"
+            ]
+          }
+        ],
+        "1.5": [
+          {
+            "area_mm2": 108.551,
+            "landings": [
+              "J9:2"
+            ]
+          },
+          {
+            "area_mm2": 293.688,
+            "landings": [
+              "C2:2",
+              "GND_via_1",
+              "GND_via_2",
+              "U2:2"
+            ]
+          },
+          {
+            "area_mm2": 0.224,
+            "landings": [
+              "J2:4"
+            ]
+          },
+          {
+            "area_mm2": 28.417,
+            "landings": [
+              "C4:2"
+            ]
+          },
+          {
+            "area_mm2": 1133.522,
+            "landings": [
+              "C1:2",
+              "C3:2",
+              "D2:2",
+              "J1:2",
+              "J7:2",
+              "J8:2",
+              "J8:5"
+            ]
+          }
+        ],
+        "2.0": [
+          {
+            "area_mm2": 95.404,
+            "landings": [
+              "J9:2"
+            ]
+          },
+          {
+            "area_mm2": 20.13,
+            "landings": [
+              "C4:2"
+            ]
+          },
+          {
+            "area_mm2": 233.799,
+            "landings": [
+              "C2:2",
+              "GND_via_1",
+              "GND_via_2",
+              "U2:2"
+            ]
+          },
+          {
+            "area_mm2": 972.178,
+            "landings": [
+              "C1:2",
+              "C3:2",
+              "D2:2",
+              "J1:2",
+              "J7:2",
+              "J8:2",
+              "J8:5"
+            ]
+          }
+        ]
+      },
+      "B.Cu": {
+        "0": [
+          {
+            "area_mm2": 1687.858,
+            "landings": [
+              "C1:2",
+              "C2:2",
+              "C3:2",
+              "C4:2",
+              "GND_via_1",
+              "GND_via_2",
+              "J1:2",
+              "J2:4",
+              "J7:2",
+              "J9:2",
+              "U2:2"
+            ]
+          },
+          {
+            "area_mm2": 452.222,
+            "landings": [
+              "J8:2",
+              "J8:5"
+            ]
+          },
+          {
+            "area_mm2": 701.886,
+            "landings": [
+              "D2:2"
+            ]
+          }
+        ],
+        "0.5": [
+          {
+            "area_mm2": 1480.9,
+            "landings": [
+              "C1:2",
+              "C2:2",
+              "C3:2",
+              "C4:2",
+              "GND_via_1",
+              "GND_via_2",
+              "J1:2",
+              "J2:4",
+              "J7:2",
+              "J9:2",
+              "U2:2"
+            ]
+          },
+          {
+            "area_mm2": 363.841,
+            "landings": [
+              "J8:2",
+              "J8:5"
+            ]
+          },
+          {
+            "area_mm2": 604.507,
+            "landings": [
+              "D2:2"
+            ]
+          }
+        ],
+        "1.0": [
+          {
+            "area_mm2": 1213.949,
+            "landings": [
+              "C1:2",
+              "C2:2",
+              "C3:2",
+              "C4:2",
+              "GND_via_1",
+              "GND_via_2",
+              "J1:2",
+              "J2:4",
+              "J7:2",
+              "J9:2",
+              "U2:2"
+            ]
+          },
+          {
+            "area_mm2": 125.519,
+            "landings": [
+              "D2:2"
+            ]
+          },
+          {
+            "area_mm2": 69.068,
+            "landings": [
+              "J8:2",
+              "J8:5"
+            ]
+          }
+        ],
+        "1.2": [
+          {
+            "area_mm2": 1029.543,
+            "landings": [
+              "C1:2",
+              "C2:2",
+              "C3:2",
+              "C4:2",
+              "GND_via_1",
+              "GND_via_2",
+              "J1:2",
+              "J2:4",
+              "J7:2",
+              "J9:2"
+            ]
+          },
+          {
+            "area_mm2": 90.261,
+            "landings": [
+              "U2:2"
+            ]
+          },
+          {
+            "area_mm2": 118.224,
+            "landings": [
+              "D2:2"
+            ]
+          },
+          {
+            "area_mm2": 61.784,
+            "landings": [
+              "J8:2",
+              "J8:5"
+            ]
+          }
+        ],
+        "1.5": [
+          {
+            "area_mm2": 927.857,
+            "landings": [
+              "C1:2",
+              "C2:2",
+              "C3:2",
+              "C4:2",
+              "GND_via_1",
+              "GND_via_2",
+              "J1:2",
+              "J2:4",
+              "J7:2",
+              "J9:2"
+            ]
+          },
+          {
+            "area_mm2": 77.637,
+            "landings": [
+              "U2:2"
+            ]
+          },
+          {
+            "area_mm2": 107.514,
+            "landings": [
+              "D2:2"
+            ]
+          },
+          {
+            "area_mm2": 12.337,
+            "landings": [
+              "J8:2"
+            ]
+          },
+          {
+            "area_mm2": 38.805,
+            "landings": [
+              "J8:5"
+            ]
+          }
+        ],
+        "2.0": [
+          {
+            "area_mm2": 432.985,
+            "landings": [
+              "C1:2",
+              "C2:2",
+              "C4:2",
+              "GND_via_1",
+              "GND_via_2",
+              "J1:2",
+              "J2:4",
+              "J9:2"
+            ]
+          },
+          {
+            "area_mm2": 1.259,
+            "landings": [
+              "U2:2"
+            ]
+          },
+          {
+            "area_mm2": 17.345,
+            "landings": [
+              "D2:2"
+            ]
+          },
+          {
+            "area_mm2": 7.321,
+            "landings": [
+              "J8:2"
+            ]
+          },
+          {
+            "area_mm2": 29.448,
+            "landings": [
+              "J8:5"
+            ]
+          },
+          {
+            "area_mm2": 357.614,
+            "landings": [
+              "C3:2",
+              "J7:2"
+            ]
+          }
+        ]
+      }
+    },
+    "power_return_reachable_from_J1_by_corridor_mm": {
+      "0": [
+        "C1:2",
+        "C2:2",
+        "C3:2",
+        "C4:2",
+        "D2:2",
+        "GND_via_1",
+        "GND_via_2",
+        "J1:2",
+        "J2:4",
+        "J9:2",
+        "U2:2"
+      ],
+      "0.5": [
+        "C1:2",
+        "C2:2",
+        "C3:2",
+        "C4:2",
+        "D2:2",
+        "GND_via_1",
+        "GND_via_2",
+        "J1:2",
+        "J2:4",
+        "J9:2",
+        "U2:2"
+      ],
+      "1.0": [
+        "C1:2",
+        "C2:2",
+        "C3:2",
+        "C4:2",
+        "D2:2",
+        "GND_via_1",
+        "GND_via_2",
+        "J1:2",
+        "J2:4",
+        "J9:2",
+        "U2:2"
+      ],
+      "1.2": [
+        "C1:2",
+        "C2:2",
+        "C3:2",
+        "C4:2",
+        "D2:2",
+        "GND_via_1",
+        "GND_via_2",
+        "J1:2",
+        "J2:4",
+        "J9:2",
+        "U2:2"
+      ],
+      "1.5": [
+        "C1:2",
+        "C2:2",
+        "C3:2",
+        "C4:2",
+        "D2:2",
+        "GND_via_1",
+        "GND_via_2",
+        "J1:2",
+        "J2:4",
+        "J9:2",
+        "U2:2"
+      ],
+      "2.0": [
+        "C1:2",
+        "C2:2",
+        "C3:2",
+        "C4:2",
+        "D2:2",
+        "GND_via_1",
+        "GND_via_2",
+        "J1:2",
+        "J2:4",
+        "J9:2",
+        "U2:2"
+      ]
+    },
+    "main_power_return_corridor_mm": 2.0,
+    "j2_combined_return_corridor_mm": 1.2
+  },
+  "top_washer_keepouts": [
+    {
+      "name": "CARRIER_TOP_WASHER_1",
+      "mount": "H1",
+      "layer": "F.Cu",
+      "protected_outer_diameter_mm": 7.4,
+      "npth_exemption_max_radius_mm": 1.7
+    },
+    {
+      "name": "CARRIER_TOP_WASHER_2",
+      "mount": "H2",
+      "layer": "F.Cu",
+      "protected_outer_diameter_mm": 7.4,
+      "npth_exemption_max_radius_mm": 1.7
+    },
+    {
+      "name": "CARRIER_TOP_WASHER_3",
+      "mount": "H3",
+      "layer": "F.Cu",
+      "protected_outer_diameter_mm": 7.4,
+      "npth_exemption_max_radius_mm": 1.7
+    },
+    {
+      "name": "CARRIER_TOP_WASHER_4",
+      "mount": "H4",
+      "layer": "F.Cu",
+      "protected_outer_diameter_mm": 7.4,
+      "npth_exemption_max_radius_mm": 1.7
+    }
+  ],
+  "routing_check_scope": "Native zero-unconnected/DRC/parity plus planned-width trunk presence; narrow branches and pad neckdowns require load-path review, not a blanket minimum-width assertion.",
+  "erc_violations": 0,
+  "schematic_parity_issues": 0,
+  "q1_mount": {
+    "orientation": "horizontal, tab down",
+    "body_max_mm": [
+      10.67,
+      16.51,
+      4.83
+    ],
+    "fitted_height_budget_mm": 6.5,
+    "under_body_support_mm": 1,
+    "live_tab_copper_keepout_checked": true,
+    "physical_forming_and_thermal_checks": "required"
+  },
+  "bom_revision": "B-T2F0-A5807-S4",
+  "bom_reference_checks": 37,
+  "buzzer_drive": "GPIO14 through R6 330 ohm to passive BZ1; Q3/R7/R19 removed; 4 kHz firmware tone",
+  "simplifications": {
+    "removed_references": [
+      "C13",
+      "C5",
+      "C7",
+      "D1",
+      "F1",
+      "F2",
+      "F3",
+      "F4",
+      "JP2",
+      "Q3",
+      "R17",
+      "R18",
+      "R19",
+      "R7"
+    ],
+    "source_oring_diode": "not fitted; K1 selects one positive input at a time",
+    "adc_module_requirements": [
+      "local supply bypassing",
+      "SDA pull-up to VDD",
+      "SCL pull-up to VDD"
+    ],
+    "probe_bias_resistors": "10 kohm 1%; per-channel calibration required"
+  },
+  "power_source_selector": {
+    "part": "G5Q-1 DC12 + SB140 coil flyback",
+    "nc_rating_a": 3,
+    "no_rating_a": 5,
+    "coil_w": 0.4,
+    "PD": "K1 de-energized: pins 2-4",
+    "WALL": "K1 energized: pins 2-3",
+    "transition": "open contact interval; controller may restart",
+    "jack_switch": "J9 pins 2-3 normally closed; pin 3 unused",
+    "state_checks": 18,
+    "barrel": "regulated 12 V, 5.5 x 2.1 mm, center positive",
+    "limitations": "Topology only; verify contact inrush, brownout, release delay and loaded transfer physically"
+  },
+  "converter": {
+    "manufacturer": "Traco Power",
+    "part": "TSR 2-2450N",
+    "input_v": [
+      6.5,
+      36
+    ],
+    "output_v": 5,
+    "output_a": 2,
+    "body_mm": [
+      14,
+      7.6,
+      10.2
+    ],
+    "pinout": {
+      "1": "VIN",
+      "2": "GND",
+      "3": "VOUT"
+    }
+  },
+  "converter_pin_coordinates_mm": {
+    "1": [
+      17.0,
+      70.75
+    ],
+    "2": [
+      19.54,
+      70.75
+    ],
+    "3": [
+      22.08,
+      70.75
+    ]
+  },
+  "fuses": 0,
+  "power_protection_assumption": "Use only protected/current-limited regulated 12 V sources rated no more than 3 A; no branch-selective overcurrent protection is fitted.",
+  "output_contact_limit": {
+    "connector": "J2 RJHSE5080",
+    "rating_a_per_contact": 1.5,
+    "shared_return_pin": 4,
+    "shared_return_load": "blower + servo; validate combined current and cable/contact heating"
+  },
+  "drc_violations_by_type": {},
+  "unconnected_items": 0,
+  "mount_pattern_mm": [
+    51,
+    58
+  ],
+  "carrier_clearance_holes_mm": 3.2,
+  "mechanical_revision": "carrier-enclosure-r6",
+  "connector_edges": "power +Y short end: RJ45/barrel flush, USB-C flush with floor of 2 mm exterior recess; probes -Y short end",
+  "interpretation": "Measured routing and native checks pass; physical load, temperature, source transfer and fit qualification remain. Copper width reports are not current-capacity certification."
+}

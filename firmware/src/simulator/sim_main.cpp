@@ -402,6 +402,9 @@ int main(int argc, char* argv[]) {
                 ui_wizard_init();
                 ui_wizard_set_callbacks(wiz_sim_fan_test, wiz_sim_servo_test,
                                         wiz_sim_buzzer_test, wiz_sim_units, wiz_sim_complete);
+                char wizardWebAddress[32];
+                snprintf(wizardWebAddress, sizeof(wizardWebAddress), "localhost:%d", webPort);
+                ui_wizard_update_wifi({true, false, "Simulator", wizardWebAddress, 0});
                 simPhase = SimPhase::WIZARD;
                 printf("[SIM] Setup wizard started\n");
             }

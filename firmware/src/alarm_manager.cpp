@@ -26,6 +26,7 @@ void AlarmManager::begin() {
 #ifndef NATIVE_BUILD
     pinMode(PIN_BUZZER, OUTPUT);
     digitalWrite(PIN_BUZZER, LOW);
+    setToneChannel(BUZZER_PWM_CHANNEL);
     Serial.printf("[ALARM] Buzzer initialized on pin %d.\n", PIN_BUZZER);
 #endif
 }

@@ -1,0 +1,818 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-06T14:16:57-0700",
+    "kicad_version": "9.0.6",
+    "schematic_parity": [],
+    "source": "servo-only.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [/+5V] on B.Cu, length 1.8017 mm",
+                    "pos": {
+                        "x": 130.5,
+                        "y": 120.0
+                    },
+                    "uuid": "5282a0b4-34d6-4570-ae7e-7a9fd00c44f1"
+                },
+                {
+                    "description": "PTH pad 1 [/+5V] of JP1",
+                    "pos": {
+                        "x": 155.0,
+                        "y": 73.5
+                    },
+                    "uuid": "5d4aff3e-e423-4ee2-ac3c-a94c3bb6908c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Tracks crossing",
+            "items": [
+                {
+                    "description": "Track [/FAN_BASE] on F.Cu, length 15.6232 mm",
+                    "pos": {
+                        "x": 108.7084,
+                        "y": 107.7084
+                    },
+                    "uuid": "3f1fc5af-48ca-4da8-8b1c-b5be2a4aaef6"
+                },
+                {
+                    "description": "Track [/SERVO_SIG] on F.Cu, length 6.2388 mm",
+                    "pos": {
+                        "x": 108.71,
+                        "y": 116.346
+                    },
+                    "uuid": "c9b5a2f7-8944-4615-b57c-e84815a86550"
+                }
+            ],
+            "severity": "error",
+            "type": "tracks_crossing"
+        },
+        {
+            "description": "Items shorting two nets (nets /FAN_BASE and /SERVO_SIG)",
+            "items": [
+                {
+                    "description": "Track [/FAN_BASE] on F.Cu, length 15.6232 mm",
+                    "pos": {
+                        "x": 108.7084,
+                        "y": 107.7084
+                    },
+                    "uuid": "3f1fc5af-48ca-4da8-8b1c-b5be2a4aaef6"
+                },
+                {
+                    "description": "Track [/SERVO_SIG] on F.Cu, length 5.5510 mm",
+                    "pos": {
+                        "x": 108.71,
+                        "y": 110.795
+                    },
+                    "uuid": "9c14a5f9-0bb8-4378-9ed5-30a26626a359"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Items shorting two nets (nets /FAN_OUT and /SERVO_SIG)",
+            "items": [
+                {
+                    "description": "Track [/FAN_OUT] on F.Cu, length 1.7239 mm",
+                    "pos": {
+                        "x": 104.2583,
+                        "y": 133.4278
+                    },
+                    "uuid": "2bbde6f0-0206-4dd4-bc8c-6bc55a90d812"
+                },
+                {
+                    "description": "Track [/SERVO_SIG] on F.Cu, length 5.2071 mm",
+                    "pos": {
+                        "x": 104.298,
+                        "y": 130.418
+                    },
+                    "uuid": "d2e8d7f9-c6ad-497c-a8bc-e13584f80a52"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Clearance violation (netclass 'Power12' clearance 0.3000 mm; actual 0.1830 mm)",
+            "items": [
+                {
+                    "description": "Track [/SERVO_SIG] on F.Cu, length 20.7460 mm",
+                    "pos": {
+                        "x": 101.683,
+                        "y": 83.937
+                    },
+                    "uuid": "f246d7ee-92d9-4bba-945f-c3aa90a781bf"
+                },
+                {
+                    "description": "Via [/+12V] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 100.95,
+                        "y": 104.214
+                    },
+                    "uuid": "f84b4651-b02d-417b-ab37-c468d1773717"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Tracks crossing",
+            "items": [
+                {
+                    "description": "Track [/FAN_OUT] on F.Cu, length 22.1391 mm",
+                    "pos": {
+                        "x": 105.4773,
+                        "y": 132.2088
+                    },
+                    "uuid": "69fe5f33-11a6-45cf-9008-f6ee2ee39a45"
+                },
+                {
+                    "description": "Track [/SERVO_SIG] on F.Cu, length 5.2071 mm",
+                    "pos": {
+                        "x": 104.298,
+                        "y": 130.418
+                    },
+                    "uuid": "d2e8d7f9-c6ad-497c-a8bc-e13584f80a52"
+                }
+            ],
+            "severity": "error",
+            "type": "tracks_crossing"
+        },
+        {
+            "description": "Tracks crossing",
+            "items": [
+                {
+                    "description": "Track [/SERVO_SIG] on F.Cu, length 6.7812 mm",
+                    "pos": {
+                        "x": 103.915,
+                        "y": 106.0
+                    },
+                    "uuid": "260b6967-a8f7-40d2-8ab1-abe97db489ba"
+                },
+                {
+                    "description": "Track [/FAN_BASE] on F.Cu, length 15.6232 mm",
+                    "pos": {
+                        "x": 108.7084,
+                        "y": 107.7084
+                    },
+                    "uuid": "3f1fc5af-48ca-4da8-8b1c-b5be2a4aaef6"
+                }
+            ],
+            "severity": "error",
+            "type": "tracks_crossing"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Connector_JST'.",
+            "items": [
+                {
+                    "description": "Footprint J7",
+                    "pos": {
+                        "x": 140.0,
+                        "y": 62.0
+                    },
+                    "uuid": "009c8796-0ea0-4966-b33b-7ef3e0c39cbb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint C12",
+                    "pos": {
+                        "x": 115.0,
+                        "y": 104.0
+                    },
+                    "uuid": "045c8af4-8da3-4f7a-84df-1de41f8a18da"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint C11",
+                    "pos": {
+                        "x": 115.0,
+                        "y": 96.0
+                    },
+                    "uuid": "0cff1657-a12a-49a7-a13f-ca76581338bf"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint J5",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 50.0
+                    },
+                    "uuid": "0d728ee3-1049-4711-9f49-9969349084fc"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Diode_THT'.",
+            "items": [
+                {
+                    "description": "Footprint D3",
+                    "pos": {
+                        "x": 155.0,
+                        "y": 81.0
+                    },
+                    "uuid": "0dbf06bb-97b3-43ea-b6a3-80ace32725ae"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R12",
+                    "pos": {
+                        "x": 115.0,
+                        "y": 108.0
+                    },
+                    "uuid": "0fe315f2-bc18-4967-aae4-9a5b683629c1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R4",
+                    "pos": {
+                        "x": 103.0,
+                        "y": 75.0
+                    },
+                    "uuid": "25a3eafa-0d5d-4d3f-9850-d3002041b152"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R3",
+                    "pos": {
+                        "x": 103.0,
+                        "y": 102.0
+                    },
+                    "uuid": "293b7496-43aa-497b-8822-5778629ce028"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R16",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 92.0
+                    },
+                    "uuid": "2a8cd2f4-79ad-40c3-8f6b-99be8f674db4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint BZ1",
+                    "pos": {
+                        "x": 104.3,
+                        "y": 93.0
+                    },
+                    "uuid": "2e1bcf35-dcc4-44c8-818b-9aea1a812371"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Capacitor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint C3",
+                    "pos": {
+                        "x": 153.25,
+                        "y": 64.5
+                    },
+                    "uuid": "317c4202-f479-456f-9d50-4eeaec8bb3c7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint H4",
+                    "pos": {
+                        "x": 155.5,
+                        "y": 112.5
+                    },
+                    "uuid": "370e08b6-cb86-45de-885b-6ec902bd6b9b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint H3",
+                    "pos": {
+                        "x": 104.5,
+                        "y": 112.5
+                    },
+                    "uuid": "394398e3-23da-4da7-89a0-ba685f2660b5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint U2",
+                    "pos": {
+                        "x": 117.0,
+                        "y": 121.5
+                    },
+                    "uuid": "3b76972c-6326-44af-ab4f-542d8b9757e2"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Connector_JST'.",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 154.0,
+                        "y": 101.0
+                    },
+                    "uuid": "3d7d99fd-341f-44aa-a879-cafdf4db4896"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 113.0,
+                        "y": 50.0
+                    },
+                    "uuid": "40f55b03-5320-4aa7-8d46-fa49689544e8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint H1",
+                    "pos": {
+                        "x": 104.5,
+                        "y": 54.5
+                    },
+                    "uuid": "4db07917-034d-40f1-9a68-c606626c334b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Capacitor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint C1",
+                    "pos": {
+                        "x": 143.0,
+                        "y": 109.0
+                    },
+                    "uuid": "4df8f15e-8fde-4beb-b3dd-b69869c1cc42"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint J9",
+                    "pos": {
+                        "x": 126.5,
+                        "y": 129.9
+                    },
+                    "uuid": "634d9420-8768-4960-b0ee-e483474e4d0b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R14",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 95.0
+                    },
+                    "uuid": "69cb3b3f-b144-4b2d-9a1e-723912978651"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint Q1",
+                    "pos": {
+                        "x": 143.3,
+                        "y": 91.0
+                    },
+                    "uuid": "6e4a0f9e-85eb-420f-bc96-231fce0989c8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 113.06,
+                        "y": 135.88
+                    },
+                    "uuid": "714b958c-7da9-4dc0-9e63-bd660a16d09b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Connector_PinHeader_2.54mm'.",
+            "items": [
+                {
+                    "description": "Footprint JP1",
+                    "pos": {
+                        "x": 155.0,
+                        "y": 73.5
+                    },
+                    "uuid": "74c32694-8c9c-433c-8be7-4a04ab433bbf"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint J8",
+                    "pos": {
+                        "x": 113.0,
+                        "y": 83.0
+                    },
+                    "uuid": "7925438e-d4ab-4b9a-987b-2ac5c11c9fc3"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R2",
+                    "pos": {
+                        "x": 107.0,
+                        "y": 64.0
+                    },
+                    "uuid": "7f15dcf2-04c5-45cd-88cf-e5832f20e058"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R5",
+                    "pos": {
+                        "x": 103.0,
+                        "y": 106.0
+                    },
+                    "uuid": "88869e1e-3941-404a-85f0-95b8e159be6e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R6",
+                    "pos": {
+                        "x": 107.0,
+                        "y": 75.0
+                    },
+                    "uuid": "8a185eb5-a2ea-40e9-bc01-9d6b62433686"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R13",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 88.0
+                    },
+                    "uuid": "8b616ce3-a171-49f8-9405-b625b9c071db"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint H6",
+                    "pos": {
+                        "x": 151.993,
+                        "y": 137.817
+                    },
+                    "uuid": "a81bb813-61a1-455a-b516-30325d81c92a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint C2",
+                    "pos": {
+                        "x": 115.0,
+                        "y": 115.0
+                    },
+                    "uuid": "aeb24da4-d0ed-4e8b-a8a6-0867664296ee"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R10",
+                    "pos": {
+                        "x": 115.0,
+                        "y": 92.0
+                    },
+                    "uuid": "b6282ae8-1772-4bd7-907d-a5ce86f41021"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Connector_JST'.",
+            "items": [
+                {
+                    "description": "Footprint J3",
+                    "pos": {
+                        "x": 112.0,
+                        "y": 62.0
+                    },
+                    "uuid": "b8af25b2-1e9a-488e-a741-8ad370a4eaf5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint H5",
+                    "pos": {
+                        "x": 136.753,
+                        "y": 137.817
+                    },
+                    "uuid": "bc066143-d8be-4c4f-aa76-ff14be08a042"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint C4",
+                    "pos": {
+                        "x": 130.5,
+                        "y": 120.0
+                    },
+                    "uuid": "ca0d2fab-1fb2-4daf-904b-7b4e6de44570"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R11",
+                    "pos": {
+                        "x": 115.0,
+                        "y": 100.0
+                    },
+                    "uuid": "d34a43df-08ef-4583-ae7e-ab91a3893a4e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 147.0,
+                        "y": 50.0
+                    },
+                    "uuid": "d7f65420-e9f5-4ca1-94d9-5128f19c9c63"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R15",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 106.0
+                    },
+                    "uuid": "d98bc1ef-65fe-4ad9-a304-52a6abcb7ac6"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint H2",
+                    "pos": {
+                        "x": 155.5,
+                        "y": 54.5
+                    },
+                    "uuid": "da797dbf-1b3a-4c16-9753-433dda9354d8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_THT'.",
+            "items": [
+                {
+                    "description": "Footprint R1",
+                    "pos": {
+                        "x": 103.0,
+                        "y": 64.5
+                    },
+                    "uuid": "e5629181-7aec-40e4-8c0f-fac6f7165653"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint K1",
+                    "pos": {
+                        "x": 130.34,
+                        "y": 96.33
+                    },
+                    "uuid": "e6f22018-b211-443e-8ae9-88c67b631a01"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'PitClaw'.",
+            "items": [
+                {
+                    "description": "Footprint C10",
+                    "pos": {
+                        "x": 115.0,
+                        "y": 88.0
+                    },
+                    "uuid": "ebde94b3-9941-451f-9839-106e97ced69a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Diode_THT'.",
+            "items": [
+                {
+                    "description": "Footprint D2",
+                    "pos": {
+                        "x": 141.5,
+                        "y": 95.5
+                    },
+                    "uuid": "ef58622a-c042-42f9-b2c4-38ee54b52217"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Package_TO_SOT_THT'.",
+            "items": [
+                {
+                    "description": "Footprint Q2",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 124.0
+                    },
+                    "uuid": "f8bd9c1b-c2e1-499e-b5ce-788385e335c4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        }
+    ]
+}

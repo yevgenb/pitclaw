@@ -1,0 +1,201 @@
+(footprint "TRACO_TSR_2N_SIP3"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "Traco TSR 2N manufacturer outline: 14x7.6x10.2mm SIP-3, 2.54mm pitch. Pin 1 VIN, 2 GND, 3 VOUT. Offset pin row; 1.4mm drills clear tolerated square pins.")
+	(property "Reference" "REF**"
+		(at 0 -3 0)
+		(layer "F.SilkS")
+		(uuid "13d64812-e80c-4172-8efa-ef15cf325a49")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "TRACO_TSR_2N_SIP3"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3b05af67-e80a-4aef-827d-887f996030a5")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "7f74e096-cd53-4b15-bd8d-ad558199876f")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d54c167c-c9d7-4165-abcc-1c3c1d7e3706")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -4.46 -1.44)
+		(end 9.54 -1.44)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "855bcbc2-7e4a-4b83-80fe-39551573f558")
+	)
+	(fp_line
+		(start -4.46 6.16)
+		(end -4.46 -1.44)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "cd6750d9-fa94-44be-8367-f2fd655e979f")
+	)
+	(fp_line
+		(start 9.54 -1.44)
+		(end 9.54 6.16)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "2f56400a-af0a-40fd-b05e-812df82f9d91")
+	)
+	(fp_line
+		(start 9.54 6.16)
+		(end -4.46 6.16)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "8905f169-81c7-4a46-b4f0-9a62e3ca3d2c")
+	)
+	(fp_line
+		(start -5.21 -2.19)
+		(end 10.29 -2.19)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "62920936-23e4-4a94-aa03-5dae598531c0")
+	)
+	(fp_line
+		(start -5.21 6.91)
+		(end -5.21 -2.19)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "d2ae0a19-f991-47cb-b10d-1e870136b688")
+	)
+	(fp_line
+		(start 10.29 -2.19)
+		(end 10.29 6.91)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "04238e7b-9fba-4f24-9b89-bb8236c15fba")
+	)
+	(fp_line
+		(start 10.29 6.91)
+		(end -5.21 6.91)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "9dc10c87-d13f-4bf2-99f3-db6aea675156")
+	)
+	(fp_line
+		(start -4.46 -1.44)
+		(end 9.54 -1.44)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "6a662ad4-5848-498a-876b-fe3bc1be1037")
+	)
+	(fp_line
+		(start -4.46 6.16)
+		(end -4.46 -1.44)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "bdaeb83a-664b-40ad-b533-beb4b19a7497")
+	)
+	(fp_line
+		(start 9.54 -1.44)
+		(end 9.54 6.16)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "d6023a45-e375-4fa3-8646-8aaa9bd106e0")
+	)
+	(fp_line
+		(start 9.54 6.16)
+		(end -4.46 6.16)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "17397661-a047-406d-8baf-5fc2bbe3101d")
+	)
+	(pad "1" thru_hole rect
+		(at 0 0)
+		(size 2 2)
+		(drill 1.4)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 45)
+		(uuid "b4ab0315-e33f-4b45-b407-a6e0ee36a1b0")
+	)
+	(pad "2" thru_hole circle
+		(at 2.54 0)
+		(size 2 2)
+		(drill 1.4)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "aabed383-c09e-4d3f-a755-f8d0faf00deb")
+	)
+	(pad "3" thru_hole circle
+		(at 5.08 0)
+		(size 2 2)
+		(drill 1.4)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "f3ed86ac-719f-47cb-b8b9-469bbca0ad0c")
+	)
+	(embedded_fonts no)
+)

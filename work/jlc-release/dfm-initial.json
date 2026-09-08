@@ -1,0 +1,425 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-06T15:35:20-0700",
+    "kicad_version": "9.0.6",
+    "schematic_parity": [],
+    "source": "pitclaw-carrier.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2800 mm; actual 0.2505 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of J5",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 53.5
+                    },
+                    "uuid": "1e07dba4-cded-4691-b1f4-41fc4fcd8e2c"
+                },
+                {
+                    "description": "Zone 'GND_FRONT' [/GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 100.5,
+                        "y": 50.5
+                    },
+                    "uuid": "c53b269b-23f7-4a6c-ac26-366933a2ac68"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2800 mm; actual 0.2505 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of J5",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 53.5
+                    },
+                    "uuid": "1e07dba4-cded-4691-b1f4-41fc4fcd8e2c"
+                },
+                {
+                    "description": "Zone 'GND_BACK' [/GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 100.5,
+                        "y": 50.5
+                    },
+                    "uuid": "bcee38b5-5106-4598-bb0a-64b2e1dbc6a0"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2800 mm; actual 0.2505 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of J4",
+                    "pos": {
+                        "x": 113.0,
+                        "y": 53.5
+                    },
+                    "uuid": "afe80cfc-e413-4c78-aef0-17be34a08a1b"
+                },
+                {
+                    "description": "Zone 'GND_FRONT' [/GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 100.5,
+                        "y": 50.5
+                    },
+                    "uuid": "c53b269b-23f7-4a6c-ac26-366933a2ac68"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2800 mm; actual 0.2505 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of J4",
+                    "pos": {
+                        "x": 113.0,
+                        "y": 53.5
+                    },
+                    "uuid": "afe80cfc-e413-4c78-aef0-17be34a08a1b"
+                },
+                {
+                    "description": "Zone 'GND_BACK' [/GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 100.5,
+                        "y": 50.5
+                    },
+                    "uuid": "bcee38b5-5106-4598-bb0a-64b2e1dbc6a0"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2800 mm; actual 0.2505 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of J2",
+                    "pos": {
+                        "x": 115.85,
+                        "y": 138.42
+                    },
+                    "uuid": "4db79582-a1c0-45d1-b4e8-952bdc25b221"
+                },
+                {
+                    "description": "Zone 'GND_FRONT' [/GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 100.5,
+                        "y": 50.5
+                    },
+                    "uuid": "c53b269b-23f7-4a6c-ac26-366933a2ac68"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2800 mm; actual 0.2505 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of J2",
+                    "pos": {
+                        "x": 115.85,
+                        "y": 138.42
+                    },
+                    "uuid": "4db79582-a1c0-45d1-b4e8-952bdc25b221"
+                },
+                {
+                    "description": "Zone 'GND_BACK' [/GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 100.5,
+                        "y": 50.5
+                    },
+                    "uuid": "bcee38b5-5106-4598-bb0a-64b2e1dbc6a0"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2800 mm; actual 0.2505 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of J2",
+                    "pos": {
+                        "x": 103.15,
+                        "y": 138.42
+                    },
+                    "uuid": "0adaf124-9a25-4fa8-b4f2-b9a15a4efa97"
+                },
+                {
+                    "description": "Zone 'GND_FRONT' [/GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 100.5,
+                        "y": 50.5
+                    },
+                    "uuid": "c53b269b-23f7-4a6c-ac26-366933a2ac68"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2800 mm; actual 0.2505 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of J2",
+                    "pos": {
+                        "x": 103.15,
+                        "y": 138.42
+                    },
+                    "uuid": "0adaf124-9a25-4fa8-b4f2-b9a15a4efa97"
+                },
+                {
+                    "description": "Zone 'GND_BACK' [/GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 100.5,
+                        "y": 50.5
+                    },
+                    "uuid": "bcee38b5-5106-4598-bb0a-64b2e1dbc6a0"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2800 mm; actual 0.2505 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of J6",
+                    "pos": {
+                        "x": 147.0,
+                        "y": 53.5
+                    },
+                    "uuid": "69d58861-9a45-45e9-b1bd-6c526bf65c9b"
+                },
+                {
+                    "description": "Zone 'GND_FRONT' [/GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 100.5,
+                        "y": 50.5
+                    },
+                    "uuid": "c53b269b-23f7-4a6c-ac26-366933a2ac68"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.2800 mm; actual 0.2505 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of J6",
+                    "pos": {
+                        "x": 147.0,
+                        "y": 53.5
+                    },
+                    "uuid": "69d58861-9a45-45e9-b1bd-6c526bf65c9b"
+                },
+                {
+                    "description": "Zone 'GND_BACK' [/GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 100.5,
+                        "y": 50.5
+                    },
+                    "uuid": "bcee38b5-5106-4598-bb0a-64b2e1dbc6a0"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Silkscreen overlap (board setup constraints silk clearance 0.1500 mm; actual 0.1214 mm)",
+            "items": [
+                {
+                    "description": "PCB text 'WALL 12V' on F.Silkscreen",
+                    "pos": {
+                        "x": 125.6,
+                        "y": 140.7
+                    },
+                    "uuid": "38d9cf3a-1995-4bc6-b329-fb7105dafb58"
+                },
+                {
+                    "description": "Segment of J9 on F.Silkscreen",
+                    "pos": {
+                        "x": 121.9,
+                        "y": 141.4
+                    },
+                    "uuid": "bfb40281-cef9-442a-b8bd-dcdf10808b22"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap (board setup constraints silk clearance 0.1500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Segment of J7 on F.Silkscreen",
+                    "pos": {
+                        "x": 137.44,
+                        "y": 65.51
+                    },
+                    "uuid": "4f48a6e5-8c48-4cbf-bd37-ed6b7ad7fd41"
+                },
+                {
+                    "description": "PCB text '3V3' on F.Silkscreen",
+                    "pos": {
+                        "x": 141.25,
+                        "y": 66.2
+                    },
+                    "uuid": "fcc9600b-6b5f-41aa-87eb-04720c152056"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap (board setup constraints silk clearance 0.1500 mm; actual 0.0780 mm)",
+            "items": [
+                {
+                    "description": "Segment of J7 on F.Silkscreen",
+                    "pos": {
+                        "x": 145.06,
+                        "y": 59.54
+                    },
+                    "uuid": "e245b9e2-74cc-4365-b73e-06ff95ff26ee"
+                },
+                {
+                    "description": "Reference field of J7",
+                    "pos": {
+                        "x": 141.0,
+                        "y": 59.0
+                    },
+                    "uuid": "fd1389ea-8d52-4835-8363-5284b727c7bc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap (board setup constraints silk clearance 0.1500 mm; actual 0.1217 mm)",
+            "items": [
+                {
+                    "description": "Segment of J7 on F.Silkscreen",
+                    "pos": {
+                        "x": 140.75,
+                        "y": 59.55
+                    },
+                    "uuid": "9a47007b-678e-4ca3-b46d-bc1f78ed595c"
+                },
+                {
+                    "description": "Reference field of J7",
+                    "pos": {
+                        "x": 141.0,
+                        "y": 59.0
+                    },
+                    "uuid": "fd1389ea-8d52-4835-8363-5284b727c7bc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap (board setup constraints silk clearance 0.1500 mm; actual 0.1217 mm)",
+            "items": [
+                {
+                    "description": "Segment of J7 on F.Silkscreen",
+                    "pos": {
+                        "x": 141.75,
+                        "y": 59.55
+                    },
+                    "uuid": "04759341-bf66-4741-8e9e-528294cbcc38"
+                },
+                {
+                    "description": "Reference field of J7",
+                    "pos": {
+                        "x": 141.0,
+                        "y": 59.0
+                    },
+                    "uuid": "fd1389ea-8d52-4835-8363-5284b727c7bc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap (board setup constraints silk clearance 0.1500 mm; actual 0.1152 mm)",
+            "items": [
+                {
+                    "description": "Reference field of JP1",
+                    "pos": {
+                        "x": 155.0,
+                        "y": 71.4
+                    },
+                    "uuid": "9c678bbd-b54e-4060-9eb1-df66d4863f53"
+                },
+                {
+                    "description": "Segment of JP1 on F.Silkscreen",
+                    "pos": {
+                        "x": 153.62,
+                        "y": 72.12
+                    },
+                    "uuid": "cf115b40-c610-4789-9b15-d8722d5cb2bd"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap (board setup constraints silk clearance 0.1500 mm; actual 0.0928 mm)",
+            "items": [
+                {
+                    "description": "Segment of J3 on F.Silkscreen",
+                    "pos": {
+                        "x": 128.75,
+                        "y": 59.55
+                    },
+                    "uuid": "20e19594-bd55-4423-b0de-7bf9b581a931"
+                },
+                {
+                    "description": "Reference field of J3",
+                    "pos": {
+                        "x": 121.0,
+                        "y": 58.9
+                    },
+                    "uuid": "c40a74d4-16ff-41eb-8ad4-55a380ec7df2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen overlap (board setup constraints silk clearance 0.1500 mm; actual 0.0828 mm)",
+            "items": [
+                {
+                    "description": "Segment of J3 on F.Silkscreen",
+                    "pos": {
+                        "x": 132.06,
+                        "y": 59.54
+                    },
+                    "uuid": "16df122c-4ba6-4b60-8726-7e5d9a121685"
+                },
+                {
+                    "description": "Reference field of J3",
+                    "pos": {
+                        "x": 121.0,
+                        "y": 58.9
+                    },
+                    "uuid": "c40a74d4-16ff-41eb-8ad4-55a380ec7df2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

@@ -1,0 +1,106 @@
+(footprint "Piezo_TDK_PS1240P02BT_D12.2_P5"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "TDK PS1240P02BT manufacturer drawing: D12.2, 5mm pitch, 0.6mm leads, 7.8mm maximum seated height. Passive externally driven piezo.")
+	(property "Reference" "REF**"
+		(at 0 -3 0)
+		(layer "F.SilkS")
+		(uuid "31444b31-29f3-4ca8-8690-3904367f5afd")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Piezo_TDK_PS1240P02BT_D12.2_P5"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8fa12118-c8f8-453d-a61f-57332402d847")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "70be78d6-c09a-4a7b-96cd-36ecbf9b943a")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "da3e2b8c-61fb-4267-ac0d-86d7365b6f15")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_circle
+		(center 2.5 0)
+		(end 8.7 0)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "aa7fd06b-7c66-4308-870c-e41a87c1e9e5")
+	)
+	(fp_circle
+		(center 2.5 0)
+		(end 9.1 0)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "2e0bbe1c-4f58-4d14-b0b2-0b9ba7ce4d01")
+	)
+	(fp_circle
+		(center 2.5 0)
+		(end 8.6 0)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "07b544bf-f0d1-45e2-aa5f-280447b106b7")
+	)
+	(pad "1" thru_hole rect
+		(at 0 0)
+		(size 1.8 1.8)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 45)
+		(uuid "991066af-cf10-44f1-bb69-338fb94be0a9")
+	)
+	(pad "2" thru_hole circle
+		(at 5 0)
+		(size 1.8 1.8)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "0f169cc6-5e8e-48c6-93a5-d513272d63a8")
+	)
+	(embedded_fonts no)
+)

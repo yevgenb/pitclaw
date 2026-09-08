@@ -108,12 +108,13 @@ void PidController::setTunings(float kp, float ki, float kd) {
 }
 
 void PidController::resetIntegrator() {
+    _pidOutput = 0.0f;
 #ifndef NATIVE_BUILD
     if (_pid != nullptr) {
         _pid->Reset();
-        _pid->SetMode(QuickPID::Control::automatic);
+        _pid->SetMode(_enabled ? QuickPID::Control::automatic : QuickPID::Control::manual);
     }
-    Serial.println("[PID] Integrator reset (setpoint change)");
+    Serial.println("[PID] Integrator and output reset");
 #endif
 }
 

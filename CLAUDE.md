@@ -60,6 +60,11 @@ pio run --target clean                              # Clean build
 
 ### Hardware Target
 
+The active hardware source is `hardware/carrier-revb/README.md` and `docs/wiring.md`
+(Rev B-T2F0-A5807-S3). The perfboard hardware descriptions below are historical,
+not assembly instructions for the carrier PCB. See `docs/hardware-review.md` for
+confirmed fixes and remaining display/enclosure bring-up work.
+
 - **MCU Board**: WT32-SC01 Plus (ESP32-S3, 3.5" 480x320 capacitive touchscreen, 16MB flash, 2MB PSRAM, 92x60x10.8mm)
 - **Carrier Board**: 50x70mm perfboard consolidating all electronics behind the display
 - **ADC**: ADS1115 16-bit I2C (4 channels: 3 probes + 1 spare) — socketed on carrier board
@@ -69,7 +74,7 @@ pio run --target clean                              # Clean build
 - **Buzzer**: Piezo buzzer soldered to carrier board (GPIO14)
 - **Power**: 12V barrel jack (panel-mount) → MP1584EN mini buck converter (22x17mm) → 5V rail
 - **I2C Bus**: GPIO10 (SDA), GPIO11 (SCL)
-- **Enclosure target**: ~100x70x40mm (deck-of-cards form factor)
+- **Enclosure**: 101.5x69.5x41.4mm (deck-of-cards form factor), derived from the internal stack
 
 ### Carrier Board Layout (50x70mm perfboard)
 
@@ -324,19 +329,29 @@ corner_r      = 4;       // Corner radius (mm)
 tolerance     = 0.5;     // Fit tolerance per side (mm)
 screw_d       = 3.0;     // M3 screw hole diameter (mm)
 
+// Internal stack — these drive outer_w/outer_h/outer_d, which are derived
+pcb_recess_d       = 2;   // WT32 locating pocket depth in the bezel (mm)
+pcb_standoff_h     = 3;   // Display module thickness in front of the WT32 PCB (mm)
+carrier_standoff_h = 5;   // Peg height under the carrier board (mm)
+carrier_pcb_t      = 1.6; // Carrier perfboard thickness (mm)
+board_gap          = 2;   // WT32 back face to carrier components clearance (mm)
+// inner_w/h include the bezel's snap rim, which wraps around the WT32 inside
+// the cavity — leaving it out of the sum detaches the rim from the bezel plate.
+// Assembled result: 69.5 x 101.5 x 41.4mm
+
 // Panel mount holes
 probe_jack_d  = 6.2;     // 2.5mm mono jack mounting hole (mm)
 barrel_jack_d = 12.2;    // DC barrel jack mounting hole (mm)
-usb_c_w       = 10;      // USB-C cutout width (mm)
-usb_c_h       = 4;       // USB-C cutout height (mm)
+panel_margin  = 4;       // Minimum gap from cavity wall to the panel row (mm)
+panel_gap     = 3.5;     // Gap between adjacent panel openings (mm)
 ```
 
 **Assembly:**
-- 4x M3x8mm screws join front bezel to rear shell (into heat-set threaded inserts or self-tapping into PETG)
-- WT32-SC01 Plus held by its 4x M3 mounting holes on standoffs in the front bezel
-- Carrier board rests on standoffs in the rear shell
+- Front bezel snaps into the rear shell — 4 wedge catches on the bezel's rim into 4 grooves in the shell walls, no screws for closure
+- WT32-SC01 Plus held by its 4x M3 mounting holes on standoffs in the front bezel; display glass seats in the bezel pocket
+- Carrier board screws to 4 standoffs in the rear shell (4x M3x8mm self-tapping) — nothing else in the case reaches it
 - Panel-mount jacks thread through holes and secure with their own nuts
-- Kickstand clips into a hinge slot on the rear shell
+- Kickstand hinge rod press-fits into the back-wall slot from inside the shell; the slot is 0.4mm under the rod diameter and friction is the only retention
 
 **Panel layout (rear shell bottom edge, landscape orientation):**
 
@@ -350,12 +365,14 @@ usb_c_h       = 4;       // USB-C cutout height (mm)
 │                                               │
 ├───────────────────────────────────────────────┤
 │ BOTTOM EDGE                                   │
-│ [USB-C]  [Probe1] [Probe2] [Probe3] [DC 12V] │
+│      [Probe1] [Probe2] [Probe3]  [DC 12V]     │
 └───────────────────────────────────────────────┘
 
 SIDE EDGE (right):
   [Fan cable slot]  [Servo cable slot]
 ```
+
+**No USB pass-through.** The WT32-SC01 Plus's USB-C port sits on the underside of the board facing into the cavity, ~25mm of occupied space from any wall — a bare cutout cannot reach it. The port is only needed for the initial flash (done before assembly), the serial console, on-device tests, and recovery from a bad OTA; all of those mean opening the case, which is a snap fit. Panel USB access would need a USB-C extension pigtail and a hole sized for that connector.
 
 **Print settings:**
 - Material: PETG

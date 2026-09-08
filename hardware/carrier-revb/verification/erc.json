@@ -1,0 +1,14 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-06T16:21:51-0700",
+    "kicad_version": "9.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/be3127a1-5b79-50fc-af71-ae69adb18efd",
+            "violations": []
+        }
+    ],
+    "source": "pitclaw-carrier.kicad_sch"
+}

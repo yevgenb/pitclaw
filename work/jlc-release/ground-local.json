@@ -1,0 +1,471 @@
+{
+  "method": "Saved GND fills + GND tracks + outer pad/via copper, eroded separately per layer with 0.01 mm corridor-width numerical allowance; landing tolerance is erosion distance + 0.05 mm. Power-section PTH pads and actual GND vias may join surviving regions across layers; ADC/DEBUG pads are not power-return bridges. PTH/via drill resistance, copper thickness, current sharing, temperature and voltage drop are not modeled.",
+  "corridor_width_numerical_allowance_mm": 0.01,
+  "layers": {
+    "F.Cu": {
+      "0": [
+        {
+          "area_mm2": 2831.537,
+          "landings": [
+            "C1:2",
+            "C2:2",
+            "C3:2",
+            "C4:2",
+            "D2:2",
+            "J1:2",
+            "J7:2",
+            "J8:2",
+            "J8:5",
+            "J9:2",
+            "U2:2"
+          ]
+        },
+        {
+          "area_mm2": 4.156,
+          "landings": [
+            "J2:4"
+          ]
+        }
+      ],
+      "0.5": [
+        {
+          "area_mm2": 2433.012,
+          "landings": [
+            "C1:2",
+            "C2:2",
+            "C3:2",
+            "C4:2",
+            "D2:2",
+            "J1:2",
+            "J7:2",
+            "J8:2",
+            "J8:5",
+            "J9:2",
+            "U2:2"
+          ]
+        },
+        {
+          "area_mm2": 2.247,
+          "landings": [
+            "J2:4"
+          ]
+        }
+      ],
+      "1.0": [
+        {
+          "area_mm2": 1618.896,
+          "landings": [
+            "C1:2",
+            "C3:2",
+            "C4:2",
+            "D2:2",
+            "J1:2",
+            "J7:2",
+            "J8:2",
+            "J8:5",
+            "J9:2"
+          ]
+        },
+        {
+          "area_mm2": 351.923,
+          "landings": [
+            "C2:2",
+            "U2:2"
+          ]
+        },
+        {
+          "area_mm2": 0.95,
+          "landings": [
+            "J2:4"
+          ]
+        }
+      ],
+      "1.2": [
+        {
+          "area_mm2": 175.959,
+          "landings": [
+            "C4:2",
+            "J9:2"
+          ]
+        },
+        {
+          "area_mm2": 331.421,
+          "landings": [
+            "C2:2",
+            "U2:2"
+          ]
+        },
+        {
+          "area_mm2": 0.596,
+          "landings": [
+            "J2:4"
+          ]
+        },
+        {
+          "area_mm2": 1351.139,
+          "landings": [
+            "C1:2",
+            "C3:2",
+            "D2:2",
+            "J1:2",
+            "J7:2",
+            "J8:2",
+            "J8:5"
+          ]
+        }
+      ],
+      "1.5": [
+        {
+          "area_mm2": 108.551,
+          "landings": [
+            "J9:2"
+          ]
+        },
+        {
+          "area_mm2": 301.02,
+          "landings": [
+            "C2:2",
+            "U2:2"
+          ]
+        },
+        {
+          "area_mm2": 0.224,
+          "landings": [
+            "J2:4"
+          ]
+        },
+        {
+          "area_mm2": 28.417,
+          "landings": [
+            "C4:2"
+          ]
+        },
+        {
+          "area_mm2": 1133.522,
+          "landings": [
+            "C1:2",
+            "C3:2",
+            "D2:2",
+            "J1:2",
+            "J7:2",
+            "J8:2",
+            "J8:5"
+          ]
+        }
+      ],
+      "2.0": [
+        {
+          "area_mm2": 95.404,
+          "landings": [
+            "J9:2"
+          ]
+        },
+        {
+          "area_mm2": 251.11,
+          "landings": [
+            "C2:2",
+            "U2:2"
+          ]
+        },
+        {
+          "area_mm2": 20.13,
+          "landings": [
+            "C4:2"
+          ]
+        },
+        {
+          "area_mm2": 972.178,
+          "landings": [
+            "C1:2",
+            "C3:2",
+            "D2:2",
+            "J1:2",
+            "J7:2",
+            "J8:2",
+            "J8:5"
+          ]
+        }
+      ]
+    },
+    "B.Cu": {
+      "0": [
+        {
+          "area_mm2": 1672.782,
+          "landings": [
+            "C1:2",
+            "C2:2",
+            "C3:2",
+            "C4:2",
+            "J1:2",
+            "J2:4",
+            "J7:2",
+            "J9:2",
+            "U2:2"
+          ]
+        },
+        {
+          "area_mm2": 452.222,
+          "landings": [
+            "J8:2",
+            "J8:5"
+          ]
+        },
+        {
+          "area_mm2": 701.886,
+          "landings": [
+            "D2:2"
+          ]
+        }
+      ],
+      "0.5": [
+        {
+          "area_mm2": 399.616,
+          "landings": [
+            "C4:2",
+            "J2:4",
+            "J9:2"
+          ]
+        },
+        {
+          "area_mm2": 1080.163,
+          "landings": [
+            "C1:2",
+            "C2:2",
+            "C3:2",
+            "J1:2",
+            "J7:2",
+            "U2:2"
+          ]
+        },
+        {
+          "area_mm2": 363.841,
+          "landings": [
+            "J8:2",
+            "J8:5"
+          ]
+        },
+        {
+          "area_mm2": 604.507,
+          "landings": [
+            "D2:2"
+          ]
+        }
+      ],
+      "1.0": [
+        {
+          "area_mm2": 287.499,
+          "landings": [
+            "C4:2",
+            "J2:4",
+            "J9:2"
+          ]
+        },
+        {
+          "area_mm2": 941.468,
+          "landings": [
+            "C1:2",
+            "C2:2",
+            "C3:2",
+            "J1:2",
+            "J7:2",
+            "U2:2"
+          ]
+        },
+        {
+          "area_mm2": 125.519,
+          "landings": [
+            "D2:2"
+          ]
+        },
+        {
+          "area_mm2": 69.068,
+          "landings": [
+            "J8:2",
+            "J8:5"
+          ]
+        }
+      ],
+      "1.2": [
+        {
+          "area_mm2": 274.122,
+          "landings": [
+            "C4:2",
+            "J2:4",
+            "J9:2"
+          ]
+        },
+        {
+          "area_mm2": 888.763,
+          "landings": [
+            "C1:2",
+            "C2:2",
+            "C3:2",
+            "J1:2",
+            "J7:2",
+            "U2:2"
+          ]
+        },
+        {
+          "area_mm2": 118.224,
+          "landings": [
+            "D2:2"
+          ]
+        },
+        {
+          "area_mm2": 61.784,
+          "landings": [
+            "J8:2",
+            "J8:5"
+          ]
+        }
+      ],
+      "1.5": [
+        {
+          "area_mm2": 238.365,
+          "landings": [
+            "C4:2",
+            "J2:4",
+            "J9:2"
+          ]
+        },
+        {
+          "area_mm2": 810.433,
+          "landings": [
+            "C1:2",
+            "C2:2",
+            "C3:2",
+            "J1:2",
+            "J7:2",
+            "U2:2"
+          ]
+        },
+        {
+          "area_mm2": 107.514,
+          "landings": [
+            "D2:2"
+          ]
+        },
+        {
+          "area_mm2": 12.337,
+          "landings": [
+            "J8:2"
+          ]
+        },
+        {
+          "area_mm2": 38.805,
+          "landings": [
+            "J8:5"
+          ]
+        }
+      ],
+      "2.0": [
+        {
+          "area_mm2": 215.309,
+          "landings": [
+            "C4:2",
+            "J2:4",
+            "J9:2"
+          ]
+        },
+        {
+          "area_mm2": 162.151,
+          "landings": [
+            "C2:2",
+            "U2:2"
+          ]
+        },
+        {
+          "area_mm2": 158.722,
+          "landings": [
+            "C1:2",
+            "J1:2"
+          ]
+        },
+        {
+          "area_mm2": 17.345,
+          "landings": [
+            "D2:2"
+          ]
+        },
+        {
+          "area_mm2": 7.321,
+          "landings": [
+            "J8:2"
+          ]
+        },
+        {
+          "area_mm2": 29.448,
+          "landings": [
+            "J8:5"
+          ]
+        },
+        {
+          "area_mm2": 357.614,
+          "landings": [
+            "C3:2",
+            "J7:2"
+          ]
+        }
+      ]
+    }
+  },
+  "power_return_reachable_from_J1_by_corridor_mm": {
+    "0": [
+      "C1:2",
+      "C2:2",
+      "C3:2",
+      "C4:2",
+      "D2:2",
+      "J1:2",
+      "J2:4",
+      "J9:2",
+      "U2:2"
+    ],
+    "0.5": [
+      "C1:2",
+      "C2:2",
+      "C3:2",
+      "C4:2",
+      "D2:2",
+      "J1:2",
+      "J2:4",
+      "J9:2",
+      "U2:2"
+    ],
+    "1.0": [
+      "C1:2",
+      "C2:2",
+      "C3:2",
+      "C4:2",
+      "D2:2",
+      "J1:2",
+      "J2:4",
+      "J9:2",
+      "U2:2"
+    ],
+    "1.2": [
+      "C1:2",
+      "C2:2",
+      "C3:2",
+      "D2:2",
+      "J1:2",
+      "U2:2"
+    ],
+    "1.5": [
+      "C1:2",
+      "C2:2",
+      "C3:2",
+      "D2:2",
+      "J1:2",
+      "U2:2"
+    ],
+    "2.0": [
+      "C1:2",
+      "C3:2",
+      "D2:2",
+      "J1:2"
+    ]
+  },
+  "main_power_return_corridor_mm": 2.0,
+  "j2_combined_return_corridor_mm": 1.2
+}

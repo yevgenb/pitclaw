@@ -53,6 +53,9 @@ public:
     /// Switch to AP mode (e.g., user-triggered from the UI).
     void startAP();
 
+    // Release the application's HTTP listener before starting the portal.
+    void onPortalStart(void (*callback)()) { _onPortalStart = callback; }
+
 private:
     /// Start mDNS responder.
     void setupMDNS();
@@ -75,6 +78,7 @@ private:
     static const unsigned long CONNECTION_CHECK_MS = 10000;
 
     unsigned long _lastConnectionCheckMs;
+    void (*_onPortalStart)() = nullptr;
 
 #ifndef NATIVE_BUILD
     WiFiManager   _wifiManager;

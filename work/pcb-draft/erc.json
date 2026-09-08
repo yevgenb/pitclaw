@@ -1,0 +1,870 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-04T15:49:23-0700",
+    "kicad_version": "9.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/be3127a1-5b79-50fc-af71-ae69adb18efd",
+            "violations": [
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 1 [VIN, Power input, Line]",
+                            "pos": {
+                                "x": 2.5781,
+                                "y": 0.4826
+                            },
+                            "uuid": "b9160c98-13da-5c3b-b95d-5db236607142"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol J1 [PowerIn]",
+                            "pos": {
+                                "x": 0.3556,
+                                "y": 0.4953
+                            },
+                            "uuid": "50a7f7d7-7c50-5da4-9cad-8f8c53b8b4cc"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'PitClaw'.",
+                    "items": [
+                        {
+                            "description": "Symbol F1 [Fuse]",
+                            "pos": {
+                                "x": 0.8509,
+                                "y": 0.4953
+                            },
+                            "uuid": "82e17942-bdf2-51fa-b128-2e306bb9534f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol F1 [Fuse]",
+                            "pos": {
+                                "x": 0.8509,
+                                "y": 0.4953
+                            },
+                            "uuid": "82e17942-bdf2-51fa-b128-2e306bb9534f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol C3 [C_Polarized]",
+                            "pos": {
+                                "x": 0.3556,
+                                "y": 1.0033
+                            },
+                            "uuid": "76771934-ddb5-5468-9d0f-21485c65300f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol C4 [C]",
+                            "pos": {
+                                "x": 0.8509,
+                                "y": 1.0033
+                            },
+                            "uuid": "67a794ea-ab1f-56fc-999c-fa765190c61b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol C1 [C_Polarized]",
+                            "pos": {
+                                "x": 1.2954,
+                                "y": 0.4953
+                            },
+                            "uuid": "9a5091db-44c2-5dc8-a36d-719623dd9f8f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'PitClaw'.",
+                    "items": [
+                        {
+                            "description": "Symbol F2 [Fuse]",
+                            "pos": {
+                                "x": 1.2954,
+                                "y": 1.0033
+                            },
+                            "uuid": "c713f649-a6f5-50c8-8271-f8a9477c2a47"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol F2 [Fuse]",
+                            "pos": {
+                                "x": 1.2954,
+                                "y": 1.0033
+                            },
+                            "uuid": "c713f649-a6f5-50c8-8271-f8a9477c2a47"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol J3 [EXT]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 1.7526
+                            },
+                            "uuid": "03ee9588-4a42-50b7-8add-3d98c17df09e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol C2 [C]",
+                            "pos": {
+                                "x": 1.7526,
+                                "y": 0.4953
+                            },
+                            "uuid": "8ca3e98c-9e39-5558-81cf-efa61ce521a2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol JP1 [Jumper]",
+                            "pos": {
+                                "x": 1.8542,
+                                "y": 1.0033
+                            },
+                            "uuid": "9bccfb41-75b4-5b62-a41f-09b1910dc913"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol J7 [Debug3V3]",
+                            "pos": {
+                                "x": 1.2446,
+                                "y": 1.7018
+                            },
+                            "uuid": "0a96ec6f-3dd7-51d3-b333-97b8082c786b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol D1 [D_Zener]",
+                            "pos": {
+                                "x": 2.1971,
+                                "y": 0.4953
+                            },
+                            "uuid": "7a2f3f8f-32d2-5c8c-bd20-7ae17b826589"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol #FLG01 [PWR_FLAG]",
+                            "pos": {
+                                "x": 2.0066,
+                                "y": 1.2065
+                            },
+                            "uuid": "117631ce-6421-5516-85b9-33d0ea03e2a9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'PitClaw'.",
+                    "items": [
+                        {
+                            "description": "Symbol J4 [Probe]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 2.4511
+                            },
+                            "uuid": "3586ac79-fb28-5805-890b-f25ebdd81179"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol J4 [Probe]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 2.4511
+                            },
+                            "uuid": "3586ac79-fb28-5805-890b-f25ebdd81179"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'PitClaw'.",
+                    "items": [
+                        {
+                            "description": "Symbol F3 [Fuse]",
+                            "pos": {
+                                "x": 2.2987,
+                                "y": 1.0033
+                            },
+                            "uuid": "834e54b3-af39-554d-99b8-43a43b2ae3cd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol F3 [Fuse]",
+                            "pos": {
+                                "x": 2.2987,
+                                "y": 1.0033
+                            },
+                            "uuid": "834e54b3-af39-554d-99b8-43a43b2ae3cd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol C7 [C_Polarized]",
+                            "pos": {
+                                "x": 1.8542,
+                                "y": 1.7018
+                            },
+                            "uuid": "8c1c2bf3-241f-5e20-b6f5-c7735f45b460"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R10 [R]",
+                            "pos": {
+                                "x": 1.1049,
+                                "y": 2.4511
+                            },
+                            "uuid": "79968f0d-c2f5-51fc-a5a3-744d43b8657c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol U2 [Buck5V]",
+                            "pos": {
+                                "x": 2.7559,
+                                "y": 0.4953
+                            },
+                            "uuid": "ac922f5c-5f8d-5058-b9df-8d5ab9286278"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol C13 [C]",
+                            "pos": {
+                                "x": 2.2479,
+                                "y": 1.7018
+                            },
+                            "uuid": "d87f7f70-fd78-5479-a038-68a197a56733"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol C5 [C_Polarized]",
+                            "pos": {
+                                "x": 2.794,
+                                "y": 1.0033
+                            },
+                            "uuid": "13f3d598-949b-5c87-bad6-bfbe93a46e35"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'PitClaw'.",
+                    "items": [
+                        {
+                            "description": "Symbol J5 [Probe]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 2.9464
+                            },
+                            "uuid": "650f4b45-bf83-5778-baa8-1d4c9af3af83"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol J5 [Probe]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 2.9464
+                            },
+                            "uuid": "650f4b45-bf83-5778-baa8-1d4c9af3af83"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R13 [R]",
+                            "pos": {
+                                "x": 1.7018,
+                                "y": 2.4511
+                            },
+                            "uuid": "497a2598-fbbc-5a32-b59a-dca7487599dc"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R11 [R]",
+                            "pos": {
+                                "x": 1.1049,
+                                "y": 2.9464
+                            },
+                            "uuid": "02208adf-bae8-5035-8d59-9a7d72f5258c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R17 [R]",
+                            "pos": {
+                                "x": 2.7051,
+                                "y": 1.7018
+                            },
+                            "uuid": "a924d331-fc3f-51b3-b5b9-fee0b9b3de34"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol C10 [C]",
+                            "pos": {
+                                "x": 2.2479,
+                                "y": 2.4511
+                            },
+                            "uuid": "3dd6545d-e7e7-5f8e-b713-c5040f8a47d9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R14 [R]",
+                            "pos": {
+                                "x": 1.7018,
+                                "y": 2.9464
+                            },
+                            "uuid": "8cea7608-fdb9-5a30-af4c-d5a1479f921b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'PitClaw'.",
+                    "items": [
+                        {
+                            "description": "Symbol J6 [Probe]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 3.4544
+                            },
+                            "uuid": "da3c6e00-5aa4-514d-97b6-8f36364aafa5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol J6 [Probe]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 3.4544
+                            },
+                            "uuid": "da3c6e00-5aa4-514d-97b6-8f36364aafa5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol Q1 [FQP27P06]",
+                            "pos": {
+                                "x": 3.4544,
+                                "y": 0.5461
+                            },
+                            "uuid": "8ee3711f-1a23-5b55-9a10-3332c2f6769e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'PitClaw'.",
+                    "items": [
+                        {
+                            "description": "Symbol F4 [Fuse]",
+                            "pos": {
+                                "x": 3.4036,
+                                "y": 1.0541
+                            },
+                            "uuid": "2309c753-9e79-5ff0-a0ae-d50bc9651a87"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol F4 [Fuse]",
+                            "pos": {
+                                "x": 3.4036,
+                                "y": 1.0541
+                            },
+                            "uuid": "2309c753-9e79-5ff0-a0ae-d50bc9651a87"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R18 [R]",
+                            "pos": {
+                                "x": 3.1496,
+                                "y": 1.7018
+                            },
+                            "uuid": "29f8a3dd-45d2-5630-af9c-a2d52bb4a452"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R12 [R]",
+                            "pos": {
+                                "x": 1.1049,
+                                "y": 3.4544
+                            },
+                            "uuid": "59a002ea-7806-58cd-b3fd-030df0c454bb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol C11 [C]",
+                            "pos": {
+                                "x": 2.2479,
+                                "y": 2.9464
+                            },
+                            "uuid": "ccf0cb97-a7fe-55ee-95da-c649493328fe"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R15 [R]",
+                            "pos": {
+                                "x": 1.7018,
+                                "y": 3.4544
+                            },
+                            "uuid": "ac8f41a7-a3da-55fc-9a8f-6dc32714581a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R1 [R]",
+                            "pos": {
+                                "x": 3.8989,
+                                "y": 0.5461
+                            },
+                            "uuid": "8db001ce-5b6f-5008-8e8c-3f7806a8d6db"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol D2 [D_Schottky]",
+                            "pos": {
+                                "x": 3.8481,
+                                "y": 1.0541
+                            },
+                            "uuid": "09d8b4d7-09f6-53b0-80b0-5230d0914eed"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol BZ1 [Speaker]",
+                            "pos": {
+                                "x": 3.6449,
+                                "y": 1.7018
+                            },
+                            "uuid": "74fee5fc-9f24-51d5-a6ce-09a88dd24db8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol C12 [C]",
+                            "pos": {
+                                "x": 2.2479,
+                                "y": 3.4544
+                            },
+                            "uuid": "8f266c08-52b1-5900-add1-4781b3e5245c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol J8 [ADC_Module_TBD]",
+                            "pos": {
+                                "x": 3.2512,
+                                "y": 2.7051
+                            },
+                            "uuid": "2aea70fb-c005-54b8-9a5b-2c65eabf4516"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol Q2 [2N3904]",
+                            "pos": {
+                                "x": 4.3942,
+                                "y": 0.5461
+                            },
+                            "uuid": "ed2a0b20-b80e-59b3-a2b8-1524617d5281"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R4 [R]",
+                            "pos": {
+                                "x": 4.3053,
+                                "y": 1.0541
+                            },
+                            "uuid": "701ae976-c53f-5b72-88f3-65e0fa79bf26"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol Q3 [2N3904]",
+                            "pos": {
+                                "x": 4.1021,
+                                "y": 1.7018
+                            },
+                            "uuid": "dc80fd77-8f8e-58db-934f-8cb3967f07c0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R16 [R]",
+                            "pos": {
+                                "x": 3.8481,
+                                "y": 2.5019
+                            },
+                            "uuid": "a0137bcd-a817-5fce-9b74-135e216b99df"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R6 [R]",
+                            "pos": {
+                                "x": 4.5466,
+                                "y": 1.7018
+                            },
+                            "uuid": "093130d1-6cf7-5718-9893-7865201b1d19"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R5 [R]",
+                            "pos": {
+                                "x": 4.7498,
+                                "y": 1.0541
+                            },
+                            "uuid": "625196bf-2e12-51d6-b39e-c3664bd2099d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R2 [R]",
+                            "pos": {
+                                "x": 4.9022,
+                                "y": 0.5461
+                            },
+                            "uuid": "abb6253f-6875-5e08-9513-43672537d730"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R7 [R]",
+                            "pos": {
+                                "x": 5.0546,
+                                "y": 1.7018
+                            },
+                            "uuid": "0af3934a-a3d5-5fb7-8133-501c17d2858a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol R3 [R]",
+                            "pos": {
+                                "x": 5.3975,
+                                "y": 0.5461
+                            },
+                            "uuid": "561d58ea-8e32-58d9-8542-7e15a6f29689"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'PitClaw'.",
+                    "items": [
+                        {
+                            "description": "Symbol J2 [RJ45]",
+                            "pos": {
+                                "x": 5.5245,
+                                "y": 1.0541
+                            },
+                            "uuid": "dc30ad9f-0b83-543a-a4a0-7e180f5d5686"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol J2 [RJ45]",
+                            "pos": {
+                                "x": 5.5245,
+                                "y": 1.0541
+                            },
+                            "uuid": "dc30ad9f-0b83-543a-a4a0-7e180f5d5686"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PitClaw'",
+                    "items": [
+                        {
+                            "description": "Symbol D3 [D_Schottky]",
+                            "pos": {
+                                "x": 5.4991,
+                                "y": 1.7018
+                            },
+                            "uuid": "075fe700-53eb-53eb-a52d-072b681e6af1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                }
+            ]
+        }
+    ],
+    "source": "pitclaw-carrier.kicad_sch"
+}

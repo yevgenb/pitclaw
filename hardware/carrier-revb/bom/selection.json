@@ -1,0 +1,815 @@
+{
+  "revision": "B-T2F0-A5807-S4",
+  "checked_date": "2026-09-06",
+  "currency": "USD",
+  "scope": "DigiKey US public price snapshot; retained rows from 2026-09-05, K1 checked 2026-09-06. Prototype purchasing list, not fabrication approval. Taxes, tariffs, shipping, PCB, wire, tools and external hardware excluded.",
+  "modules": [
+    {
+      "refs": [
+        "MOD1"
+      ],
+      "qty": 1,
+      "manufacturer": "Adafruit Industries",
+      "mpn": "5807",
+      "sku": "1528-5807-ND",
+      "description": "HUSB238 USB-C PD sink breakout; fixed-voltage jumpers; 5-20 V requests",
+      "url": "https://www.digikey.com/en/products/detail/adafruit-industries-llc/5807/21839778",
+      "prices": [
+        [
+          1,
+          5.95
+        ]
+      ],
+      "stock": 1682,
+      "notes": "Board-mounted module. Configure and meter-check the 12 V / 3 A request before J1 connection. Official PCB outline is 20.32 x 23.495 mm with two 2.5 mm holes at 15.24 mm spacing. Mount over the carrier using M2 hardware and 3 mm insulating spacers; connect V+/GND to J1 with a short 20-22 AWG pair."
+    }
+  ],
+  "parts": [
+    {
+      "refs": [
+        "U2"
+      ],
+      "manufacturer": "Traco Power",
+      "mpn": "TSR 2-2450N",
+      "sku": "1951-TSR2-2450N-ND",
+      "description": "Fixed 5 V 2 A non-isolated switching regulator, 6.5-36 V input, SIP-3 THT",
+      "url": "https://www.digikey.com/en/products/detail/traco-power/TSR-2-2450N/25903121",
+      "prices": [
+        [
+          1,
+          6.89
+        ],
+        [
+          5,
+          6.632
+        ],
+        [
+          10,
+          6.524
+        ],
+        [
+          30,
+          6.35733
+        ],
+        [
+          50,
+          6.2812
+        ]
+      ],
+      "stock": 1046,
+      "value": "TSR 2-2450N / 5V 2A",
+      "fp": "PitClaw:TRACO_TSR_2N_SIP3",
+      "notes": "Fixed-output converter; pin 1 VIN, 2 GND, 3 VOUT. Body 14 x 7.6 x 10.2 mm. Continuous short-circuit protection and automatic recovery; typical output current limit is 360% of rated output for this 5 V model. Maximum stated capacitive load is 820 uF. Verify all downstream capacitance, WT32/MG90S transients and enclosed temperature."
+    },
+    {
+      "refs": [
+        "J4",
+        "J5",
+        "J6"
+      ],
+      "manufacturer": "Same Sky",
+      "mpn": "MJ1-2503A",
+      "sku": "CP1-2503AM-ND",
+      "description": "2.5 mm mono probe jack, right-angle THT",
+      "url": "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/MJ1-2503A/738679",
+      "prices": [
+        [
+          1,
+          0.77
+        ],
+        [
+          10,
+          0.657
+        ],
+        [
+          25,
+          0.6156
+        ]
+      ],
+      "stock": 2366,
+      "notes": "Keep for DigiKey build. Pin 1 sleeve; pins 2 and 3 both tip. PJ-210B is not a drop-in replacement. Check physical lead/slot fit."
+    },
+    {
+      "refs": [
+        "J2"
+      ],
+      "manufacturer": "Amphenol ICC",
+      "mpn": "RJHSE5080",
+      "sku": "664-RJHSE5080-ND",
+      "description": "8P8C right-angle unmagnetized RJ45, unshielded",
+      "url": "https://www.digikey.com/en/products/detail/amphenol-cs-commercial-products/RJHSE5080/1242687",
+      "prices": [
+        [
+          1,
+          1.39
+        ],
+        [
+          10,
+          1.183
+        ],
+        [
+          25,
+          1.1088
+        ]
+      ],
+      "stock": 32472,
+      "notes": "Existing provisional pad geometry retained. Exact manufacturer drawing and sample fit remain release gates. Not an Ethernet/magnetics jack."
+    },
+    {
+      "refs": [
+        "J1",
+        "J7"
+      ],
+      "manufacturer": "JST",
+      "mpn": "B2B-XH-A",
+      "sku": "455-B2B-XH-A-ND",
+      "description": "2-pin XH vertical header, 2.50 mm pitch",
+      "url": "https://www.digikey.com/en/products/detail/jst-sales-america-inc/B2B-XH-A/1651045",
+      "prices": [
+        [
+          1,
+          0.1
+        ],
+        [
+          10,
+          0.087
+        ],
+        [
+          100,
+          0.0742
+        ]
+      ],
+      "stock": 327189,
+      "fp": "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical",
+      "notes": "Carrier side only. J1 receives 12 V from the PD module and feeds K1 normally closed contact (PD_12V); J7 is 3.3 V DEBUG. Same mate fits both: label/key harnesses and never interchange."
+    },
+    {
+      "refs": [
+        "K1"
+      ],
+      "manufacturer": "Aratas (formerly Omron Components)",
+      "mpn": "G5Q-1 DC12",
+      "sku": "Z221-ND",
+      "description": "12 V coil SPDT changeover relay; automatic wall-priority power selection",
+      "url": "https://www.digikey.com/en/products/detail/aratas-america-llc/G5Q-1-DC12/355239",
+      "prices": [
+        [
+          1,
+          1.8
+        ],
+        [
+          10,
+          1.605
+        ],
+        [
+          25,
+          1.5332
+        ],
+        [
+          50,
+          1.4808
+        ],
+        [
+          100,
+          1.4301
+        ]
+      ],
+      "stock": 22522,
+      "checked_date": "2026-09-06",
+      "notes": "NC to PD_12V, NO to WALL_12V, COM to +12V. Coil directly across raw WALL_12V/GND with D3 flyback. One input selected at a time; wall has priority. NC rated 3 A/30 VDC, NO 5 A/30 VDC. Coil 360 ohm, 33.3 mA, 0.4 W at 12 V; use SPDT G5Q-1, not SPST G5Q-1A. Body maximum 20.3 x 10.3 x 15.8 mm housing plus 0.4 mm molded feet; reserve 16.2 mm seated height. Switchover may restart controller; no brownout supervisor. https://components.omron.com/eu-en/system/files/2026-04/datasheet_pdf/J155-E1.pdf"
+    },
+    {
+      "refs": [
+        "J9"
+      ],
+      "manufacturer": "Tensility International",
+      "mpn": "54-00133",
+      "sku": "839-54-00133-ND",
+      "description": "5.5 x 2.1 mm center-positive barrel inlet; sleeve NC contact unused",
+      "url": "https://www.digikey.com/en/products/detail/tensility-international-corp/54-00133/9685442",
+      "prices": [
+        [
+          1,
+          0.9
+        ],
+        [
+          10,
+          0.766
+        ],
+        [
+          25,
+          0.7176
+        ],
+        [
+          50,
+          0.6834
+        ],
+        [
+          100,
+          0.6507
+        ]
+      ],
+      "stock": 5019,
+      "fp": "PitClaw:Tensility_54-00133_Horizontal",
+      "notes": "Pin 1/A is raw WALL_12V and feeds K1 coil and normally open contact; pin 2/B is GND; pin 3/C is unused. The NC jack switch joins B-C, not the center contact. K1 selects wall power when energized, PD otherwise. Face offset from pin A is 13.6 mm; housing 9 x 10.8 mm, bore axis 6.5 mm above PCB."
+    },
+    {
+      "refs": [
+        "J3"
+      ],
+      "manufacturer": "JST",
+      "mpn": "B8B-XH-A",
+      "sku": "455-B8B-XH-A-ND",
+      "description": "8-pin XH vertical header, 2.50 mm pitch",
+      "url": "https://www.digikey.com/en/products/detail/jst-sales-america-inc/B8B-XH-A/1651049",
+      "prices": [
+        [
+          1,
+          0.3
+        ],
+        [
+          10,
+          0.257
+        ],
+        [
+          250,
+          0.20448
+        ]
+      ],
+      "stock": 17894,
+      "fp": "Connector_JST:JST_XH_B8B-XH-A_1x08_P2.50mm_Vertical",
+      "notes": "Carrier end of WT32 EXT harness; not the WT32's 1.25 mm connector. Pin 8 unused."
+    },
+    {
+      "refs": [
+        "J8"
+      ],
+      "manufacturer": "Sullins",
+      "mpn": "PPPC101LFBN-RC",
+      "sku": "S7043-ND",
+      "description": "1x10 female socket, 2.54 mm, 8.51 mm high",
+      "url": "https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPPC101LFBN-RC/810182",
+      "prices": [
+        [
+          1,
+          0.66
+        ],
+        [
+          10,
+          0.559
+        ],
+        [
+          100,
+          0.4752
+        ]
+      ],
+      "stock": 24709,
+      "notes": "Socket only; ADC already owned. Confirm module pitch, edge offsets, insertion height and insulating support."
+    },
+    {
+      "refs": [
+        "JP1"
+      ],
+      "manufacturer": "Amphenol ICC",
+      "mpn": "68000-102HLF",
+      "sku": "609-3500-ND",
+      "description": "1x2 male jumper header, 2.54 mm",
+      "url": "https://www.digikey.com/en/products/detail/amphenol-cs-fci/68000-102HLF/1493545",
+      "prices": [
+        [
+          1,
+          0.24
+        ],
+        [
+          10,
+          0.203
+        ],
+        [
+          100,
+          0.1726
+        ]
+      ],
+      "stock": 103584,
+      "notes": "Shunt ordered separately; remove shunt before powering WT32 from programming USB."
+    },
+    {
+      "refs": [
+        "C1"
+      ],
+      "manufacturer": "Rubycon",
+      "mpn": "35PX470MEFC10X12.5",
+      "sku": "1189-1280-ND",
+      "description": "470 uF 35 V, 105 C radial, D10 / P5",
+      "url": "https://www.digikey.com/en/products/detail/rubycon/35PX470MEFC10X12-5/3134236",
+      "prices": [
+        [
+          1,
+          0.66
+        ],
+        [
+          10,
+          0.41
+        ],
+        [
+          50,
+          0.305
+        ]
+      ],
+      "stock": 64500,
+      "notes": "14 mm maximum seated height. 630 mA ripple at 10 kHz; verify actual input ripple and heating."
+    },
+    {
+      "refs": [
+        "C3"
+      ],
+      "manufacturer": "Rubycon",
+      "mpn": "16ZLH470MEFC8X11.5",
+      "sku": "1189-1859-ND",
+      "description": "470 uF 16 V, low-impedance 105 C radial, D8 / P3.5",
+      "url": "https://www.digikey.com/en/products/detail/rubycon/16ZLH470MEFC8X11-5/3563382",
+      "prices": [
+        [
+          1,
+          0.52
+        ],
+        [
+          10,
+          0.318
+        ],
+        [
+          50,
+          0.2348
+        ]
+      ],
+      "stock": 1853,
+      "fp": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
+      "notes": "Replaces C3 220 uF plus C5 100 uF with one 470 uF part. 13 mm maximum seated height; remains below U2's 820 uF stated maximum capacitive load before downstream capacitance is counted."
+    },
+    {
+      "refs": [
+        "C2",
+        "C4",
+        "C10",
+        "C11",
+        "C12"
+      ],
+      "manufacturer": "TDK",
+      "mpn": "FG28X7R1H104KNT06",
+      "sku": "445-173588-1-ND",
+      "description": "100 nF 50 V X7R 10%, radial MLCC, P5",
+      "url": "https://www.digikey.com/en/products/detail/tdk/FG28X7R1H104KNT06/5803202",
+      "prices": [
+        [
+          1,
+          0.25
+        ],
+        [
+          10,
+          0.146
+        ],
+        [
+          50,
+          0.1048
+        ],
+        [
+          100,
+          0.0922
+        ]
+      ],
+      "stock": 72175,
+      "fp": "PitClaw:C_TDK_FG28X7R1H104KNT06_P5",
+      "notes": "4 x 2.5 mm body, 5.5 mm maximum seated height and 5 mm formed-lead pitch. Carrier-level ADC-rail bypass C13 is removed because the socketed module must provide local bypassing."
+    },
+    {
+      "refs": [
+        "D2",
+        "D3"
+      ],
+      "manufacturer": "SMC Diode Solutions",
+      "mpn": "SB140",
+      "sku": "1655-SB140CT-ND",
+      "description": "1 A 40 V Schottky diode, DO-41",
+      "url": "https://www.digikey.com/en/products/detail/smc-diode-solutions/SB140/6022959",
+      "prices": [
+        [
+          1,
+          0.23
+        ],
+        [
+          10,
+          0.139
+        ],
+        [
+          50,
+          0.0994
+        ]
+      ],
+      "stock": 38472,
+      "notes": "D2 blower flyback: banded cathode FAN_OUT, anode GND. D3 relay-coil flyback: banded cathode raw WALL_12V, anode GND. D3 slows relay release; check supply switchover on the actual assembly."
+    },
+    {
+      "refs": [
+        "Q1"
+      ],
+      "manufacturer": "Infineon Technologies",
+      "mpn": "IRF5305PBF",
+      "sku": "IRF5305PBF-ND",
+      "description": "P-channel 55 V MOSFET, 31 A, TO-220AB",
+      "url": "https://www.digikey.com/en/products/detail/infineon-technologies/IRF5305PBF/811987",
+      "prices": [
+        [
+          1,
+          2.53
+        ],
+        [
+          10,
+          1.628
+        ],
+        [
+          50,
+          1.236
+        ]
+      ],
+      "stock": 18282,
+      "notes": "Mount horizontally, tab down, using the formed-lead footprint. Pin 1 gate, 2 drain, 3 source; tab is live FAN_OUT. Reserve 6.5 mm height including 1 mm insulating support and forming tolerance. Retain with insulating support and side adhesive fillets, no tab bolt. Support leads during forming; verify sample fit and enclosed temperature at 100 Hz fan PWM.",
+      "fp": "PitClaw:IRF5305_TO220_Horizontal_TabDown"
+    },
+    {
+      "refs": [
+        "Q2"
+      ],
+      "manufacturer": "onsemi",
+      "mpn": "2N3904BU",
+      "sku": "2N3904FS-ND",
+      "description": "NPN transistor, TO-92, 1E/2B/3C",
+      "url": "https://www.digikey.com/en/products/detail/onsemi/2N3904BU/1413",
+      "prices": [
+        [
+          1,
+          0.29
+        ],
+        [
+          10,
+          0.179
+        ],
+        [
+          100,
+          0.1113
+        ]
+      ],
+      "stock": 165917,
+      "notes": "Blower gate-driver transistor only. Form leads carefully to the wide-pitch THT footprint; do not reverse E/C."
+    },
+    {
+      "refs": [
+        "BZ1"
+      ],
+      "manufacturer": "TDK",
+      "mpn": "PS1240P02BT",
+      "sku": "445-2525-1-ND",
+      "description": "Passive piezo transducer, 3 V rated, 4 kHz, D12.2 / P5",
+      "url": "https://www.digikey.com/en/products/detail/tdk-corporation/PS1240P02BT/935930",
+      "prices": [
+        [
+          1,
+          0.67
+        ],
+        [
+          10,
+          0.501
+        ],
+        [
+          25,
+          0.4492
+        ]
+      ],
+      "stock": 44618,
+      "value": "PS1240P02BT / PIEZO",
+      "fp": "PitClaw:Piezo_TDK_PS1240P02BT_D12.2_P5",
+      "notes": "Direct 3.3 V GPIO drive through R6 at 4 kHz; pin 2 to ground. 7.8 mm maximum seated height. Confirm useful audibility in the enclosure."
+    },
+    {
+      "refs": [
+        "R1",
+        "R13",
+        "R14",
+        "R15",
+        "R16"
+      ],
+      "manufacturer": "YAGEO",
+      "mpn": "MFR-25FBF52-1K",
+      "sku": "1.00KXBK-ND",
+      "description": "1 kOhm 1% metal film, 0.25 W, axial",
+      "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-1K/13011",
+      "prices": [
+        [
+          1,
+          0.1
+        ],
+        [
+          10,
+          0.042
+        ],
+        [
+          25,
+          0.0348
+        ],
+        [
+          50,
+          0.0304
+        ],
+        [
+          100,
+          0.0268
+        ]
+      ],
+      "stock": 92700,
+      "notes": "R1 dissipates about 0.144 W at continuous fan-on. Buy ten for $0.42, less than five for $0.50."
+    },
+    {
+      "refs": [
+        "R2"
+      ],
+      "manufacturer": "YAGEO",
+      "mpn": "MFR-25FBF52-2K2",
+      "sku": "MFR-25FBF52-2K2-ND",
+      "description": "2.2 kOhm 1% metal film, 0.25 W, axial",
+      "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-2K2/9138108",
+      "prices": [
+        [
+          1,
+          0.1
+        ],
+        [
+          10,
+          0.042
+        ],
+        [
+          25,
+          0.0348
+        ],
+        [
+          50,
+          0.0304
+        ],
+        [
+          100,
+          0.0268
+        ]
+      ],
+      "stock": 18468,
+      "notes": "Blower transistor base resistor; 6.3 x 2.4 mm body and 7.62 mm formed lead pitch."
+    },
+    {
+      "refs": [
+        "R3"
+      ],
+      "manufacturer": "YAGEO",
+      "mpn": "MFR-25FBF52-100K",
+      "sku": "100KXBK-ND",
+      "description": "100 kOhm 1% metal film, 0.25 W, axial",
+      "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-100K/13473",
+      "prices": [
+        [
+          1,
+          0.1
+        ],
+        [
+          10,
+          0.042
+        ],
+        [
+          25,
+          0.0348
+        ],
+        [
+          50,
+          0.0304
+        ],
+        [
+          100,
+          0.0268
+        ]
+      ],
+      "stock": 17481,
+      "notes": "Blower-transistor base pull-down."
+    },
+    {
+      "refs": [
+        "R6"
+      ],
+      "manufacturer": "YAGEO",
+      "mpn": "MFR-25FBF52-330R",
+      "sku": "MFR-25FBF52-330R-ND",
+      "description": "330 Ohm 1% metal film, 0.25 W, axial",
+      "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-330R/9138136",
+      "prices": [
+        [
+          1,
+          0.11
+        ],
+        [
+          10,
+          0.044
+        ],
+        [
+          25,
+          0.0368
+        ],
+        [
+          50,
+          0.0324
+        ],
+        [
+          100,
+          0.0284
+        ]
+      ],
+      "stock": 16985,
+      "value": "330R / PIEZO SERIES",
+      "notes": "Direct-drive piezo series resistor. Limits the ideal initial 3.3 V capacitive-step current to 10 mA; 6.3 x 2.4 mm body and 7.62 mm formed lead pitch. Price checked 2026-09-05."
+    },
+    {
+      "refs": [
+        "R4"
+      ],
+      "manufacturer": "YAGEO",
+      "mpn": "MFR-25FBF52-220R",
+      "sku": "MFR-25FBF52-220R-ND",
+      "description": "220 Ohm 1% metal film, 0.25 W, axial",
+      "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-220R/9138097",
+      "prices": [
+        [
+          1,
+          0.1
+        ],
+        [
+          10,
+          0.042
+        ],
+        [
+          25,
+          0.0348
+        ],
+        [
+          50,
+          0.0304
+        ],
+        [
+          100,
+          0.0268
+        ]
+      ],
+      "stock": 23966,
+      "notes": "Servo signal series resistor."
+    },
+    {
+      "refs": [
+        "R5",
+        "R10",
+        "R11",
+        "R12"
+      ],
+      "manufacturer": "YAGEO",
+      "mpn": "MFR-25FBF52-10K",
+      "sku": "10.0KXBK-ND",
+      "description": "10 kOhm 1% metal film, 0.25 W, axial",
+      "url": "https://www.digikey.com/en/products/detail/yageo/MFR-25FBF52-10K/13219",
+      "prices": [
+        [
+          1,
+          0.1
+        ],
+        [
+          10,
+          0.042
+        ],
+        [
+          25,
+          0.0348
+        ],
+        [
+          50,
+          0.0304
+        ],
+        [
+          100,
+          0.0268
+        ]
+      ],
+      "stock": 126991,
+      "notes": "R5 is the servo pull-down; R10-R12 are probe bias resistors. Using common 1% parts trades roughly 0.2-0.5 C worst-case bias error across typical cooking temperatures for a large prototype cost reduction; calibrate each probe channel."
+    }
+  ],
+  "accessories": [
+    {
+      "refs": [
+        "J1 mate",
+        "J7 mate"
+      ],
+      "qty": 2,
+      "manufacturer": "JST",
+      "mpn": "XHP-2",
+      "sku": "455-2266-ND",
+      "description": "2-pin XH cable housing",
+      "url": "https://www.digikey.com/en/products/detail/jst-sales-america-inc/XHP-2/555485",
+      "prices": [
+        [
+          1,
+          0.1
+        ],
+        [
+          10,
+          0.059
+        ],
+        [
+          25,
+          0.0556
+        ]
+      ],
+      "notes": "J1 and J7 use different voltage rails; clearly label both ends."
+    },
+    {
+      "refs": [
+        "J3 mate"
+      ],
+      "qty": 1,
+      "manufacturer": "JST",
+      "mpn": "XHP-8",
+      "sku": "455-1902-ND",
+      "description": "8-pin XH cable housing",
+      "url": "https://www.digikey.com/en/products/detail/jst-sales-america-inc/XHP-8/923773",
+      "prices": [
+        [
+          1,
+          0.11
+        ],
+        [
+          10,
+          0.095
+        ],
+        [
+          25,
+          0.0892
+        ]
+      ],
+      "notes": "Carrier harness end only; separate WT32-end mate required."
+    },
+    {
+      "refs": [
+        "XH harness contacts"
+      ],
+      "qty": 11,
+      "manufacturer": "JST",
+      "mpn": "BXH-001T-P0.6",
+      "sku": "BXH-001T-P0.6-ND",
+      "description": "Loose crimp socket, 22-26 AWG",
+      "url": "https://www.digikey.com/en/products/detail/jst-sales-america-inc/BXH-001T-P0-6/7423881",
+      "prices": [
+        [
+          1,
+          0.1
+        ],
+        [
+          10,
+          0.05
+        ],
+        [
+          25,
+          0.0468
+        ],
+        [
+          50,
+          0.0444
+        ]
+      ],
+      "notes": "4 contacts for two 2-pin plugs + 7 for EXT; J3 pin 8 empty. Prefer 22 AWG for power. Loose contacts avoid 100-piece strip MOQ. Crimp tool/wire not included."
+    },
+    {
+      "refs": [
+        "JP1 shunt"
+      ],
+      "qty": 1,
+      "manufacturer": "Sullins",
+      "mpn": "SPC02SYAN",
+      "sku": "S9001-ND",
+      "description": "Removable 2.54 mm shorting shunt",
+      "url": "https://www.digikey.com/en/products/detail/sullins-connector-solutions/SPC02SYAN/76375",
+      "prices": [
+        [
+          1,
+          0.1
+        ],
+        [
+          10,
+          0.029
+        ],
+        [
+          25,
+          0.0272
+        ]
+      ],
+      "notes": "Remove JP1 for WT32 USB programming. JP2 is eliminated by K1 automatic wall-priority source selection. Shunt 3 A rating: https://www.sullinscorp.com/images/SPC02SYAN-0-3293.pdf"
+    }
+  ]
+}

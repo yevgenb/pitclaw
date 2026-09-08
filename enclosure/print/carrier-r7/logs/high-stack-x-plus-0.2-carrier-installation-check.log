@@ -1,0 +1,10 @@
+ECHO: "DRAFT case W,L,H", [86, 104, 44.9]
+ECHO: "FIT_CHECK_INPUTS", [1.76, 1.76, 3.1, 0.2, 0.2]
+ECHO: "Carrier underside / top / max component", [7.5, 9.1, 25.1]
+ECHO: "Seam / retainer underside / glass front", [27.6, 30.1, 43.4]
+ECHO: "USB face setback / pocket floor thickness / channel separation", [2, 1.5, 0.8]
+ECHO: "USB local floor skin at hidden PCB / screw-head clearances", [0.943, 0.983]
+ECHO: "USB PCB / mounting hardware clearance from normal wall", [0.643, 0.683]
+ECHO: "UNMEASURED: OEM rear mounting plane, screw engagement, glass pad preload,"
+ECHO: "rear components/antenna/cables, all plug overmolds and most connector Z."
+Current top level object is empty.

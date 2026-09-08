@@ -23,7 +23,7 @@ enum ProbeIndex : uint8_t {
 // Probe status
 enum class ProbeStatus : uint8_t {
     OK,
-    OPEN_CIRCUIT,    // ADC reads very high (probe disconnected)
+    OPEN_CIRCUIT,    // Near excitation rail, or excitation reference unavailable
     SHORT_CIRCUIT    // ADC reads very low (probe shorted)
 };
 
@@ -44,6 +44,10 @@ public:
 
     // Poll probes if the sample interval has elapsed. Call every loop().
     void update();
+
+    // Process one probe reading and its measured AIN3 excitation reference.
+    // Shared by hardware acquisition and resistor-fixture/native verification.
+    void processSample(uint8_t probe, int16_t raw, int16_t rawSupply);
 
     // Latest smoothed temperature for a given probe (in configured units: F or C)
     float getTemp(uint8_t probe) const;
@@ -82,13 +86,14 @@ public:
 
 private:
     // Convert raw ADC value to resistance using voltage divider formula
-    float adcToResistance(int16_t raw) const;
+    float adcToResistance(int16_t raw, int16_t rawSupply) const;
 
     // Convert resistance to temperature in Celsius using Steinhart-Hart
     float resistanceToTempC(float resistance, const ProbeConfig& cfg) const;
 
 #ifndef NATIVE_BUILD
     Adafruit_ADS1115 _ads;
+    bool _adcReady = false;
 #endif
 
     // Per-probe state
