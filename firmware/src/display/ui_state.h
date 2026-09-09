@@ -18,6 +18,7 @@ inline float ui_display_temp(float f) {
 inline const char* ui_unit_suffix() { return ui_state.fahrenheit ? "F" : "C"; }
 
 void ui_refresh_editors();
+void ui_refresh_temperature_layout();
 void ui_refresh_alert_layout();
 void ui_layout_alert(bool active);
 void ui_graph_refresh_layout();

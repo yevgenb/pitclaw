@@ -63,6 +63,7 @@ static Screen current_screen = Screen::DASHBOARD;
 static lv_obj_t* nav_btns[3][3] = {};
 static lv_obj_t* pit_card = nullptr;
 static lv_obj_t* meat_cards[2] = {};
+static lv_obj_t* temp_degrees[3] = {};
 static lv_obj_t* settings_content = nullptr;
 static lv_obj_t* graph_legend = nullptr;
 static bool alert_active = false;
@@ -110,17 +111,43 @@ void ui_set_wifi_callback(UiWifiActionCb cb) { cb_wifi_action = cb; }
 
 static lv_obj_t* new_screen() { return UiStyle::box(nullptr, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT, COLOR_BG, 0); }
 static void nav_event_cb(lv_event_t* e) { ui_switch_screen((Screen)(uintptr_t)lv_event_get_user_data(e)); }
+static void graph_icon_draw_cb(lv_event_t* e) {
+    auto btn = static_cast<lv_obj_t*>(lv_event_get_target(e));
+    lv_area_t area;
+    lv_obj_get_coords(btn, &area);
+    lv_draw_line_dsc_t line;
+    lv_draw_line_dsc_init(&line);
+    // Resolve the foreground on every draw, including selected/pressed states.
+    line.color = lv_obj_get_style_text_color(btn, LV_PART_MAIN);
+    line.width = 2;
+    line.round_start = line.round_end = true;
+    const int segments[][4] = {
+        {0, 0, 0, 16}, {0, 16, 18, 16},
+        {3, 12, 7, 6}, {7, 6, 11, 9}, {11, 9, 17, 2}
+    };
+    for (const auto& segment : segments) {
+        line.p1 = {area.x1 + 30 + segment[0], area.y1 + 18 + segment[1]};
+        line.p2 = {area.x1 + 30 + segment[2], area.y1 + 18 + segment[3]};
+        lv_draw_line(lv_event_get_layer(e), &line);
+    }
+}
 static void create_nav_bar(lv_obj_t* parent, uint8_t index) {
     // Separate rounded controls share the cards' outer margins and gutter.
     constexpr int nav_width = DISPLAY_WIDTH - 2 * UiStyle::SPACE;
     constexpr int button_space = nav_width - 2 * UiStyle::SPACE;
     auto nav = UiStyle::box(parent, UiStyle::SPACE, UiStyle::NAV_TOP, nav_width, UiStyle::NAV_HEIGHT, COLOR_BG, 0);
-    const char* labels[] = {LV_SYMBOL_HOME " Home", LV_SYMBOL_IMAGE " Graph", LV_SYMBOL_SETTINGS " Settings"};
+    const char* labels[] = {LV_SYMBOL_HOME " Home", "Graph", LV_SYMBOL_SETTINGS " Settings"};
     for (int i = 0; i < 3; ++i) {
         const int left = i * button_space / 3;
         const int right = (i + 1) * button_space / 3;
         auto btn = UiStyle::button(nav, labels[i], left + i * UiStyle::SPACE, 0, right - left, UiStyle::NAV_HEIGHT);
         lv_obj_set_style_bg_color(btn, COLOR_CARD_BG, 0);
+        if (i == 1) {
+            auto label = lv_obj_get_child(btn, 0);
+            lv_obj_set_width(label, LV_SIZE_CONTENT);
+            lv_obj_align(label, LV_ALIGN_CENTER, 13, 0);
+            lv_obj_add_event_cb(btn, graph_icon_draw_cb, LV_EVENT_DRAW_MAIN, nullptr);
+        }
         lv_obj_add_event_cb(btn, nav_event_cb, LV_EVENT_CLICKED, (void*)(uintptr_t)i);
         nav_btns[index][i] = btn;
         UiStyle::selected(btn, i == index);
@@ -128,6 +155,35 @@ static void create_nav_bar(lv_obj_t* parent, uint8_t index) {
 }
 static void update_nav_highlight(Screen screen) {
     for (auto& row : nav_btns) for (int i = 0; i < 3; ++i) UiStyle::selected(row[i], i == (int)screen);
+}
+
+void ui_refresh_temperature_layout() {
+    lv_obj_t* values[] = {lbl_pit_temp, lbl_meat1_temp, lbl_meat2_temp};
+    for (int i = 0; i < 3; ++i) {
+        auto value = values[i];
+        auto degree = temp_degrees[i];
+        if (!value || !degree) continue;
+        const auto font = i == 0 ? &lv_font_montserrat_48 :
+                          alert_active ? &lv_font_montserrat_24 : &lv_font_montserrat_36;
+        const auto small = i == 0 ? &lv_font_montserrat_24 : &lv_font_montserrat_18;
+        lv_point_t number_size, degree_size;
+        lv_text_get_size(&number_size, lv_label_get_text(value), font, 0, 0, LV_COORD_MAX, LV_TEXT_FLAG_NONE);
+        lv_text_get_size(&degree_size, "\xC2\xB0", small, 0, 0, LV_COORD_MAX, LV_TEXT_FLAG_NONE);
+        const bool connected = ui_state.connected[i];
+        const int suffix_width = connected ? degree_size.x + 2 : 0;
+        const int x = i == 0 ? 12 + (198 - number_size.x - suffix_width) / 2 : 14;
+        const int y = i == 0 ? (alert_active ? 36 : 69) : (alert_active ? 29 : 36);
+        lv_obj_set_style_text_font(value, font, 0);
+        lv_obj_set_style_text_align(value, LV_TEXT_ALIGN_LEFT, 0);
+        lv_obj_set_width(value, number_size.x);
+        lv_obj_set_pos(value, x, y);
+        // Position from the layout state, without reading stale LVGL coordinates.
+        const int raised_offset = i == 0 ? 3 : (alert_active ? -2 : 1);
+        lv_obj_set_pos(degree, x + number_size.x + 2, y + raised_offset);
+        lv_obj_set_style_text_color(degree, lv_obj_get_style_text_color(value, LV_PART_MAIN), 0);
+        if (connected) lv_obj_remove_flag(degree, LV_OBJ_FLAG_HIDDEN);
+        else lv_obj_add_flag(degree, LV_OBJ_FLAG_HIDDEN);
+    }
 }
 
 static bool modal_open(lv_obj_t* obj) { return obj && !lv_obj_has_flag(obj, LV_OBJ_FLAG_HIDDEN); }
@@ -154,18 +210,15 @@ void ui_layout_alert(bool active) {
         lv_obj_set_height(pit_card, active ? 136 : 190);
         // Pit title is child 0, edit icon 1, value 2, target 3.
         lv_obj_set_y(lv_obj_get_child(pit_card, 0), active ? 10 : 18);
-        lv_obj_set_y(lbl_pit_temp, active ? 36 : 69);
         lv_obj_set_y(lbl_setpoint, active ? 102 : 156);
-        lv_obj_t* values[] = {lbl_meat1_temp, lbl_meat2_temp};
         lv_obj_t* targets[] = {lbl_meat1_target, lbl_meat2_target};
         for (int i = 0; i < 2; ++i) {
             lv_obj_set_height(meat_cards[i], active ? 64 : 91);
             lv_obj_set_y(meat_cards[i], 64 + i * (active ? 72 : 99));
-            lv_obj_set_style_text_font(values[i], active ? &lv_font_montserrat_24 : &lv_font_montserrat_36, 0);
-            lv_obj_set_y(values[i], active ? 29 : 36);
             lv_obj_set_y(meat_target_captions[i], active ? 23 : 32);
             lv_obj_set_y(targets[i], active ? 42 : 54);
         }
+        ui_refresh_temperature_layout();
         if (settings_content) lv_obj_set_height(settings_content, active ? 158 : 214);
         if (chart_temps) {
             lv_obj_set_height(chart_temps, active ? 112 : 168);
@@ -308,28 +361,34 @@ static void create_dashboard_screen() {
     UiStyle::label(header, "Cook", 40, 7, &lv_font_montserrat_16, COLOR_TEXT_DIM);
     lbl_elapsed = UiStyle::label(header, "00:00:00", 142, 2, &lv_font_montserrat_24, COLOR_TEXT, 196, LV_TEXT_ALIGN_CENTER);
     lbl_units = UiStyle::label(header, "\xC2\xB0" "F", 428, 5, &lv_font_montserrat_18, COLOR_TEXT_DIM, 40, LV_TEXT_ALIGN_RIGHT);
-    lbl_fan_bar = UiStyle::label(scr_dashboard, "FAN 0%", 12, 38, &lv_font_montserrat_16, COLOR_GREEN);
+    lbl_fan_bar = UiStyle::label(scr_dashboard, "Fan 0%", 12, 38, &lv_font_montserrat_16, COLOR_TEXT_DIM);
     bar_fan = output_bar(scr_dashboard, 105, 111, COLOR_GREEN);
-    lbl_damper_bar = UiStyle::label(scr_dashboard, "DAMPER 0%", 246, 38, &lv_font_montserrat_16, COLOR_PURPLE);
+    lbl_damper_bar = UiStyle::label(scr_dashboard, "Damper 0%", 246, 38, &lv_font_montserrat_16, COLOR_TEXT_DIM);
     bar_damper = output_bar(scr_dashboard, 373, 95, COLOR_PURPLE);
     pit_card = UiStyle::card(scr_dashboard, 8, 64, 228, 190, COLOR_ORANGE);
     lv_obj_add_event_cb(pit_card, pit_card_click_cb, LV_EVENT_CLICKED, nullptr);
-    UiStyle::label(pit_card, "PIT", 16, 18, &lv_font_montserrat_18, COLOR_ORANGE, 190, LV_TEXT_ALIGN_CENTER);
-    UiStyle::label(pit_card, LV_SYMBOL_EDIT, 190, 12, &lv_font_montserrat_14, COLOR_TEXT_DIM);
+    UiStyle::label(pit_card, "Pit", 16, 18, &lv_font_montserrat_18, COLOR_ORANGE, 190, LV_TEXT_ALIGN_CENTER);
+    UiStyle::label(pit_card, LV_SYMBOL_EDIT, 196, 10, &lv_font_montserrat_14, COLOR_TEXT_DIM);
     lbl_pit_temp = UiStyle::label(pit_card, "---", 12, 69, &lv_font_montserrat_48, COLOR_ORANGE, 198, LV_TEXT_ALIGN_CENTER);
     lbl_setpoint = UiStyle::label(pit_card, "", 12, 156, &lv_font_montserrat_18, COLOR_TEXT_DIM, 198, LV_TEXT_ALIGN_CENTER);
     for (int i = 0; i < 2; ++i) {
         auto card = UiStyle::card(scr_dashboard, 244, 64 + i * 99, 228, 91, i == 0 ? COLOR_RED : COLOR_BLUE);
         meat_cards[i] = card;
         lv_obj_add_event_cb(card, i == 0 ? meat1_card_click_cb : meat2_card_click_cb, LV_EVENT_CLICKED, nullptr);
-        UiStyle::label(card, i == 0 ? "MEAT 1" : "MEAT 2", 14, 9, &lv_font_montserrat_16, COLOR_TEXT_DIM);
-        meat_edit_icons[i] = UiStyle::label(card, LV_SYMBOL_EDIT, 196, 9, &lv_font_montserrat_14, COLOR_TEXT_DIM);
+        UiStyle::label(card, i == 0 ? "Meat 1" : "Meat 2", 14, 9, &lv_font_montserrat_16, COLOR_TEXT_DIM);
+        meat_edit_icons[i] = UiStyle::label(card, LV_SYMBOL_EDIT, 196, 10, &lv_font_montserrat_14, COLOR_TEXT_DIM);
         auto temp = UiStyle::label(card, "---", 14, 36, &lv_font_montserrat_36, i == 0 ? COLOR_RED : COLOR_BLUE);
         meat_target_captions[i] = UiStyle::label(card, "Target", 128, 32, &lv_font_montserrat_16, COLOR_TEXT_DIM);
         auto target = UiStyle::label(card, "---", 128, 54, &lv_font_montserrat_16);
         auto est = UiStyle::label(card, "", 118, 9, &lv_font_montserrat_14, COLOR_TEXT_DIM, 94, LV_TEXT_ALIGN_RIGHT);
         if (i == 0) { lbl_meat1_temp = temp; lbl_meat1_target = target; lbl_meat1_est = est; }
         else { lbl_meat2_temp = temp; lbl_meat2_target = target; lbl_meat2_est = est; }
+    }
+    lv_obj_t* cards[] = {pit_card, meat_cards[0], meat_cards[1]};
+    for (int i = 0; i < 3; ++i) {
+        temp_degrees[i] = UiStyle::label(cards[i], "\xC2\xB0", 0, 0,
+                                       i == 0 ? &lv_font_montserrat_24 : &lv_font_montserrat_18);
+        lv_obj_add_flag(temp_degrees[i], LV_OBJ_FLAG_HIDDEN);
     }
     create_nav_bar(scr_dashboard, 0);
     alert_banner = UiStyle::box(lv_layer_top(), 8, 208, 464, 52, COLOR_DANGER);

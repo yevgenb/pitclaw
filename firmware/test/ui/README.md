@@ -11,7 +11,9 @@ which do not link LVGL.
 - `test_interactions.cpp` checks committed editor values, independent targets,
   Cancel, one-degree and held adjustments, bounds, Fahrenheit/Celsius conversion,
   condensed history timestamps, axis layout, alarms on all main screens and over
-  editors, Settings scrolling, and setup navigation/test feedback.
+  editors, Settings scrolling, and setup navigation/test feedback. It also checks
+  raised degree symbols through changing digit widths, negative/zero Celsius
+  readings, disconnection/reconnection, and compact alarm layouts.
 
 Build the simulator to obtain the matching LVGL library, then run both checks:
 

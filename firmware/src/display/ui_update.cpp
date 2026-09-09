@@ -33,10 +33,11 @@ void ui_update_temps(float pit, float m1, float m2, bool pc, bool m1c, bool m2c)
     for (int i = 0; i < 3; ++i) {
         ui_state.temps[i] = values[i]; ui_state.connected[i] = connected[i] && isfinite(values[i]);
         if (!labels[i]) continue;
-        if (ui_state.connected[i]) UiStyle::text_fmt(labels[i], "%.0f\xC2\xB0", ui_display_temp(values[i]));
+        if (ui_state.connected[i]) UiStyle::text_fmt(labels[i], "%.0f", ui_display_temp(values[i]));
         else lv_label_set_text(labels[i], "---");
         lv_obj_set_style_text_color(labels[i], ui_state.connected[i] ? colors[i] : COLOR_TEXT_DIM, 0);
     }
+    ui_refresh_temperature_layout();
 }
 void ui_update_setpoint(float sp) {
     if (!isfinite(sp)) return;
@@ -111,8 +112,8 @@ void ui_update_output_bars(float fan, float damper) {
     if (!isfinite(fan)) fan = 0;
     if (!isfinite(damper)) damper = 0;
     fan = fminf(100, fmaxf(0, fan)); damper = fminf(100, fmaxf(0, damper));
-    if (lbl_fan_bar) UiStyle::text_fmt(lbl_fan_bar, "FAN %.0f%%", fan);
-    if (lbl_damper_bar) UiStyle::text_fmt(lbl_damper_bar, "DAMPER %.0f%%", damper);
+    if (lbl_fan_bar) UiStyle::text_fmt(lbl_fan_bar, "Fan %.0f%%", fan);
+    if (lbl_damper_bar) UiStyle::text_fmt(lbl_damper_bar, "Damper %.0f%%", damper);
     if (bar_fan) lv_bar_set_value(bar_fan, lroundf(fan), LV_ANIM_OFF);
     if (bar_damper) lv_bar_set_value(bar_damper, lroundf(damper), LV_ANIM_OFF);
 }

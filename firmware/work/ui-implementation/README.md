@@ -9,6 +9,12 @@ buttons, eight-pixel gaps and side margins, and four pixels below it. Dashboard
 columns and the two unit choices have equal widths. See the
 [aesthetics review](../ui-aesthetics-review/review.md) for the rationale and before images.
 
+The subtle-polish refinement adds neutral fan/damper labels, sentence-case card
+titles, aligned edit icons, and a line-chart navigation icon. Smaller raised
+degree symbols follow the live temperature text through digit-width changes,
+Fahrenheit/Celsius switches, and compact alarm layouts; disconnected readings
+show dashes without a degree symbol. Selected navigation keeps its orange fill.
+
 | View | Render |
 | --- | --- |
 | Home | [Dashboard](screens/dashboard.png) |
@@ -35,5 +41,8 @@ The original visual proposal remains in [ui-comparison](../ui-comparison/README.
 
 Validation on 8 September 2026: firmware and simulator builds, 132 native test
 cases, the splash/navigation check, and the production UI interaction check.
+The interaction check also exercises changing digit widths, negative/zero Celsius
+readings, disconnected and reconnected probes, and degree-symbol placement while
+alarms appear and clear.
 Captures were inspected for layout. Physical touch, glare, and device rendering
 latency still require a check on the panel.

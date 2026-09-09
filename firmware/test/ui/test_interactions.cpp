@@ -61,6 +61,50 @@ static bool overlap(lv_obj_t* first, lv_obj_t* second) {
     lv_area_t a, b; lv_obj_get_coords(first, &a); lv_obj_get_coords(second, &b);
     return a.x1 <= b.x2 && b.x1 <= a.x2 && a.y1 <= b.y2 && b.y1 <= a.y2;
 }
+static void check_temperature_readings() {
+    pump();
+    lv_obj_t* values[] = {lbl_pit_temp, lbl_meat1_temp, lbl_meat2_temp};
+    for (int i = 0; i < 3; ++i) {
+        auto value = values[i];
+        auto degree = temp_degrees[i];
+        assert(lv_obj_is_visible(degree) == ui_state.connected[i]);
+        lv_area_t number, suffix, card;
+        lv_obj_get_coords(value, &number);
+        lv_obj_get_coords(lv_obj_get_parent(value), &card);
+        assert(number.x1 >= card.x1 && number.x2 <= card.x2);
+        assert(number.y1 >= card.y1 && number.y2 <= card.y2);
+        if (!ui_state.connected[i]) continue;
+        lv_obj_get_coords(degree, &suffix);
+        assert(suffix.x1 > number.x2 && suffix.x2 <= card.x2);
+        assert(suffix.y1 <= number.y1 + (number.y2 - number.y1) / 4);
+        assert(suffix.y1 >= card.y1 && suffix.y2 < number.y2);
+        assert(!overlap(value, lv_obj_get_child(lv_obj_get_parent(value), 0)));
+        if (i) assert(!overlap(degree, meat_target_captions[i - 1]));
+    }
+}
+static void check_temperature_updates() {
+    const UiState original = ui_state;
+    ui_update_temps(212, 32, 14, true, true, true);
+    ui_set_units(false);
+    assert(strcmp(lv_label_get_text(lbl_pit_temp), "100") == 0);
+    assert(strcmp(lv_label_get_text(lbl_meat1_temp), "0") == 0);
+    assert(strcmp(lv_label_get_text(lbl_meat2_temp), "-10") == 0);
+    check_temperature_readings();
+    ui_update_alerts(3, false, false, 0); check_temperature_readings();
+    ui_set_units(true); check_temperature_readings();
+    ui_update_alerts(0, false, false, 0); check_temperature_readings();
+    ui_update_temps(NAN, 200, 200, true, false, false);
+    for (auto value : {lbl_pit_temp, lbl_meat1_temp, lbl_meat2_temp})
+        assert(strcmp(lv_label_get_text(value), "---") == 0);
+    check_temperature_readings();
+    ui_update_temps(99, 99, 99, true, true, true); check_temperature_readings();
+    const int degree_x = lv_obj_get_x(temp_degrees[1]);
+    ui_update_temps(100, 100, 100, true, true, true); check_temperature_readings();
+    assert(lv_obj_get_x(temp_degrees[1]) > degree_x);
+    ui_set_units(original.fahrenheit);
+    ui_update_temps(original.temps[0], original.temps[1], original.temps[2],
+                    original.connected[0], original.connected[1], original.connected[2]);
+}
 int main() {
     lv_init(); lv_tick_set_cb([]() -> uint32_t { return time_ms; });
     auto display = lv_display_create(480, 320);
@@ -80,6 +124,7 @@ int main() {
     assert(!overlap(lbl_meat1_temp, lbl_meat1_target));
     assert(!overlap(lbl_damper_bar, bar_damper));
     capture("dashboard");
+    check_temperature_updates();
 
     // Opening/accepting reflects the current committed value. Cancel discards a draft.
     tap(pit_card); assert(modal_open(modal_setpoint));
@@ -146,7 +191,10 @@ int main() {
     assert(lv_obj_is_visible(alert_banner)); assert(!overlap(lv_obj_get_child(modal_setpoint, 0), alert_banner));
     capture("editor-alarm"); tap(btn_alert_ack); assert(acknowledgments == 1);
     tap(button(modal_setpoint, "Cancel")); ui_update_alerts(0, false, false, 0);
-    ui_update_alerts(0, false, false, 7); capture("probe-errors"); ui_update_alerts(0, false, false, 0);
+    ui_update_temps(NAN, NAN, NAN, false, false, false);
+    ui_update_alerts(0, false, false, 7); check_temperature_readings(); capture("probe-errors");
+    ui_update_alerts(0, false, false, 0);
+    ui_update_temps(225, 200, 200, true, true, true);
 
     ui_switch_screen(Screen::SETTINGS);
     ui_update_wifi_info({true, false, "Example-network-with-a-long-name", "192.168.100.100", -62});
