@@ -29,9 +29,10 @@ a temporary directory and removes the executables after running them.
 To also capture the actual production screens as PNGs:
 
 ```sh
-python3 test/ui/run_checks.py --capture-dir work/ui-implementation/screens
+python3 test/ui/run_checks.py --capture-dir .pio/ui-screens
 ```
 
 The capture process uses LVGL rendering and Python's standard library; it needs
-no browser or image packages. The static comparison under `work/ui-comparison`
-preserves the earlier before/proposed screenshots.
+no browser or image packages. Generated captures stay in the ignored `.pio/`
+directory. The project's main README includes a current dashboard render;
+temporary UI reviews and comparisons are not retained in `work/`.

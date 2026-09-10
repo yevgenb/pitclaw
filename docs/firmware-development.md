@@ -57,6 +57,9 @@ pio test -e native --filter test_desktop/test_pid
 
 # On-device integration tests (requires connected hardware)
 pio test -e wt32_sc01_plus
+
+# Headless production LVGL checks (build the simulator first)
+python3 test/ui/run_checks.py
 ```
 
 Tests use the Unity framework with two environments:
@@ -168,7 +171,7 @@ All user settings stored in `config.json` on LittleFS. Survives reboots and firm
 - Lid-open threshold: 6% drop below setpoint
 
 **Fan Control:**
-- PWM frequency: 25 kHz
-- Kick-start: 75% for 500ms
+- PWM frequency: 100 Hz with 10-bit duty resolution (provisional; bench-verify the blower)
+- Kick-start: 100% for 500ms
 - Long-pulse mode below 10% (10s cycle)
 - Min sustained speed: 15%

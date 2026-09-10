@@ -1,164 +1,189 @@
 # <img src="firmware/data/favicon.svg" width="36" height="36" alt="Pit Claw logo"> Pit Claw
 
-[![CI](https://github.com/MrMatt57/pitclaw/actions/workflows/ci.yml/badge.svg)](https://github.com/MrMatt57/pitclaw/actions/workflows/ci.yml)
+[![CI](https://github.com/yevgenb/pitclaw/actions/workflows/ci.yml/badge.svg)](https://github.com/yevgenb/pitclaw/actions/workflows/ci.yml)
 
-Open-source BBQ temperature monitor and controller. Uses an ESP32-S3 with a 3.5" touchscreen to maintain precise smoker temperature via PID-controlled fan and optional servo damper. Reads Thermoworks-compatible thermistor probes. Includes a web interface (PWA) for remote monitoring from any phone or computer on Wi-Fi. Touchscreen works fully offline.
+BBQ temperature monitor and controller built around the WT32-SC01 Plus: an
+ESP32-S3 with a 3.5-inch, 480×320 landscape capacitive touchscreen. Pit Claw reads
+one pit probe and two meat probes, controls a blower and optional servo damper,
+and provides a web dashboard for monitoring and control. The touchscreen and
+temperature control work without Wi-Fi.
 
-### Touchscreen Dashboard
+## Current project state
 
-Real-time temperature display on the 3.5" capacitive touchscreen. Works fully offline — no Wi-Fi required.
+As of **9 September 2026**:
 
-![Pit Claw touchscreen dashboard](docs/media/pitclaw-device.png)
+| Area | State |
+| --- | --- |
+| Firmware | Version **0.2.0**, built and flashed to a WT32-SC01 Plus; upload verified and the device responded after reboot. |
+| Touchscreen | LVGL Home, Graph, Settings, temperature editors, shared alarms, and first-boot setup are implemented. The latest polish is included in the flashed build. |
+| Web interface | Live temperatures, history and prediction graphs, session controls/export, settings, and manual firmware OTA. Supports deployment under an Nginx path prefix. |
+| Carrier PCB | **Rev B-T2F0-A5807-S4** routed prototype. Recorded KiCad ERC, DRC, schematic parity, and unconnected-item checks pass. A reviewed bare-board fabrication package is available; physical qualification remains. |
+| Enclosure | **r7 landscape fit prototype**, with exported STLs, fit coupons, and a print guide. Physical module and printed-part fit still need verification. |
 
-### Web Interface
+The firmware and simulator builds, **132 native test cases**, and the headless
+LVGL checks passed on 8 September 2026. The LVGL checks include 123 navigation
+taps and editor, unit, alarm, probe-state, and layout transitions. This validation
+does not establish smoker temperature accuracy or qualify the new carrier's
+electrical loads, thermal behavior, or physical fit.
 
-Browser-based PWA with live temperature graph, predictive done-time curves, and full cook session control. Access from any device at `http://bbq.local`.
+## Touchscreen
 
-![Pit Claw web UI with temperature history graph](docs/media/pitclaw.png)
+![Current Pit Claw touchscreen dashboard](docs/media/pitclaw-dashboard.png)
 
-## Features
+The current dashboard uses large temperature readings, rounded cards and
+navigation buttons, neutral status labels, and consistent edit icons. Smaller
+degree symbols follow changing values and disappear for disconnected probes.
+The image above is a native 480×320 LVGL render with example readings.
 
-- **3 probe inputs**: 1 pit (ambient) + 2 meat probes (Thermoworks Pro-Series compatible, 2.5mm jack)
-- **PID temperature control**: Fan + optional damper hold pit temperature steady (±5°F typical)
-- **3.5" capacitive touchscreen**: Real-time dashboard — works fully without Wi-Fi
-- **Web UI (PWA)**: Install to home screen, real-time graph, set points, alarms, session export
-- **Predictive curve**: Chart shows dashed projection from current meat temp to target with estimated done time
-- **Alarms**: Local buzzer + browser audio + Pushover push notifications
-- **Cook session logging**: Persists through power loss, download as CSV/JSON before starting next cook
-- **Easy setup**: QR code on screen for Wi-Fi, captive portal, mDNS (`bbq.local`)
-- **OTA updates**: Flash new firmware from the browser — no USB after initial setup
-- **Error detection**: Probe disconnect/short, fire-out warning, Wi-Fi auto-reconnect
-- **Calibration**: Per-probe Steinhart-Hart coefficients with offset adjustment
-- **3D printable enclosure**: Landscape case prototype with screw-fastened top and bottom
+- Tap the pit card to change its setpoint, or a meat card to edit that probe's
+  target. Tap for one-degree steps or hold for five-degree steps; Cancel discards
+  the draft value.
+- Switch between Fahrenheit and Celsius without changing the stored control
+  targets. Graph history uses elapsed sample time and a dashed setpoint line.
+- Alarm controls remain available on Home, Graph, Settings, and above an open
+  editor. Disconnected probes display dashes.
+- Setup provides Back navigation, Wi-Fi connection feedback, live probe checks,
+  and separate fan, servo, and buzzer test buttons.
 
-## Hardware
+## Control and monitoring
 
-### Carrier PCB engineering draft
+- **Three probe inputs:** one pit and two meat channels, using calibrated
+  thermistor probes with 2.5 mm jacks. Thermoworks Pro-Series is the intended
+  probe family; other probes require suitable coefficients and calibration.
+- **PID control:** fan-only, fan-and-damper, and damper-priority modes, with
+  startup handling, lid-open detection, and output shutdown on a pit-probe fault.
+- **Alarms:** local buzzer, browser audio, and configurable Pushover notifications.
+- **Cook sessions:** temperature history, predicted meat completion times, and
+  CSV/JSON export. Download a session before starting a new one.
+- **Configuration:** persistent settings, probe calibration, and Wi-Fi reconnect.
 
-The active prototype design is the [Rev B-T2F0-A5807-S4 through-hole carrier](hardware/carrier-revb/README.md),
-with PCB-mounted RJ45, probe jacks and a 5.5 × 2.1 mm 12 V inlet, a screw-mounted Adafruit 5807 USB-C PD breakout, an automatic relay PD/wall selector and a
-TSR 2-2450N 5 V / 2 A converter. Its [priced DigiKey BOM](hardware/carrier-revb/bom/README.md)
-and [wiring](docs/wiring.md) intentionally omit F1–F4. The carrier has routed copper, schematic/PCB previews and a
-[JLCPCB bare-board prototype package](hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/README.md).
-Physical module/enclosure fit and load qualification remain. S3 fixes a barrel-jack wiring error that would short
-USB-PD in S2; use the current wiring. K1 now automatically selects wall power
-when present, with USB-PD as the default. No internal source-selection jumper is needed.
+## Web interface
 
-### Legacy perfboard bill of materials
+![Pit Claw web dashboard](docs/media/pitclaw.png)
 
-All internal electronics mount on a single 50x70mm carrier perfboard behind the display. Requires basic soldering (~20 joints). Enclosure is 101.5x69.5x41.4mm.
+Open `http://bbq.local` or the controller's LAN IP from a device on the same
+network. The dashboard uses WebSocket updates and also works behind an Nginx
+directory prefix such as `/newbbq/`; see the
+[reverse-proxy guide](firmware/docs/reverse-proxy.md).
 
-| # | Component | Product | Qty | Price | Link |
-|---|-----------|---------|-----|-------|------|
-| 1 | MCU + Display | WT32-SC01 Plus (ESP32-S3, 3.5" 480x320 capacitive touch) | 1 | ~$20-25 | [Amazon](https://www.amazon.com/s?k=WT32-SC01+Plus) / AliExpress |
-| 2 | ADC | ADS1115 16-bit I2C breakout (HiLetgo 3-pack) | 1 | ~$4 | [Amazon](https://www.amazon.com/s?k=ADS1115+16+bit) |
-| 3 | Blower Fan | GDSTIME 5015 12V dual ball bearing blower (2-pack) | 1 | ~$10-12 | [Amazon](https://www.amazon.com/s?k=GDSTIME+5015+12V+blower) |
-| 4 | MOSFET | IRLZ44N logic-level N-channel TO-220 (5-pack) | 1 | ~$7 | [Amazon](https://www.amazon.com/s?k=IRLZ44N+MOSFET) |
-| 5 | Servo | Miuzei MG90S metal gear micro servo (2-pack) | 1 | ~$8-10 | [Amazon](https://www.amazon.com/s?k=MG90S+metal+gear+servo) |
-| 6 | Power Supply | ALITOVE 12V 5A DC adapter (5.5x2.1mm barrel) | 1 | ~$10-12 | [Amazon](https://www.amazon.com/s?k=12V+5A+power+supply+barrel) |
-| 7 | Buck Converter | MP1584EN mini adjustable DC-DC (6-pack, 22x17mm) | 1 | ~$8 | [Amazon](https://www.amazon.com/s?k=MP1584EN+buck+converter) |
-| 8 | Power Jack | Panel-mount DC barrel jack 5.5x2.1mm (4-pack) | 1 | ~$6 | [Amazon](https://www.amazon.com/s?k=panel+mount+DC+barrel+jack+5.5x2.1) |
-| 9 | Probe Jacks | CESS 2.5mm mono TS panel-mount with nut (4-pack) | 1 | ~$6-8 | [Amazon](https://www.amazon.com/s?k=2.5mm+mono+panel+mount+jack) |
-| 10 | Buzzer | Piezo buzzer disc 3-5V (5-pack) | 1 | ~$5 | [Amazon](https://www.amazon.com/s?k=piezo+buzzer+disc+5V) |
-| 11 | Carrier Board | 50x70mm perfboard (10-pack) | 1 | ~$6 | [Amazon](https://www.amazon.com/s?k=50x70mm+perfboard) |
-| 12 | Resistors | 10K ohm 1% metal film (pack) | 3 | ~$5 | [Amazon](https://www.amazon.com/s?k=10K+1%25+metal+film+resistor) |
-| 13 | Capacitors | 0.1uF ceramic (pack) | 3 | ~$5 | [Amazon](https://www.amazon.com/s?k=0.1uF+ceramic+capacitor) |
-| 14 | Hookup Wire | 22AWG solid core (assorted colors) | 1 | ~$8 | [Amazon](https://www.amazon.com/s?k=22AWG+solid+core+hookup+wire) |
-| | | **Total (excluding probes)** | | **~$95-115** | |
+PWA installation, service-worker caching, and browser notifications need a secure
+context; use HTTPS on the reverse proxy for those features. Live readings still
+require a connection to the controller.
 
-### Temperature Probes (buy separately)
+Manual firmware updates are available at `/update`. Automatic GitHub release
+checks are disabled in the current PlatformIO configuration. Firmware and web
+assets are separate: uploading `firmware.bin` does not update the files in
+LittleFS.
 
-Any Thermoworks Pro-Series probe with 2.5mm mono jack works:
-- [TX-1003X-AP](https://www.thermoworks.com/tx-1003x-ap/) — Air/pit probe with grate clip (~$19)
-- [TX-1001X-OP](https://www.thermoworks.com/tx-1001x-op/) — Cooking/meat probe (~$21)
+## Hardware and enclosure
 
-Compatible alternatives: Maverick ET-72/73 replacement probes (different Steinhart-Hart coefficients), Inkbird, FireBoard probes.
+The active design is the
+[Rev B-T2F0-A5807-S4 carrier](hardware/carrier-revb/README.md), a 60×92 mm board
+with PCB-mounted probe jacks, a blower/servo connector, a 12 V barrel inlet,
+an Adafruit 5807 USB-C PD module, and a Traco TSR 2-2450N 5 V / 2 A converter.
+A relay selects wall power when present and USB-PD otherwise.
 
-### 3D Printed Parts
+| Resource | Contents |
+| --- | --- |
+| [Carrier design](hardware/carrier-revb/README.md) | Circuit, power limits, module mounting, and remaining qualification work |
+| [Wiring guide](docs/wiring.md) | Current connector pin assignments and assembly wiring |
+| [Carrier BOM](hardware/carrier-revb/bom/README.md) | Current parts and recorded pricing |
+| [Verification](hardware/carrier-revb/verification/README.md) | Native electrical/layout checks and physical validation limits |
+| [JLCPCB prototype package](hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/README.md) | Reviewed Gerber/drill archive for a small bare-board order |
+| [Landscape enclosure](enclosure/carrier-case.md) | Current 104×86×44.9 mm case and fit assumptions |
+| [r7 STL package and print guide](enclosure/print/carrier-r7/README.md) | Top, bottom, display retainer, fit coupons, and printing instructions |
 
-The [Rev B landscape enclosure](enclosure/carrier-case.md) puts power connections
-on one short end and three probe jacks on the other. Its top protects and retains
-the display; the carrier mounts independently in the bottom with heat-set
-inserts. The 104 × 86 × 44.9 mm model and STLs are fit prototypes.
+The fabrication documentation records no submitted PCB order. Carrier load,
+relay-transfer, thermal, and module-fit checks remain, along with printed
+enclosure fit checks. The older 50×70 mm perfboard and snap-fit controller case
+are legacy designs; their parts do not fit the Rev B carrier. See the
+[enclosure guide](enclosure/README.md) for that distinction and the separate
+fan/damper assembly.
 
-- **Top bezel** — recessed display, with a thin internal retaining frame
-- **Bottom shell** — carrier board and connector openings
-- **Blower housing** — holds fan, servo, and butterfly damper
-- **UDS pipe adapter** — mounts to 3/4" NPT pipe nipple on drum
+## Getting started
 
-The older snap-fit `bbq-case.scad`, controller STLs and kickstand fit the legacy
-perfboard only. See [3D Printed Parts](enclosure/README.md) for the separate guides.
+### 1. Set up the tools
 
-## Getting Started
-
-### 1. Clone and Set Up
-
-```bash
-git clone https://github.com/MrMatt57/pitclaw.git
+```sh
+git clone https://github.com/yevgenb/pitclaw.git
 cd pitclaw
 ```
 
-**Windows** — one script installs everything (Git, Python, PlatformIO CLI, OpenSCAD):
+Install PlatformIO CLI. Windows users can use the repository's setup script:
 
 ```powershell
-# Run from an elevated (Admin) PowerShell
+# Run from an elevated PowerShell in the repository root
 powershell -ExecutionPolicy Bypass -File scripts\setup-dev.ps1
 ```
 
-**Other platforms** — install [PlatformIO CLI](https://docs.platformio.org/en/latest/core/installation.html) (`pip install platformio`).
+See [firmware development](docs/firmware-development.md) for prerequisites.
+Use the current carrier and wiring guides when assembling hardware.
 
-### 2. Wire and Assemble
+### 2. Build and flash
 
-Solder the carrier board and wire everything up. See the [wiring guide](docs/wiring.md) for the full diagram and pin assignments.
+Run from `firmware/` with the WT32-SC01 Plus connected over USB:
 
-### 3. Build and Flash
-
-```bash
+```sh
 cd firmware
-
-# Build firmware
 pio run -e wt32_sc01_plus
-
-# Connect WT32-SC01 Plus via USB-C, then flash
 pio run -e wt32_sc01_plus --target upload
 
-# Upload web UI files to flash filesystem
+# Initial installation of the web assets in LittleFS
 pio run -e wt32_sc01_plus --target uploadfs
 ```
 
-Do this before closing the case — the enclosure has no USB pass-through, so the board's USB-C port is only reachable with the bezel off. After this initial flash, all future firmware and web UI updates can be done over Wi-Fi at `http://bbq.local/update`.
+For an existing installation, a filesystem upload replaces LittleFS: preserve
+configuration and session data before updating its image. A firmware-only update
+preserves that filesystem. The display board's programming USB port requires
+opening the enclosure; the carrier's external USB-C PD port is for power.
 
-### 4. First Boot
+For later manual firmware OTA, open `http://bbq.local/update` and upload
+`firmware/.pio/build/wt32_sc01_plus/firmware.bin` from the repository root.
 
-1. Power on — the setup wizard starts on the touchscreen
-2. Select temperature units (°F or °C)
-3. Scan the QR code on screen with your phone to connect to the setup Wi-Fi
-4. Enter your home Wi-Fi credentials in the portal page
-5. Plug in probes — the wizard verifies live readings
-6. Fan, servo, and buzzer do a quick self-test
-7. Setup complete — dashboard appears
+### 3. Complete setup
 
-### 5. Use the Web UI
+1. Select °F or °C in the touchscreen wizard.
+2. Follow the Wi-Fi QR code and portal instructions, or continue offline with Next.
+3. Connect the probes and check their live readings.
+4. Tap the fan, servo, and buzzer test buttons and confirm each device operates.
+5. Finish setup to enter the dashboard.
 
-Open `http://bbq.local` in any browser on the same Wi-Fi network.
+Hold a finger on the touchscreen for 10 seconds during the boot splash to request
+a factory reset.
 
-For the best experience, add it to your phone's home screen (it's a PWA):
-- **iOS**: Safari → Share → Add to Home Screen
-- **Android**: Chrome → Menu → Add to Home Screen
+## Development and validation
 
-### Factory Reset
+The SDL2 desktop simulator runs the production LVGL screens and serves the web
+UI at `http://localhost:3000`. Run these commands from `firmware/`:
 
-Hold your finger on the touchscreen for 10 seconds during the boot splash screen.
+```sh
+# Native control-logic regression tests
+pio test -e native
 
-## Development
+# Desktop simulator; requires SDL2
+pio run -e simulator
+.pio/build/simulator/program
+
+# Headless production LVGL interaction checks; run after building the simulator
+python3 test/ui/run_checks.py
+
+# Web update and reverse-proxy checks
+node test/web/test_release_updates.cjs
+node test/web/test_reverse_proxy.cjs
+```
+
+On Apple Silicon with Homebrew SDL2, use
+`CPATH=/opt/homebrew/include pio run -e simulator` if the headers are not found.
+The [display test guide](firmware/test/ui/README.md) explains the capture command
+and alternate SDL paths. UI screenshots can be regenerated locally on demand.
 
 | Guide | Topics |
-|-------|--------|
-| [Firmware Development](docs/firmware-development.md) | Building, flashing, testing, architecture, configuration |
-| [Web UI Development](docs/web-development.md) | Simulator, web UI editing, cook profiles, WebSocket protocol |
-| [Wiring](docs/wiring.md) | Current PCB net list and connector pin assignments |
-| [Carrier PCB draft](hardware/carrier-revb/README.md) | KiCad design, layout assumptions, BOM and release gates |
-| [3D Printed Parts](enclosure/README.md) | Print settings, hardware list, assembly instructions, parametric customization |
+| --- | --- |
+| [Firmware development](docs/firmware-development.md) | Build, flash, architecture, and configuration |
+| [Display checks](firmware/test/ui/README.md) | Real LVGL pointer events, layout checks, and PNG capture |
+| [Web UI development](docs/web-development.md) | Simulator profiles, web assets, and WebSocket protocol |
+| [Reverse proxy](firmware/docs/reverse-proxy.md) | Nginx path prefixes, WebSockets, HTTPS, and manual OTA routing |
+| [3D printed parts](enclosure/README.md) | Current enclosure, legacy parts, and fan assembly |
 
 ## License
 
