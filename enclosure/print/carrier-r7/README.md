@@ -1,5 +1,10 @@
 # PitClaw carrier case r7 — print and assembly guide
 
+**Current enclosure:** use the [r11 package](../../fusion-r11/README.md) for the
+corrected bottom, reinforced probe fascia and future-mount inserts. The r7/r8
+bottom and power-end coupon have mirrored connector layouts. This page and its
+ZIP are retained only for history.
+
 **Fit prototype for the routed Rev B 60 × 92 mm carrier and WT32-SC01 Plus.**
 The assembled case is 104 × 86 × 44.9 mm. It has two outer halves and a thin
 internal display retainer. Power connections are on one short end; probes are

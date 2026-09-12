@@ -1,0 +1,46 @@
+{
+  "document": "PitClaw enclosure r11 - bottom mounting inserts",
+  "source_f3d_sha256": "7b8a72a4156941832957eb7e3d6639795637ddd2f38485d4052f308b51262fd7",
+  "source_unchanged": true,
+  "mount_centres_mm": [
+    [
+      -36,
+      -37
+    ],
+    [
+      -36,
+      37
+    ],
+    [
+      36,
+      -37
+    ],
+    [
+      36,
+      37
+    ]
+  ],
+  "mount_pitch_mm": [
+    72,
+    74
+  ],
+  "mount_thread": "M3",
+  "additional_inserts": 4,
+  "total_case_inserts": 16,
+  "boss_diameter_mm": 10,
+  "boss_top_z_mm": 7.5,
+  "pilot_diameter_mm": 4,
+  "pilot_floor_z_mm": 2.5,
+  "external_access_diameter_mm": 3.4,
+  "insert_z_mm": [
+    3.5,
+    7.5
+  ],
+  "recommended_screw_reach_mm": [
+    6.5,
+    7
+  ],
+  "reference_insert_diameter_mm": 4.6,
+  "body_volume_mm3": 45465.03823281404,
+  "front_guide_stop_cap_height_mm": 7.5
+}

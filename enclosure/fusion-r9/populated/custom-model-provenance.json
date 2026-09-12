@@ -1,0 +1,74 @@
+[
+  {
+    "ref": "C1",
+    "basis": "Selected Rubycon nominal diameter/body height; simplified vent and sleeve."
+  },
+  {
+    "ref": "C3",
+    "basis": "Selected Rubycon nominal diameter/body height; simplified vent and sleeve."
+  },
+  {
+    "ref": "C2",
+    "basis": "TDK FG28 footprint body4x2.5mm, seated-height allowance5.5mm; cosmetic rounded rectangle."
+  },
+  {
+    "ref": "C4",
+    "basis": "TDK FG28 footprint body4x2.5mm, seated-height allowance5.5mm; cosmetic rounded rectangle."
+  },
+  {
+    "ref": "C10",
+    "basis": "TDK FG28 footprint body4x2.5mm, seated-height allowance5.5mm; cosmetic rounded rectangle."
+  },
+  {
+    "ref": "C11",
+    "basis": "TDK FG28 footprint body4x2.5mm, seated-height allowance5.5mm; cosmetic rounded rectangle."
+  },
+  {
+    "ref": "C12",
+    "basis": "TDK FG28 footprint body4x2.5mm, seated-height allowance5.5mm; cosmetic rounded rectangle."
+  },
+  {
+    "ref": "K1",
+    "basis": "Omron G5Q-1 reviewed20.3x10.3mm outline and16.2mm maximum seated height; simple housing."
+  },
+  {
+    "ref": "U2",
+    "basis": "Traco TSR2N nominal14x7.6x10.2mm body at actual F.Fab offset; housing simplified."
+  },
+  {
+    "ref": "Q1",
+    "basis": "IRF5305 flat tab-down, reviewed10.67x16.51 body envelope,1mm insulating gap; formed leads simplified."
+  },
+  {
+    "ref": "BZ1",
+    "basis": "TDK PS1240P02BT footprint center/diameter12.2mm,7.8mm seated allowance; sound port cosmetic."
+  },
+  {
+    "ref": "J2",
+    "basis": "Amphenol RJHSE5080 reviewed15.75x14.99x13.21 housing and flush face; cavity/contacts simplified."
+  },
+  {
+    "ref": "J9",
+    "basis": "Tensility5400133 reviewed14.4x9x10.8 housing,axis6.5mm above PCB; bore and center pin simplified."
+  },
+  {
+    "ref": "J4",
+    "basis": "SameSkyMJ12503A5.1mm housing,front nose at reviewed Y-44.5,axis2.55mm; contacts omitted."
+  },
+  {
+    "ref": "J5",
+    "basis": "SameSkyMJ12503A5.1mm housing,front nose at reviewed Y-44.5,axis2.55mm; contacts omitted."
+  },
+  {
+    "ref": "J6",
+    "basis": "SameSkyMJ12503A5.1mm housing,front nose at reviewed Y-44.5,axis2.55mm; contacts omitted."
+  },
+  {
+    "ref": "J8",
+    "basis": "Reviewed28x17mm blue ADS1115 module at actual1x10 socket row; socket8.5mm and IC details illustrative."
+  },
+  {
+    "ref": "MOD1",
+    "basis": "Adafruit5807 publishedPCBoutline/mounts and reviewed USBface. Socket/hardware simplified; small SMD parts omitted."
+  }
+]

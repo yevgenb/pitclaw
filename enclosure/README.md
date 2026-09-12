@@ -1,13 +1,14 @@
 # Pit Claw 3D Printed Parts
 
-The current Rev B design is the [landscape carrier enclosure](carrier-case.md):
-two outer halves, display in the top, carrier in the bottom and a thin internal
-display retainer. All power connections occupy one short end, with all three
-probe jacks at the other. Its 104 × 86 × 44.9 mm geometry and exported STLs are
-r7 fit prototypes, verified against the routed carrier. Download the
-[STL package](print/carrier-r7/pitclaw-carrier-case-r7.zip) and follow the
-[0.4 mm nozzle print guide](print/carrier-r7/README.md); print the two coupons
-first to check PETG or HT-PLA fit. See the design guide for remaining measurements.
+The current [Fusion r11 enclosure](fusion-r11/README.md) includes an editable
+F3D model, populated-board previews and four printable parts. It adds four
+interior M3 inserts for future mounts, with screw access from underneath.
+The reinforced r10 top, retainer and probe fascia remain compatible.
+
+The [r7 design notes](carrier-case.md) and old print package remain available
+for history. The r11 model carries forward r9's corrected PCB orientation and
+four-anchor display retainer. Earlier r7/r8 bottoms have mirrored power ports.
+Start with the coupons in the [r11 print and assembly guide](fusion-r11/README.md).
 
 ## Legacy controller and fan assembly
 

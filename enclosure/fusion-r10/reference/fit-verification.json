@@ -1,0 +1,1110 @@
+{
+  "status": "PASS: FIT PROTOTYPE",
+  "revision": "carrier-enclosure-fusion-r10-reference",
+  "created_utc": "2026-09-11T22:42:33.320021+00:00",
+  "sources_sha256": {
+    "enclosure/fusion-r10/reference/carrier-case.scad": "b254ba542ad2bcb8e305b896ef5324aa3ea8fb102d517171a3a28076a1230dd2",
+    "enclosure/carrier-case.scad": "020d5e0470524c1742362970488d83ba45f6cac7366a4743800ca568c94a07bf",
+    "enclosure/fusion-r10/reference/carrier-interface.scad": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c",
+    "enclosure/carrier-interface.scad": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c",
+    "hardware/carrier-revb/mechanical/enclosure-interface.json": "dfd9c0abf2a2648a673ce457d45b12c425651a65cd0b414647fef36a81bab82e",
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pcb": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pro": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf",
+    "hardware/carrier-revb/verification/drc.json": "1bdf6a51c1d0be4ac81ad53075849833396be83ad85382b675db2a12859c32cb"
+  },
+  "verifier_sha256": "c16a4193804736d29d8ae6d7c121f9f5393a0370f32cd2557fe3990c5551a260",
+  "scope": "Declared nominal geometry and explicit tolerance scenarios; no physical print or purchased-part fit test.",
+  "assumptions": [
+    "Carrier PCB and USB module thickness 1.44\u20131.76 mm; USB spacer 2.9\u20133.1 mm.",
+    "Board edge growth 0.2 mm and USB module lateral placement shift \u00b10.2 mm.",
+    "Purchased USB-module/spacer tolerances are design allowances requiring sample measurement.",
+    "Case geometry stays nominal; printer dimensional error is not silently added to witnesses.",
+    "Only shell closure may retain triangles strictly coplanar at Z=27.6 mm; other intersections must be empty.",
+    "The programmed 0.3 mm installation lift, clipped solder tails, and declared M2 hardware envelopes apply.",
+    "No modeled tolerance establishes OEM screw suitability, glass-pad preload, cable reach, or thermal/weather qualification."
+  ],
+  "geometry_checks": {
+    "nominal-insertion-check": {
+      "name": "nominal-insertion-check",
+      "part": "insertion-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.6,
+        "check_pd_thickness": 1.6,
+        "check_pd_spacer_height": 3,
+        "check_board_edge_growth": 0,
+        "check_module_shift_x": 0
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/nominal-insertion-check-intersection.stl",
+        "-D",
+        "part=\"insertion-check\"",
+        "-D",
+        "check_pcb_thickness=1.6",
+        "-D",
+        "check_pd_thickness=1.6",
+        "-D",
+        "check_pd_spacer_height=3",
+        "-D",
+        "check_board_edge_growth=0",
+        "-D",
+        "check_module_shift_x=0",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/nominal-insertion-check.log",
+      "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.23
+    },
+    "nominal-electronics-closure-check": {
+      "name": "nominal-electronics-closure-check",
+      "part": "electronics-closure-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.6,
+        "check_pd_thickness": 1.6,
+        "check_pd_spacer_height": 3,
+        "check_board_edge_growth": 0,
+        "check_module_shift_x": 0
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/nominal-electronics-closure-check-intersection.stl",
+        "-D",
+        "part=\"electronics-closure-check\"",
+        "-D",
+        "check_pcb_thickness=1.6",
+        "-D",
+        "check_pd_thickness=1.6",
+        "-D",
+        "check_pd_spacer_height=3",
+        "-D",
+        "check_board_edge_growth=0",
+        "-D",
+        "check_module_shift_x=0",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/nominal-electronics-closure-check.log",
+      "log_sha256": "27477ddd6e7e422a21159ea81e62c6adf225e249d1912907f48408d05c518228",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.3
+    },
+    "nominal-carrier-installation-check": {
+      "name": "nominal-carrier-installation-check",
+      "part": "carrier-installation-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.6,
+        "check_pd_thickness": 1.6,
+        "check_pd_spacer_height": 3,
+        "check_board_edge_growth": 0,
+        "check_module_shift_x": 0
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/nominal-carrier-installation-check-intersection.stl",
+        "-D",
+        "part=\"carrier-installation-check\"",
+        "-D",
+        "check_pcb_thickness=1.6",
+        "-D",
+        "check_pd_thickness=1.6",
+        "-D",
+        "check_pd_spacer_height=3",
+        "-D",
+        "check_board_edge_growth=0",
+        "-D",
+        "check_module_shift_x=0",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/nominal-carrier-installation-check.log",
+      "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.51
+    },
+    "nominal-fascia-fit-check": {
+      "name": "nominal-fascia-fit-check",
+      "part": "fascia-fit-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.6,
+        "check_pd_thickness": 1.6,
+        "check_pd_spacer_height": 3,
+        "check_board_edge_growth": 0,
+        "check_module_shift_x": 0
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/nominal-fascia-fit-check-intersection.stl",
+        "-D",
+        "part=\"fascia-fit-check\"",
+        "-D",
+        "check_pcb_thickness=1.6",
+        "-D",
+        "check_pd_thickness=1.6",
+        "-D",
+        "check_pd_spacer_height=3",
+        "-D",
+        "check_board_edge_growth=0",
+        "-D",
+        "check_module_shift_x=0",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/nominal-fascia-fit-check.log",
+      "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.35
+    },
+    "nominal-shell-closure-check": {
+      "name": "nominal-shell-closure-check",
+      "part": "shell-closure-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.6,
+        "check_pd_thickness": 1.6,
+        "check_pd_spacer_height": 3,
+        "check_board_edge_growth": 0,
+        "check_module_shift_x": 0
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/nominal-shell-closure-check-intersection.stl",
+        "-D",
+        "part=\"shell-closure-check\"",
+        "-D",
+        "check_pcb_thickness=1.6",
+        "-D",
+        "check_pd_thickness=1.6",
+        "-D",
+        "check_pd_spacer_height=3",
+        "-D",
+        "check_board_edge_growth=0",
+        "-D",
+        "check_module_shift_x=0",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 0,
+      "log": "logs/nominal-shell-closure-check.log",
+      "log_sha256": "645b871f5da2ab7aa7cbe653fcfcc1638b2982714378cccc90253b42b9ac89df",
+      "intentional_seam_contact": {
+        "file": "logs/nominal-shell-closure-check-intersection.stl",
+        "sha256": "9e836cf9127cd4eac45d7caa832ce438e6bed0394c3c0e31f035b86d26cc11ae",
+        "bounds_mm": [
+          [
+            -43.0,
+            -52.0,
+            27.6
+          ],
+          [
+            43.0,
+            52.0,
+            27.6
+          ]
+        ],
+        "triangles": 506,
+        "signed_volume_mm3": -9.701276818911234e-12,
+        "z_thickness_mm": 0.0,
+        "maximum_distance_from_seam_mm": 0.0,
+        "seam_z_mm": 27.6,
+        "numeric_tolerance": 1e-05
+      },
+      "result": "PASS: intentional coplanar seam contact",
+      "elapsed_seconds": 0.69
+    },
+    "nominal-lid-closing-check": {
+      "name": "nominal-lid-closing-check",
+      "part": "lid-closing-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.6,
+        "check_pd_thickness": 1.6,
+        "check_pd_spacer_height": 3,
+        "check_board_edge_growth": 0,
+        "check_module_shift_x": 0
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/nominal-lid-closing-check-intersection.stl",
+        "-D",
+        "part=\"lid-closing-check\"",
+        "-D",
+        "check_pcb_thickness=1.6",
+        "-D",
+        "check_pd_thickness=1.6",
+        "-D",
+        "check_pd_spacer_height=3",
+        "-D",
+        "check_board_edge_growth=0",
+        "-D",
+        "check_module_shift_x=0",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/nominal-lid-closing-check.log",
+      "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.31
+    },
+    "nominal-fascia-lift-check": {
+      "name": "nominal-fascia-lift-check",
+      "part": "fascia-lift-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.6,
+        "check_pd_thickness": 1.6,
+        "check_pd_spacer_height": 3,
+        "check_board_edge_growth": 0,
+        "check_module_shift_x": 0
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/nominal-fascia-lift-check-intersection.stl",
+        "-D",
+        "part=\"fascia-lift-check\"",
+        "-D",
+        "check_pcb_thickness=1.6",
+        "-D",
+        "check_pd_thickness=1.6",
+        "-D",
+        "check_pd_spacer_height=3",
+        "-D",
+        "check_board_edge_growth=0",
+        "-D",
+        "check_module_shift_x=0",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/nominal-fascia-lift-check.log",
+      "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.35
+    },
+    "low-stack-x-minus-0.2-carrier-installation-check": {
+      "name": "low-stack-x-minus-0.2-carrier-installation-check",
+      "part": "carrier-installation-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.44,
+        "check_pd_thickness": 1.44,
+        "check_pd_spacer_height": 2.9,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": -0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/low-stack-x-minus-0.2-carrier-installation-check-intersection.stl",
+        "-D",
+        "part=\"carrier-installation-check\"",
+        "-D",
+        "check_pcb_thickness=1.44",
+        "-D",
+        "check_pd_thickness=1.44",
+        "-D",
+        "check_pd_spacer_height=2.9",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=-0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/low-stack-x-minus-0.2-carrier-installation-check.log",
+      "log_sha256": "82b718cb4e7e35dd54a2070e0ae81716c55b2c1b011bac4c8349837104e17436",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.52
+    },
+    "low-stack-x-minus-0.2-electronics-closure-check": {
+      "name": "low-stack-x-minus-0.2-electronics-closure-check",
+      "part": "electronics-closure-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.44,
+        "check_pd_thickness": 1.44,
+        "check_pd_spacer_height": 2.9,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": -0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/low-stack-x-minus-0.2-electronics-closure-check-intersection.stl",
+        "-D",
+        "part=\"electronics-closure-check\"",
+        "-D",
+        "check_pcb_thickness=1.44",
+        "-D",
+        "check_pd_thickness=1.44",
+        "-D",
+        "check_pd_spacer_height=2.9",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=-0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/low-stack-x-minus-0.2-electronics-closure-check.log",
+      "log_sha256": "e3f926cb217dce266350f6c0fe9af8e6ea9303c7ab60753a75152551211f3b87",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.33
+    },
+    "low-stack-x-minus-0.2-fascia-fit-check": {
+      "name": "low-stack-x-minus-0.2-fascia-fit-check",
+      "part": "fascia-fit-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.44,
+        "check_pd_thickness": 1.44,
+        "check_pd_spacer_height": 2.9,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": -0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/low-stack-x-minus-0.2-fascia-fit-check-intersection.stl",
+        "-D",
+        "part=\"fascia-fit-check\"",
+        "-D",
+        "check_pcb_thickness=1.44",
+        "-D",
+        "check_pd_thickness=1.44",
+        "-D",
+        "check_pd_spacer_height=2.9",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=-0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/low-stack-x-minus-0.2-fascia-fit-check.log",
+      "log_sha256": "82b718cb4e7e35dd54a2070e0ae81716c55b2c1b011bac4c8349837104e17436",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.34
+    },
+    "low-stack-x-plus-0.2-carrier-installation-check": {
+      "name": "low-stack-x-plus-0.2-carrier-installation-check",
+      "part": "carrier-installation-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.44,
+        "check_pd_thickness": 1.44,
+        "check_pd_spacer_height": 2.9,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": 0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/low-stack-x-plus-0.2-carrier-installation-check-intersection.stl",
+        "-D",
+        "part=\"carrier-installation-check\"",
+        "-D",
+        "check_pcb_thickness=1.44",
+        "-D",
+        "check_pd_thickness=1.44",
+        "-D",
+        "check_pd_spacer_height=2.9",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/low-stack-x-plus-0.2-carrier-installation-check.log",
+      "log_sha256": "582b6c65cab97bdc03bef3a40784e8775afcf37c5351e59ae935e7f3c9ab1cc5",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.46
+    },
+    "low-stack-x-plus-0.2-electronics-closure-check": {
+      "name": "low-stack-x-plus-0.2-electronics-closure-check",
+      "part": "electronics-closure-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.44,
+        "check_pd_thickness": 1.44,
+        "check_pd_spacer_height": 2.9,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": 0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/low-stack-x-plus-0.2-electronics-closure-check-intersection.stl",
+        "-D",
+        "part=\"electronics-closure-check\"",
+        "-D",
+        "check_pcb_thickness=1.44",
+        "-D",
+        "check_pd_thickness=1.44",
+        "-D",
+        "check_pd_spacer_height=2.9",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/low-stack-x-plus-0.2-electronics-closure-check.log",
+      "log_sha256": "bc7174d4f55b214063d75360f42686b75ff8b024166502701535e58328565353",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.3
+    },
+    "low-stack-x-plus-0.2-fascia-fit-check": {
+      "name": "low-stack-x-plus-0.2-fascia-fit-check",
+      "part": "fascia-fit-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.44,
+        "check_pd_thickness": 1.44,
+        "check_pd_spacer_height": 2.9,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": 0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/low-stack-x-plus-0.2-fascia-fit-check-intersection.stl",
+        "-D",
+        "part=\"fascia-fit-check\"",
+        "-D",
+        "check_pcb_thickness=1.44",
+        "-D",
+        "check_pd_thickness=1.44",
+        "-D",
+        "check_pd_spacer_height=2.9",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/low-stack-x-plus-0.2-fascia-fit-check.log",
+      "log_sha256": "582b6c65cab97bdc03bef3a40784e8775afcf37c5351e59ae935e7f3c9ab1cc5",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.33
+    },
+    "nominal-fascia-insertion-check": {
+      "name": "nominal-fascia-insertion-check",
+      "part": "fascia-insertion-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.6,
+        "check_pd_thickness": 1.6,
+        "check_pd_spacer_height": 3,
+        "check_board_edge_growth": 0,
+        "check_module_shift_x": 0
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/nominal-fascia-insertion-check-intersection.stl",
+        "-D",
+        "part=\"fascia-insertion-check\"",
+        "-D",
+        "check_pcb_thickness=1.6",
+        "-D",
+        "check_pd_thickness=1.6",
+        "-D",
+        "check_pd_spacer_height=3",
+        "-D",
+        "check_board_edge_growth=0",
+        "-D",
+        "check_module_shift_x=0",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/nominal-fascia-insertion-check.log",
+      "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 11.17
+    },
+    "high-stack-x-minus-0.2-carrier-installation-check": {
+      "name": "high-stack-x-minus-0.2-carrier-installation-check",
+      "part": "carrier-installation-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.76,
+        "check_pd_thickness": 1.76,
+        "check_pd_spacer_height": 3.1,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": -0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/high-stack-x-minus-0.2-carrier-installation-check-intersection.stl",
+        "-D",
+        "part=\"carrier-installation-check\"",
+        "-D",
+        "check_pcb_thickness=1.76",
+        "-D",
+        "check_pd_thickness=1.76",
+        "-D",
+        "check_pd_spacer_height=3.1",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=-0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/high-stack-x-minus-0.2-carrier-installation-check.log",
+      "log_sha256": "c5474c9e1237516add4f38bf22ba0b82fcff1820b994c602a375bb0ca78b0da7",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.45
+    },
+    "high-stack-x-minus-0.2-electronics-closure-check": {
+      "name": "high-stack-x-minus-0.2-electronics-closure-check",
+      "part": "electronics-closure-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.76,
+        "check_pd_thickness": 1.76,
+        "check_pd_spacer_height": 3.1,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": -0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/high-stack-x-minus-0.2-electronics-closure-check-intersection.stl",
+        "-D",
+        "part=\"electronics-closure-check\"",
+        "-D",
+        "check_pcb_thickness=1.76",
+        "-D",
+        "check_pd_thickness=1.76",
+        "-D",
+        "check_pd_spacer_height=3.1",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=-0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/high-stack-x-minus-0.2-electronics-closure-check.log",
+      "log_sha256": "36a4f4f0dc29d81a70f67d6371f1d621af42ee0685f6bd822613d27f58342697",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.29
+    },
+    "high-stack-x-minus-0.2-fascia-fit-check": {
+      "name": "high-stack-x-minus-0.2-fascia-fit-check",
+      "part": "fascia-fit-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.76,
+        "check_pd_thickness": 1.76,
+        "check_pd_spacer_height": 3.1,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": -0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/high-stack-x-minus-0.2-fascia-fit-check-intersection.stl",
+        "-D",
+        "part=\"fascia-fit-check\"",
+        "-D",
+        "check_pcb_thickness=1.76",
+        "-D",
+        "check_pd_thickness=1.76",
+        "-D",
+        "check_pd_spacer_height=3.1",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=-0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/high-stack-x-minus-0.2-fascia-fit-check.log",
+      "log_sha256": "c5474c9e1237516add4f38bf22ba0b82fcff1820b994c602a375bb0ca78b0da7",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.38
+    },
+    "low-stack-x-minus-0.2-fascia-insertion-check": {
+      "name": "low-stack-x-minus-0.2-fascia-insertion-check",
+      "part": "fascia-insertion-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.44,
+        "check_pd_thickness": 1.44,
+        "check_pd_spacer_height": 2.9,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": -0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/low-stack-x-minus-0.2-fascia-insertion-check-intersection.stl",
+        "-D",
+        "part=\"fascia-insertion-check\"",
+        "-D",
+        "check_pcb_thickness=1.44",
+        "-D",
+        "check_pd_thickness=1.44",
+        "-D",
+        "check_pd_spacer_height=2.9",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=-0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/low-stack-x-minus-0.2-fascia-insertion-check.log",
+      "log_sha256": "82b718cb4e7e35dd54a2070e0ae81716c55b2c1b011bac4c8349837104e17436",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 11.3
+    },
+    "high-stack-x-plus-0.2-carrier-installation-check": {
+      "name": "high-stack-x-plus-0.2-carrier-installation-check",
+      "part": "carrier-installation-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.76,
+        "check_pd_thickness": 1.76,
+        "check_pd_spacer_height": 3.1,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": 0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/high-stack-x-plus-0.2-carrier-installation-check-intersection.stl",
+        "-D",
+        "part=\"carrier-installation-check\"",
+        "-D",
+        "check_pcb_thickness=1.76",
+        "-D",
+        "check_pd_thickness=1.76",
+        "-D",
+        "check_pd_spacer_height=3.1",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/high-stack-x-plus-0.2-carrier-installation-check.log",
+      "log_sha256": "7bb6ae7d67d750dfc1f0a0595b6916722c2752087695c559c8cb329ac9f1e946",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.44
+    },
+    "high-stack-x-plus-0.2-electronics-closure-check": {
+      "name": "high-stack-x-plus-0.2-electronics-closure-check",
+      "part": "electronics-closure-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.76,
+        "check_pd_thickness": 1.76,
+        "check_pd_spacer_height": 3.1,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": 0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/high-stack-x-plus-0.2-electronics-closure-check-intersection.stl",
+        "-D",
+        "part=\"electronics-closure-check\"",
+        "-D",
+        "check_pcb_thickness=1.76",
+        "-D",
+        "check_pd_thickness=1.76",
+        "-D",
+        "check_pd_spacer_height=3.1",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/high-stack-x-plus-0.2-electronics-closure-check.log",
+      "log_sha256": "0ca3c5029dfddb1064e5bdebb51a4150c49eff77a5b2c94f3d6fa141537f7a11",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.28
+    },
+    "high-stack-x-plus-0.2-fascia-fit-check": {
+      "name": "high-stack-x-plus-0.2-fascia-fit-check",
+      "part": "fascia-fit-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.76,
+        "check_pd_thickness": 1.76,
+        "check_pd_spacer_height": 3.1,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": 0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/high-stack-x-plus-0.2-fascia-fit-check-intersection.stl",
+        "-D",
+        "part=\"fascia-fit-check\"",
+        "-D",
+        "check_pcb_thickness=1.76",
+        "-D",
+        "check_pd_thickness=1.76",
+        "-D",
+        "check_pd_spacer_height=3.1",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/high-stack-x-plus-0.2-fascia-fit-check.log",
+      "log_sha256": "7bb6ae7d67d750dfc1f0a0595b6916722c2752087695c559c8cb329ac9f1e946",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.36
+    },
+    "low-stack-x-plus-0.2-fascia-insertion-check": {
+      "name": "low-stack-x-plus-0.2-fascia-insertion-check",
+      "part": "fascia-insertion-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.44,
+        "check_pd_thickness": 1.44,
+        "check_pd_spacer_height": 2.9,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": 0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/low-stack-x-plus-0.2-fascia-insertion-check-intersection.stl",
+        "-D",
+        "part=\"fascia-insertion-check\"",
+        "-D",
+        "check_pcb_thickness=1.44",
+        "-D",
+        "check_pd_thickness=1.44",
+        "-D",
+        "check_pd_spacer_height=2.9",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/low-stack-x-plus-0.2-fascia-insertion-check.log",
+      "log_sha256": "582b6c65cab97bdc03bef3a40784e8775afcf37c5351e59ae935e7f3c9ab1cc5",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 11.21
+    },
+    "high-stack-x-minus-0.2-fascia-insertion-check": {
+      "name": "high-stack-x-minus-0.2-fascia-insertion-check",
+      "part": "fascia-insertion-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.76,
+        "check_pd_thickness": 1.76,
+        "check_pd_spacer_height": 3.1,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": -0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/high-stack-x-minus-0.2-fascia-insertion-check-intersection.stl",
+        "-D",
+        "part=\"fascia-insertion-check\"",
+        "-D",
+        "check_pcb_thickness=1.76",
+        "-D",
+        "check_pd_thickness=1.76",
+        "-D",
+        "check_pd_spacer_height=3.1",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=-0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/high-stack-x-minus-0.2-fascia-insertion-check.log",
+      "log_sha256": "c5474c9e1237516add4f38bf22ba0b82fcff1820b994c602a375bb0ca78b0da7",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 11.0
+    },
+    "high-stack-x-plus-0.2-fascia-insertion-check": {
+      "name": "high-stack-x-plus-0.2-fascia-insertion-check",
+      "part": "fascia-insertion-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.76,
+        "check_pd_thickness": 1.76,
+        "check_pd_spacer_height": 3.1,
+        "check_board_edge_growth": 0.2,
+        "check_module_shift_x": 0.2
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/logs/high-stack-x-plus-0.2-fascia-insertion-check-intersection.stl",
+        "-D",
+        "part=\"fascia-insertion-check\"",
+        "-D",
+        "check_pcb_thickness=1.76",
+        "-D",
+        "check_pd_thickness=1.76",
+        "-D",
+        "check_pd_spacer_height=3.1",
+        "-D",
+        "check_board_edge_growth=0.2",
+        "-D",
+        "check_module_shift_x=0.2",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r10/reference/carrier-case.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/high-stack-x-plus-0.2-fascia-insertion-check.log",
+      "log_sha256": "7bb6ae7d67d750dfc1f0a0595b6916722c2752087695c559c8cb329ac9f1e946",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 10.95
+    }
+  },
+  "meshes": {
+    "top": {
+      "file": "carrier-top.stl",
+      "sha256": "3ea396432305803105c4da990d5d9c270541d77fb76ba183749ef80747bb712c",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -43.0,
+          -52.0,
+          0.0
+        ],
+        [
+          43.0,
+          52.0,
+          21.899999618530273
+        ]
+      ],
+      "size_mm": [
+        86.0,
+        104.0,
+        21.899999618530273
+      ],
+      "volume_mm3": 30260.696,
+      "triangles": 11018,
+      "result": "PASS"
+    },
+    "bottom": {
+      "file": "carrier-bottom.stl",
+      "sha256": "45414319e8e1669e7b3c1d1cd1f9cabe6847b337adadd50764cf46945776fb3b",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -43.0,
+          -52.0,
+          0.0
+        ],
+        [
+          43.0,
+          52.0,
+          27.600000381469727
+        ]
+      ],
+      "size_mm": [
+        86.0,
+        104.0,
+        27.600000381469727
+      ],
+      "volume_mm3": 44278.153,
+      "triangles": 4756,
+      "result": "PASS"
+    },
+    "retainer": {
+      "file": "carrier-retainer.stl",
+      "sha256": "c0cecafacd62aac840012e25c48364af924318e06678f69a789ac1327c76559d",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -40.0,
+          -48.0,
+          0.0
+        ],
+        [
+          40.0,
+          48.0,
+          2.5
+        ]
+      ],
+      "size_mm": [
+        80.0,
+        96.0,
+        2.5
+      ],
+      "volume_mm3": 3184.112,
+      "triangles": 3292,
+      "result": "PASS"
+    },
+    "fascia": {
+      "file": "probe-fascia.stl",
+      "sha256": "b236ebbd338718507162e60caf05ec80ac02b04fb6d532968ef330a61a797c9f",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -36.0,
+          -27.299999237060547,
+          0.0
+        ],
+        [
+          36.0,
+          0.0,
+          9.5
+        ]
+      ],
+      "size_mm": [
+        72.0,
+        27.299999237060547,
+        9.5
+      ],
+      "volume_mm3": 8107.293,
+      "triangles": 1648,
+      "result": "PASS"
+    },
+    "joint_bottom": {
+      "file": "joint-coupon-bottom.stl",
+      "sha256": "f29316011dad180e401bb3ae501de3c3e5d19194edecd2aecfefe2394040ee08",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -16.5,
+          -5.75,
+          0.0
+        ],
+        [
+          16.5,
+          5.75,
+          27.600000381469727
+        ]
+      ],
+      "size_mm": [
+        33.0,
+        11.5,
+        27.600000381469727
+      ],
+      "volume_mm3": 1610.802,
+      "triangles": 236,
+      "result": "PASS"
+    },
+    "joint_top": {
+      "file": "joint-coupon-top.stl",
+      "sha256": "c6988c3545fa15f8a7103e971fe3f00630709ee062bdc3eb2b7f9851522c99e9",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -16.5,
+          -5.75,
+          0.0
+        ],
+        [
+          16.5,
+          5.75,
+          21.899999618530273
+        ]
+      ],
+      "size_mm": [
+        33.0,
+        11.5,
+        21.899999618530273
+      ],
+      "volume_mm3": 2783.448,
+      "triangles": 702,
+      "result": "PASS"
+    },
+    "joint_fascia": {
+      "file": "joint-coupon-fascia.stl",
+      "sha256": "18b5b1779af7254512fef700fe4ba540201e8757764e45f6fa71b560dac9b2be",
+      "connected_components": 1,
+      "watertight": true,
+      "consistent_winding": true,
+      "bounds_mm": [
+        [
+          -13.0,
+          -13.649999618530273,
+          0.0
+        ],
+        [
+          13.0,
+          13.649999618530273,
+          9.5
+        ]
+      ],
+      "size_mm": [
+        26.0,
+        27.299999237060547,
+        9.5
+      ],
+      "volume_mm3": 3043.251,
+      "triangles": 696,
+      "result": "PASS"
+    }
+  },
+  "sources_unchanged": true,
+  "combined_reports": {
+    "fit-verification-diagnostics.json": "70fba12b6bcedfed5236b6a2b81229f22ed34daba7f2333167f71beff908faec",
+    "fit-verification-meshes.json": "2098da7d29413563343d51ba93af0435d5c533c412ec763193ec718eef6e07b8"
+  }
+}

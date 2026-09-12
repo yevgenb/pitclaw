@@ -1,0 +1,18 @@
+{
+  "status": "APPEARANCE CONCEPT ONLY",
+  "source_f3d_sha256": "3a1922ceed9b4b27a8d671d39581a539b649fece77ffc12d3d8edcd32cc19d83",
+  "source_unchanged": true,
+  "new_face_y_mm": -44.5,
+  "original_face_y_mm": -52,
+  "face_inset_mm": 7.5,
+  "slope_start_z_mm": 18.9,
+  "slope_end_z_mm": 26.4,
+  "overall_envelope_mm": [
+    104,
+    86,
+    44.9
+  ],
+  "unchanged": "PCB and its placement, WT32 and its placement, four-anchor retainer, upper housing and power-side geometry.",
+  "not_verified": "New fascia split/joint, installation/removal path, cable boots, print supports and structural strength.",
+  "no_print_stl_exported": true
+}

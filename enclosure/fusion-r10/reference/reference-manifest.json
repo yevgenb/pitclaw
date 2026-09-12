@@ -1,0 +1,14 @@
+{
+  "carrier-case.scad": "b254ba542ad2bcb8e305b896ef5324aa3ea8fb102d517171a3a28076a1230dd2",
+  "carrier-interface.scad": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c",
+  "verify_reference.py": "c16a4193804736d29d8ae6d7c121f9f5393a0370f32cd2557fe3990c5551a260",
+  "README.md": "0efae47fa17dad4e5467f00ba6aba6e24402723692114159e063ee852e5271fb",
+  "fit-verification.json": "26c761a175be9072f77cd0707bdc9c5c7b5468fcd2ff4e153427d71e1fb1c184",
+  "carrier-top.stl": "3ea396432305803105c4da990d5d9c270541d77fb76ba183749ef80747bb712c",
+  "carrier-bottom.stl": "45414319e8e1669e7b3c1d1cd1f9cabe6847b337adadd50764cf46945776fb3b",
+  "carrier-retainer.stl": "c0cecafacd62aac840012e25c48364af924318e06678f69a789ac1327c76559d",
+  "probe-fascia.stl": "b236ebbd338718507162e60caf05ec80ac02b04fb6d532968ef330a61a797c9f",
+  "joint-coupon-bottom.stl": "f29316011dad180e401bb3ae501de3c3e5d19194edecd2aecfefe2394040ee08",
+  "joint-coupon-top.stl": "c6988c3545fa15f8a7103e971fe3f00630709ee062bdc3eb2b7f9851522c99e9",
+  "joint-coupon-fascia.stl": "18b5b1779af7254512fef700fe4ba540201e8757764e45f6fa71b560dac9b2be"
+}

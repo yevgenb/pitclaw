@@ -1,0 +1,559 @@
+{
+  "STEP_file": "enclosure/fusion-r8/populated/carrier-native.step",
+  "STEP_sha256": "d3742c9f86b8c81a25706eceaec175c675799d89b2f9e5da5395f19b01582ce0",
+  "placements": [
+    {
+      "ref": "J7",
+      "board_xy_mm": [
+        40.0,
+        12.0
+      ],
+      "STEP_xyz_mm": [
+        10.0,
+        34.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        10.0,
+        34.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "D3",
+      "board_xy_mm": [
+        55.0,
+        31.0
+      ],
+      "STEP_xyz_mm": [
+        25.0,
+        15.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        25.0,
+        15.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(-0.,0.,1.))"
+    },
+    {
+      "ref": "R12",
+      "board_xy_mm": [
+        15.0,
+        58.0
+      ],
+      "STEP_xyz_mm": [
+        -15.0,
+        -12.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -15.0,
+        -12.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "R4",
+      "board_xy_mm": [
+        3.0,
+        25.0
+      ],
+      "STEP_xyz_mm": [
+        -27.0,
+        21.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -27.0,
+        21.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(-0.,0.,1.))"
+    },
+    {
+      "ref": "R3",
+      "board_xy_mm": [
+        3.0,
+        52.0
+      ],
+      "STEP_xyz_mm": [
+        -27.0,
+        -6.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -27.0,
+        -6.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "R16",
+      "board_xy_mm": [
+        26.0,
+        42.0
+      ],
+      "STEP_xyz_mm": [
+        -4.0,
+        4.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -4.0,
+        4.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "C3",
+      "board_xy_mm": [
+        53.25,
+        14.5
+      ],
+      "STEP_xyz_mm": [
+        23.25,
+        31.5,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        23.25,
+        31.5
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "J1",
+      "board_xy_mm": [
+        54.0,
+        51.0
+      ],
+      "STEP_xyz_mm": [
+        24.0,
+        -5.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        24.0,
+        -5.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "C1",
+      "board_xy_mm": [
+        43.0,
+        59.0
+      ],
+      "STEP_xyz_mm": [
+        13.0,
+        -13.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        13.0,
+        -13.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "R14",
+      "board_xy_mm": [
+        26.0,
+        45.0
+      ],
+      "STEP_xyz_mm": [
+        -4.0,
+        1.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -4.0,
+        1.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(-0.,0.,1.))"
+    },
+    {
+      "ref": "JP1",
+      "board_xy_mm": [
+        55.0,
+        23.5
+      ],
+      "STEP_xyz_mm": [
+        25.0,
+        22.5,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        25.0,
+        22.5
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "R2",
+      "board_xy_mm": [
+        7.0,
+        14.0
+      ],
+      "STEP_xyz_mm": [
+        -23.0,
+        32.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -23.0,
+        32.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(-0.,0.,1.))"
+    },
+    {
+      "ref": "R5",
+      "board_xy_mm": [
+        3.0,
+        56.0
+      ],
+      "STEP_xyz_mm": [
+        -27.0,
+        -10.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -27.0,
+        -10.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "R6",
+      "board_xy_mm": [
+        7.0,
+        25.0
+      ],
+      "STEP_xyz_mm": [
+        -23.0,
+        21.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -23.0,
+        21.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(-0.,0.,1.))"
+    },
+    {
+      "ref": "R13",
+      "board_xy_mm": [
+        26.0,
+        38.0
+      ],
+      "STEP_xyz_mm": [
+        -4.0,
+        8.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -4.0,
+        8.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "R10",
+      "board_xy_mm": [
+        15.0,
+        42.0
+      ],
+      "STEP_xyz_mm": [
+        -15.0,
+        4.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -15.0,
+        4.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "J3",
+      "board_xy_mm": [
+        12.0,
+        12.0
+      ],
+      "STEP_xyz_mm": [
+        -18.0,
+        34.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -18.0,
+        34.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "R11",
+      "board_xy_mm": [
+        15.0,
+        50.0
+      ],
+      "STEP_xyz_mm": [
+        -15.0,
+        -4.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -15.0,
+        -4.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "R15",
+      "board_xy_mm": [
+        26.0,
+        56.0
+      ],
+      "STEP_xyz_mm": [
+        -4.0,
+        -10.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -4.0,
+        -10.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(-0.,0.,1.))"
+    },
+    {
+      "ref": "R1",
+      "board_xy_mm": [
+        3.0,
+        14.5
+      ],
+      "STEP_xyz_mm": [
+        -27.0,
+        31.5,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -27.0,
+        31.5
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(-0.,0.,1.))"
+    },
+    {
+      "ref": "D2",
+      "board_xy_mm": [
+        41.5,
+        45.5
+      ],
+      "STEP_xyz_mm": [
+        11.5,
+        0.5,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        11.5,
+        0.5
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    },
+    {
+      "ref": "Q2",
+      "board_xy_mm": [
+        5.5,
+        74.0
+      ],
+      "STEP_xyz_mm": [
+        -24.5,
+        -28.0,
+        1.595
+      ],
+      "expected_STEP_xy_mm": [
+        -24.5,
+        -28.0
+      ],
+      "max_xy_error_mm": 0.0,
+      "z_direction": "DIRECTION('',(0.,0.,1.))"
+    }
+  ],
+  "layer_datums": [
+    {
+      "product": "pitclaw-carrier_pad",
+      "representation": 17684,
+      "bounds_of_topological_vertices_mm": [
+        [
+          -27.0,
+          -40.7,
+          -0.04
+        ],
+        [
+          27.549999,
+          40.5,
+          1.55
+        ]
+      ],
+      "z_values": [
+        -0.04,
+        0.0,
+        1.51,
+        1.55
+      ]
+    },
+    {
+      "product": "pitclaw-carrier_silkscreen",
+      "representation": 61305,
+      "bounds_of_topological_vertices_mm": [
+        [
+          -28.45,
+          -45.414632,
+          1.585
+        ],
+        [
+          29.194999,
+          45.56236,
+          1.585
+        ]
+      ],
+      "z_values": [
+        1.585
+      ]
+    },
+    {
+      "product": "pitclaw-carrier_soldermask",
+      "representation": 87121,
+      "bounds_of_topological_vertices_mm": [
+        [
+          -30.0,
+          -46.0,
+          1.56
+        ],
+        [
+          30.0,
+          46.0,
+          1.56
+        ]
+      ],
+      "z_values": [
+        1.56
+      ]
+    },
+    {
+      "product": "pitclaw-carrier_soldermask",
+      "representation": 89676,
+      "bounds_of_topological_vertices_mm": [
+        [
+          -30.0,
+          -46.0,
+          -0.05
+        ],
+        [
+          30.0,
+          46.0,
+          -0.05
+        ]
+      ],
+      "z_values": [
+        -0.05
+      ]
+    },
+    {
+      "product": "pitclaw-carrier_PCB",
+      "representation": 92231,
+      "bounds_of_topological_vertices_mm": [
+        [
+          -30.0,
+          -46.0,
+          0.0
+        ],
+        [
+          30.0,
+          46.0,
+          1.51
+        ]
+      ],
+      "z_values": [
+        0.0,
+        1.51
+      ]
+    }
+  ],
+  "mechanical_hole_cylinders": [
+    {
+      "entity": 95932,
+      "origin_mm": [
+        -25.5,
+        -16.5,
+        -0.046
+      ],
+      "radius_mm": 1.6
+    },
+    {
+      "entity": 96918,
+      "origin_mm": [
+        -25.5,
+        41.5,
+        -0.046
+      ],
+      "radius_mm": 1.6
+    },
+    {
+      "entity": 96272,
+      "origin_mm": [
+        6.753,
+        -41.817,
+        -0.046
+      ],
+      "radius_mm": 1.2
+    },
+    {
+      "entity": 96323,
+      "origin_mm": [
+        21.993,
+        -41.817,
+        -0.046
+      ],
+      "radius_mm": 1.2
+    },
+    {
+      "entity": 96425,
+      "origin_mm": [
+        25.5,
+        -16.5,
+        -0.046
+      ],
+      "radius_mm": 1.6
+    },
+    {
+      "entity": 98074,
+      "origin_mm": [
+        25.5,
+        41.5,
+        -0.046
+      ],
+      "radius_mm": 1.6
+    }
+  ]
+}

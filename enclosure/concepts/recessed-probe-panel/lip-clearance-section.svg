@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="730" viewBox="0 0 1120 730">
+<defs>
+ <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#334155" stroke-width="1.3"/></marker>
+</defs>
+<rect width="1120" height="730" fill="#f8fafc"/>
+<g font-family="Arial, sans-serif" fill="#243441">
+ <text x="40" y="48" font-size="30" font-weight="bold">Relieve the cable-exit lip</text>
+ <text x="40" y="82" font-size="19">Side section • elbows pointing toward the bottom of the case • proposal only</text>
+ <text x="415" y="122" font-size="18">Outer face</text>
+ <text x="772" y="122" font-size="18">Socket face stays here</text>
+ <line x1="520" y1="139" x2="760" y2="139" stroke="#334155" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+ <text x="640" y="130" font-size="17" text-anchor="middle">7.5 mm unchanged</text>
+ <line x1="520" y1="150" x2="520" y2="592" stroke="#94a3b8" stroke-dasharray="5 5"/>
+ <line x1="760" y1="150" x2="760" y2="352" stroke="#94a3b8" stroke-dasharray="5 5"/>
+ <line x1="70" y1="210" x2="1050" y2="210" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="10 6"/>
+ <text x="80" y="197" font-size="18" fill="#0284c7">Jack / metal-tip axis</text>
+ <text x="865" y="181" font-size="18">Inside case →</text>
+ <!-- Plastic below the revised lower recess boundary. Coordinates use32px/mm. -->
+ <path d="M520,530 L760,402 L760,283.6 L840,283.6 L840,502.8 L1050,502.8 L1050,582.8 L520,582.8 Z" fill="#596b7a" stroke="#263646" stroke-width="2"/>
+ <!-- Existing lower boundary and plastic to be removed. -->
+ <path d="M520,498 L760,402 L520,530 Z" fill="#f5a23d" opacity=".8"/>
+ <path d="M520,498 L760,402" fill="none" stroke="#b45309" stroke-width="2.5" stroke-dasharray="8 5"/>
+ <path d="M520,530 L760,402" fill="none" stroke="#0f766e" stroke-width="3"/>
+ <!-- PCB datum shown only to establish that the board does not move. -->
+ <rect x="856" y="291.6" width="194" height="51.2" fill="#3a8c64" stroke="#23573e" stroke-width="2"/>
+ <text x="953" y="321" text-anchor="middle" font-size="18" fill="white">PCB unchanged</text>
+ <!-- Approximate cable-side contour from the user's ruler photograph. -->
+ <path d="M760,354 C709,355 660,354 632,360 C604,367 582,385 568,405 C548,433 536,467 520,496 C500,530 471,559 432,579" fill="none" stroke="#232b31" stroke-width="4" stroke-linecap="round"/>
+ <circle cx="520" cy="496" r="5" fill="#232b31"/>
+ <text x="62" y="291" font-size="19" font-weight="bold">Plug bend</text>
+ <text x="62" y="317" font-size="17">Approximate photo profile;</text>
+ <text x="62" y="341" font-size="17">current lip has little margin.</text>
+ <path d="M280,323 L368,351 L558,417" fill="none" stroke="#475569" stroke-width="1.5"/>
+ <line x1="487" y1="498" x2="487" y2="530" stroke="#334155" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+ <text x="476" y="520" text-anchor="end" font-size="18" font-weight="bold">1 mm</text>
+ <text x="875" y="419" font-size="18" fill="#b45309">Dashed: current lip</text>
+ <text x="875" y="447" font-size="18" fill="#0f766e">Green: relieved lip</text>
+ <text x="675" y="624" text-anchor="middle" font-size="19" font-weight="bold">Remove the highlighted wedge of plastic</text>
+ <line x1="675" y1="600" x2="619" y2="477" stroke="#b45309" stroke-width="1.5"/>
+ <text x="675" y="653" text-anchor="middle" font-size="17">Local material below the entry reduces from 2.65 to 1.65 mm.</text>
+ <text x="40" y="700" font-size="17" fill="#475569">Same PCB, socket position and recess depth. Check the real plug and a printed coupon before release.</text>
+</g>
+</svg>

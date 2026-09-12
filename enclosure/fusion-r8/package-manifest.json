@@ -1,0 +1,38 @@
+{
+  "revision": "native-fusion-r8",
+  "status": "Geometric checks pass; physical fit and strength pending",
+  "protected_files_unchanged": {
+    "enclosure/carrier-case.scad": "020d5e0470524c1742362970488d83ba45f6cac7366a4743800ca568c94a07bf",
+    "enclosure/carrier-interface.scad": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c",
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pcb": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pro": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf",
+    "hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/pitclaw-carrier-jlcpcb.zip": "d75ea76ef0e9b0892459d3f8e0c6367630f1d467716bc774757389a562409497",
+    "enclosure/print/carrier-r7/pitclaw-carrier-case-r7.zip": "19121e595a56483ee007cd67d590e5d10f090f7881625383bced5e4a1d812818"
+  },
+  "files_sha256": {
+    "README.md": "ce234202300ecb51a98fa00c06660a08694efa83d3b6f9767cfb8afda25fe707",
+    "pitclaw-enclosure-r8.f3d": "18427976e02b34b23a4ca595e5ba09e73abee4444cec30e25ee63194f8341961",
+    "pitclaw-enclosure-r8.step": "6202b2244cb4b8461364bb3002cb02ed3cbe29930cfea2611109229c5a138b4e",
+    "build_fusion.py": "8e699e91b0b83489bfd844c3b412f6152669fa079b5bd7b91cf2f66ccfa6f327",
+    "export_fusion.py": "9ecf0bc3cb4a3510135581ddbfad7eaa72f82128fab1503295d14697b07d23f1",
+    "verify_exports.py": "32f61db4384ce58c81f345e0944e8d84a7074b89509db5dd189578eaeb303520",
+    "native-verification.json": "c33ece2508a66b4b8ac12c434b325775267fedbb0cc538f3b535aacd894c8199",
+    "mesh-verification.json": "2dad91f1f539595b9c26669d53198332da8e00faf3c54ad5535da91a8495207e",
+    "four-anchor-review.md": "beb1ea0d2da83b53a36f9fe8b945d38938d96fb1f8dbfe6d33fc492e121bbff1",
+    "fusion-assembled.png": "bd0a8785ad6a0d39b7f36ba9c3323f26cce493d227d46778907ab47b744b6bb5",
+    "fusion-bottom.png": "5d450587b0ec44806b25fb5106be00c5053a4c462191ac16bb8fd58fc2eebe40",
+    "fusion-exploded.png": "951123ec7d972ed4e3e7996b701b86f7e829f5b79825c048cbaa2005ea26469f",
+    "fusion-retainer.png": "560c9634c4d9a38a23aa037c3dbdbc45499a7c64c0927593e82b4af3b7b919d0",
+    "stl/carrier-bottom.stl": "11d4b51b6b9b2d285546e68098a8b96e11f68318eb78cf7cad566cc27879c9f4",
+    "stl/carrier-retainer.stl": "992e3f1d4e6c708155129f651bffb29cae8ffea10237358fa6be79d396820cda",
+    "stl/carrier-top.stl": "610a2401a2d2908a72d5208680ab03f4d14e39f90b315503d29fb780a3511eec",
+    "step/carrier-bottom.step": "0ac549621a4b9d5cfb63e84fbd38cb322948c5507d741567be0a72574cc8c99b",
+    "step/carrier-retainer.step": "661cc86ed162a50ed5b09153e29306c0077bdcd49f383bb62268ebb7e7a1b765",
+    "step/carrier-top.step": "5ff47f179e2dfaf766121af531dcc5cc3295e0650a32517ebff11074b46ff268",
+    "reference/carrier-case.scad": "7236fdce2082045b21b59c48783767b32c5fc8e226d100e59f5f91dd63796ab7",
+    "reference/carrier-interface.scad": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c",
+    "reference/fit-verification.json": "1e6ab52ff97e0c4ba50b6a5faf277a19cc5d77ea8e181751f6de67b86511e033",
+    "reference/reference-source-manifest.json": "adb9c068f369439a0cba56b044d56c610e9a672e5ab20394ad7d00d071e66332",
+    "reference/verify_reference.py": "9e2290cb9d6cc7a8a210be8c9daca555274a544bccab29de207db76654c1f2cf"
+  }
+}

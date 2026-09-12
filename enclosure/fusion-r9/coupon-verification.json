@@ -1,0 +1,23 @@
+{
+  "fit-coupon": {
+    "watertight": true,
+    "one_solid": true,
+    "dimensions_mm": [
+      86.0,
+      22.0,
+      27.600000381469727
+    ],
+    "volume_mm3": 11571.954921867364
+  },
+  "insert-coupon": {
+    "watertight": true,
+    "one_solid": true,
+    "dimensions_mm": [
+      36.0,
+      16.0,
+      7.5
+    ],
+    "volume_mm3": 2191.7375039431704
+  },
+  "fit_coupon_mirror_check_max_vertex_deviation_mm": 0.0
+}

@@ -1,0 +1,51 @@
+{
+  "original_scad_sha256": "020d5e0470524c1742362970488d83ba45f6cac7366a4743800ca568c94a07bf",
+  "reference_scad_sha256": "7236fdce2082045b21b59c48783767b32c5fc8e226d100e59f5f91dd63796ab7",
+  "interface_sha256": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c",
+  "only_source_changes": [
+    "r7 -> r8 first-line revision comment",
+    "retainer_anchor_xy = [[-35.5,0],[35.5,0]]; -> retainer_anchor_xy = [[-35.5,-40],[35.5,-40],[-35.5,40],[35.5,40]];"
+  ],
+  "nominal_datums_mm": {
+    "case_height": 44.9,
+    "seam": 27.6,
+    "retainer_bottom": 30.1,
+    "retainer_top": 32.6
+  },
+  "exports": {
+    "top": {
+      "file": "carrier-top.stl",
+      "sha256": "c06cf93b99331912abe89cc2b16126ad337c602c20dd8130d5cfb55023f97424",
+      "volume_mm3": 30042.798,
+      "size_mm": [
+        86.0,
+        104.0,
+        19.299999237060547
+      ]
+    },
+    "bottom": {
+      "file": "carrier-bottom.stl",
+      "sha256": "01a54e90b99fc2d1460c9da24e997a7a7fce5433b012b7d4c2108a7c8051e988",
+      "volume_mm3": 49139.521,
+      "size_mm": [
+        86.0,
+        104.0,
+        27.600000381469727
+      ]
+    },
+    "retainer": {
+      "file": "carrier-retainer.stl",
+      "sha256": "c0cecafacd62aac840012e25c48364af924318e06678f69a789ac1327c76559d",
+      "volume_mm3": 3184.112,
+      "size_mm": [
+        80.0,
+        96.0,
+        2.5
+      ]
+    }
+  },
+  "verification_report": "fit-verification.json",
+  "verification_report_sha256": "1e6ab52ff97e0c4ba50b6a5faf277a19cc5d77ea8e181751f6de67b86511e033",
+  "original_r7_source_unchanged": true,
+  "bottom_identical_to_r7": true
+}

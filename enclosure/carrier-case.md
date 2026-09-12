@@ -1,5 +1,10 @@
 # Landscape carrier enclosure — fit prototype r7
 
+**Current design:** use the [Fusion r11 enclosure](fusion-r11/README.md), with
+corrected PCB orientation, four retainer anchors, a reinforced removable probe
+fascia and internal inserts for future mounts. This page preserves r7 history;
+its original bottom has a mirrored power-connector layout.
+
 The Rev B carrier case has **two outer halves**, a top bezel and a bottom shell,
 plus a thin internal display retainer. The WT32 mounts inside the top, with a
 raised rim protecting its front and sides. The carrier mounts independently in

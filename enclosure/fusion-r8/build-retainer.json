@@ -1,0 +1,19 @@
+{
+  "stage": "retainer",
+  "component": "03 WT32 retainer - four anchors",
+  "body_count": 1,
+  "volume_mm3": 3184.594095821465,
+  "timeline_count": 82,
+  "bounds_mm": [
+    [
+      -40.0,
+      -48.00000000000001,
+      30.1
+    ],
+    [
+      40.0,
+      48.00000000000001,
+      32.6
+    ]
+  ]
+}

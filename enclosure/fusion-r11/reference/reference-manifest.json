@@ -1,0 +1,17 @@
+{
+  "carrier-case.scad": "40e53a1ec166a9b14c66ea82bb30b19361eba524c58fed69b08e06dfea902768",
+  "carrier-interface.scad": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c",
+  "verify_reference.py": "d982b88603ef8d29a60bbe25a3cca0a2762c3248abc6a6fff28e4a2f0729eeb5",
+  "README.md": "6f6ff9aaaca934ca3361611758f60f47512a3e17032db0bc5147e94a243e5491",
+  "fit-verification.json": "8b40a99bccc6597e8606784af7d235db4760d463d199f69bc1f76705ecd26789",
+  "carrier-bottom.stl": "b379112fa014294b7655c18c2bd6f8c0db3b7dedd71bb83d459b46bb2bcf0c7d",
+  "carrier-retainer.stl": "c0cecafacd62aac840012e25c48364af924318e06678f69a789ac1327c76559d",
+  "carrier-top.stl": "3ea396432305803105c4da990d5d9c270541d77fb76ba183749ef80747bb712c",
+  "fit-coupon.stl": "e0f3206ceb6a1d9e8f2173c9d2694a5666c707230ffc2ee74d28480417daa1f1",
+  "insert-coupon.stl": "ae7ea4d04560875b8cd0fe6083c8da4c2cd6aeab0f6031d84b585f22d1df8b9e",
+  "joint-coupon-bottom.stl": "59d22a47a26260fae0707ed8436796d6b9c9a81a1bc3064da2e36c14b3f06fe9",
+  "joint-coupon-fascia.stl": "18b5b1779af7254512fef700fe4ba540201e8757764e45f6fa71b560dac9b2be",
+  "joint-coupon-top.stl": "c6988c3545fa15f8a7103e971fe3f00630709ee062bdc3eb2b7f9851522c99e9",
+  "mount-coupon.stl": "eee03214c7f2d9f7df398c2b995fe520e1c859a3fa65233ae8b91f7fae66246e",
+  "probe-fascia.stl": "b236ebbd338718507162e60caf05ec80ac02b04fb6d532968ef330a61a797c9f"
+}

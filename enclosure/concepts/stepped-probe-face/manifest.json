@@ -1,0 +1,18 @@
+{
+  "purpose": "Appearance concept only; assembly joint unresolved",
+  "production_files_unchanged": {
+    "enclosure/fusion-r9/pitclaw-populated-r9.f3d": "3a1922ceed9b4b27a8d671d39581a539b649fece77ffc12d3d8edcd32cc19d83",
+    "enclosure/fusion-r9/pitclaw-populated-r9.zip": "174fd92ad9b734b504fc56a2ffbf5e083dd7da8034d9c43e00f0b60f74876e4d",
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pcb": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764"
+  },
+  "files_sha256": {
+    "stepped-probe-face.png": "906a260e0b6980cfc68d902df3b7b46d34d78b6e8faa281b5bbc68c3c5bd0293",
+    "concept-notes.json": "9561e5420c548416a8ff3537ef3221eb6632519556295c39712b2e1ae5aae42e",
+    "stepped-probe-face-CONCEPT.f3d": "fbf786033fcdbfc523cf5b80b23bce57b3372db3ea7ab507a0e6f8a000e22fda",
+    "stepped-side-profile.png": "4013aecba56449b09930e57481cc382d4786b3a91136c2dda03f950c8be883b3",
+    "README.md": "648633bce447ee4aa8f81d73c8f4a7d6f145d8e04a151e65cac3eef3b9e57681",
+    "render_concept.py": "db59abfe924a545f2fffa500280d1cddf4359b2facb86bab00205e14b880e714",
+    "stepped-probe-detail.png": "1ce01f6d2d5505a8017130718a684c3a751f153ff598fa84d07ea0b036f766c8",
+    "before-probe-face.png": "642359e273965505ee8dbdf52e5514226e38e89164a1e85da588a9088508c5a1"
+  }
+}
