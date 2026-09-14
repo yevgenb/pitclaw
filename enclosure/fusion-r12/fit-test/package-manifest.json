@@ -1,0 +1,17 @@
+{
+  "scope": "Adjusted clamped fit coupons only; full R12 release unchanged",
+  "geometry_checks": 32,
+  "mesh_checks": 5,
+  "files_sha256": {
+    "README.md": "110d58c01c632621cbeb7a89989a8cbc437173d7c600ee0848379c73efd0e790",
+    "closure-post.png": "c3ed86cafa8dc004205740e0c166269f45f33c0893b86c2cc085f63c9d9358c6",
+    "bottom.stl": "c539b5772fc4869830e51daacf976712119b50e0b412ddad3725b4997429f230",
+    "top.stl": "984ce28f3d8ba8507683161b590e9f6da12e112043593cecaf37c7d5180bf1a9",
+    "fascia.stl": "efb80b6c9233ababc6cde465fe42e9b9f5a80344b3ab422df85ee40e1196e665",
+    "control-bottom.stl": "d4e00c959db722c783a9f32b00f917b3606625a88d542f613da7c6f76167b299",
+    "control-top.stl": "ff69b0adc87ee99c61c9fb03d5af93d5c927213ceda30ca941481768e6f4e678",
+    "fit-parameters.json": "7e484ca74fcbd265c650035730835eee9f000c96265edddfba9e0f07f088dac9",
+    "fit-verification.json": "1886614b8cadbc0d7c9bea88015967413c9d30c3dac8275b0bd88ab7b1117a03",
+    "generation-manifest.json": "4c1c3d1ccdec60ff5216cabed4fe132fca31d8cebb914e5cf34f69937f3463ec"
+  }
+}

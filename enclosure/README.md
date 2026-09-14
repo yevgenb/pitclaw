@@ -10,6 +10,9 @@ pattern with screw access from underneath.
 - [Native Fusion design](fusion-r12/pitclaw-enclosure-r12.f3d)
 - [Mounting interface](fusion-r12/mount-interface.json)
 - [Independent OpenSCAD reference and checks](fusion-r12/reference/README.md)
+- [Adjusted clamped fit-test kit](fusion-r12/fit-test/joint-fit-test.zip) and
+  [test instructions](fusion-r12/fit-test/README.md) for checking smaller joint gaps
+  before changing the full enclosure.
 
 Only the latest controller enclosure is kept in the working tree. Older designs
 remain in Git history. The CAD checks pass; physical fit, printed joint strength

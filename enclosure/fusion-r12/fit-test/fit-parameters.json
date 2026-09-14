@@ -1,0 +1,94 @@
+{
+  "scope": "FIT TEST ONLY; released Fusion model, main reference and production STLs are unchanged",
+  "candidate_files": [
+    "bottom.stl",
+    "top.stl",
+    "fascia.stl"
+  ],
+  "control_files": [
+    "control-bottom.stl",
+    "control-top.stl"
+  ],
+  "reused_control_fascia": "../stl/joint-coupon-fascia.stl",
+  "reused_control_fascia_sha256": "9b7dacd027c66f9815343a411ace588fd5049dd2525a35b865363e349eec5ec8",
+  "crop_xy_mm": [
+    [
+      10,
+      43
+    ],
+    [
+      -52,
+      -22
+    ]
+  ],
+  "candidate_dimensions_mm": {
+    "bottom": [
+      33,
+      30,
+      27.6
+    ],
+    "top": [
+      33,
+      30,
+      21.9
+    ],
+    "fascia": [
+      26,
+      27.4,
+      9.8
+    ]
+  },
+  "candidate_clearances_mm": {
+    "guide_side": 0.2,
+    "guide_roof_normal": 0.25,
+    "guide_roof_vertical": 0.3535533905932738,
+    "fascia_side": 0.2,
+    "fascia_top": 0.2,
+    "fascia_rear_floor": 0.2,
+    "lip_straight_and_corner": 0.3
+  },
+  "candidate_datums_mm": {
+    "guide_bearing_z": 3.8,
+    "guide_rear_stop_y": -43,
+    "probe_plate_front_y": -44.5,
+    "probe_plate_rear_y": -42.5,
+    "probe_axis_z": 11.65,
+    "fascia_floor_rear_y": -42.2,
+    "fascia_floor_top_z": 2.5,
+    "fascia_top_z": 27.4,
+    "keeper_notch_top_z": 27.42,
+    "lip_outer_radius": 2.2,
+    "lip_inner_radius": 1
+  },
+  "closure_hardware": {
+    "insert": "one M3S x4 heat-set insert in tall closure post",
+    "post_xy_mm": [
+      38,
+      -28
+    ],
+    "insert_span_z_mm": [
+      23.6,
+      27.6
+    ],
+    "screw": "M3 x18; head OD<=6mm,height<=3mm; no washer",
+    "head_seat_z_mm": 41.7,
+    "screw_tip_z_mm": 23.7,
+    "thread_engagement_mm": 3.9,
+    "pilot_floor_clearance_mm": 1.1,
+    "not_the_lower_mount_boss_xy_mm": [
+      36,
+      -37
+    ]
+  },
+  "comparison_sequence": [
+    "Assemble control bottom/top without fascia using the actual closure insert/screw.",
+    "Add the released R12 fascia coupon to the control pair.",
+    "Repeat with candidate bottom/top first alone, then with candidate fascia."
+  ],
+  "limitations": [
+    "The coupon reproduces one real closure clamp, not full-enclosure stiffness or a strength rating.",
+    "Do not use the screw to force a visibly obstructed joint closed.",
+    "Guide offsets are coupled: upward displacement plus absolute lateral displacement must remain within the vertical roof allowance.",
+    "Physical fit must be chosen before any production geometry is updated."
+  ]
+}
