@@ -29,9 +29,7 @@ import time
 ROOT = Path(__file__).resolve().parents[3]
 SOURCES = (
     "enclosure/fusion-r11/reference/carrier-case.scad",
-    "enclosure/carrier-case.scad",
     "enclosure/fusion-r11/reference/carrier-interface.scad",
-    "enclosure/carrier-interface.scad",
     "hardware/carrier-revb/mechanical/enclosure-interface.json",
     "hardware/carrier-revb/pitclaw-carrier.kicad_pcb",
     "hardware/carrier-revb/pitclaw-carrier.kicad_pro",

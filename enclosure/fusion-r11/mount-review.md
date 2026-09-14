@@ -62,12 +62,20 @@ match the checked envelope, with larger tool sections kept above it.
   print STL hashes match [mesh-verification.json](mesh-verification.json).
 
 Reference SCAD SHA-256:
-`40e53a1ec166a9b14c66ea82bb30b19361eba524c58fed69b08e06dfea902768`.
+`11e49a0858f8ca515f4c4af18111a89d9ca70f68d39c3a1520861192931d6b32`.
 Reference report SHA-256:
-`8b40a99bccc6597e8606784af7d235db4760d463d199f69bc1f76705ecd26789`.
+`6fb7e7a88b946ec7c6625d7e8be45dc7af193d55758a105ad455376358e8cfb8`.
 Native archive SHA-256:
 `5e2adc1a88e88e4d65602398c21637bc8557ec5116cfea637c7e6859bfc2e8f7`.
 
 Actual printed insert retention, mounting torque, material creep and the future bracket's
 load distribution remain physical checks. The intended scope is supporting
 the controller itself.
+
+## Latest-only repository cleanup — 2026-09-14
+
+Older enclosure files and the upgrade-only builder were removed. The current
+Fusion archive, ten printable STL files and four STEP files are byte-for-byte
+unchanged. The independent verifier now records only current source inputs;
+its 26 geometry scenarios and 10 mesh checks were rerun and pass. The OpenSCAD
+edit changed comments only. The hashes above identify this current report.

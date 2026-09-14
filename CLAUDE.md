@@ -184,10 +184,10 @@ firmware/
     test_embedded/              # On-device tests (ADC, fan_pwm, servo, buzzer, i2c)
   platformio.ini
 enclosure/
-  bbq-case.scad                 # Controller enclosure (front bezel, rear shell, kickstand)
+  fusion-r11/                   # Current controller Fusion model, STL/STEP files, coupons and checks
   bbq-fan-assembly.scad         # Fan + damper + UDS adapter
   README.md                     # Print settings, assembly notes, hardware (screws, inserts, clamps)
-  stl/                          # Export STLs here from OpenSCAD
+  stl/                          # Separate blower housing and UDS adapter STLs
 docs/                           # Project media and documentation assets
 scripts/                        # Developer setup scripts (setup-dev.ps1)
 .github/workflows/              # CI (ci.yml) and release (release.yml) workflows
@@ -298,89 +298,28 @@ On first power-on (or after factory reset), the touchscreen walks the user throu
 
 Hold finger on touchscreen for 10 seconds during the boot splash screen. Device wipes `config.json`, restarts, and enters setup wizard. Cook session data is also cleared.
 
-### Enclosure (OpenSCAD Parametric Design)
+### Controller enclosure
 
-Single `bbq-case.scad` file with all parts. Open in OpenSCAD to preview, render, and export STLs.
+Use `enclosure/fusion-r11/README.md` and the editable
+`pitclaw-enclosure-r11.f3d` model. Only the latest controller enclosure remains
+in the working tree; earlier versions are in Git history.
 
-**Design goals**: Sturdy, professional, rounded corners, basic but clean. Not trying for tight component-hugging tolerances — generous internal space to nestle everything comfortably.
+The 104 × 86 × 44.9 mm landscape case has four printed parts: top bezel,
+bottom shell, display retainer and removable probe fascia. It fits the Rev B
+60 × 92 mm carrier. Power connectors occupy one short end and probes the other.
+The fascia uses reinforced 12 × 2.1 mm bezel keys; four internal M3 mounting
+inserts on a 72 × 74 mm pattern accept future mounts from underneath.
 
-**Three printable parts:**
-1. **Front bezel** — holds the WT32-SC01 Plus display, bezel lip frames the screen, screw bosses
-2. **Rear shell** — houses carrier board, panel-mount jacks, barrel jack, cable pass-throughs, ventilation
-3. **Kickstand** — detachable flip-out stand (~30° viewing angle), press-fit hinge
+The Fusion archive is the editable CAD source. `export_r11.py` exports its
+current parts and previews; `reference/carrier-case.scad` is the independent
+OpenSCAD model used by `reference/verify_reference.py`. `verify_exports.py`
+compares native and reference meshes, and `package_release.py` assembles the
+print package. No earlier enclosure archive is required.
 
-**Key dimensions (parametric variables in the .scad file):**
-
-```
-// Board dimensions
-wt32_pcb_w    = 60;      // WT32-SC01 Plus width (mm)
-wt32_pcb_h    = 92;      // WT32-SC01 Plus height (mm)
-wt32_pcb_d    = 10.8;    // WT32-SC01 Plus depth (mm)
-display_w     = 50;      // Active display area width (mm)
-display_h     = 74;      // Active display area height (mm)
-
-carrier_w     = 50;      // Carrier perfboard width (mm)
-carrier_h     = 70;      // Carrier perfboard height (mm)
-carrier_d     = 15;      // Carrier board component height (mm)
-
-// Enclosure
-wall          = 2.5;     // Wall thickness (mm)
-corner_r      = 4;       // Corner radius (mm)
-tolerance     = 0.5;     // Fit tolerance per side (mm)
-screw_d       = 3.0;     // M3 screw hole diameter (mm)
-
-// Internal stack — these drive outer_w/outer_h/outer_d, which are derived
-pcb_recess_d       = 2;   // WT32 locating pocket depth in the bezel (mm)
-pcb_standoff_h     = 3;   // Display module thickness in front of the WT32 PCB (mm)
-carrier_standoff_h = 5;   // Peg height under the carrier board (mm)
-carrier_pcb_t      = 1.6; // Carrier perfboard thickness (mm)
-board_gap          = 2;   // WT32 back face to carrier components clearance (mm)
-// inner_w/h include the bezel's snap rim, which wraps around the WT32 inside
-// the cavity — leaving it out of the sum detaches the rim from the bezel plate.
-// Assembled result: 69.5 x 101.5 x 41.4mm
-
-// Panel mount holes
-probe_jack_d  = 6.2;     // 2.5mm mono jack mounting hole (mm)
-barrel_jack_d = 12.2;    // DC barrel jack mounting hole (mm)
-panel_margin  = 4;       // Minimum gap from cavity wall to the panel row (mm)
-panel_gap     = 3.5;     // Gap between adjacent panel openings (mm)
-```
-
-**Assembly:**
-- Front bezel snaps into the rear shell — 4 wedge catches on the bezel's rim into 4 grooves in the shell walls, no screws for closure
-- WT32-SC01 Plus held by its 4x M3 mounting holes on standoffs in the front bezel; display glass seats in the bezel pocket
-- Carrier board screws to 4 standoffs in the rear shell (4x M3x8mm self-tapping) — nothing else in the case reaches it
-- Panel-mount jacks thread through holes and secure with their own nuts
-- Kickstand hinge rod press-fits into the back-wall slot from inside the shell; the slot is 0.4mm under the rod diameter and friction is the only retention
-
-**Panel layout (rear shell bottom edge, landscape orientation):**
-
-```
-┌───────────────────────────────────────────────┐
-│                  REAR SHELL                   │
-│                                               │
-│  [vent slots]              [vent slots]       │
-│                                               │
-│  Carrier board standoffs                      │
-│                                               │
-├───────────────────────────────────────────────┤
-│ BOTTOM EDGE                                   │
-│      [Probe1] [Probe2] [Probe3]  [DC 12V]     │
-└───────────────────────────────────────────────┘
-
-SIDE EDGE (right):
-  [Fan cable slot]  [Servo cable slot]
-```
-
-**No USB pass-through.** The WT32-SC01 Plus's USB-C port sits on the underside of the board facing into the cavity, ~25mm of occupied space from any wall — a bare cutout cannot reach it. The port is only needed for the initial flash (done before assembly), the serial console, on-device tests, and recovery from a bad OTA; all of those mean opening the case, which is a snap fit. Panel USB access would need a USB-C extension pigtail and a hole sized for that connector.
-
-**Print settings:**
-- Material: PETG
-- Layer height: 0.2mm
-- Walls: 4 perimeters
-- Infill: 30%
-- No supports needed (designed for supportless printing)
-- Print front bezel face-down, rear shell open-side-up
+Print the supplied coupons in the intended material before the complete case.
+Use the r11 guide for orientations, screw lengths, insert installation, support
+access and physical validation limits. CAD verification does not establish
+printed strength, operating temperature or weather resistance.
 
 ### Fan + Damper Assembly (Separate OpenSCAD file, UDS-specific)
 

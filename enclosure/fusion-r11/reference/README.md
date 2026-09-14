@@ -145,4 +145,5 @@ checking the printed key roots and layer adhesion.
 The mounting coupon is the actual current bottom cropped to X27…43, Y27…48,
 Z0…10. The power-end and joint-bottom coupons also come from the current bottom,
 including any newly intersecting boss material. The insert-calibration coupon
-geometry is unchanged. All delivered R10 files remain preserved.
+geometry is unchanged. This directory is self-contained and verifies the current
+enclosure without requiring any older enclosure release.

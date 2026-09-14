@@ -4,7 +4,7 @@ The active Rev B-T2F0-A5807-S4 design mounts the Adafruit 5807 HUSB238 breakout
 directly above the carrier at its power short end. No printed cradle is required.
 The carrier mounts independently in the bottom shell on a 51 × 58 mm M3
 pattern; the WT32 belongs to the top assembly. See the
-[current enclosure fit prototype](../../../../enclosure/carrier-case.md).
+[current enclosure fit prototype](../../../../enclosure/fusion-r11/README.md).
 
 The geometry in `interface.json` is transcribed from Adafruit's published Eagle
 board file:

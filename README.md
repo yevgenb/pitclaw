@@ -90,15 +90,13 @@ A relay selects wall power when present and USB-PD otherwise.
 | [Carrier BOM](hardware/carrier-revb/bom/README.md) | Current parts and recorded pricing |
 | [Verification](hardware/carrier-revb/verification/README.md) | Native electrical/layout checks and physical validation limits |
 | [JLCPCB prototype package](hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/README.md) | Reviewed Gerber/drill archive for a small bare-board order |
-| [Landscape enclosure](enclosure/carrier-case.md) | Current 104×86×44.9 mm case and fit assumptions |
-| [r7 STL package and print guide](enclosure/print/carrier-r7/README.md) | Top, bottom, display retainer, fit coupons, and printing instructions |
+| [Fusion enclosure model](enclosure/fusion-r11/pitclaw-enclosure-r11.f3d) | Editable 104×86×44.9 mm controller case |
+| [STL package and print guide](enclosure/fusion-r11/README.md) | Top, bottom, display retainer, fit coupons, and printing instructions |
 
 The fabrication documentation records no submitted PCB order. Carrier load,
 relay-transfer, thermal, and module-fit checks remain, along with printed
-enclosure fit checks. The older 50×70 mm perfboard and snap-fit controller case
-are legacy designs; their parts do not fit the Rev B carrier. See the
-[enclosure guide](enclosure/README.md) for that distinction and the separate
-fan/damper assembly.
+enclosure fit checks. Use the [enclosure guide](enclosure/README.md) for the
+current controller case and the separate fan/damper assembly.
 
 ## Getting started
 

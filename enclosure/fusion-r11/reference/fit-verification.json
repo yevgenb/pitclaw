@@ -1,18 +1,16 @@
 {
   "status": "PASS: FIT PROTOTYPE",
   "revision": "carrier-enclosure-fusion-r11-reference",
-  "created_utc": "2026-09-11T23:30:14.845435+00:00",
+  "created_utc": "2026-09-14T18:15:06.970135+00:00",
   "sources_sha256": {
-    "enclosure/fusion-r11/reference/carrier-case.scad": "40e53a1ec166a9b14c66ea82bb30b19361eba524c58fed69b08e06dfea902768",
-    "enclosure/carrier-case.scad": "020d5e0470524c1742362970488d83ba45f6cac7366a4743800ca568c94a07bf",
+    "enclosure/fusion-r11/reference/carrier-case.scad": "11e49a0858f8ca515f4c4af18111a89d9ca70f68d39c3a1520861192931d6b32",
     "enclosure/fusion-r11/reference/carrier-interface.scad": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c",
-    "enclosure/carrier-interface.scad": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c",
     "hardware/carrier-revb/mechanical/enclosure-interface.json": "dfd9c0abf2a2648a673ce457d45b12c425651a65cd0b414647fef36a81bab82e",
     "hardware/carrier-revb/pitclaw-carrier.kicad_pcb": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
     "hardware/carrier-revb/pitclaw-carrier.kicad_pro": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf",
     "hardware/carrier-revb/verification/drc.json": "1bdf6a51c1d0be4ac81ad53075849833396be83ad85382b675db2a12859c32cb"
   },
-  "verifier_sha256": "d982b88603ef8d29a60bbe25a3cca0a2762c3248abc6a6fff28e4a2f0729eeb5",
+  "verifier_sha256": "353cfd717d6cbeddd61d733bed0b33cca75cb801ee780265c0ae4dfa85178655",
   "scope": "Declared nominal geometry and explicit tolerance scenarios; no physical print or purchased-part fit test.",
   "assumptions": [
     "Carrier PCB and USB module thickness 1.44\u20131.76 mm; USB spacer 2.9\u20133.1 mm.",
@@ -58,7 +56,7 @@
       "log": "logs/nominal-insertion-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.23
+      "elapsed_seconds": 1.87
     },
     "nominal-electronics-closure-check": {
       "name": "nominal-electronics-closure-check",
@@ -94,7 +92,7 @@
       "log": "logs/nominal-electronics-closure-check.log",
       "log_sha256": "27477ddd6e7e422a21159ea81e62c6adf225e249d1912907f48408d05c518228",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.3
+      "elapsed_seconds": 1.93
     },
     "nominal-carrier-installation-check": {
       "name": "nominal-carrier-installation-check",
@@ -130,7 +128,7 @@
       "log": "logs/nominal-carrier-installation-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.49
+      "elapsed_seconds": 2.13
     },
     "nominal-fascia-fit-check": {
       "name": "nominal-fascia-fit-check",
@@ -166,65 +164,7 @@
       "log": "logs/nominal-fascia-fit-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.51
-    },
-    "nominal-shell-closure-check": {
-      "name": "nominal-shell-closure-check",
-      "part": "shell-closure-check",
-      "witness_inputs_mm": {
-        "check_pcb_thickness": 1.6,
-        "check_pd_thickness": 1.6,
-        "check_pd_spacer_height": 3,
-        "check_board_edge_growth": 0,
-        "check_module_shift_x": 0
-      },
-      "command": [
-        "arch",
-        "-x86_64",
-        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
-        "-o",
-        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r11/reference/logs/nominal-shell-closure-check-intersection.stl",
-        "-D",
-        "part=\"shell-closure-check\"",
-        "-D",
-        "check_pcb_thickness=1.6",
-        "-D",
-        "check_pd_thickness=1.6",
-        "-D",
-        "check_pd_spacer_height=3",
-        "-D",
-        "check_board_edge_growth=0",
-        "-D",
-        "check_module_shift_x=0",
-        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r11/reference/carrier-case.scad"
-      ],
-      "returncode": 0,
-      "log": "logs/nominal-shell-closure-check.log",
-      "log_sha256": "2f3535d3112f892e18d63cba4ceccc6ff188bbe40e084b23ce978c356afcf54b",
-      "intentional_seam_contact": {
-        "file": "logs/nominal-shell-closure-check-intersection.stl",
-        "sha256": "003015869bfc6545e91cc3f384384a2008b9763853d7eaf7cf658d123f3d90dc",
-        "bounds_mm": [
-          [
-            -43.0,
-            -52.0,
-            27.6
-          ],
-          [
-            43.0,
-            52.0,
-            27.6
-          ]
-        ],
-        "triangles": 506,
-        "signed_volume_mm3": -9.701276818911234e-12,
-        "z_thickness_mm": 0.0,
-        "maximum_distance_from_seam_mm": 0.0,
-        "seam_z_mm": 27.6,
-        "numeric_tolerance": 1e-05
-      },
-      "result": "PASS: intentional coplanar seam contact",
-      "elapsed_seconds": 0.7
+      "elapsed_seconds": 0.38
     },
     "nominal-lid-closing-check": {
       "name": "nominal-lid-closing-check",
@@ -260,7 +200,7 @@
       "log": "logs/nominal-lid-closing-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.36
+      "elapsed_seconds": 0.34
     },
     "nominal-fascia-lift-check": {
       "name": "nominal-fascia-lift-check",
@@ -296,7 +236,65 @@
       "log": "logs/nominal-fascia-lift-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.39
+      "elapsed_seconds": 0.36
+    },
+    "nominal-shell-closure-check": {
+      "name": "nominal-shell-closure-check",
+      "part": "shell-closure-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.6,
+        "check_pd_thickness": 1.6,
+        "check_pd_spacer_height": 3,
+        "check_board_edge_growth": 0,
+        "check_module_shift_x": 0
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r11/reference/logs/nominal-shell-closure-check-intersection.stl",
+        "-D",
+        "part=\"shell-closure-check\"",
+        "-D",
+        "check_pcb_thickness=1.6",
+        "-D",
+        "check_pd_thickness=1.6",
+        "-D",
+        "check_pd_spacer_height=3",
+        "-D",
+        "check_board_edge_growth=0",
+        "-D",
+        "check_module_shift_x=0",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r11/reference/carrier-case.scad"
+      ],
+      "returncode": 0,
+      "log": "logs/nominal-shell-closure-check.log",
+      "log_sha256": "263229b9a1d38000ee2847ab15d0f84e0c6fc02635ef7f56ce9d4060e8378f73",
+      "intentional_seam_contact": {
+        "file": "logs/nominal-shell-closure-check-intersection.stl",
+        "sha256": "003015869bfc6545e91cc3f384384a2008b9763853d7eaf7cf658d123f3d90dc",
+        "bounds_mm": [
+          [
+            -43.0,
+            -52.0,
+            27.6
+          ],
+          [
+            43.0,
+            52.0,
+            27.6
+          ]
+        ],
+        "triangles": 506,
+        "signed_volume_mm3": -9.701276818911234e-12,
+        "z_thickness_mm": 0.0,
+        "maximum_distance_from_seam_mm": 0.0,
+        "seam_z_mm": 27.6,
+        "numeric_tolerance": 1e-05
+      },
+      "result": "PASS: intentional coplanar seam contact",
+      "elapsed_seconds": 1.31
     },
     "nominal-mount-screw-check": {
       "name": "nominal-mount-screw-check",
@@ -332,7 +330,7 @@
       "log": "logs/nominal-mount-screw-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.28
+      "elapsed_seconds": 0.26
     },
     "nominal-mount-tool-check": {
       "name": "nominal-mount-tool-check",
@@ -368,7 +366,7 @@
       "log": "logs/nominal-mount-tool-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.23
+      "elapsed_seconds": 0.2
     },
     "low-stack-x-minus-0.2-electronics-closure-check": {
       "name": "low-stack-x-minus-0.2-electronics-closure-check",
@@ -476,7 +474,7 @@
       "log": "logs/low-stack-x-minus-0.2-fascia-fit-check.log",
       "log_sha256": "82b718cb4e7e35dd54a2070e0ae81716c55b2c1b011bac4c8349837104e17436",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.36
+      "elapsed_seconds": 0.38
     },
     "low-stack-x-plus-0.2-carrier-installation-check": {
       "name": "low-stack-x-plus-0.2-carrier-installation-check",
@@ -512,7 +510,7 @@
       "log": "logs/low-stack-x-plus-0.2-carrier-installation-check.log",
       "log_sha256": "582b6c65cab97bdc03bef3a40784e8775afcf37c5351e59ae935e7f3c9ab1cc5",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.47
+      "elapsed_seconds": 0.49
     },
     "low-stack-x-plus-0.2-electronics-closure-check": {
       "name": "low-stack-x-plus-0.2-electronics-closure-check",
@@ -548,7 +546,7 @@
       "log": "logs/low-stack-x-plus-0.2-electronics-closure-check.log",
       "log_sha256": "bc7174d4f55b214063d75360f42686b75ff8b024166502701535e58328565353",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.28
+      "elapsed_seconds": 0.31
     },
     "low-stack-x-plus-0.2-fascia-fit-check": {
       "name": "low-stack-x-plus-0.2-fascia-fit-check",
@@ -584,7 +582,7 @@
       "log": "logs/low-stack-x-plus-0.2-fascia-fit-check.log",
       "log_sha256": "582b6c65cab97bdc03bef3a40784e8775afcf37c5351e59ae935e7f3c9ab1cc5",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.34
+      "elapsed_seconds": 0.38
     },
     "nominal-fascia-insertion-check": {
       "name": "nominal-fascia-insertion-check",
@@ -620,7 +618,7 @@
       "log": "logs/nominal-fascia-insertion-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 11.22
+      "elapsed_seconds": 11.34
     },
     "high-stack-x-minus-0.2-carrier-installation-check": {
       "name": "high-stack-x-minus-0.2-carrier-installation-check",
@@ -692,7 +690,7 @@
       "log": "logs/high-stack-x-minus-0.2-electronics-closure-check.log",
       "log_sha256": "36a4f4f0dc29d81a70f67d6371f1d621af42ee0685f6bd822613d27f58342697",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.3
+      "elapsed_seconds": 0.29
     },
     "high-stack-x-minus-0.2-fascia-fit-check": {
       "name": "high-stack-x-minus-0.2-fascia-fit-check",
@@ -764,7 +762,7 @@
       "log": "logs/low-stack-x-minus-0.2-fascia-insertion-check.log",
       "log_sha256": "82b718cb4e7e35dd54a2070e0ae81716c55b2c1b011bac4c8349837104e17436",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 11.25
+      "elapsed_seconds": 11.31
     },
     "high-stack-x-plus-0.2-carrier-installation-check": {
       "name": "high-stack-x-plus-0.2-carrier-installation-check",
@@ -872,7 +870,7 @@
       "log": "logs/high-stack-x-plus-0.2-fascia-fit-check.log",
       "log_sha256": "7bb6ae7d67d750dfc1f0a0595b6916722c2752087695c559c8cb329ac9f1e946",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.37
+      "elapsed_seconds": 0.36
     },
     "low-stack-x-plus-0.2-fascia-insertion-check": {
       "name": "low-stack-x-plus-0.2-fascia-insertion-check",
@@ -908,7 +906,7 @@
       "log": "logs/low-stack-x-plus-0.2-fascia-insertion-check.log",
       "log_sha256": "582b6c65cab97bdc03bef3a40784e8775afcf37c5351e59ae935e7f3c9ab1cc5",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 11.25
+      "elapsed_seconds": 11.24
     },
     "high-stack-x-minus-0.2-fascia-insertion-check": {
       "name": "high-stack-x-minus-0.2-fascia-insertion-check",
@@ -944,7 +942,7 @@
       "log": "logs/high-stack-x-minus-0.2-fascia-insertion-check.log",
       "log_sha256": "c5474c9e1237516add4f38bf22ba0b82fcff1820b994c602a375bb0ca78b0da7",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 11.13
+      "elapsed_seconds": 11.05
     },
     "high-stack-x-plus-0.2-fascia-insertion-check": {
       "name": "high-stack-x-plus-0.2-fascia-insertion-check",
@@ -980,7 +978,7 @@
       "log": "logs/high-stack-x-plus-0.2-fascia-insertion-check.log",
       "log_sha256": "7bb6ae7d67d750dfc1f0a0595b6916722c2752087695c559c8cb329ac9f1e946",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 11.04
+      "elapsed_seconds": 11.12
     }
   },
   "meshes": {
@@ -1256,10 +1254,6 @@
     }
   },
   "sources_unchanged": true,
-  "combined_reports": {
-    "fit-verification-diagnostics.json": "ef199e069c1e96669af7d50baba20e6ea2b074a9b793e149ce07eddd9a90a24c",
-    "fit-verification-meshes.json": "dedfd01f86cbe5ab2fa23d10aea43030625a1389ee25daa4ee2fbc8d50b5dd4f"
-  },
   "mount_interfaces_mm": {
     "center_xy": [
       [
@@ -1309,5 +1303,10 @@
       7.5,
       8.02
     ]
+  },
+  "geometry_preservation": {
+    "scad_change": "comments only; geometry code unchanged",
+    "code_without_comments_sha256": "f57751ee4661de63cca1fe8bbc94e9fd42f4c4b600ee963da38bba00ae9c44ff",
+    "all_existing_stl_sha256_unchanged": true
   }
 }

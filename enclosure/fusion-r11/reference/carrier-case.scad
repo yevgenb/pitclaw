@@ -1,9 +1,11 @@
-// PitClaw Rev B carrier enclosure r11: two outer halves + internal retainer.
+// PitClaw Rev B carrier enclosure r11: bottom, top, removable fascia and internal retainer.
 // Units mm. WT32 uses centered PCB coordinates; the carrier is shifted toward
 // the power end by carrier_case_offset_y from the generated interface.
 // This is a fit prototype, not a mechanically released / weather-rated case.
 // WT32 OEM holes are REAR blind bosses: do not screw through the glass / PCB.
-// See enclosure/carrier-case.md for source drawings and physical measurements.
+// See README.md in this reference directory for assembly, dimensions and fit limits.
+// The r9/r10-named modules below are embedded construction stages, not external
+// dependencies or separate enclosure releases. This source and interface are complete.
 include <carrier-interface.scad>
 
 // Views also include fit-coupon and insert-coupon for first-print calibration.
@@ -780,7 +782,7 @@ module carrier_sweep(offset0,offset1,lift0,lift1) {
     mirror([1,0,0]) carrier_sweep_board_coordinates(offset0,offset1,lift0,lift1);
 }
 
-// r10 physical-coordinate modifications. All previous board transforms remain.
+// Embedded probe-fascia construction stage in physical PCB coordinates.
 module box_bounds(x0,x1,y0,y1,z0,z1) {
     translate([x0,y0,z0]) cube([x1-x0,y1-y0,z1-z0]);
 }

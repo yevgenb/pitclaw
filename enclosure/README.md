@@ -1,90 +1,33 @@
-# Pit Claw 3D Printed Parts
+# Pit Claw 3D printed parts
 
-The current [Fusion r11 enclosure](fusion-r11/README.md) includes an editable
-F3D model, populated-board previews and four printable parts. It adds four
-interior M3 inserts for future mounts, with screw access from underneath.
-The reinforced r10 top, retainer and probe fascia remain compatible.
+The controller enclosure is [Fusion r11](fusion-r11/README.md): a 104 × 86 ×
+44.9 mm case with a top bezel, bottom shell, internal display retainer and
+removable probe fascia. Four internal M3 inserts provide a 72 × 74 mm mounting
+pattern with screw access from underneath.
 
-The [r7 design notes](carrier-case.md) and old print package remain available
-for history. The r11 model carries forward r9's corrected PCB orientation and
-four-anchor display retainer. Earlier r7/r8 bottoms have mirrored power ports.
-Start with the coupons in the [r11 print and assembly guide](fusion-r11/README.md).
+- [Print package and editable Fusion model](fusion-r11/pitclaw-enclosure-r11.zip)
+- [Print settings, coupons, hardware and assembly](fusion-r11/README.md)
+- [Native Fusion design](fusion-r11/pitclaw-enclosure-r11.f3d)
+- [Mounting interface](fusion-r11/mount-interface.json)
+- [Independent OpenSCAD reference and checks](fusion-r11/reference/README.md)
 
-## Legacy controller and fan assembly
+Only the latest controller enclosure is kept in the working tree. Older designs
+remain in Git history. The CAD checks pass; physical fit, printed joint strength
+and mounting load capacity still need prototype testing.
 
-**Legacy controller enclosure only.** `bbq-case.scad` and its controller STLs target
-the 50 × 70 mm perfboard, a 44 × 64 mm carrier mounting pattern and panel-mount
-jacks. They do not fit the Rev B 60 × 92 mm carrier, its 51 × 58 mm M3 mounts
-or its PCB-mounted connectors. Do not print these as a Rev B enclosure; finish
-the carrier fit checks using `carrier-case.scad`. The fan assembly is separate.
+## Separate blower and damper assembly
 
-3D-printable enclosure for the Pit Claw temperature controller and fan/damper assembly for UDS (Ugly Drum Smoker). All designs are parametric OpenSCAD files.
+The smoker-mounted blower/damper is a separate part, retained alongside the
+controller enclosure. Use [bbq-fan-assembly.scad](bbq-fan-assembly.scad),
+[blower-housing.stl](stl/blower-housing.stl) and
+[uds-pipe-adapter.stl](stl/uds-pipe-adapter.stl).
 
-## Files
+Open the fan source in OpenSCAD, select the desired `part`, render and export in
+millimeters. Print the blower housing open-side-up and the pipe adapter upright.
+Check fit with the actual fan, servo and smoker intake. Its geometry is separate
+from the r11 controller fit verification.
 
-| File | Description |
-|------|-------------|
-| `bbq-case.scad` | Controller enclosure (front bezel, rear shell, kickstand) |
-| `bbq-fan-assembly.scad` | Fan + damper housing and UDS pipe adapter |
-| `stl/` | Pre-exported STL files ready for slicing |
-
-Assembled controller enclosure: **69.5 x 101.5 x 41.4mm**. The depth is set by the internal stack — carrier standoffs, carrier board, its components, clearance, and the display board — so trimming `carrier_d` is the way to make it thinner.
-
-There is no USB pass-through. The WT32-SC01 Plus's USB-C port faces into the cavity from the underside of the board, ~25mm of occupied space away from any wall, so no cutout can reach it. USB is only needed for the initial flash (before assembly), the serial console, on-device tests, and recovery from a failed OTA — all of which mean opening the case, and the case is a snap fit. If you want panel USB access, fit a USB-C extension pigtail and size a hole for that connector.
-
-## Print Settings
-
-| Setting | Value |
-|---------|-------|
-| Material | PETG (80C glass transition -- resists heat and grease) |
-| Layer height | 0.2mm |
-| Walls | 4 perimeters |
-| Infill | 30% |
-| Supports | None needed (all parts designed for supportless printing) |
-
-For the UDS pipe adapter, ASA (105C glass transition) is an option if your smoker runs hot near the bottom vent, though PETG is fine for typical 225F cooks where the drum skin near the vent is 100-150F.
-
-## Print Orientations
-
-| Part | Orientation | Notes |
-|------|-------------|-------|
-| Front bezel | Face-down (display side on bed) | Flat display surface, snap rim prints upward |
-| Rear shell | Open-side-up (back wall on bed) | Cavity prints upward, no overhangs |
-| Kickstand | Flat | Simple flat piece, no special orientation needed |
-| Blower housing | Open-side-up | Fan cavity prints upward |
-| UDS pipe adapter | Upright (pipe end down) | Cylindrical, prints cleanly vertical |
-
-## Exporting STLs from OpenSCAD
-
-1. Open the `.scad` file in OpenSCAD
-2. Change the `part` variable at the top of the file (e.g., `part = "bezel";`)
-3. Press F5 to preview, then F6 to render
-4. File > Export > Export as STL
-5. Save to the `stl/` directory with the appropriate name
-
-### STL File Names
-
-Controller enclosure (`bbq-case.scad`):
-- `stl/front-bezel.stl` (part = "bezel")
-- `stl/rear-shell.stl` (part = "shell")
-- `stl/kickstand.stl` (part = "kickstand")
-
-Fan assembly (`bbq-fan-assembly.scad`):
-- `stl/blower-housing.stl` (part = "housing")
-- `stl/uds-pipe-adapter.stl` (part = "adapter")
-
-## Hardware List
-
-### Controller Enclosure
-
-| Qty | Item | Notes |
-|-----|------|-------|
-| 4 | M3x6mm self-tapping screws | Mount WT32-SC01 Plus PCB to bezel standoffs |
-| 4 | M3x8mm self-tapping screws | Mount carrier board to rear shell standoffs |
-
-The front bezel snaps onto the rear shell — no screws needed for case closure. Both boards are screwed down: nothing else inside the case reaches the carrier board to hold it.
-
-### Fan Assembly
+### Hardware
 
 | Qty | Item | Notes |
 |-----|------|-------|
@@ -94,23 +37,7 @@ The front bezel snaps onto the rear shell — no screws needed for case closure.
 | 2 | Small hose clamps (25-40mm range) | One for pipe adapter to pipe nipple, one for duct to adapter (if not press-fit) |
 | 1 | High-temp gasket tape (or PTFE tape) | Wrap around NPT pipe before inserting into adapter for air-tight seal |
 
-## Assembly Instructions
-
-### Controller Enclosure
-
-1. **Mount the WT32-SC01 Plus**: Place the display board face-down into the front bezel. The display glass sits against the bezel lip. Secure with 4x M3x6mm screws through the PCB mounting holes into the bezel standoffs.
-
-2. **Mount the carrier board**: Place the carrier perfboard onto the standoffs inside the rear shell and secure with 4x M3x8mm self-tapping screws.
-
-3. **Install panel-mount connectors**: Thread the 3x 2.5mm mono probe jacks and 1x DC barrel jack through their respective holes in the rear shell bottom edge. Secure with their mounting nuts from inside.
-
-4. **Connect wiring**: Connect the 8-pin ribbon cable from the carrier board to the WT32-SC01 Plus extension connector. Route fan and servo wires through the right-side cable slots.
-
-5. **Close the enclosure**: Align the bezel's snap-fit rim with the rear shell opening and press firmly until the catches click into place. No screws needed.
-
-6. **Attach kickstand** (optional): Before closing the case, press the kickstand's hinge rod into the slot in the shell's back wall **from inside the shell**, so the arm passes through the slot to the outside. The slot is 0.4mm narrower than the rod — it is a press fit, and that friction is what retains the kickstand and holds its angle. Verify it grips before closing the case; if the fit is loose or too tight on your printer, adjust `ks_hinge_slot_w`.
-
-### Fan + Damper Assembly
+### Assembly
 
 1. **Mount the servo**: Press-fit or screw the MG90S servo into the servo pocket on the intake side of the blower housing.
 
@@ -134,27 +61,3 @@ Outside air -> [butterfly damper] -> [5015 blower fan] -> [duct] -> [UDS pipe ad
 ```
 
 The PID controller modulates both the fan speed (PWM) and damper position (servo angle) to maintain the target pit temperature. Cap all other intake pipes on the UDS -- this assembly controls all airflow.
-
-## Future Adapters
-
-The blower housing output duct is a standard round interface (28mm OD / 24mm ID). Adapters for other smoker types can be designed to mate with this same duct:
-
-- Weber Smokey Mountain (WSM) -- adapter plate for the bottom vent
-- Kamado-style (Big Green Egg, Kamado Joe) -- adapter for the bottom draft door
-- Offset smokers -- adapter plate for the firebox intake
-
-Community contributions welcome. Design your adapter to receive the 28mm OD duct (either press-fit or with a hose clamp groove) on one end, and interface with your smoker's air intake on the other.
-
-## Parametric Customization
-
-Both `.scad` files have all key dimensions as variables at the top. Common reasons to customize:
-
-- **Different fan size**: Update `fan_w`, `fan_h`, `fan_d`, and `fan_screw_spacing`
-- **Different servo**: Update `servo_w`, `servo_h`, `servo_d`, `servo_tab_w`
-- **Thicker walls**: Increase `wall` (case) or `housing_wall` (fan assembly)
-- **Tighter/looser fit**: Adjust `tolerance` or `housing_tol`
-- **Case depth**: Driven by `carrier_d`, `carrier_standoff_h`, `board_gap`, `pcb_recess_d` — `outer_d` is derived from these, not set directly
-- **Display board seating**: `pcb_standoff_h` is the display module thickness in front of the WT32 PCB; measure your board and correct it before printing the bezel
-- **Different pipe size**: Update `npt_od` and `adapter_id` for your intake pipe
-
-Open the `.scad` file in OpenSCAD, modify the variables, press F5 to preview, and F6 to render.

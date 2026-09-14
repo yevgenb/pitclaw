@@ -6,8 +6,7 @@ Install the inserts before the electronics so attaching a mount later will not
 require opening the case. The outer bottom stays flat, with four Ø3.4 mm access
 holes and no projecting bosses.
 
-Only the bottom changes from R10. Its top, display retainer and probe fascia can
-be reused. The full package includes all four current parts. The PCB, connector
+The full package includes all four current parts. The PCB, connector
 positions, reinforced bezel keys and **104 × 86 × 44.9 mm** case size are unchanged.
 
 **CAD and mesh checks pass; physical fit and mounting strength still need a test
@@ -27,9 +26,28 @@ print.** Use the new mounting coupon to check your inserts and screw engagement.
 
 The four complete print meshes come from Fusion; the six coupon meshes come
 from the independently checked reference. Power and joint-bottom coupons were
-regenerated to include the current mounting geometry. The original insert-size
-calibration block remains geometrically unchanged. The brass-colored inserts
+regenerated to include the current mounting geometry. The insert-size
+calibration block provides pilot-size trials. The brass-colored inserts
 in Fusion are simplified references, not printable components.
+
+## Editing and regenerating the release
+
+The included F3D archive is the editable CAD source, with its native feature
+history and populated-board references. Open it in Fusion, edit the current
+design, then run `export_r11.py` through the Fusion Python API to export parts
+and previews. The old upgrade scripts and earlier enclosure archives are no
+longer required or kept in the working tree.
+
+In the repository, the self-contained `reference/carrier-case.scad` and its generated
+`carrier-interface.scad` provide the independent assembly model. Run
+`reference/verify_reference.py` with OpenSCAD and Python/trimesh to check the
+reference, then `verify_exports.py` to compare the native meshes. Finally run
+`package_release.py` to check the current files and assemble the ZIP. These
+tools require only the current enclosure and the protected carrier hardware.
+
+When the PCB changes, `hardware/carrier-revb/tools/export_enclosure_interface.py`
+updates the interface directly in this reference directory. Recheck both CAD
+models and regenerate their exports after interface or geometry changes.
 
 ## Bottom mounting interface
 

@@ -1,9 +1,9 @@
 {
-  "carrier-case.scad": "40e53a1ec166a9b14c66ea82bb30b19361eba524c58fed69b08e06dfea902768",
+  "carrier-case.scad": "11e49a0858f8ca515f4c4af18111a89d9ca70f68d39c3a1520861192931d6b32",
   "carrier-interface.scad": "0f08c92da2cc66640f94ef99bb7925ab6a0b47fda985b96626af2466ebf9191c",
-  "verify_reference.py": "d982b88603ef8d29a60bbe25a3cca0a2762c3248abc6a6fff28e4a2f0729eeb5",
-  "README.md": "6f6ff9aaaca934ca3361611758f60f47512a3e17032db0bc5147e94a243e5491",
-  "fit-verification.json": "8b40a99bccc6597e8606784af7d235db4760d463d199f69bc1f76705ecd26789",
+  "verify_reference.py": "353cfd717d6cbeddd61d733bed0b33cca75cb801ee780265c0ae4dfa85178655",
+  "README.md": "583fddc9fc7bf1f61571e9f97687c9807bdc13a3ae222455c8b785d628716b27",
+  "fit-verification.json": "6fb7e7a88b946ec7c6625d7e8be45dc7af193d55758a105ad455376358e8cfb8",
   "carrier-bottom.stl": "b379112fa014294b7655c18c2bd6f8c0db3b7dedd71bb83d459b46bb2bcf0c7d",
   "carrier-retainer.stl": "c0cecafacd62aac840012e25c48364af924318e06678f69a789ac1327c76559d",
   "carrier-top.stl": "3ea396432305803105c4da990d5d9c270541d77fb76ba183749ef80747bb712c",

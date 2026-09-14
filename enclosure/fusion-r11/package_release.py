@@ -13,9 +13,6 @@ PROTECTED = {
     'hardware/carrier-revb/pitclaw-carrier.kicad_pcb': '7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764',
     'hardware/carrier-revb/pitclaw-carrier.kicad_pro': '814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf',
     'hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/pitclaw-carrier-jlcpcb.zip': 'd75ea76ef0e9b0892459d3f8e0c6367630f1d467716bc774757389a562409497',
-    'enclosure/fusion-r9/pitclaw-populated-r9.f3d': '3a1922ceed9b4b27a8d671d39581a539b649fece77ffc12d3d8edcd32cc19d83',
-    'enclosure/fusion-r10/pitclaw-enclosure-r10.f3d': '7b8a72a4156941832957eb7e3d6639795637ddd2f38485d4052f308b51262fd7',
-    'enclosure/fusion-r10/pitclaw-enclosure-r10.zip': 'c6ac1bdb353117307b7b03c7a4bf0db1b144fd293efc86f813b74f91482e836d',
 }
 SIZES = {
     'carrier-bottom': [86, 104, 27.6], 'carrier-top': [86, 104, 21.9],

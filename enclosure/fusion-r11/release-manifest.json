@@ -1,6 +1,6 @@
 {
   "revision": "r11 bottom mounting inserts",
-  "created_utc": "2026-09-11T23:36:02.274514+00:00",
+  "created_utc": "2026-09-14T18:18:25.283484+00:00",
   "status": "CAD VERIFIED FIT PROTOTYPE; physical print validation pending",
   "geometry_checks": 26,
   "reference_meshes": 10,
@@ -16,10 +16,7 @@
   "protected_files_unchanged_sha256": {
     "hardware/carrier-revb/pitclaw-carrier.kicad_pcb": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
     "hardware/carrier-revb/pitclaw-carrier.kicad_pro": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf",
-    "hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/pitclaw-carrier-jlcpcb.zip": "d75ea76ef0e9b0892459d3f8e0c6367630f1d467716bc774757389a562409497",
-    "enclosure/fusion-r9/pitclaw-populated-r9.f3d": "3a1922ceed9b4b27a8d671d39581a539b649fece77ffc12d3d8edcd32cc19d83",
-    "enclosure/fusion-r10/pitclaw-enclosure-r10.f3d": "7b8a72a4156941832957eb7e3d6639795637ddd2f38485d4052f308b51262fd7",
-    "enclosure/fusion-r10/pitclaw-enclosure-r10.zip": "c6ac1bdb353117307b7b03c7a4bf0db1b144fd293efc86f813b74f91482e836d"
+    "hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/pitclaw-carrier-jlcpcb.zip": "d75ea76ef0e9b0892459d3f8e0c6367630f1d467716bc774757389a562409497"
   },
   "print_meshes": {
     "carrier-bottom": {
@@ -134,15 +131,15 @@
     }
   },
   "files_sha256": {
-    "README.md": "674a20dbb5068ef2e6c9824426213f896e5c70911b649a7e26887c960fea6fae",
-    "mount-review.md": "921e432794e122b1ad6f011472ad4184c9232838ee132fe2e3171adf7f3a16ed",
+    "README.md": "9fb25e908bd4f30ed272f5681d3ddcab9b5b90159a98ca84cc01fdb9a7a3294c",
+    "mount-review.md": "35c8f4c8c84531fa59ca8ceeafbfb872261a65d6c802db1a07a5c137ec443da7",
     "mount-interface.json": "706aa707ea829ddedba777a56231c55b572c4bb55ec460a93ccaf79f7ae531c7",
     "mount-pattern.dxf": "d1bd60d0c912cc9275871f4b3d9832177f67c7b07cbdd383784f19a732a9c462",
     "pitclaw-enclosure-r11.f3d": "5e2adc1a88e88e4d65602398c21637bc8557ec5116cfea637c7e6859bfc2e8f7",
     "native-verification.json": "afaae95842524b5fba6f7744147a9d39753ea41730271d63d99c9889addb38d5",
     "mesh-verification.json": "79c19a41c0e9b7dacd2e0d1d22049f49d4d9622cfc1ef120c530eff51aaa0e50",
     "build-native.json": "62df60535e015a74daf00c845afb96ed63e865b284181cbb0d7d0cbf892e39fc",
-    "reference/fit-verification.json": "8b40a99bccc6597e8606784af7d235db4760d463d199f69bc1f76705ecd26789",
+    "reference/fit-verification.json": "6fb7e7a88b946ec7c6625d7e8be45dc7af193d55758a105ad455376358e8cfb8",
     "assembled-probe-face.png": "52597a3151dd3760ceef31c1be9f3daba224f1079b4d579596b967ded0193929",
     "assembly-1-carrier.png": "08a1e367d45f58d9b409e3271a693f7fda26fcd0f712d0bafe062f48194be01e",
     "assembly-2-fascia.png": "b66f0f0f12c93045a272fc3375a79f953d27fdb0fd714d18607ea1a81ba9752b",
