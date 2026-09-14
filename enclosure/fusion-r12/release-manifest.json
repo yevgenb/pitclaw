@@ -1,0 +1,175 @@
+{
+  "revision": "r12 continuous fascia guides",
+  "created_utc": "2026-09-14T20:12:38.812535+00:00",
+  "status": "CAD VERIFIED FIT PROTOTYPE; physical print validation pending",
+  "geometry_checks": 31,
+  "reference_meshes": 10,
+  "native_body_case_tests": 131,
+  "native_mesh_comparison": "PASS",
+  "additional_mount_inserts": 4,
+  "total_case_inserts": 16,
+  "mount_pitch_mm": [
+    72,
+    74
+  ],
+  "mount_thread": "M3",
+  "guide_engagement_mm": 9,
+  "guide_side_clearance_mm": 0.4,
+  "guide_roof_normal_clearance_mm": 0.35355339059327373,
+  "protected_files_unchanged_sha256": {
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pcb": "7d648c85aaa1fabd4f39074680c3daeb83a75353a57960b03cd88eaad8274764",
+    "hardware/carrier-revb/pitclaw-carrier.kicad_pro": "814bd6b79383344938fb11cef374c5ab29d7d67091976e8c2353aa28831d35bf",
+    "hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/pitclaw-carrier-jlcpcb.zip": "d75ea76ef0e9b0892459d3f8e0c6367630f1d467716bc774757389a562409497"
+  },
+  "print_meshes": {
+    "carrier-bottom": {
+      "dimensions_mm": [
+        86.0,
+        104.0,
+        27.600000381469727
+      ],
+      "watertight": true,
+      "connected_solids": 1,
+      "volume_mm3": 45681.20362359928,
+      "sha256": "6e736159f3ac3cfd61e428f8a4cb4288e7214b3a82f3c9ca11304feeada31509"
+    },
+    "carrier-top": {
+      "dimensions_mm": [
+        86.0,
+        104.0,
+        21.900001144409202
+      ],
+      "watertight": true,
+      "connected_solids": 1,
+      "volume_mm3": 30272.91027477085,
+      "sha256": "0bd691502df4505769f7e52d071a37d63bfe3161ff9434e83b0b6837f0eb6562"
+    },
+    "carrier-retainer": {
+      "dimensions_mm": [
+        79.9990005493164,
+        96.0,
+        2.499998188018793
+      ],
+      "watertight": true,
+      "connected_solids": 1,
+      "volume_mm3": 3184.591194114995,
+      "sha256": "992e3f1d4e6c708155129f651bffb29cae8ffea10237358fa6be79d396820cda"
+    },
+    "probe-fascia": {
+      "dimensions_mm": [
+        72.0,
+        27.299999237060547,
+        9.5
+      ],
+      "watertight": true,
+      "connected_solids": 1,
+      "volume_mm3": 8193.610140541341,
+      "sha256": "df17385377ab151df0f7b486a480097f8db721b5322288b0a527480b6c468a1d"
+    },
+    "joint-coupon-bottom": {
+      "dimensions_mm": [
+        33.0,
+        11.5,
+        27.600000381469727
+      ],
+      "watertight": true,
+      "connected_solids": 1,
+      "volume_mm3": 1714.480755293451,
+      "sha256": "4c4ddfd393bcf99da9d32dc4685e99428ac80fa8b4aaee6ab1923371c474a9f4"
+    },
+    "joint-coupon-top": {
+      "dimensions_mm": [
+        33.0,
+        11.5,
+        21.899999618530273
+      ],
+      "watertight": true,
+      "connected_solids": 1,
+      "volume_mm3": 2783.44765501941,
+      "sha256": "c6988c3545fa15f8a7103e971fe3f00630709ee062bdc3eb2b7f9851522c99e9"
+    },
+    "joint-coupon-fascia": {
+      "dimensions_mm": [
+        26.0,
+        27.299999237060547,
+        9.5
+      ],
+      "watertight": true,
+      "connected_solids": 1,
+      "volume_mm3": 3086.4512762995,
+      "sha256": "9b7dacd027c66f9815343a411ace588fd5049dd2525a35b865363e349eec5ec8"
+    },
+    "fit-coupon": {
+      "dimensions_mm": [
+        86.0,
+        22.0,
+        27.600000381469727
+      ],
+      "watertight": true,
+      "connected_solids": 1,
+      "volume_mm3": 12196.753585412727,
+      "sha256": "e0f3206ceb6a1d9e8f2173c9d2694a5666c707230ffc2ee74d28480417daa1f1"
+    },
+    "insert-coupon": {
+      "dimensions_mm": [
+        36.0,
+        16.0,
+        7.5
+      ],
+      "watertight": true,
+      "connected_solids": 1,
+      "volume_mm3": 2191.7375039431704,
+      "sha256": "ae7ea4d04560875b8cd0fe6083c8da4c2cd6aeab0f6031d84b585f22d1df8b9e"
+    },
+    "mount-coupon": {
+      "dimensions_mm": [
+        16.0,
+        21.0,
+        10.0
+      ],
+      "watertight": true,
+      "connected_solids": 1,
+      "volume_mm3": 1797.0714283386887,
+      "sha256": "eee03214c7f2d9f7df398c2b995fe520e1c859a3fa65233ae8b91f7fae66246e"
+    }
+  },
+  "files_sha256": {
+    "README.md": "2b7e017f06218705b95154f7f8f8409d34dc18022edfe044322eee9dda9c4732",
+    "mount-review.md": "265e41cba04ea4f01651d07e26122c451dfc17c6e5021cf80462a5074565b5a6",
+    "mount-interface.json": "c9a8ed82cd6b5fe645cf1f5a51546482002055ee641d0888cd6d27447259a4f3",
+    "mount-pattern.dxf": "d1bd60d0c912cc9275871f4b3d9832177f67c7b07cbdd383784f19a732a9c462",
+    "guide-review.md": "1baefad877b230fff7ec415b5b02d5b5e9cb099b8824631c0cd1792767357012",
+    "guide-section-comparison.png": "83668b8243be9ac905b50f0401233596201aaa6453a91c587295e1048ca17c58",
+    "guide-section-comparison.svg": "09e428011f8c97c8750b9765101b70a5b6624eddd4bde1fdbbfc9b8bdb296813",
+    "pitclaw-enclosure-r12.f3d": "ca7851904af2cbe75ff7c9a623b59fd13645fee92741013a807a5e538b02906f",
+    "native-verification.json": "57918e8bd8730d98c75ec45f4dacad847839062c39b6f293d7c7bb5b6c0a8386",
+    "mesh-verification.json": "bf4d5de736e1149e4efbc6149249c9f4ddb798d0570cead8f578baafedd9730b",
+    "build-native.json": "c8f375e0659ed951bb587a5285338235db2f75fc04be8cda4a8d504b31ed1bb8",
+    "reference/fit-verification.json": "21d141b4c76710e13b368a6feb172652d491a5c18645a54c0cf407b677b61ab9",
+    "reference/guide-section-verification.json": "5033fc614f3f8fe5809eaa6388e0eb19f30ce8eac874be168bb91359426b6ec7",
+    "assembled-probe-face.png": "0bed2952f2387dbfa20103acf229320aff1dc15d5c5ee4b7fc8cc2e2bd1d933c",
+    "assembly-1-carrier.png": "e861de4642e45244d82e406bbd85f8442c11122e0c821531cd7d9436731fea2d",
+    "assembly-2-fascia.png": "b78ed7e0712a623b94567b3bf20392406d7e1dac493f90b99edb2c3d51f1f7d5",
+    "assembly-3-lid.png": "acefbde84dd590857327e28f27f585547a8d223e18dcbefc7730a681b877fd36",
+    "fascia-back.png": "e915fbd204a337d7689429f66c0a243468b37f93e8543eae64668bac53ed0233",
+    "bezel-keys.png": "3981078e546d4b3ec27602a4eab78a24ba5f74b17a69208a16d85c3acf887519",
+    "reinforced-joint-detail.png": "439a7cc39c92ecc7a8d1c1c00c2268ecfc738b04212f20f40a40f29d53571b6d",
+    "bottom-mounts-inside.png": "995b9ba13fd2edc2f99fb8dfb9cfb73fba97315a4267d7b7b9f3d58272c5f0b6",
+    "bottom-mounts-outside.png": "45b89738e2569ce5f15343e5617e068e6029ddada5e2d364f8f764fa98596ec0",
+    "mount-pattern-top-view.png": "94bd560bf3bff78f04ac2493d8a3075449bb923d77dce8ce8235de78967bd79a",
+    "stl/carrier-bottom.stl": "6e736159f3ac3cfd61e428f8a4cb4288e7214b3a82f3c9ca11304feeada31509",
+    "stl/carrier-retainer.stl": "992e3f1d4e6c708155129f651bffb29cae8ffea10237358fa6be79d396820cda",
+    "stl/carrier-top.stl": "0bd691502df4505769f7e52d071a37d63bfe3161ff9434e83b0b6837f0eb6562",
+    "stl/fit-coupon.stl": "e0f3206ceb6a1d9e8f2173c9d2694a5666c707230ffc2ee74d28480417daa1f1",
+    "stl/insert-coupon.stl": "ae7ea4d04560875b8cd0fe6083c8da4c2cd6aeab0f6031d84b585f22d1df8b9e",
+    "stl/joint-coupon-bottom.stl": "4c4ddfd393bcf99da9d32dc4685e99428ac80fa8b4aaee6ab1923371c474a9f4",
+    "stl/joint-coupon-fascia.stl": "9b7dacd027c66f9815343a411ace588fd5049dd2525a35b865363e349eec5ec8",
+    "stl/joint-coupon-top.stl": "c6988c3545fa15f8a7103e971fe3f00630709ee062bdc3eb2b7f9851522c99e9",
+    "stl/mount-coupon.stl": "eee03214c7f2d9f7df398c2b995fe520e1c859a3fa65233ae8b91f7fae66246e",
+    "stl/probe-fascia.stl": "df17385377ab151df0f7b486a480097f8db721b5322288b0a527480b6c468a1d",
+    "step/carrier-bottom.step": "1c87bec57ad966f51d9a28422fc107b02a988e1a8f21004fa4c20b9cbe9fd6a5",
+    "step/carrier-retainer.step": "aa172e60b71d92b45bab77a3360eacdaa2bbb416440859650a47f74d9bcd8dd8",
+    "step/carrier-top.step": "fa97e9002d454798d587208737c5ef9f12f2071ddd62505fab6c3c2d8af1b131",
+    "step/probe-fascia.step": "b09e5b24d5a409e8067128e1637a39dde2ba1f80b252b0152b9fbedd6d4abc31"
+  }
+}

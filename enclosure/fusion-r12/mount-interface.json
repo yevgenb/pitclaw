@@ -1,0 +1,53 @@
+{
+  "revision": "r12",
+  "units": "mm",
+  "datum": "Case centre in XY; outside bottom is Z0; +Y is the power end.",
+  "mount_thread": "M3",
+  "centres_mm": [
+    [
+      -36,
+      -37
+    ],
+    [
+      -36,
+      37
+    ],
+    [
+      36,
+      -37
+    ],
+    [
+      36,
+      37
+    ]
+  ],
+  "pitch_mm": {
+    "across_case_x": 72,
+    "along_case_y": 74
+  },
+  "case_xy_mm": [
+    86,
+    104
+  ],
+  "external_access_diameter_mm": 3.4,
+  "internal_boss_diameter_mm": 10,
+  "boss_top_z_mm": 7.5,
+  "insert": "Ruthex RX-M3Sx4.0 or dimensionally compatible short M3 insert after fit testing",
+  "insert_installation": "From inside, before electronics; flush with boss top.",
+  "pilot_diameter_mm": 4,
+  "pilot_bottom_z_mm": 2.5,
+  "insert_z_mm": [
+    3.5,
+    7.5
+  ],
+  "recommended_screw_protrusion_from_bracket_mating_face_mm": [
+    6.5,
+    7
+  ],
+  "maximum_screw_protrusion_mm": 7.5,
+  "bracket_and_washer_stack": "Add to protrusion to choose nominal screw length; verify actual stack.",
+  "additional_inserts": 4,
+  "total_case_inserts_when_fitted": 16,
+  "load_rating": null,
+  "dxf_scope": "Four external access circles only, exported from the native Fusion sketch. No bracket outline or external mounting-standard compatibility."
+}

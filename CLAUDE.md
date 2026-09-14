@@ -184,7 +184,7 @@ firmware/
     test_embedded/              # On-device tests (ADC, fan_pwm, servo, buzzer, i2c)
   platformio.ini
 enclosure/
-  fusion-r11/                   # Current controller Fusion model, STL/STEP files, coupons and checks
+  fusion-r12/                   # Current controller Fusion model, STL/STEP files, coupons and checks
   bbq-fan-assembly.scad         # Fan + damper + UDS adapter
   README.md                     # Print settings, assembly notes, hardware (screws, inserts, clamps)
   stl/                          # Separate blower housing and UDS adapter STLs
@@ -300,24 +300,25 @@ Hold finger on touchscreen for 10 seconds during the boot splash screen. Device 
 
 ### Controller enclosure
 
-Use `enclosure/fusion-r11/README.md` and the editable
-`pitclaw-enclosure-r11.f3d` model. Only the latest controller enclosure remains
+Use `enclosure/fusion-r12/README.md` and the editable
+`pitclaw-enclosure-r12.f3d` model. Only the latest controller enclosure remains
 in the working tree; earlier versions are in Git history.
 
 The 104 × 86 × 44.9 mm landscape case has four printed parts: top bezel,
 bottom shell, display retainer and removable probe fascia. It fits the Rev B
 60 × 92 mm carrier. Power connectors occupy one short end and probes the other.
-The fascia uses reinforced 12 × 2.1 mm bezel keys; four internal M3 mounting
+The fascia uses full-depth captured rails and reinforced 12 × 2.1 mm bezel keys;
+four internal M3 mounting
 inserts on a 72 × 74 mm pattern accept future mounts from underneath.
 
-The Fusion archive is the editable CAD source. `export_r11.py` exports its
+The Fusion archive is the editable CAD source. `export_r12.py` exports its
 current parts and previews; `reference/carrier-case.scad` is the independent
 OpenSCAD model used by `reference/verify_reference.py`. `verify_exports.py`
 compares native and reference meshes, and `package_release.py` assembles the
 print package. No earlier enclosure archive is required.
 
 Print the supplied coupons in the intended material before the complete case.
-Use the r11 guide for orientations, screw lengths, insert installation, support
+Use the r12 guide for orientations, screw lengths, insert installation, support
 access and physical validation limits. CAD verification does not establish
 printed strength, operating temperature or weather resistance.
 

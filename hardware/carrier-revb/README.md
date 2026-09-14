@@ -141,7 +141,7 @@ and thermal check. Exact electrical parts and nets are unchanged.
 The 16 mm overall carrier component allowance also covers the 14 mm C1,
 socketed ADC and mated JST-XH wiring. Verify complete assemblies, including wire
 turns, fit that allowance. K1 alone reserves 16.2 mm including its molded feet;
-the enclosure checks its local clearance separately without increasing case depth. See the [revised case stack](../../enclosure/fusion-r11/README.md).
+the enclosure checks its local clearance separately without increasing case depth. See the [revised case stack](../../enclosure/fusion-r12/README.md).
 
 Q1 dimensions use [Infineon's current datasheet](https://www.infineon.com/dgdl/Infineon-IRF5305-DataSheet-v01_01-EN.pdf?fileId=5546d462533600a4015355e370101993)
 (Rev 2.1, 2026-07-24): maximum 10.67 × 16.51 × 4.83 mm body.
@@ -160,7 +160,7 @@ at carrier Y = 91.5 mm: **0.5 mm inside the carrier edge**.
 Use two provisional M2 × 10 screws, four washers no larger than Ø5 mm, two 3 mm nylon spacers
 and nuts under the carrier. Add one adhesive insulating support beneath the
 module's rear/free edge and maintain clearance to the WT32. The
-[current enclosure fit prototype](../../enclosure/fusion-r11/README.md) provides
+[current enclosure fit prototype](../../enclosure/fusion-r12/README.md) provides
 flush RJ45/barrel openings and a 2 mm-deep outside USB pocket. The USB face
 is level with the pocket floor, inside a fitted 9.54 × 4.1 mm opening.
 The cable housing sits in the 20 × 10 mm exterior pocket. Internal backing
@@ -181,7 +181,7 @@ component-courtyard collisions. Connect V+/GND to J1 with a short secured
 - `tools/export_enclosure_interface.py`: exports actual carrier mount and socket
   coordinates to `mechanical/enclosure-interface.json` and the enclosure's
   generated `carrier-interface.scad`.
-- [Current enclosure fit prototype](../../enclosure/fusion-r11/README.md): bottom
+- [Current enclosure fit prototype](../../enclosure/fusion-r12/README.md): bottom
   carrier mounts, top display mounting, connector openings and fit-test gates.
 - `verification/`: native ERC/DRC plus independent pin/net, BOM and mechanical
   checks.
@@ -230,7 +230,7 @@ first-board respin risk; measuring them before ordering reduces that risk.
 5. Measure the WT32 plus MG90S 5 V startup/current transients and the actual
    blower current. Verify the shared RJ45 ground contact under combined load.
 6. Confirm antenna, enclosure, screw, rear-component, barrel-plug and USB clearances
-   using the [current enclosure fit prototype](../../enclosure/fusion-r11/README.md).
+   using the [current enclosure fit prototype](../../enclosure/fusion-r12/README.md).
    It has not passed physical fit testing. Earlier perfboard enclosure SCAD/STLs
    remain legacy designs and do not fit this carrier.
 7. Validate the routed power paths against measured current, voltage drop and

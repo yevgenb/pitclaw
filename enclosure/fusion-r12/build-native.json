@@ -1,0 +1,89 @@
+{
+  "document": "PitClaw enclosure r12 - continuous fascia guides",
+  "source_f3d_sha256": "5e2adc1a88e88e4d65602398c21637bc8557ec5116cfea637c7e6859bfc2e8f7",
+  "source_unchanged": true,
+  "mount_centres_mm": [
+    [
+      -36,
+      -37
+    ],
+    [
+      -36,
+      37
+    ],
+    [
+      36,
+      -37
+    ],
+    [
+      36,
+      37
+    ]
+  ],
+  "mount_pitch_mm": [
+    72,
+    74
+  ],
+  "mount_thread": "M3",
+  "additional_inserts": 4,
+  "total_case_inserts": 16,
+  "boss_diameter_mm": 10,
+  "boss_top_z_mm": 7.5,
+  "pilot_diameter_mm": 4,
+  "pilot_floor_z_mm": 2.5,
+  "external_access_diameter_mm": 3.4,
+  "insert_z_mm": [
+    3.5,
+    7.5
+  ],
+  "recommended_screw_reach_mm": [
+    6.5,
+    7
+  ],
+  "reference_insert_diameter_mm": 4.6,
+  "body_volume_mm3": 45681.97272996607,
+  "front_guide_stop_cap_height_mm": 7.5,
+  "guide_revision": "constant section through full engagement",
+  "guide_length_mm": 9,
+  "guide_side_clearance_mm": 0.4,
+  "guide_roof_normal_clearance_mm": 0.35355339059327373,
+  "guide_roof_height_mm": 10.6,
+  "guide_min_roof_thickness_mm": 1.6,
+  "guide_male_xz_positive_mm": [
+    [
+      32.7,
+      3.8
+    ],
+    [
+      36,
+      3.8
+    ],
+    [
+      36,
+      5.8
+    ],
+    [
+      32.7,
+      9.1
+    ]
+  ],
+  "guide_cavity_xz_positive_mm": [
+    [
+      32.7,
+      3.8
+    ],
+    [
+      36.4,
+      3.8
+    ],
+    [
+      36.4,
+      5.9
+    ],
+    [
+      32.7,
+      9.6
+    ]
+  ],
+  "fascia_volume_mm3": 8196.32023177206
+}

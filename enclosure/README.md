@@ -1,15 +1,15 @@
 # Pit Claw 3D printed parts
 
-The controller enclosure is [Fusion r11](fusion-r11/README.md): a 104 × 86 ×
+The controller enclosure is [Fusion r12](fusion-r12/README.md): a 104 × 86 ×
 44.9 mm case with a top bezel, bottom shell, internal display retainer and
-removable probe fascia. Four internal M3 inserts provide a 72 × 74 mm mounting
+removable probe fascia with continuous captured guides. Four internal M3 inserts provide a 72 × 74 mm mounting
 pattern with screw access from underneath.
 
-- [Print package and editable Fusion model](fusion-r11/pitclaw-enclosure-r11.zip)
-- [Print settings, coupons, hardware and assembly](fusion-r11/README.md)
-- [Native Fusion design](fusion-r11/pitclaw-enclosure-r11.f3d)
-- [Mounting interface](fusion-r11/mount-interface.json)
-- [Independent OpenSCAD reference and checks](fusion-r11/reference/README.md)
+- [Print package and editable Fusion model](fusion-r12/pitclaw-enclosure-r12.zip)
+- [Print settings, coupons, hardware and assembly](fusion-r12/README.md)
+- [Native Fusion design](fusion-r12/pitclaw-enclosure-r12.f3d)
+- [Mounting interface](fusion-r12/mount-interface.json)
+- [Independent OpenSCAD reference and checks](fusion-r12/reference/README.md)
 
 Only the latest controller enclosure is kept in the working tree. Older designs
 remain in Git history. The CAD checks pass; physical fit, printed joint strength
@@ -25,7 +25,7 @@ controller enclosure. Use [bbq-fan-assembly.scad](bbq-fan-assembly.scad),
 Open the fan source in OpenSCAD, select the desired `part`, render and export in
 millimeters. Print the blower housing open-side-up and the pipe adapter upright.
 Check fit with the actual fan, servo and smoker intake. Its geometry is separate
-from the r11 controller fit verification.
+from the r12 controller fit verification.
 
 ### Hardware
 
