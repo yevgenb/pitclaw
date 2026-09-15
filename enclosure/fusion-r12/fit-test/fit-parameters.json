@@ -39,7 +39,7 @@
     ]
   },
   "candidate_clearances_mm": {
-    "guide_side": 0.2,
+    "guide_side": 0.3,
     "guide_roof_normal": 0.4,
     "guide_roof_vertical": 0.5656854249492381,
     "fascia_side": 0.2,
@@ -102,7 +102,7 @@
     "Guide offsets are coupled: upward displacement plus absolute lateral displacement must remain within the vertical roof allowance.",
     "Physical fit must be chosen before any production geometry is updated."
   ],
-  "iteration": "Roomier vertical guide clearance; reprint bottom only",
+  "iteration": "Side clearance increased to 0.30 mm after filing feedback; reprint bottom only",
   "guide_floor_profile_yz_mm": [
     [
       -52.1,

@@ -42,7 +42,7 @@ def main():
                 rows.append({'x_mm':x,'runner_bottom_z_mm':male_bottom,'receiver_floor_z_mm':floor,'lower_gap_mm':male_bottom-floor,'roof_normal_gap_mm':normal})
             male_edge=min(x for x in crossings(f,2,4.5,0) if x>33.3)
             wall=min(x for x in crossings(b,2,4.5,0) if x>33.3)
-            near(male_edge,36);near(wall,36.2);near(wall-male_edge,.2)
+            near(male_edge,36);near(wall,36.3);near(wall-male_edge,.3)
             report['sections'].append({'label':label,'y_mm':y,'samples':rows,'side_gap_mm':wall-male_edge})
         if report['sources_sha256']!={n:sha(ROOT/n) for n in files}:raise ValueError('Input changed during measurement')
         report['status']='PASS: measured running gaps and two support lands'

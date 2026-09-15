@@ -3,18 +3,18 @@
   "geometry_checks": 37,
   "mesh_checks": 5,
   "files_sha256": {
-    "README.md": "f0443a38ce302537172a5786ab6c1c4d8b403b9af4d6f9e8dd8f108eeb970993",
+    "README.md": "943379d86d6fe68a6f123da8a2e04a5d1c3e33ffa327881f24f998c7caed5a9f",
     "closure-post.png": "c3ed86cafa8dc004205740e0c166269f45f33c0893b86c2cc085f63c9d9358c6",
-    "guide-clearance.png": "f109971817b0059bf95f94e0a82ec311050e14a918fe12f976ae3cd7f6b99202",
-    "guide-clearance.svg": "9211e260c7abcb57c7f0a17d1b25858356a662cf4f9a757dd743179e275664a6",
-    "bottom.stl": "f1f793d9ae1520aa5d856c4176908902bc69e9876a7f9a580443c71eb72d9d5f",
+    "guide-clearance.png": "d8578a22895c04b95a1e3de02da7260ae2a64b2e4c30adc1c76c406078a1552b",
+    "guide-clearance.svg": "af9e753292fb431650b9d665ea6a64a8cb866a9c32bb7e00a2b4fead3c29ea7e",
+    "bottom.stl": "ff05da8db340410bdd9f22ae12888238b031dfde7d8cd48343e51716db1811a6",
     "top.stl": "984ce28f3d8ba8507683161b590e9f6da12e112043593cecaf37c7d5180bf1a9",
     "fascia.stl": "efb80b6c9233ababc6cde465fe42e9b9f5a80344b3ab422df85ee40e1196e665",
     "control-bottom.stl": "d4e00c959db722c783a9f32b00f917b3606625a88d542f613da7c6f76167b299",
     "control-top.stl": "ff69b0adc87ee99c61c9fb03d5af93d5c927213ceda30ca941481768e6f4e678",
-    "fit-parameters.json": "765551ac30a0755a238d87b3e605fc6d899bb8552202e90018ffa54136f4339c",
-    "fit-verification.json": "a75d2820cedc43164e9dccf940affdcb59050c14fd6a7093033a00e2e9690b76",
-    "generation-manifest.json": "8c511e67b8967ac8c2561f5bdfa004480bde0220986153ec0546035854eefabd",
-    "running-clearance-verification.json": "eab0a12bedc0c549e6157aec6fc4536d4ff2a32da4338940fc276787fc41e86e"
+    "fit-parameters.json": "35598004e5c5f4e5db2ce905c64c5cd7a02cc82c38ff753499f62f7a75d422a6",
+    "fit-verification.json": "a86eb57b3abbbb5705c698dad17ce79556328b797a18bb4b8d0027772984f6a9",
+    "generation-manifest.json": "cde89351b73e0962938a776153f80db1d5e093f4d7100d00cb94d73b32dcb1b0",
+    "running-clearance-verification.json": "1b393304421d6de0dec69f32dd42ea81513b76f55ce5223d7ede90199fb49cb8"
   }
 }

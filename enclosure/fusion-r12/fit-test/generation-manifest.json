@@ -91,12 +91,12 @@
   },
   "bottom_only": true,
   "source_sha256": {
-    "candidate.scad": "58b0f0ad1533b72c68deaaab8701513ecd1a51fb80fd7b2fe22df6b3f2150516",
+    "candidate.scad": "403067363459b69a413a9312c744886f40fa17832a49108ba1ed6165092d7a43",
     "control.scad": "8d09dfcb16905414399b2522c31586c25eeafcf0f9ba4d8d4d908f370a6e7355",
     "carrier-interface.scad": "645127e0effdb7c1fed8978f7d0312136b530cf465ddc3ba7a8aa9584ee016e4"
   },
   "outputs_sha256": {
-    "bottom.stl": "f1f793d9ae1520aa5d856c4176908902bc69e9876a7f9a580443c71eb72d9d5f",
+    "bottom.stl": "ff05da8db340410bdd9f22ae12888238b031dfde7d8cd48343e51716db1811a6",
     "control-bottom.stl": "d4e00c959db722c783a9f32b00f917b3606625a88d542f613da7c6f76167b299",
     "top.stl": "984ce28f3d8ba8507683161b590e9f6da12e112043593cecaf37c7d5180bf1a9",
     "fascia.stl": "efb80b6c9233ababc6cde465fe42e9b9f5a80344b3ab422df85ee40e1196e665",

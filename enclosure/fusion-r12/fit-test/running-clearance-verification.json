@@ -1,11 +1,11 @@
 {
   "status": "PASS: measured running gaps and two support lands",
   "sources_sha256": {
-    "bottom.stl": "f1f793d9ae1520aa5d856c4176908902bc69e9876a7f9a580443c71eb72d9d5f",
+    "bottom.stl": "ff05da8db340410bdd9f22ae12888238b031dfde7d8cd48343e51716db1811a6",
     "fascia.stl": "efb80b6c9233ababc6cde465fe42e9b9f5a80344b3ab422df85ee40e1196e665",
-    "sources/candidate.scad": "58b0f0ad1533b72c68deaaab8701513ecd1a51fb80fd7b2fe22df6b3f2150516"
+    "sources/candidate.scad": "403067363459b69a413a9312c744886f40fa17832a49108ba1ed6165092d7a43"
   },
-  "verifier_sha256": "afec51ba8b08b00de3e1cea91ed8762a4265f2671f6259eaf89215bcb2d516f9",
+  "verifier_sha256": "ff5be2d1b1be2d9ab66bb508f8149657a13a80bd3df258a864da21098854d4b4",
   "scope": "Actual exported coupon sections; full-model nominal geometry is checked separately.",
   "sections": [
     {
@@ -24,24 +24,24 @@
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.5,
           "lower_gap_mm": 0.30000038146972585,
-          "roof_normal_gap_mm": 0.3999998617723626
+          "roof_normal_gap_mm": 0.39999986177236135
         },
         {
           "x_mm": 35,
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.5,
           "lower_gap_mm": 0.30000038146972585,
-          "roof_normal_gap_mm": 0.3999999780395468
+          "roof_normal_gap_mm": 0.39999997803954557
         },
         {
           "x_mm": 35.8,
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.5,
           "lower_gap_mm": 0.30000038146972585,
-          "roof_normal_gap_mm": 0.40000007105329305
+          "roof_normal_gap_mm": 0.4000000710532924
         }
       ],
-      "side_gap_mm": 0.19999980926513672
+      "side_gap_mm": 0.3000001907348633
     },
     {
       "label": "front ramp",
@@ -59,24 +59,24 @@
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.650000071525499,
           "lower_gap_mm": 0.15000030994422664,
-          "roof_normal_gap_mm": 0.39999986177236385
+          "roof_normal_gap_mm": 0.3999998617723626
         },
         {
           "x_mm": 35,
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.650000071525499,
           "lower_gap_mm": 0.15000030994422664,
-          "roof_normal_gap_mm": 0.3999999780395474
+          "roof_normal_gap_mm": 0.3999999780395468
         },
         {
           "x_mm": 35.8,
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.650000071525499,
           "lower_gap_mm": 0.15000030994422664,
-          "roof_normal_gap_mm": 0.4000000710532918
+          "roof_normal_gap_mm": 0.40000007105329116
         }
       ],
-      "side_gap_mm": 0.19999980926513672
+      "side_gap_mm": 0.3000001907348633
     },
     {
       "label": "front land",
@@ -101,17 +101,17 @@
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.799999952316284,
           "lower_gap_mm": 4.2915344167226976e-07,
-          "roof_normal_gap_mm": 0.3999999780395437
+          "roof_normal_gap_mm": 0.399999978039543
         },
         {
           "x_mm": 35.8,
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.799999952316284,
           "lower_gap_mm": 4.2915344167226976e-07,
-          "roof_normal_gap_mm": 0.40000007105329116
+          "roof_normal_gap_mm": 0.4000000710532899
         }
       ],
-      "side_gap_mm": 0.19999980926513672
+      "side_gap_mm": 0.3000001907348633
     },
     {
       "label": "falling ramp",
@@ -122,14 +122,14 @@
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.649999928474388,
           "lower_gap_mm": 0.15000045299533804,
-          "roof_normal_gap_mm": 0.39999980363876986
+          "roof_normal_gap_mm": 0.39999980363876864
         },
         {
           "x_mm": 34,
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.649999928474388,
           "lower_gap_mm": 0.15000045299533804,
-          "roof_normal_gap_mm": 0.3999998617723576
+          "roof_normal_gap_mm": 0.3999998617723588
         },
         {
           "x_mm": 35,
@@ -143,10 +143,10 @@
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.649999928474388,
           "lower_gap_mm": 0.15000045299533804,
-          "roof_normal_gap_mm": 0.40000007105329116
+          "roof_normal_gap_mm": 0.4000000710532905
         }
       ],
-      "side_gap_mm": 0.19999980926513672
+      "side_gap_mm": 0.3000001907348633
     },
     {
       "label": "middle relief",
@@ -171,17 +171,17 @@
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.5,
           "lower_gap_mm": 0.30000038146972585,
-          "roof_normal_gap_mm": 0.3999999780395468
+          "roof_normal_gap_mm": 0.39999997803954557
         },
         {
           "x_mm": 35.8,
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.5,
           "lower_gap_mm": 0.30000038146972585,
-          "roof_normal_gap_mm": 0.4000000710532924
+          "roof_normal_gap_mm": 0.4000000710532918
         }
       ],
-      "side_gap_mm": 0.19999980926513672
+      "side_gap_mm": 0.3000001907348633
     },
     {
       "label": "rear ramp",
@@ -213,10 +213,10 @@
           "runner_bottom_z_mm": 3.800000381469726,
           "receiver_floor_z_mm": 3.6499999523162856,
           "lower_gap_mm": 0.15000042915344025,
-          "roof_normal_gap_mm": 0.4000000710532918
+          "roof_normal_gap_mm": 0.4000000710532899
         }
       ],
-      "side_gap_mm": 0.19999980926513672
+      "side_gap_mm": 0.3000001907348633
     },
     {
       "label": "rear land",
@@ -251,7 +251,7 @@
           "roof_normal_gap_mm": 0.4000000710532899
         }
       ],
-      "side_gap_mm": 0.19999980926513672
+      "side_gap_mm": 0.3000001907348633
     }
   ]
 }

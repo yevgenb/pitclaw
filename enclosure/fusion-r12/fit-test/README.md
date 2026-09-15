@@ -1,11 +1,11 @@
 # Clamped enclosure-fit test
 
-This second test adjustment adds room above and below the guide following the
-reported tight fit. **Reprint only `bottom.stl`** if you already printed the
-first fit-test set: its `top.stl` and `fascia.stl` are unchanged.
+This update increases the guide's outer-side clearance from 0.20 to 0.30 mm,
+following the improved fit after light filing. **Reprint only `bottom.stl`**
+if you already printed the fit-test set: its `top.stl` and `fascia.stl` are unchanged.
 
-The guide's side clearance stays at 0.20 mm. Its sloping upper gap increases to
-0.40 mm measured normal to the face. The underside receives 0.30 mm running
+The sloping upper gap stays at 0.40 mm measured normal to the face. The underside
+retains 0.30 mm running
 clearance, with two short, ramped support lands left at the original height so
 the fascia remains level and the probe holes retain their nominal position.
 
@@ -16,14 +16,14 @@ this physical fit check.
 
 ## What the adjusted sample changes
 
-| Interface | First fit-test set | Revised sample |
+| Interface | Previous test | This update |
 | --- | ---: | ---: |
 | Top/bottom closure plane | 0 mm gap | 0 mm gap |
 | Fascia side and top edges | 0.20 mm | 0.20 mm |
 | Fascia rear floor joint | 0.20 mm | 0.20 mm |
-| Guide outer-side clearance | 0.20 mm | 0.20 mm |
-| Clearance normal to the sloping guide roof | 0.25 mm | 0.40 mm |
-| Clearance below the rail's running areas | 0 mm | 0.30 mm |
+| Guide outer-side clearance | 0.20 mm | 0.30 mm |
+| Clearance normal to the sloping guide roof | 0.40 mm | 0.40 mm |
+| Clearance below the rail's running areas | 0.30 mm | 0.30 mm |
 | Locating-lip corner clearance | 0.30 mm | 0.30 mm |
 
 These are CAD dimensions, not measurements extracted from the photograph.
@@ -40,7 +40,7 @@ The front land raises the rail to its original height early in insertion,
 before the probe collars enter the fascia holes. The rear land then provides
 a second support, approximately 6.1 mm away, to control pitching.
 
-![Revised running clearance above and below the rail](guide-clearance.png)
+![Small side-clearance increase with the upper and lower gaps unchanged](guide-clearance.png)
 
 ## Parts in the test kit
 

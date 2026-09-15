@@ -1,4 +1,4 @@
-"""Scoped second fit-test iteration: bottom clearances and two support lands."""
+"""Fit-test guide clearances and two support lands."""
 
 SCAD = r'''
 module guide_roomier_cavity() {
@@ -7,8 +7,8 @@ module guide_roomier_cavity() {
     stations=[[-52.1,3.5],[-50.6,3.5],[-50,3.8],[-49.2,3.8],
               [-48.6,3.5],[-44.6,3.5],[-44,3.8],[-43,3.8]];
     roof=41.8+sqrt(2)*.4;
-    points=[for(p=stations) each [[32.7,p[0],p[1]],[36.2,p[0],p[1]],
-                                   [36.2,p[0],roof-36.2],[32.7,p[0],roof-32.7]]];
+    points=[for(p=stations) each [[32.7,p[0],p[1]],[36.3,p[0],p[1]],
+                                   [36.3,p[0],roof-36.3],[32.7,p[0],roof-32.7]]];
     faces=concat([[3,2,1,0],[28,29,30,31]],
         [for(i=[0:6],j=[0:3]) [4*i+j,4*i+(j+1)%4,4*(i+1)+(j+1)%4,4*(i+1)+j]]);
     polyhedron(points=points,faces=faces);

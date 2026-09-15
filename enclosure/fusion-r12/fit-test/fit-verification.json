@@ -1,9 +1,9 @@
 {
   "status": "PASS: FIT PROTOTYPE",
   "revision": "bounded-clamped-fit-test",
-  "created_utc": "2026-09-15T00:37:05.458009+00:00",
+  "created_utc": "2026-09-15T02:44:17.671020+00:00",
   "sources_sha256": {
-    "enclosure/fusion-r12/fit-test/sources/candidate.scad": "58b0f0ad1533b72c68deaaab8701513ecd1a51fb80fd7b2fe22df6b3f2150516",
+    "enclosure/fusion-r12/fit-test/sources/candidate.scad": "403067363459b69a413a9312c744886f40fa17832a49108ba1ed6165092d7a43",
     "enclosure/fusion-r12/fit-test/sources/control.scad": "8d09dfcb16905414399b2522c31586c25eeafcf0f9ba4d8d4d908f370a6e7355",
     "enclosure/fusion-r12/fit-test/sources/carrier-interface.scad": "645127e0effdb7c1fed8978f7d0312136b530cf465ddc3ba7a8aa9584ee016e4",
     "hardware/carrier-revb/mechanical/enclosure-interface.json": "dfd9c0abf2a2648a673ce457d45b12c425651a65cd0b414647fef36a81bab82e",
@@ -57,7 +57,7 @@
       "log": "logs/nominal-insertion-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.24
+      "elapsed_seconds": 0.23
     },
     "nominal-electronics-closure-check": {
       "name": "nominal-electronics-closure-check",
@@ -93,7 +93,7 @@
       "log": "logs/nominal-electronics-closure-check.log",
       "log_sha256": "27477ddd6e7e422a21159ea81e62c6adf225e249d1912907f48408d05c518228",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.32
+      "elapsed_seconds": 0.3
     },
     "nominal-carrier-installation-check": {
       "name": "nominal-carrier-installation-check",
@@ -165,7 +165,7 @@
       "log": "logs/nominal-fascia-fit-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.4
+      "elapsed_seconds": 0.38
     },
     "nominal-lid-closing-check": {
       "name": "nominal-lid-closing-check",
@@ -199,6 +199,42 @@
       ],
       "returncode": 1,
       "log": "logs/nominal-lid-closing-check.log",
+      "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.37
+    },
+    "nominal-fascia-lift-check": {
+      "name": "nominal-fascia-lift-check",
+      "part": "fascia-lift-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.6,
+        "check_pd_thickness": 1.6,
+        "check_pd_spacer_height": 3,
+        "check_board_edge_growth": 0,
+        "check_module_shift_x": 0
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r12/fit-test/logs/nominal-fascia-lift-check-intersection.stl",
+        "-D",
+        "part=\"fascia-lift-check\"",
+        "-D",
+        "check_pcb_thickness=1.6",
+        "-D",
+        "check_pd_thickness=1.6",
+        "-D",
+        "check_pd_spacer_height=3",
+        "-D",
+        "check_board_edge_growth=0",
+        "-D",
+        "check_module_shift_x=0",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r12/fit-test/sources/candidate.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/nominal-fascia-lift-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
       "elapsed_seconds": 0.35
@@ -235,7 +271,7 @@
       ],
       "returncode": 0,
       "log": "logs/nominal-shell-closure-check.log",
-      "log_sha256": "9bfd456918bade2d429b61ba3843bb74c113fc1d545172c02ef3e080065eb88b",
+      "log_sha256": "a9bb0d884b55c16e15d09a2873dd6d196e21f540d4a64f51e56f5fe3bcc07ca0",
       "intentional_seam_contact": {
         "file": "logs/nominal-shell-closure-check-intersection.stl",
         "sha256": "813773b4191198f20f102a4af40692321099397182bc3dfa32fe6fc8b34fe0ae",
@@ -259,43 +295,7 @@
         "numeric_tolerance": 1e-05
       },
       "result": "PASS: intentional coplanar seam contact",
-      "elapsed_seconds": 1.01
-    },
-    "nominal-fascia-lift-check": {
-      "name": "nominal-fascia-lift-check",
-      "part": "fascia-lift-check",
-      "witness_inputs_mm": {
-        "check_pcb_thickness": 1.6,
-        "check_pd_thickness": 1.6,
-        "check_pd_spacer_height": 3,
-        "check_board_edge_growth": 0,
-        "check_module_shift_x": 0
-      },
-      "command": [
-        "arch",
-        "-x86_64",
-        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
-        "-o",
-        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r12/fit-test/logs/nominal-fascia-lift-check-intersection.stl",
-        "-D",
-        "part=\"fascia-lift-check\"",
-        "-D",
-        "check_pcb_thickness=1.6",
-        "-D",
-        "check_pd_thickness=1.6",
-        "-D",
-        "check_pd_spacer_height=3",
-        "-D",
-        "check_board_edge_growth=0",
-        "-D",
-        "check_module_shift_x=0",
-        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r12/fit-test/sources/candidate.scad"
-      ],
-      "returncode": 1,
-      "log": "logs/nominal-fascia-lift-check.log",
-      "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
-      "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.36
+      "elapsed_seconds": 1.38
     },
     "nominal-mount-screw-check": {
       "name": "nominal-mount-screw-check",
@@ -401,7 +401,7 @@
       ],
       "returncode": 0,
       "log": "logs/nominal-shell-closure-with-fascia-check.log",
-      "log_sha256": "102e21700b36b5b1febd35f53ef0ce89a1235f7b96dcfbf30eb42236c60fa8f9",
+      "log_sha256": "6e299147a4ffb9ce6457388684aa19520f92643b7e3e705b6f9a5108a145173a",
       "intentional_seam_contact": {
         "file": "logs/nominal-shell-closure-with-fascia-check-intersection.stl",
         "sha256": "7780f58ec37b2187247272999a9a4c22927adea39674226af8de2284c08f9385",
@@ -459,7 +459,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-capture-front-check.log",
-      "log_sha256": "5f28b76c787d8c464c707af7403d21cab641835682c92d8e4e40d09e0e657c25",
+      "log_sha256": "7a72da1ea64b22825700c030539b4089c9c21a8e906f8c0458d68c7b0ab98da2",
       "contact": {
         "station_y_mm": -51.8,
         "translation_z_mm": 0.7,
@@ -474,7 +474,7 @@
         "lid_present": false
       },
       "result": "PASS: both guides block upward motion",
-      "elapsed_seconds": 0.24
+      "elapsed_seconds": 0.23
     },
     "guide-capture-early-check": {
       "name": "guide-capture-early-check",
@@ -519,7 +519,7 @@
         ],
         "expected_volume_each_mm3": 0.07252987052741139,
         "volume_tolerance_mm3": 0.003,
-        "witness_sha256": "4e45b05606863953640c8c47da740fde0706961c7601c018eb8b8c9dff3ecdd3",
+        "witness_sha256": "d821bc360b46c8705751a214d60a9a7f6dd5cc1b05aabcf2767e5602071d307c",
         "lid_present": false
       },
       "result": "PASS: both guides block upward motion",
@@ -557,7 +557,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-capture-midfront-check.log",
-      "log_sha256": "5f28b76c787d8c464c707af7403d21cab641835682c92d8e4e40d09e0e657c25",
+      "log_sha256": "0494cf64dd5ff23ecead04e607baf127804898e7c534aa49ebcc598eddd15aff",
       "contact": {
         "station_y_mm": -49,
         "translation_z_mm": 0.7,
@@ -655,7 +655,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-capture-rear-check.log",
-      "log_sha256": "5f28b76c787d8c464c707af7403d21cab641835682c92d8e4e40d09e0e657c25",
+      "log_sha256": "0494cf64dd5ff23ecead04e607baf127804898e7c534aa49ebcc598eddd15aff",
       "contact": {
         "station_y_mm": -44,
         "translation_z_mm": 0.7,
@@ -704,7 +704,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-support-front-005-check.log",
-      "log_sha256": "935226b029c8d84782515785a12fffb42db7c50351d4c7e3cd492074e94a9e5d",
+      "log_sha256": "f51d9e1d76f5f31c33a415d90cea7030fa896b9021e70269e6d02e8bdec557d3",
       "contact": {
         "station_y_mm": -49.6,
         "translation_z_mm": -0.05,
@@ -753,7 +753,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-support-front-010-check.log",
-      "log_sha256": "76d14ca34ba116a0e7d05c5bedc1142ff9c5cf209f852b3347175ebab43e4c58",
+      "log_sha256": "a25acf8648d797f3ed08dab59b2bb93602e3fae3ca79c93940129ec55686fe4c",
       "contact": {
         "station_y_mm": -49.6,
         "translation_z_mm": -0.1,
@@ -802,7 +802,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-support-rear-005-check.log",
-      "log_sha256": "54baa175121eeaea78ef4597ade260c0914e88792285f1090cd5ba71db2f3829",
+      "log_sha256": "0494cf64dd5ff23ecead04e607baf127804898e7c534aa49ebcc598eddd15aff",
       "contact": {
         "station_y_mm": -43.5,
         "translation_z_mm": -0.05,
@@ -851,7 +851,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-support-rear-010-check.log",
-      "log_sha256": "cd254e355a0ec4bb2bb08b9bf3f6ff99cd9b45dc50b418edc2745120e59bb671",
+      "log_sha256": "011124f99f93f41e723d0e1d2f926c104749ec654c03d64ab55a17cf3edd6a4a",
       "contact": {
         "station_y_mm": -43.5,
         "translation_z_mm": -0.1,
@@ -902,7 +902,7 @@
       "log": "logs/low-stack-x-minus-0.2-carrier-installation-check.log",
       "log_sha256": "82b718cb4e7e35dd54a2070e0ae81716c55b2c1b011bac4c8349837104e17436",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.47
+      "elapsed_seconds": 0.46
     },
     "low-stack-x-minus-0.2-electronics-closure-check": {
       "name": "low-stack-x-minus-0.2-electronics-closure-check",
@@ -938,7 +938,7 @@
       "log": "logs/low-stack-x-minus-0.2-electronics-closure-check.log",
       "log_sha256": "e3f926cb217dce266350f6c0fe9af8e6ea9303c7ab60753a75152551211f3b87",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.28
+      "elapsed_seconds": 0.29
     },
     "low-stack-x-minus-0.2-fascia-fit-check": {
       "name": "low-stack-x-minus-0.2-fascia-fit-check",
@@ -974,7 +974,7 @@
       "log": "logs/low-stack-x-minus-0.2-fascia-fit-check.log",
       "log_sha256": "82b718cb4e7e35dd54a2070e0ae81716c55b2c1b011bac4c8349837104e17436",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.36
+      "elapsed_seconds": 0.35
     },
     "nominal-fascia-insertion-check": {
       "name": "nominal-fascia-insertion-check",
@@ -1010,7 +1010,7 @@
       "log": "logs/nominal-fascia-insertion-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 10.72
+      "elapsed_seconds": 10.6
     },
     "low-stack-x-plus-0.2-carrier-installation-check": {
       "name": "low-stack-x-plus-0.2-carrier-installation-check",
@@ -1046,7 +1046,7 @@
       "log": "logs/low-stack-x-plus-0.2-carrier-installation-check.log",
       "log_sha256": "582b6c65cab97bdc03bef3a40784e8775afcf37c5351e59ae935e7f3c9ab1cc5",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.69
+      "elapsed_seconds": 0.47
     },
     "low-stack-x-plus-0.2-electronics-closure-check": {
       "name": "low-stack-x-plus-0.2-electronics-closure-check",
@@ -1118,7 +1118,7 @@
       "log": "logs/low-stack-x-plus-0.2-fascia-fit-check.log",
       "log_sha256": "582b6c65cab97bdc03bef3a40784e8775afcf37c5351e59ae935e7f3c9ab1cc5",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.36
+      "elapsed_seconds": 0.35
     },
     "low-stack-x-minus-0.2-fascia-insertion-check": {
       "name": "low-stack-x-minus-0.2-fascia-insertion-check",
@@ -1154,7 +1154,7 @@
       "log": "logs/low-stack-x-minus-0.2-fascia-insertion-check.log",
       "log_sha256": "82b718cb4e7e35dd54a2070e0ae81716c55b2c1b011bac4c8349837104e17436",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 10.65
+      "elapsed_seconds": 10.56
     },
     "high-stack-x-minus-0.2-carrier-installation-check": {
       "name": "high-stack-x-minus-0.2-carrier-installation-check",
@@ -1226,7 +1226,7 @@
       "log": "logs/high-stack-x-minus-0.2-electronics-closure-check.log",
       "log_sha256": "36a4f4f0dc29d81a70f67d6371f1d621af42ee0685f6bd822613d27f58342697",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.29
+      "elapsed_seconds": 0.28
     },
     "high-stack-x-minus-0.2-fascia-fit-check": {
       "name": "high-stack-x-minus-0.2-fascia-fit-check",
@@ -1298,7 +1298,7 @@
       "log": "logs/low-stack-x-plus-0.2-fascia-insertion-check.log",
       "log_sha256": "582b6c65cab97bdc03bef3a40784e8775afcf37c5351e59ae935e7f3c9ab1cc5",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 10.59
+      "elapsed_seconds": 10.62
     },
     "high-stack-x-plus-0.2-carrier-installation-check": {
       "name": "high-stack-x-plus-0.2-carrier-installation-check",
@@ -1334,7 +1334,7 @@
       "log": "logs/high-stack-x-plus-0.2-carrier-installation-check.log",
       "log_sha256": "7bb6ae7d67d750dfc1f0a0595b6916722c2752087695c559c8cb329ac9f1e946",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.53
+      "elapsed_seconds": 0.47
     },
     "high-stack-x-plus-0.2-electronics-closure-check": {
       "name": "high-stack-x-plus-0.2-electronics-closure-check",
@@ -1370,7 +1370,7 @@
       "log": "logs/high-stack-x-plus-0.2-electronics-closure-check.log",
       "log_sha256": "0ca3c5029dfddb1064e5bdebb51a4150c49eff77a5b2c94f3d6fa141537f7a11",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.29
+      "elapsed_seconds": 0.33
     },
     "high-stack-x-plus-0.2-fascia-fit-check": {
       "name": "high-stack-x-plus-0.2-fascia-fit-check",
@@ -1442,7 +1442,7 @@
       "log": "logs/high-stack-x-minus-0.2-fascia-insertion-check.log",
       "log_sha256": "c5474c9e1237516add4f38bf22ba0b82fcff1820b994c602a375bb0ca78b0da7",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 10.55
+      "elapsed_seconds": 10.45
     },
     "lowered-entry-check": {
       "name": "lowered-entry-check",
@@ -1478,7 +1478,7 @@
       "log": "logs/lowered-entry-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 31.09
+      "elapsed_seconds": 31.1
     },
     "high-stack-x-plus-0.2-fascia-insertion-check": {
       "name": "high-stack-x-plus-0.2-fascia-insertion-check",
@@ -1514,13 +1514,13 @@
       "log": "logs/high-stack-x-plus-0.2-fascia-insertion-check.log",
       "log_sha256": "7bb6ae7d67d750dfc1f0a0595b6916722c2752087695c559c8cb329ac9f1e946",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 10.5
+      "elapsed_seconds": 10.4
     }
   },
   "meshes": {
     "candidate_bottom": {
       "file": "bottom.stl",
-      "sha256": "f1f793d9ae1520aa5d856c4176908902bc69e9876a7f9a580443c71eb72d9d5f",
+      "sha256": "ff05da8db340410bdd9f22ae12888238b031dfde7d8cd48343e51716db1811a6",
       "connected_components": 1,
       "watertight": true,
       "consistent_winding": true,
@@ -1541,7 +1541,7 @@
         30.0,
         27.600000381469727
       ],
-      "volume_mm3": 6176.301,
+      "volume_mm3": 6174.028,
       "triangles": 1478,
       "result": "PASS"
     },
