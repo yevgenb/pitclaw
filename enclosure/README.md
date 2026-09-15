@@ -11,7 +11,7 @@ pattern with screw access from underneath.
 - [Mounting interface](fusion-r12/mount-interface.json)
 - [Independent OpenSCAD reference and checks](fusion-r12/reference/README.md)
 - [Adjusted clamped fit-test kit](fusion-r12/fit-test/joint-fit-test.zip) and
-  [test instructions](fusion-r12/fit-test/README.md) for checking smaller joint gaps
+  [test instructions](fusion-r12/fit-test/README.md) for checking guide clearance and seating
   before changing the full enclosure.
 
 Only the latest controller enclosure is kept in the working tree. Older designs

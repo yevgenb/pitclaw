@@ -7,13 +7,13 @@ ECHO: "USB local floor skin at hidden PCB / screw-head clearances", [0.943, 0.98
 ECHO: "USB PCB / mounting hardware clearance from normal wall", [0.643, 0.683]
 ECHO: "UNMEASURED: OEM rear mounting plane, screw engagement, glass pad preload,"
 ECHO: "rear components/antenna/cables, all plug overmolds and most connector Z."
-Geometries in cache: 106
-Geometry cache size in bytes: 596984
-CGAL Polyhedrons in cache: 32
-CGAL cache size in bytes: 7176000
+Geometries in cache: 151
+Geometry cache size in bytes: 790264
+CGAL Polyhedrons in cache: 46
+CGAL cache size in bytes: 8062500
 Total rendering time: 0:00:00.094
    Top level object is a 3D object (manifold):
    Status:     NoError
-   Genus:      1
-   Vertices:      739
-   Facets:       1478
+   Genus:      -1
+   Vertices:       20
+   Facets:         32

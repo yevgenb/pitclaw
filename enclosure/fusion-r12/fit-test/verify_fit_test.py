@@ -72,6 +72,10 @@ def scenarios() -> list[Check]:
                  "guide-capture-midfront-check", "guide-capture-middle-check",
                  "guide-capture-rear-check"):
         checks.append(Check(part, part, (1.6,1.6,3,0,0)))
+    for part in ("guide-support-front-005-check","guide-support-front-010-check",
+                 "guide-support-rear-005-check","guide-support-rear-010-check",
+                 "lowered-entry-check"):
+        checks.append(Check(part,part,(1.6,1.6,3,0,0)))
     # Use the full edge allowance with each stack/X corner. These are explicit
     # design scenarios, not claims about the tolerances of every purchased part.
     for label, stack in (("low", (1.44, 1.44, 2.9)), ("high", (1.76, 1.76, 3.1))):
@@ -149,35 +153,46 @@ def run_check(check: Check, command: list[str], output: Path, timeout: float) ->
         datums = echo_vector(log, "Seam / retainer underside / glass front")
         if not near_vector(datums, [27.6, 30.1, 43.4]):
             raise ValueError(f"Nominal shell/display datums moved with the witnesses: {datums}")
-        if check.part.startswith("guide-capture-"):
+        if check.part.startswith(("guide-capture-","guide-support-")):
             if not target.is_file() or process.returncode != 0:
-                raise ValueError("Guide did not block the required upward motion")
+                raise ValueError("Guide did not block the required motion")
+            import math
             import numpy as np
             import trimesh
             contact=trimesh.load(target,force="mesh",process=True)
             if not (contact.is_watertight and contact.is_winding_consistent):
-                raise ValueError("Guide capture witness is not closed and consistently wound")
-            stations={"guide-capture-front-check":-51.8,
-                      "guide-capture-early-check":-50.8,
-                      "guide-capture-midfront-check":-49,
-                      "guide-capture-middle-check":-47,
-                      "guide-capture-rear-check":-44}
-            y=stations[check.part]
-            if not (abs(contact.bounds[0][1]-(y-.1))<.001 and
-                    abs(contact.bounds[1][1]-(y+.1))<.001):
-                raise ValueError("Guide capture witness is outside its intended depth station")
+                raise ValueError("Guide contact witness is not closed and consistently wound")
+            support=check.part.startswith("guide-support-")
+            if support:
+                y=-49.6 if "front" in check.part else -43.5
+                depth=.4
+                movement=-.05 if "005" in check.part else -.1
+                expected=2.7*depth*abs(movement)
+            else:
+                stations={"guide-capture-front-check":-51.8,
+                          "guide-capture-early-check":-50.8,
+                          "guide-capture-midfront-check":-49,
+                          "guide-capture-middle-check":-47,
+                          "guide-capture-rear-check":-44}
+                y=stations[check.part];depth=.2;movement=.7
+                expected=2.7*depth*(movement-math.sqrt(2)*.4)
+            if not (abs(contact.bounds[0][1]-(y-depth/2))<.001 and
+                    abs(contact.bounds[1][1]-(y+depth/2))<.001):
+                raise ValueError("Guide contact is outside its intended depth station")
             volumes=[]
             for sign in [-1,1]:
                 mask=np.all(sign*contact.vertices[contact.faces,0]>0,axis=1)
                 side=contact.submesh([mask],append=True,repair=False)
                 volume=float(side.volume)
-                if not (len(side.faces)>0 and side.is_watertight and volume>.08):
-                    raise ValueError("One guide side lacks positive upward capture")
+                if not (len(side.faces)>0 and side.is_watertight and volume>0
+                        and abs(volume-expected)<.003):
+                    raise ValueError("Guide contact does not match the geometry-derived positive volume")
                 volumes.append(volume)
-            record["capture"]={"station_y_mm":y,"upward_translation_mm":.7,
-                "slice_depth_mm":.2,"left_right_intersection_mm3":volumes,
+            record["contact"]={"station_y_mm":y,"translation_z_mm":movement,
+                "slice_depth_mm":depth,"left_right_intersection_mm3":volumes,
+                "expected_volume_each_mm3":expected,"volume_tolerance_mm3":.003,
                 "witness_sha256":sha256(target),"lid_present":False}
-            record["result"]="PASS: both guides block upward motion"
+            record["result"]="PASS: both lands support downward motion" if support else "PASS: both guides block upward motion"
         elif EMPTY_MESSAGE in log and not target.exists():
             record["result"] = "PASS: empty intersection"
         elif check.part in ("shell-closure-check","shell-closure-with-fascia-check") and target.is_file() and process.returncode == 0:

@@ -83,13 +83,20 @@
     "stl/mount-coupon.stl": "eee03214c7f2d9f7df398c2b995fe520e1c859a3fa65233ae8b91f7fae66246e",
     "stl/probe-fascia.stl": "df17385377ab151df0f7b486a480097f8db721b5322288b0a527480b6c468a1d"
   },
+  "retained_fit_stl_sha256": {
+    "top.stl": "984ce28f3d8ba8507683161b590e9f6da12e112043593cecaf37c7d5180bf1a9",
+    "fascia.stl": "efb80b6c9233ababc6cde465fe42e9b9f5a80344b3ab422df85ee40e1196e665",
+    "control-bottom.stl": "d4e00c959db722c783a9f32b00f917b3606625a88d542f613da7c6f76167b299",
+    "control-top.stl": "ff69b0adc87ee99c61c9fb03d5af93d5c927213ceda30ca941481768e6f4e678"
+  },
+  "bottom_only": true,
   "source_sha256": {
-    "candidate.scad": "ec5dd0807bce06d4459e0938c7fac4acf5a92756ec100e371afec7a2102ff5e8",
+    "candidate.scad": "58b0f0ad1533b72c68deaaab8701513ecd1a51fb80fd7b2fe22df6b3f2150516",
     "control.scad": "8d09dfcb16905414399b2522c31586c25eeafcf0f9ba4d8d4d908f370a6e7355",
     "carrier-interface.scad": "645127e0effdb7c1fed8978f7d0312136b530cf465ddc3ba7a8aa9584ee016e4"
   },
   "outputs_sha256": {
-    "bottom.stl": "c539b5772fc4869830e51daacf976712119b50e0b412ddad3725b4997429f230",
+    "bottom.stl": "f1f793d9ae1520aa5d856c4176908902bc69e9876a7f9a580443c71eb72d9d5f",
     "control-bottom.stl": "d4e00c959db722c783a9f32b00f917b3606625a88d542f613da7c6f76167b299",
     "top.stl": "984ce28f3d8ba8507683161b590e9f6da12e112043593cecaf37c7d5180bf1a9",
     "fascia.stl": "efb80b6c9233ababc6cde465fe42e9b9f5a80344b3ab422df85ee40e1196e665",

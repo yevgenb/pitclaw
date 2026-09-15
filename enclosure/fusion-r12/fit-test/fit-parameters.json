@@ -40,12 +40,14 @@
   },
   "candidate_clearances_mm": {
     "guide_side": 0.2,
-    "guide_roof_normal": 0.25,
-    "guide_roof_vertical": 0.3535533905932738,
+    "guide_roof_normal": 0.4,
+    "guide_roof_vertical": 0.5656854249492381,
     "fascia_side": 0.2,
     "fascia_top": 0.2,
     "fascia_rear_floor": 0.2,
-    "lip_straight_and_corner": 0.3
+    "lip_straight_and_corner": 0.3,
+    "guide_running_lower": 0.3,
+    "guide_support_land_lower": 0
   },
   "candidate_datums_mm": {
     "guide_bearing_z": 3.8,
@@ -58,7 +60,16 @@
     "fascia_top_z": 27.4,
     "keeper_notch_top_z": 27.42,
     "lip_outer_radius": 2.2,
-    "lip_inner_radius": 1
+    "lip_inner_radius": 1,
+    "guide_running_floor_z": 3.5,
+    "front_support_land_y": [
+      -50,
+      -49.2
+    ],
+    "rear_support_land_y": [
+      -44,
+      -43
+    ]
   },
   "closure_hardware": {
     "insert": "one M3S x4 heat-set insert in tall closure post",
@@ -90,5 +101,86 @@
     "Do not use the screw to force a visibly obstructed joint closed.",
     "Guide offsets are coupled: upward displacement plus absolute lateral displacement must remain within the vertical roof allowance.",
     "Physical fit must be chosen before any production geometry is updated."
-  ]
+  ],
+  "iteration": "Roomier vertical guide clearance; reprint bottom only",
+  "guide_floor_profile_yz_mm": [
+    [
+      -52.1,
+      3.5
+    ],
+    [
+      -50.6,
+      3.5
+    ],
+    [
+      -50,
+      3.8
+    ],
+    [
+      -49.2,
+      3.8
+    ],
+    [
+      -48.6,
+      3.5
+    ],
+    [
+      -44.6,
+      3.5
+    ],
+    [
+      -44,
+      3.8
+    ],
+    [
+      -43,
+      3.8
+    ]
+  ],
+  "lowered_entry_path": {
+    "segments_dy_dz_mm": [
+      [
+        [
+          -12,
+          -0.3
+        ],
+        [
+          -7.6,
+          -0.3
+        ]
+      ],
+      [
+        [
+          -7.6,
+          -0.3
+        ],
+        [
+          -7,
+          0
+        ]
+      ],
+      [
+        [
+          -7,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    ],
+    "numerical_vertical_clearance_mm": 0.0002,
+    "bearing_height_established_before_probe_engagement": true
+  },
+  "reprint_files": [
+    "bottom.stl"
+  ],
+  "reuse_files": [
+    "top.stl",
+    "fascia.stl",
+    "control-bottom.stl",
+    "control-top.stl"
+  ],
+  "guide_capture_expected_volume_mm3_per_side": 0.07252987052741139
 }

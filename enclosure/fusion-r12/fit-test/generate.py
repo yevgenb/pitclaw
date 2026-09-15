@@ -7,6 +7,7 @@ assembly checks; output STLs are cropped coupons, not a new enclosure release.
 """
 from pathlib import Path
 import argparse,concurrent.futures,hashlib,json,subprocess,sys
+import vertical_clearance
 
 HERE=Path(__file__).resolve().parent
 BASE=HERE.parent/'reference'
@@ -73,6 +74,7 @@ def generate_sources():
 }
 '''
     candidate=candidate.replace('// Approach the0.3mm upward stop within0.0001mm numerical margin.','// FIT TEST: approach the0.2mm upward stop within0.0001mm numerical margin.').replace('// At exactly0.3mm, the fascia top intentionally contacts seamZ27.6.','// At exactly0.2mm, the fascia top intentionally contacts seamZ27.6.')
+    candidate=vertical_clearance.candidate(candidate)
     (folder/'candidate.scad').write_text('// FIT TEST ONLY. Not a revised enclosure release.\n'+candidate)
     (folder/'control.scad').write_text('// CURRENT R12 CONTROL. Only the coupon crop and print centering differ.\n'+control)
     (folder/'carrier-interface.scad').write_bytes((BASE/'carrier-interface.scad').read_bytes())
@@ -97,6 +99,7 @@ MESH_NAMES = {
     verifier=verifier.replace('check.part == "shell-closure-check" and target.is_file()','check.part in ("shell-closure-check","shell-closure-with-fascia-check") and target.is_file()')
     verifier=verifier.replace('"carrier-enclosure-fusion-r12-reference"','"bounded-clamped-fit-test"')
     verifier=verifier.replace('"scope": "Declared nominal geometry and explicit tolerance scenarios; no physical print or purchased-part fit test."','"scope": "FIT TEST ONLY: candidate full-assembly geometry and five cropped comparison meshes; released enclosure untouched."')
+    verifier=vertical_clearance.verifier(verifier)
     (HERE/'verify_fit_test.py').write_text(verifier)
     return folder
 
@@ -110,16 +113,24 @@ def export_one(entry,folder):
     print(name,'exported',flush=True)
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--sources-only',action='store_true');args=parser.parse_args()
-    before=protect();folder=generate_sources()
+    parser=argparse.ArgumentParser();parser.add_argument('--sources-only',action='store_true');parser.add_argument('--bottom-only',action='store_true');args=parser.parse_args()
+    before=protect()
+    keep_names=["top.stl","fascia.stl","control-bottom.stl","control-top.stl"]
+    kept={n:sha(HERE/n) for n in keep_names} if args.bottom_only else {}
+    folder=generate_sources()
     if not args.sources_only:
         entries=[('bottom.stl','candidate.scad','joint-coupon-bottom'),('top.stl','candidate.scad','joint-coupon-top'),('fascia.stl','candidate.scad','joint-coupon-fascia'),('control-bottom.stl','control.scad','joint-coupon-bottom'),('control-top.stl','control.scad','joint-coupon-top')]
+        if args.bottom_only:entries=entries[:1]
         with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:list(pool.map(lambda x:export_one(x,folder),entries))
         result=subprocess.run([sys.executable,str(HERE/'verify_fit_test.py'),'--jobs','3'])
         if result.returncode:raise RuntimeError('Candidate fit verification failed')
+        measured=subprocess.run([sys.executable,str(HERE/'verify_running_clearance.py')])
+        if measured.returncode:raise RuntimeError('Exported running-clearance measurement failed')
+    if kept and kept!={n:sha(HERE/n) for n in keep_names}:raise RuntimeError("A retained fit-test STL changed")
     after=protect()
     if before!=after:raise RuntimeError('A protected release artifact changed during generation')
     record={'scope':'FIT TEST ONLY','released_artifacts_unchanged':True,'protected_sha256':after,
+            'retained_fit_stl_sha256':kept,'bottom_only':args.bottom_only,
             'source_sha256':{p.name:sha(p) for p in folder.iterdir() if p.is_file()},
             'outputs_sha256':{p.name:sha(p) for p in HERE.glob('*.stl')}}
     (HERE/'generation-manifest.json').write_text(json.dumps(record,indent=2)+'\n')

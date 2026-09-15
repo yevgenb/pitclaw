@@ -774,6 +774,11 @@ else if(part=="insertion-check") insertion_collision();
 else if(part=="carrier-installation-check") carrier_installation_collision();
 else if(part=="electronics-closure-check") electronics_closure_collision();
 else if(part=="shell-closure-check") shell_closure_collision();
+else if(part=="guide-support-front-005-check") guide_support_collision(-49.6,.05);
+else if(part=="guide-support-front-010-check") guide_support_collision(-49.6,.1);
+else if(part=="guide-support-rear-005-check") guide_support_collision(-43.5,.05);
+else if(part=="guide-support-rear-010-check") guide_support_collision(-43.5,.1);
+else if(part=="lowered-entry-check") lowered_entry_collision();
 else if(part=="shell-closure-with-fascia-check") shell_closure_with_fascia_collision();
 else assert(false,"Unknown part view");
 
@@ -810,7 +815,7 @@ module guide_male() {
     xz_prism([[32.7,3.8],[36,3.8],[36,5.8],[32.7,9.1]],-52,-43);
 }
 module guide_cavity() {
-    xz_prism([[32.7,3.8],[36.2,3.8],[36.2,41.8+sqrt(2)*.25-36.2],[32.7,41.8+sqrt(2)*.25-32.7]],-52.1,-43);
+    xz_prism([[32.7,3.8],[36.2,3.8],[36.2,41.8+sqrt(2)*.4-36.2],[32.7,41.8+sqrt(2)*.4-32.7]],-52.1,-43);
 }
 module probe_pocket_blank() {
     union() {
@@ -869,7 +874,7 @@ module bottom_shell_r10() {
                     box_bounds(33.3,39,-52,-43,3.7,10.6); //0.1mm hidden overlap inside old solid
             }
         }
-        for(s=[-1,1]) scale([s,1,1]) guide_cavity();
+        for(s=[-1,1]) scale([s,1,1]) guide_roomier_cavity();
     }
 }
 // Exact planar chamfer: 11.2x1.3 mm at Z23 to12x2.1 at Z23.4.
@@ -1059,4 +1064,55 @@ module guide_capture_collision(y) {
 
 module shell_closure_with_fascia_collision() {
     intersection() { top_bezel(); union() { bottom_shell(); probe_fascia(); } }
+}
+
+module guide_roomier_cavity() {
+    // One cavity solid exactly combines the constant roof with the frozen
+    // piecewise floor; no coincident core/relief side faces remain.
+    stations=[[-52.1,3.5],[-50.6,3.5],[-50,3.8],[-49.2,3.8],
+              [-48.6,3.5],[-44.6,3.5],[-44,3.8],[-43,3.8]];
+    roof=41.8+sqrt(2)*.4;
+    points=[for(p=stations) each [[32.7,p[0],p[1]],[36.2,p[0],p[1]],
+                                   [36.2,p[0],roof-36.2],[32.7,p[0],roof-32.7]]];
+    faces=concat([[3,2,1,0],[28,29,30,31]],
+        [for(i=[0:6],j=[0:3]) [4*i+j,4*i+(j+1)%4,4*(i+1)+(j+1)%4,4*(i+1)+j]]);
+    polyhedron(points=points,faces=faces);
+}
+module guide_support_collision(y,drop) {
+    intersection() {
+        bottom_shell();
+        translate([0,0,-drop]) intersection() {
+            probe_fascia();
+            for(s=[-1,1]) scale([s,1,1])
+                box_bounds(33.3,36.1,y-.2,y+.2,3.7,10);
+        }
+    }
+}
+module fascia_segment(dy0,dy1,dz0,dz1) {
+    //0.0002mm lift clears intentional bearing contact; kernel half-size5nm.
+    minkowski() {
+        probe_fascia();
+        hull() for(q=[[dy0,dz0],[dy1,dz1]])
+            translate([-.000005,q[0]-.000005,q[1]+.000195])
+                cube([.00001,.00001,.00001]);
+    }
+}
+module lowered_entry_collision() {
+    intersection() {
+        union() {
+            fascia_segment(-12,-7.6,-.3,-.3);
+            fascia_segment(-7.6,-7,-.3,0);
+            fascia_segment(-7,0,0,0);
+        }
+        union() {
+            intersection() {
+                bottom_shell();
+                union() {
+                    box_bounds(-100,100,-100,-43.0001,-1,60);
+                    box_bounds(-100,100,-42.9999,100,-1,60);
+                }
+            }
+            carrier_sweep(carrier_case_offset_y,carrier_case_offset_y,0,0);
+        }
+    }
 }
