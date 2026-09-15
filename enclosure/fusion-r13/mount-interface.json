@@ -1,0 +1,74 @@
+{
+  "revision": "r13",
+  "units": "mm",
+  "datum": "Case centre in XY; outside bottom is Z0; +Y is the power end.",
+  "mount_thread": "M3",
+  "centres_mm": [
+    [
+      -36,
+      -37
+    ],
+    [
+      -36,
+      37
+    ],
+    [
+      36,
+      -37
+    ],
+    [
+      36,
+      37
+    ]
+  ],
+  "pitch_mm": {
+    "across_case_x": 72,
+    "along_case_y": 74
+  },
+  "case_xy_mm": [
+    86,
+    104
+  ],
+  "external_access_diameter_mm": 3.4,
+  "internal_boss_diameter_mm": 10,
+  "boss_top_z_mm": 7.5,
+  "insert": "User's M3 heat-set insert, measured outside diameter 4.0\u20135.0 mm; 4.0 mm length assumed and must be confirmed",
+  "insert_installation": "From inside, before electronics; flush with boss top.",
+  "pilot_diameter_mm": 4.2,
+  "pilot_bottom_z_mm": 2.5,
+  "insert_z_mm": [
+    3.5,
+    7.5
+  ],
+  "recommended_screw_protrusion_from_bracket_mating_face_mm": [
+    6.5,
+    7
+  ],
+  "maximum_screw_protrusion_mm": 7.5,
+  "bracket_and_washer_stack": "Add to protrusion to choose nominal screw length; verify actual stack.",
+  "additional_inserts": 4,
+  "total_case_inserts_when_fitted": 16,
+  "load_rating": null,
+  "dxf_scope": "Four external access circles only, exported from the native Fusion sketch. No bracket outline or external mounting-standard compatibility.",
+  "pilot_depth_mm": 5,
+  "insert_min_od_mm": 4.0,
+  "insert_max_od_mm": 5.0,
+  "insert_length_mm": 4.0,
+  "insert_length_status": "Assumed, not measured",
+  "floor_step_radial_width_mm": 0.4,
+  "boss_radial_wall_at_max_insert_od_mm": 2.5,
+  "secondary_floor_capture_only": true,
+  "working_tool_envelope": {
+    "diameter_mm": 8,
+    "z_mm": [
+      7.5001,
+      35
+    ],
+    "electronics_removed": true
+  },
+  "verification_status": "PASS: native geometry, all pilot/screw-hole measurements and sampled export comparison; physical retention is unqualified",
+  "native_verification_report": "native-verification.json",
+  "hole_measurement_report": "insert-hole-verification.json",
+  "mesh_comparison_report": "mesh-verification.json",
+  "reviewed_archive_sha256": "8198eecc4b9cd7a57a5312d8c23e085012d4658d8eb8328b3f4c280ce7d9437d"
+}

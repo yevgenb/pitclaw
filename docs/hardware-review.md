@@ -75,7 +75,7 @@ The exact fan still determines useful frequency, startup duration and duty range
    and Adafruit 5807 mounting stack. Verify jack/cable electrical numbering.
 2. Verify the owned ADC module’s local bypassing and SDA/SCL pull-ups to VDD.
    Measure DEBUG-derived 3.3 V with the display and Wi-Fi active.
-3. Fit-check the new [landscape enclosure](../enclosure/fusion-r12/README.md), including
+3. Fit-check the new [landscape enclosure](../enclosure/fusion-r13/README.md), including
    WT32 antenna/rear components, blind-boss screw engagement and real plug bodies.
    The carrier now has an independent 51 × 58 mm M3 pattern; the WT32's
    51.39 × 75.14 mm pattern is on its internal retainer. Legacy controller STLs

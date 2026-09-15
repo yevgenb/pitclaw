@@ -1,0 +1,1187 @@
+{
+  "status": "PASS: all 16 pilots are 4.2mm; 12 screw passages remain 3.4mm",
+  "scope": "Full native STL sections, all 16 pilots and 12 M3 screw passages at 3 depths; diameter tolerance 0.005mm for mesh faceting.",
+  "sources_sha256": {
+    "carrier-bottom": "bf56c07e3d6270ca00659f2fb539fb083a7821b4db27ecbeab5e58cb36b73a43",
+    "carrier-top": "5c87b29b35170254c2c1ac6849545404653317d5776a171e5e8af5d7b18d7d6f",
+    "carrier-retainer": "c8b7d0e3520a7615e1e04ea9628d26d5f4d1d6508f67e783b261970f84ffb55e"
+  },
+  "measurements": [
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "carrier pilot",
+      "assembled_coordinates_mm": [
+        -25.5,
+        -37,
+        3
+      ],
+      "diameters_xy_mm": [
+        4.200000762939453,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "carrier pilot",
+      "assembled_coordinates_mm": [
+        -25.5,
+        -37,
+        5
+      ],
+      "diameters_xy_mm": [
+        4.200000762939453,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "carrier pilot",
+      "assembled_coordinates_mm": [
+        -25.5,
+        -37,
+        7
+      ],
+      "diameters_xy_mm": [
+        4.200000762939453,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "carrier pilot",
+      "assembled_coordinates_mm": [
+        -25.5,
+        21,
+        3
+      ],
+      "diameters_xy_mm": [
+        4.200000762939453,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "carrier pilot",
+      "assembled_coordinates_mm": [
+        -25.5,
+        21,
+        5
+      ],
+      "diameters_xy_mm": [
+        4.200000762939453,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "carrier pilot",
+      "assembled_coordinates_mm": [
+        -25.5,
+        21,
+        7
+      ],
+      "diameters_xy_mm": [
+        4.200000762939453,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "carrier pilot",
+      "assembled_coordinates_mm": [
+        25.5,
+        -37,
+        3
+      ],
+      "diameters_xy_mm": [
+        4.200000762939453,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "carrier pilot",
+      "assembled_coordinates_mm": [
+        25.5,
+        -37,
+        5
+      ],
+      "diameters_xy_mm": [
+        4.200000762939453,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "carrier pilot",
+      "assembled_coordinates_mm": [
+        25.5,
+        -37,
+        7
+      ],
+      "diameters_xy_mm": [
+        4.200000762939453,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "carrier pilot",
+      "assembled_coordinates_mm": [
+        25.5,
+        21,
+        3
+      ],
+      "diameters_xy_mm": [
+        4.200000762939453,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "carrier pilot",
+      "assembled_coordinates_mm": [
+        25.5,
+        21,
+        5
+      ],
+      "diameters_xy_mm": [
+        4.200000762939453,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "carrier pilot",
+      "assembled_coordinates_mm": [
+        25.5,
+        21,
+        7
+      ],
+      "diameters_xy_mm": [
+        4.200000762939453,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "closure pilot",
+      "assembled_coordinates_mm": [
+        -38,
+        -28,
+        23
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "closure pilot",
+      "assembled_coordinates_mm": [
+        -38,
+        -28,
+        25
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "closure pilot",
+      "assembled_coordinates_mm": [
+        -38,
+        -28,
+        27
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "closure screw passage",
+      "assembled_coordinates_mm": [
+        -38,
+        -28,
+        30
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.399005889892578
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "closure screw passage",
+      "assembled_coordinates_mm": [
+        -38,
+        -28,
+        35
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.399005889892578
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "closure screw passage",
+      "assembled_coordinates_mm": [
+        -38,
+        -28,
+        40
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.399005889892578
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "closure pilot",
+      "assembled_coordinates_mm": [
+        -38,
+        28,
+        23
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "closure pilot",
+      "assembled_coordinates_mm": [
+        -38,
+        28,
+        25
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "closure pilot",
+      "assembled_coordinates_mm": [
+        -38,
+        28,
+        27
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "closure screw passage",
+      "assembled_coordinates_mm": [
+        -38,
+        28,
+        30
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.399005889892578
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "closure screw passage",
+      "assembled_coordinates_mm": [
+        -38,
+        28,
+        35
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.399005889892578
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "closure screw passage",
+      "assembled_coordinates_mm": [
+        -38,
+        28,
+        40
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.399005889892578
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "closure pilot",
+      "assembled_coordinates_mm": [
+        38,
+        -28,
+        23
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "closure pilot",
+      "assembled_coordinates_mm": [
+        38,
+        -28,
+        25
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "closure pilot",
+      "assembled_coordinates_mm": [
+        38,
+        -28,
+        27
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "closure screw passage",
+      "assembled_coordinates_mm": [
+        38,
+        -28,
+        30
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.399005889892578
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "closure screw passage",
+      "assembled_coordinates_mm": [
+        38,
+        -28,
+        35
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.399005889892578
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "closure screw passage",
+      "assembled_coordinates_mm": [
+        38,
+        -28,
+        40
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.399005889892578
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "closure pilot",
+      "assembled_coordinates_mm": [
+        38,
+        28,
+        23
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "closure pilot",
+      "assembled_coordinates_mm": [
+        38,
+        28,
+        25
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "closure pilot",
+      "assembled_coordinates_mm": [
+        38,
+        28,
+        27
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.200000762939453
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "closure screw passage",
+      "assembled_coordinates_mm": [
+        38,
+        28,
+        30
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.399005889892578
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "closure screw passage",
+      "assembled_coordinates_mm": [
+        38,
+        28,
+        35
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.399005889892578
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "closure screw passage",
+      "assembled_coordinates_mm": [
+        38,
+        28,
+        40
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.399005889892578
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "future mount pilot",
+      "assembled_coordinates_mm": [
+        -36,
+        -37,
+        3
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "future mount pilot",
+      "assembled_coordinates_mm": [
+        -36,
+        -37,
+        5
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "future mount pilot",
+      "assembled_coordinates_mm": [
+        -36,
+        -37,
+        7
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "external mount screw passage",
+      "assembled_coordinates_mm": [
+        -36,
+        -37,
+        0.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "external mount screw passage",
+      "assembled_coordinates_mm": [
+        -36,
+        -37,
+        1.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "external mount screw passage",
+      "assembled_coordinates_mm": [
+        -36,
+        -37,
+        2
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "future mount pilot",
+      "assembled_coordinates_mm": [
+        -36,
+        37,
+        3
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "future mount pilot",
+      "assembled_coordinates_mm": [
+        -36,
+        37,
+        5
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "future mount pilot",
+      "assembled_coordinates_mm": [
+        -36,
+        37,
+        7
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "external mount screw passage",
+      "assembled_coordinates_mm": [
+        -36,
+        37,
+        0.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "external mount screw passage",
+      "assembled_coordinates_mm": [
+        -36,
+        37,
+        1.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "external mount screw passage",
+      "assembled_coordinates_mm": [
+        -36,
+        37,
+        2
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "future mount pilot",
+      "assembled_coordinates_mm": [
+        36,
+        -37,
+        3
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "future mount pilot",
+      "assembled_coordinates_mm": [
+        36,
+        -37,
+        5
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "future mount pilot",
+      "assembled_coordinates_mm": [
+        36,
+        -37,
+        7
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "external mount screw passage",
+      "assembled_coordinates_mm": [
+        36,
+        -37,
+        0.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "external mount screw passage",
+      "assembled_coordinates_mm": [
+        36,
+        -37,
+        1.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "external mount screw passage",
+      "assembled_coordinates_mm": [
+        36,
+        -37,
+        2
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "future mount pilot",
+      "assembled_coordinates_mm": [
+        36,
+        37,
+        3
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "future mount pilot",
+      "assembled_coordinates_mm": [
+        36,
+        37,
+        5
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "future mount pilot",
+      "assembled_coordinates_mm": [
+        36,
+        37,
+        7
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "external mount screw passage",
+      "assembled_coordinates_mm": [
+        36,
+        37,
+        0.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "external mount screw passage",
+      "assembled_coordinates_mm": [
+        36,
+        37,
+        1.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-bottom.stl",
+      "feature": "external mount screw passage",
+      "assembled_coordinates_mm": [
+        36,
+        37,
+        2
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "retainer pilot",
+      "assembled_coordinates_mm": [
+        -35.5,
+        -40,
+        33
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "retainer pilot",
+      "assembled_coordinates_mm": [
+        -35.5,
+        -40,
+        35
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "retainer pilot",
+      "assembled_coordinates_mm": [
+        -35.5,
+        -40,
+        37
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "feature": "retainer screw passage",
+      "assembled_coordinates_mm": [
+        -35.5,
+        -40,
+        30.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "feature": "retainer screw passage",
+      "assembled_coordinates_mm": [
+        -35.5,
+        -40,
+        31.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "feature": "retainer screw passage",
+      "assembled_coordinates_mm": [
+        -35.5,
+        -40,
+        32
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "retainer pilot",
+      "assembled_coordinates_mm": [
+        -35.5,
+        40,
+        33
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "retainer pilot",
+      "assembled_coordinates_mm": [
+        -35.5,
+        40,
+        35
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "retainer pilot",
+      "assembled_coordinates_mm": [
+        -35.5,
+        40,
+        37
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "feature": "retainer screw passage",
+      "assembled_coordinates_mm": [
+        -35.5,
+        40,
+        30.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "feature": "retainer screw passage",
+      "assembled_coordinates_mm": [
+        -35.5,
+        40,
+        31.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "feature": "retainer screw passage",
+      "assembled_coordinates_mm": [
+        -35.5,
+        40,
+        32
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "retainer pilot",
+      "assembled_coordinates_mm": [
+        35.5,
+        -40,
+        33
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "retainer pilot",
+      "assembled_coordinates_mm": [
+        35.5,
+        -40,
+        35
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "retainer pilot",
+      "assembled_coordinates_mm": [
+        35.5,
+        -40,
+        37
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "feature": "retainer screw passage",
+      "assembled_coordinates_mm": [
+        35.5,
+        -40,
+        30.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "feature": "retainer screw passage",
+      "assembled_coordinates_mm": [
+        35.5,
+        -40,
+        31.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "feature": "retainer screw passage",
+      "assembled_coordinates_mm": [
+        35.5,
+        -40,
+        32
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "retainer pilot",
+      "assembled_coordinates_mm": [
+        35.5,
+        40,
+        33
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "retainer pilot",
+      "assembled_coordinates_mm": [
+        35.5,
+        40,
+        35
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-top.stl",
+      "feature": "retainer pilot",
+      "assembled_coordinates_mm": [
+        35.5,
+        40,
+        37
+      ],
+      "diameters_xy_mm": [
+        4.1999969482421875,
+        4.1999969482421875
+      ],
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "feature": "retainer screw passage",
+      "assembled_coordinates_mm": [
+        35.5,
+        40,
+        30.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "feature": "retainer screw passage",
+      "assembled_coordinates_mm": [
+        35.5,
+        40,
+        31.5
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "carrier-retainer.stl",
+      "feature": "retainer screw passage",
+      "assembled_coordinates_mm": [
+        35.5,
+        40,
+        32
+      ],
+      "diameters_xy_mm": [
+        3.4000015258789062,
+        3.3990097045898438
+      ],
+      "expected_diameter_mm": 3.4
+    }
+  ]
+}

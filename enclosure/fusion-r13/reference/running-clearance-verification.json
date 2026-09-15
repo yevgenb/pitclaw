@@ -1,0 +1,474 @@
+{
+  "status": "PASS: measured running gaps and two support lands",
+  "sources_sha256": {
+    "carrier-bottom.stl": "8704ed2ae37f5a7c59a7f54089c8778bcc285769dc54e45c8646a83ba81bdda5",
+    "probe-fascia.stl": "a616e305056fc59a6772810a0cc0f3f50703d4857b44ac5ee0a3a2146bf1ead5",
+    "carrier-case.scad": "4531ee58aa448ceb6a8686a38cc279357e2b913e9a52384ae681c15a8758413c"
+  },
+  "verifier_sha256": "73fe8aa45482ee7492bd44d571b404359f965a57993564248372b51b86f609aa",
+  "scope": "Actual exported full-part sections on both guides; nominal assembly geometry is checked separately.",
+  "sections": [
+    {
+      "label": "front relief",
+      "y_mm": -51.5,
+      "samples": [
+        {
+          "x_mm": -35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.39999931066596617
+        },
+        {
+          "x_mm": -35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.3999996827207087
+        },
+        {
+          "x_mm": -34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.40000014778913645
+        },
+        {
+          "x_mm": -33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.400000380323351
+        },
+        {
+          "x_mm": 33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.400000380323351
+        },
+        {
+          "x_mm": 34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.40000014778913645
+        },
+        {
+          "x_mm": 35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.3999996827207087
+        },
+        {
+          "x_mm": 35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.3999993106659668
+        }
+      ],
+      "left_right_side_gap_mm": [
+        0.2999992370605469,
+        0.2999992370605469
+      ]
+    },
+    {
+      "label": "front ramp",
+      "y_mm": -50.3,
+      "samples": [
+        {
+          "x_mm": -35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.39999931066596617
+        },
+        {
+          "x_mm": -35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.3999996827207099
+        },
+        {
+          "x_mm": -34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.4000001477891371
+        },
+        {
+          "x_mm": -33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.400000380323351
+        },
+        {
+          "x_mm": 33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.400000380323351
+        },
+        {
+          "x_mm": 34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.40000014778913834
+        },
+        {
+          "x_mm": 35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.3999996827207099
+        },
+        {
+          "x_mm": 35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.3999993106659643
+        }
+      ],
+      "left_right_side_gap_mm": [
+        0.2999992370605469,
+        0.2999992370605469
+      ]
+    },
+    {
+      "label": "front land",
+      "y_mm": -49.6,
+      "samples": [
+        {
+          "x_mm": -35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.3999993106659655
+        },
+        {
+          "x_mm": -35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.3999996827207099
+        },
+        {
+          "x_mm": -34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.4000001477891371
+        },
+        {
+          "x_mm": -33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.4000003803233523
+        },
+        {
+          "x_mm": 33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.400000380323351
+        },
+        {
+          "x_mm": 34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.4000001477891371
+        },
+        {
+          "x_mm": 35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.3999996827207093
+        },
+        {
+          "x_mm": 35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.3999993106659655
+        }
+      ],
+      "left_right_side_gap_mm": [
+        0.2999992370605469,
+        0.2999992370605469
+      ]
+    },
+    {
+      "label": "falling ramp",
+      "y_mm": -48.9,
+      "samples": [
+        {
+          "x_mm": -35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6500001668922466,
+          "lower_gap_mm": 0.14999978542403758,
+          "roof_normal_gap_mm": 0.3999993106659624
+        },
+        {
+          "x_mm": -35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6500001668922466,
+          "lower_gap_mm": 0.14999978542403758,
+          "roof_normal_gap_mm": 0.3999996827207074
+        },
+        {
+          "x_mm": -34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6500001668922466,
+          "lower_gap_mm": 0.14999978542403758,
+          "roof_normal_gap_mm": 0.40000014778913523
+        },
+        {
+          "x_mm": -33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6500001668922466,
+          "lower_gap_mm": 0.14999978542403758,
+          "roof_normal_gap_mm": 0.400000380323351
+        },
+        {
+          "x_mm": 33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6500001668922466,
+          "lower_gap_mm": 0.14999978542403758,
+          "roof_normal_gap_mm": 0.400000380323351
+        },
+        {
+          "x_mm": 34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6500001668922466,
+          "lower_gap_mm": 0.14999978542403758,
+          "roof_normal_gap_mm": 0.4000001477891377
+        },
+        {
+          "x_mm": 35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6500001668922466,
+          "lower_gap_mm": 0.14999978542403758,
+          "roof_normal_gap_mm": 0.3999996827207074
+        },
+        {
+          "x_mm": 35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6500001668922466,
+          "lower_gap_mm": 0.14999978542403758,
+          "roof_normal_gap_mm": 0.3999993106659643
+        }
+      ],
+      "left_right_side_gap_mm": [
+        0.2999992370605469,
+        0.2999992370605469
+      ]
+    },
+    {
+      "label": "middle relief",
+      "y_mm": -47,
+      "samples": [
+        {
+          "x_mm": -35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.3999993106659643
+        },
+        {
+          "x_mm": -35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.3999996827207093
+        },
+        {
+          "x_mm": -34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.4000001477891371
+        },
+        {
+          "x_mm": -33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.400000380323351
+        },
+        {
+          "x_mm": 33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.4000003803233523
+        },
+        {
+          "x_mm": 34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.40000014778913834
+        },
+        {
+          "x_mm": 35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.3999996827207074
+        },
+        {
+          "x_mm": 35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.5,
+          "lower_gap_mm": 0.2999999523162842,
+          "roof_normal_gap_mm": 0.3999993106659643
+        }
+      ],
+      "left_right_side_gap_mm": [
+        0.2999992370605469,
+        0.2999992370605469
+      ]
+    },
+    {
+      "label": "rear ramp",
+      "y_mm": -44.3,
+      "samples": [
+        {
+          "x_mm": -35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.3999993106659636
+        },
+        {
+          "x_mm": -35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.3999996827207074
+        },
+        {
+          "x_mm": -34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.4000001477891371
+        },
+        {
+          "x_mm": -33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.4000003803233523
+        },
+        {
+          "x_mm": 33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.4000003803233523
+        },
+        {
+          "x_mm": 34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.4000001477891371
+        },
+        {
+          "x_mm": 35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.3999996827207074
+        },
+        {
+          "x_mm": 35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.6499995946875075,
+          "lower_gap_mm": 0.15000035762877673,
+          "roof_normal_gap_mm": 0.399999310665963
+        }
+      ],
+      "left_right_side_gap_mm": [
+        0.2999992370605469,
+        0.2999992370605469
+      ]
+    },
+    {
+      "label": "rear land",
+      "y_mm": -43.5,
+      "samples": [
+        {
+          "x_mm": -35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.3999993106659643
+        },
+        {
+          "x_mm": -35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.3999996827207068
+        },
+        {
+          "x_mm": -34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.40000014778913456
+        },
+        {
+          "x_mm": -33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.4000003803233497
+        },
+        {
+          "x_mm": 33.5,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.4000003803233485
+        },
+        {
+          "x_mm": 34,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.40000014778913456
+        },
+        {
+          "x_mm": 35,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.39999968272070424
+        },
+        {
+          "x_mm": 35.8,
+          "runner_bottom_z_mm": 3.799999952316284,
+          "receiver_floor_z_mm": 3.799999952316284,
+          "lower_gap_mm": 0.0,
+          "roof_normal_gap_mm": 0.3999993106659624
+        }
+      ],
+      "left_right_side_gap_mm": [
+        0.2999992370605469,
+        0.2999992370605469
+      ]
+    }
+  ]
+}

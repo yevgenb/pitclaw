@@ -1,0 +1,144 @@
+{
+  "scope": "Native Fusion mesh integrity and sampled comparison with independently checked four-anchor OpenSCAD reference.",
+  "surface_allowance_mm": 0.03,
+  "allowance_reason": "Analytic CAD arcs versus SCAD faceting and 0.02mm Boolean construction overlaps.",
+  "parts": {
+    "bottom": {
+      "watertight": true,
+      "winding_consistent": true,
+      "connected_solids": 1,
+      "volume_mm3": 45592.91793298063,
+      "bounds_mm": [
+        [
+          -43.0,
+          -52.0,
+          0.0
+        ],
+        [
+          43.0,
+          52.0,
+          27.600000381469727
+        ]
+      ],
+      "triangles": 48232,
+      "native_source_sha256": "bf56c07e3d6270ca00659f2fb539fb083a7821b4db27ecbeab5e58cb36b73a43",
+      "reference_sha256": "8704ed2ae37f5a7c59a7f54089c8778bcc285769dc54e45c8646a83ba81bdda5",
+      "native_to_reference": {
+        "samples": 77336,
+        "max_mm": 0.010706027918510438,
+        "p99_mm": 0.010269298575376014
+      },
+      "reference_to_native": {
+        "samples": 15431,
+        "max_mm": 0.02391815185546875,
+        "p99_mm": 0.009318471195839572
+      },
+      "relative_volume_difference": 0.0004213568913918646,
+      "surface_comparison_pass": true,
+      "print_stl_sha256": "5ecd498ca5c0acf812095874985f04709656e45499da0d5feab16a7d7f08e1c4"
+    },
+    "top": {
+      "watertight": true,
+      "winding_consistent": true,
+      "connected_solids": 1,
+      "volume_mm3": 30245.711103481746,
+      "bounds_mm": [
+        [
+          -43.0,
+          -52.0,
+          -1.5258789076710855e-06
+        ],
+        [
+          43.0,
+          52.0,
+          21.9
+        ]
+      ],
+      "triangles": 45932,
+      "native_source_sha256": "5c87b29b35170254c2c1ac6849545404653317d5776a171e5e8af5d7b18d7d6f",
+      "reference_sha256": "a42e89d5b2799d57dc4f005fc08a8733ebbdf48a7a2b8aec52c0c92c01de22bc",
+      "native_to_reference": {
+        "samples": 73890,
+        "max_mm": 0.01070602802724712,
+        "p99_mm": 0.01005025421647583
+      },
+      "reference_to_native": {
+        "samples": 21519,
+        "max_mm": 0.02989959716796875,
+        "p99_mm": 0.009249858937388382
+      },
+      "relative_volume_difference": 0.00040218730128491735,
+      "surface_comparison_pass": true,
+      "print_stl_sha256": "48a63a04014f3aed13caf647003b697cc2a477d248c9a35021cbbe46d2f699bb"
+    },
+    "retainer": {
+      "watertight": true,
+      "winding_consistent": true,
+      "connected_solids": 1,
+      "volume_mm3": 3184.5910726324014,
+      "bounds_mm": [
+        [
+          -39.9995002746582,
+          -48.0,
+          3.8146972514141453e-07
+        ],
+        [
+          39.9995002746582,
+          48.0,
+          2.4999984741210923
+        ]
+      ],
+      "triangles": 11824,
+      "native_source_sha256": "c8b7d0e3520a7615e1e04ea9628d26d5f4d1d6508f67e783b261970f84ffb55e",
+      "reference_sha256": "c0cecafacd62aac840012e25c48364af924318e06678f69a789ac1327c76559d",
+      "native_to_reference": {
+        "samples": 22720,
+        "max_mm": 0.010443537127634215,
+        "p99_mm": 0.009519985220380204
+      },
+      "reference_to_native": {
+        "samples": 9922,
+        "max_mm": 0.010699975724866782,
+        "p99_mm": 0.009159504310394924
+      },
+      "relative_volume_difference": 0.00015038725371744311,
+      "surface_comparison_pass": true,
+      "print_stl_sha256": "992e3f1d4e6c708155129f651bffb29cae8ffea10237358fa6be79d396820cda"
+    },
+    "fascia": {
+      "watertight": true,
+      "winding_consistent": true,
+      "connected_solids": 1,
+      "volume_mm3": 8274.44773814421,
+      "bounds_mm": [
+        [
+          -36.0,
+          -27.399999618530273,
+          0.0
+        ],
+        [
+          36.0,
+          -0.0,
+          9.799999237060547
+        ]
+      ],
+      "triangles": 29428,
+      "native_source_sha256": "0a264c73699dde68bd73470d90c56387092efb7f592ee04258fb1c9fd5fdcc84",
+      "reference_sha256": "a616e305056fc59a6772810a0cc0f3f50703d4857b44ac5ee0a3a2146bf1ead5",
+      "native_to_reference": {
+        "samples": 49138,
+        "max_mm": 0.01172922835659353,
+        "p99_mm": 0.00805941904306636
+      },
+      "reference_to_native": {
+        "samples": 7471,
+        "max_mm": 0.012965679168701172,
+        "p99_mm": 0.007263926339955576
+      },
+      "relative_volume_difference": -1.0051492398492357e-05,
+      "surface_comparison_pass": true,
+      "print_stl_sha256": "554ba6a4a3c42c5d61f1ffaf96b342215f32943c6e97b4912b3a181deb3fe00a"
+    }
+  },
+  "status": "PASS"
+}

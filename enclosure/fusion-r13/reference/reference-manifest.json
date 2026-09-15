@@ -1,0 +1,21 @@
+{
+  "carrier-case.scad": "4531ee58aa448ceb6a8686a38cc279357e2b913e9a52384ae681c15a8758413c",
+  "carrier-interface.scad": "645127e0effdb7c1fed8978f7d0312136b530cf465ddc3ba7a8aa9584ee016e4",
+  "verify_reference.py": "960d23d72b06231d0fb280a342ab7054536162e0c61b269ca4ab42d56358e73f",
+  "verify_running_clearance.py": "73fe8aa45482ee7492bd44d571b404359f965a57993564248372b51b86f609aa",
+  "geometry-contract.json": "8d9c333333310a1c3c4c004590326b7b974055f07d91e4af070f5e8e6f97dd26",
+  "export_reference.py": "ca7780e7b490b3b5a1dd2742b58c5fa92939a60368544191fd11f56c1143d1cd",
+  "fit-verification.json": "7f9874e066741a7a4ae35eb564d4a64a0780356dde2a0d08856bf8f5161a14c9",
+  "running-clearance-verification.json": "3197c788e18c36f0c8e7d9d322d1edf8a24a3b2feb786f69359723a129089208",
+  "carrier-bottom.stl": "8704ed2ae37f5a7c59a7f54089c8778bcc285769dc54e45c8646a83ba81bdda5",
+  "carrier-top.stl": "a42e89d5b2799d57dc4f005fc08a8733ebbdf48a7a2b8aec52c0c92c01de22bc",
+  "carrier-retainer.stl": "c0cecafacd62aac840012e25c48364af924318e06678f69a789ac1327c76559d",
+  "probe-fascia.stl": "a616e305056fc59a6772810a0cc0f3f50703d4857b44ac5ee0a3a2146bf1ead5",
+  "joint-coupon-bottom.stl": "cf26e005e4af6eb09a8fd4a05162f2260939c06204cef4b32808e1a91f255fe7",
+  "joint-coupon-top.stl": "da335eb4a46f14da0beaffcb620a94ae513199d06f1e01e1e0dcbda46ed2f7fe",
+  "joint-coupon-fascia.stl": "efb80b6c9233ababc6cde465fe42e9b9f5a80344b3ab422df85ee40e1196e665",
+  "fit-coupon.stl": "9eee06274f194beb706cf7037c0d22a6a6fc810ac7048a739b63924f9b1dd789",
+  "insert-coupon.stl": "ae7ea4d04560875b8cd0fe6083c8da4c2cd6aeab0f6031d84b585f22d1df8b9e",
+  "mount-coupon.stl": "a810f0075a2ddfc11419c7194a6870bd8d4baaf6c536a2e59d94e9feee625fee",
+  "README.md": "eb1dd54dd44d0d556bbeefdf1dba77ca1843bf6028f92c83a64e2bb5771aadd0"
+}

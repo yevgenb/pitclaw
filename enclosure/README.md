@@ -1,18 +1,19 @@
 # Pit Claw 3D printed parts
 
-The controller enclosure is [Fusion r12](fusion-r12/README.md): a 104 × 86 ×
+The controller enclosure is [Fusion r13](fusion-r13/README.md): a 104 × 86 ×
 44.9 mm case with a top bezel, bottom shell, internal display retainer and
-removable probe fascia with continuous captured guides. Four internal M3 inserts provide a 72 × 74 mm mounting
-pattern with screw access from underneath.
+removable probe fascia with fitted captured guides. All sixteen insert pilots
+are Ø4.2 mm; the full parts include the accepted guide and seam adjustments.
+Four internal M3 inserts provide a 72 × 74 mm mounting pattern with screw access
+from underneath.
 
-- [Print package and editable Fusion model](fusion-r12/pitclaw-enclosure-r12.zip)
-- [Print settings, coupons, hardware and assembly](fusion-r12/README.md)
-- [Native Fusion design](fusion-r12/pitclaw-enclosure-r12.f3d)
-- [Mounting interface](fusion-r12/mount-interface.json)
-- [Independent OpenSCAD reference and checks](fusion-r12/reference/README.md)
-- [Adjusted clamped fit-test kit](fusion-r12/fit-test/joint-fit-test.zip) and
-  [test instructions](fusion-r12/fit-test/README.md) for checking guide clearance and seating
-  before changing the full enclosure.
+- [Print package and editable Fusion model](fusion-r13/pitclaw-enclosure-r13.zip)
+- [Print settings, coupons, hardware and assembly](fusion-r13/README.md)
+- [Native Fusion design](fusion-r13/pitclaw-enclosure-r13.f3d)
+- [Mounting interface](fusion-r13/mount-interface.json)
+- [Independent OpenSCAD reference and checks](fusion-r13/reference/README.md)
+- [Matching joint coupons](fusion-r13/README.md#coupons) for checking the same guide,
+  seam and insert geometry used by the complete enclosure.
 
 Only the latest controller enclosure is kept in the working tree. Older designs
 remain in Git history. The CAD checks pass; physical fit, printed joint strength
@@ -28,7 +29,7 @@ controller enclosure. Use [bbq-fan-assembly.scad](bbq-fan-assembly.scad),
 Open the fan source in OpenSCAD, select the desired `part`, render and export in
 millimeters. Print the blower housing open-side-up and the pipe adapter upright.
 Check fit with the actual fan, servo and smoker intake. Its geometry is separate
-from the r12 controller fit verification.
+from the r13 controller fit verification.
 
 ### Hardware
 

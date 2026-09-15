@@ -122,7 +122,7 @@ values = {
     "carrier_component_boxes": [c['xywh_height_mm'] for c in component_boxes],
     "carrier_component_refs": [c['ref'] for c in component_boxes],
 }
-scad = ROOT.parents[1] / "enclosure/fusion-r12/reference/carrier-interface.scad"
+scad = ROOT.parents[1] / "enclosure/fusion-r13/reference/carrier-interface.scad"
 scad.parent.mkdir(parents=True, exist_ok=True)
 scad.write_text("// Generated from carrier CAD by export_enclosure_interface.py. Do not hand-edit.\n"
                 + "".join(f"{k} = {json.dumps(v)};\n" for k,v in values.items()))
