@@ -1,0 +1,188 @@
+{
+  "status": "PASS: 4.2mm candidate pilots, unchanged screw passages and controls",
+  "scope": "Diameters measured from actual print-oriented STL sections; no retention-force claim.",
+  "sources_sha256": {
+    "bottom.stl": "cf26e005e4af6eb09a8fd4a05162f2260939c06204cef4b32808e1a91f255fe7",
+    "control-bottom.stl": "d4e00c959db722c783a9f32b00f917b3606625a88d542f613da7c6f76167b299",
+    "control-top.stl": "ff69b0adc87ee99c61c9fb03d5af93d5c927213ceda30ca941481768e6f4e678",
+    "top.stl": "da335eb4a46f14da0beaffcb620a94ae513199d06f1e01e1e0dcbda46ed2f7fe"
+  },
+  "measurements": [
+    {
+      "file": "bottom.stl",
+      "feature": "carrier insert pilot",
+      "print_coordinates_mm": [
+        -1,
+        0,
+        3
+      ],
+      "diameter_mm": 4.199999928474426,
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "bottom.stl",
+      "feature": "carrier insert pilot",
+      "print_coordinates_mm": [
+        -1,
+        0,
+        5
+      ],
+      "diameter_mm": 4.199999928474426,
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "bottom.stl",
+      "feature": "carrier insert pilot",
+      "print_coordinates_mm": [
+        -1,
+        0,
+        7
+      ],
+      "diameter_mm": 4.199999928474426,
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "bottom.stl",
+      "feature": "closure insert pilot",
+      "print_coordinates_mm": [
+        11.5,
+        9,
+        23
+      ],
+      "diameter_mm": 4.200000762939453,
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "bottom.stl",
+      "feature": "closure insert pilot",
+      "print_coordinates_mm": [
+        11.5,
+        9,
+        25
+      ],
+      "diameter_mm": 4.200000762939453,
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "bottom.stl",
+      "feature": "closure insert pilot",
+      "print_coordinates_mm": [
+        11.5,
+        9,
+        27
+      ],
+      "diameter_mm": 4.200000762939453,
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "bottom.stl",
+      "feature": "accessory mount insert pilot",
+      "print_coordinates_mm": [
+        9.5,
+        0,
+        3
+      ],
+      "diameter_mm": 4.200000286102295,
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "bottom.stl",
+      "feature": "accessory mount insert pilot",
+      "print_coordinates_mm": [
+        9.5,
+        0,
+        5
+      ],
+      "diameter_mm": 4.200000286102295,
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "bottom.stl",
+      "feature": "accessory mount insert pilot",
+      "print_coordinates_mm": [
+        9.5,
+        0,
+        7
+      ],
+      "diameter_mm": 4.200000286102295,
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "top.stl",
+      "feature": "retainer insert pilot",
+      "print_coordinates_mm": [
+        9,
+        3,
+        8
+      ],
+      "diameter_mm": 4.200000286102295,
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "top.stl",
+      "feature": "retainer insert pilot",
+      "print_coordinates_mm": [
+        9,
+        3,
+        10
+      ],
+      "diameter_mm": 4.200000286102295,
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "top.stl",
+      "feature": "retainer insert pilot",
+      "print_coordinates_mm": [
+        9,
+        3,
+        12
+      ],
+      "diameter_mm": 4.200000286102295,
+      "expected_diameter_mm": 4.2
+    },
+    {
+      "file": "top.stl",
+      "feature": "closure screw passage",
+      "print_coordinates_mm": [
+        11.5,
+        -9,
+        10
+      ],
+      "diameter_mm": 3.3999996185302734,
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "bottom.stl",
+      "feature": "external mounting screw passage",
+      "print_coordinates_mm": [
+        9.5,
+        0,
+        1.5
+      ],
+      "diameter_mm": 3.3999996185302734,
+      "expected_diameter_mm": 3.4
+    },
+    {
+      "file": "control-bottom.stl",
+      "feature": "control closure insert pilot",
+      "print_coordinates_mm": [
+        11.5,
+        9,
+        25
+      ],
+      "diameter_mm": 4.0,
+      "expected_diameter_mm": 4.0
+    },
+    {
+      "file": "control-top.stl",
+      "feature": "control retainer insert pilot",
+      "print_coordinates_mm": [
+        9,
+        3,
+        10
+      ],
+      "diameter_mm": 4.0,
+      "expected_diameter_mm": 4.0
+    }
+  ]
+}

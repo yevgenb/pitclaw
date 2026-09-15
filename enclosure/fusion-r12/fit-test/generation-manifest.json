@@ -83,22 +83,17 @@
     "stl/mount-coupon.stl": "eee03214c7f2d9f7df398c2b995fe520e1c859a3fa65233ae8b91f7fae66246e",
     "stl/probe-fascia.stl": "df17385377ab151df0f7b486a480097f8db721b5322288b0a527480b6c468a1d"
   },
-  "retained_fit_stl_sha256": {
-    "top.stl": "984ce28f3d8ba8507683161b590e9f6da12e112043593cecaf37c7d5180bf1a9",
-    "fascia.stl": "efb80b6c9233ababc6cde465fe42e9b9f5a80344b3ab422df85ee40e1196e665",
-    "control-bottom.stl": "d4e00c959db722c783a9f32b00f917b3606625a88d542f613da7c6f76167b299",
-    "control-top.stl": "ff69b0adc87ee99c61c9fb03d5af93d5c927213ceda30ca941481768e6f4e678"
-  },
-  "bottom_only": true,
+  "retained_fit_stl_sha256": {},
+  "bottom_only": false,
   "source_sha256": {
-    "candidate.scad": "403067363459b69a413a9312c744886f40fa17832a49108ba1ed6165092d7a43",
+    "candidate.scad": "a839dc2903acecc7a2c3922405676633c65c926ab2e5d0c4f8a002b1205e9545",
     "control.scad": "8d09dfcb16905414399b2522c31586c25eeafcf0f9ba4d8d4d908f370a6e7355",
     "carrier-interface.scad": "645127e0effdb7c1fed8978f7d0312136b530cf465ddc3ba7a8aa9584ee016e4"
   },
   "outputs_sha256": {
-    "bottom.stl": "ff05da8db340410bdd9f22ae12888238b031dfde7d8cd48343e51716db1811a6",
+    "bottom.stl": "cf26e005e4af6eb09a8fd4a05162f2260939c06204cef4b32808e1a91f255fe7",
     "control-bottom.stl": "d4e00c959db722c783a9f32b00f917b3606625a88d542f613da7c6f76167b299",
-    "top.stl": "984ce28f3d8ba8507683161b590e9f6da12e112043593cecaf37c7d5180bf1a9",
+    "top.stl": "da335eb4a46f14da0beaffcb620a94ae513199d06f1e01e1e0dcbda46ed2f7fe",
     "fascia.stl": "efb80b6c9233ababc6cde465fe42e9b9f5a80344b3ab422df85ee40e1196e665",
     "control-top.stl": "ff69b0adc87ee99c61c9fb03d5af93d5c927213ceda30ca941481768e6f4e678"
   }

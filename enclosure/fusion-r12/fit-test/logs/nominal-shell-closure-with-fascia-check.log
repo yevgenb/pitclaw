@@ -10,10 +10,10 @@ ECHO: "rear components/antenna/cables, all plug overmolds and most connector Z."
 Geometries in cache: 213
 Geometry cache size in bytes: 1719592
 CGAL Polyhedrons in cache: 61
-CGAL cache size in bytes: 13319750
-Total rendering time: 0:00:00.152
+CGAL cache size in bytes: 13314250
+Total rendering time: 0:00:00.162
    Top level object is a 3D object (manifold):
    Status:     NoError
-   Genus:      -23
-   Vertices:      117
-   Facets:        138
+   Genus:      -19
+   Vertices:       93
+   Facets:        106

@@ -1,9 +1,9 @@
 {
   "status": "PASS: measured running gaps and two support lands",
   "sources_sha256": {
-    "bottom.stl": "ff05da8db340410bdd9f22ae12888238b031dfde7d8cd48343e51716db1811a6",
+    "bottom.stl": "cf26e005e4af6eb09a8fd4a05162f2260939c06204cef4b32808e1a91f255fe7",
     "fascia.stl": "efb80b6c9233ababc6cde465fe42e9b9f5a80344b3ab422df85ee40e1196e665",
-    "sources/candidate.scad": "403067363459b69a413a9312c744886f40fa17832a49108ba1ed6165092d7a43"
+    "sources/candidate.scad": "a839dc2903acecc7a2c3922405676633c65c926ab2e5d0c4f8a002b1205e9545"
   },
   "verifier_sha256": "ff5be2d1b1be2d9ab66bb508f8149657a13a80bd3df258a864da21098854d4b4",
   "scope": "Actual exported coupon sections; full-model nominal geometry is checked separately.",

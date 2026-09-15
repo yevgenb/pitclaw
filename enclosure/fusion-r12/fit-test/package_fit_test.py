@@ -27,10 +27,11 @@ def main():
              'guide-clearance.svg', 'bottom.stl', 'top.stl', 'fascia.stl',
              'control-bottom.stl', 'control-top.stl', 'fit-parameters.json',
              'fit-verification.json', 'generation-manifest.json']
-    section_report = HERE / 'running-clearance-verification.json'
-    if section_report.exists():
-        assert json.loads(section_report.read_text())['status'].startswith('PASS')
-        files.append(section_report.name)
+    for name in ['running-clearance-verification.json', 'insert-hole-verification.json']:
+        section_report = HERE / name
+        if section_report.exists():
+            assert json.loads(section_report.read_text())['status'].startswith('PASS')
+            files.append(section_report.name)
     manifest = {
         'scope': 'Fit-test coupons only; released R12 enclosure unchanged',
         'geometry_checks': len(report['geometry_checks']),

@@ -31,11 +31,11 @@ locating_lip_height = 2;
 locating_lip_wall = 1.2;
 locating_lip_clearance = 0.3;
 
-// Common short insert: Ruthex RX-M3Sx4.0, OD4.6, L4.0, pilot4.0.
+// User M3 insert: measured OD4.0..5.0; L4.0 assumed; trial pilot4.2.
 // Print an insertion coupon in the chosen material before committing the case.
-insert_od = 4.6;
+insert_od = 5.0; // user-measured maximum knurl diameter
 insert_length = 4;
-insert_pilot = 4.0;
+insert_pilot = 4.2; // selected fit-test pilot for user inserts
 insert_bore_depth = 5;
 insert_boss_od = 9;
 carrier_standoff = 5;
@@ -1014,7 +1014,7 @@ module bottom_shell() {
                 box_bounds(35,40.7,28,37,2.5,7.5);
         }
         for(x=[-36,36],y=[-37,37]) {
-            translate([x,y,2.5]) cylinder(d=4,h=5.02);
+            translate([x,y,2.5]) cylinder(d=4.2,h=5.02);
             translate([x,y,-.02]) cylinder(d=3.4,h=2.54);
         }
         // Clear the heat-tool approach above the front guide's functional stop.
@@ -1025,7 +1025,7 @@ module bottom_shell() {
 }
 module mount_screw_collision() {
     // Shaft/witness only; future bracket and external screwhead are unspecified.
-    // The4.6mm insert's interference with its4.0mm pilot is intentional heat-fit.
+    // The user insert's5.0mm maximum OD interferes with the4.2mm pilot for heat-setting.
     intersection() {
         for(x=[-36,36],y=[-37,37])
             translate([x,y,-.1]) cylinder(d=3.2,h=7.6);

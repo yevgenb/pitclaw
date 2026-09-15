@@ -47,7 +47,8 @@
     "fascia_rear_floor": 0.2,
     "lip_straight_and_corner": 0.3,
     "guide_running_lower": 0.3,
-    "guide_support_land_lower": 0
+    "guide_support_land_lower": 0,
+    "insert_pilot_diameter": 4.2
   },
   "candidate_datums_mm": {
     "guide_bearing_z": 3.8,
@@ -69,10 +70,11 @@
     "rear_support_land_y": [
       -44,
       -43
-    ]
+    ],
+    "insert_pilot_depth_mm": 5
   },
   "closure_hardware": {
-    "insert": "one M3S x4 heat-set insert in tall closure post",
+    "insert": "User M3 heat-set insert, measured OD 4.0\u20135.0 mm; 4 mm length assumed as before",
     "post_xy_mm": [
       38,
       -28
@@ -89,7 +91,10 @@
     "not_the_lower_mount_boss_xy_mm": [
       36,
       -37
-    ]
+    ],
+    "insert_max_od_mm": 5.0,
+    "insert_min_od_mm": 4.0,
+    "pilot_diameter_mm": 4.2
   },
   "comparison_sequence": [
     "Assemble control bottom/top without fascia using the actual closure insert/screw.",
@@ -102,7 +107,7 @@
     "Guide offsets are coupled: upward displacement plus absolute lateral displacement must remain within the vertical roof allowance.",
     "Physical fit must be chosen before any production geometry is updated."
   ],
-  "iteration": "Side clearance increased to 0.30 mm after filing feedback; reprint bottom only",
+  "iteration": "Heat-set pilot diameter 4.20 mm for user inserts measured 4.0\u20135.0 mm OD",
   "guide_floor_profile_yz_mm": [
     [
       -52.1,
@@ -174,10 +179,10 @@
     "bearing_height_established_before_probe_engagement": true
   },
   "reprint_files": [
-    "bottom.stl"
+    "bottom.stl",
+    "top.stl"
   ],
   "reuse_files": [
-    "top.stl",
     "fascia.stl",
     "control-bottom.stl",
     "control-top.stl"

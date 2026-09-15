@@ -39,6 +39,11 @@ def generate_sources():
         control=control.replace(old,new)
     candidate=control
     edits=[
+        ('// Common short insert: Ruthex RX-M3Sx4.0, OD4.6, L4.0, pilot4.0.', '// User M3 insert: measured OD4.0..5.0; L4.0 assumed; trial pilot4.2.'),
+        ("// The4.6mm insert's interference with its4.0mm pilot is intentional heat-fit.", "// The user insert's5.0mm maximum OD interferes with the4.2mm pilot for heat-setting."),
+        ('insert_od = 4.6;', 'insert_od = 5.0; // user-measured maximum knurl diameter'),
+        ('insert_pilot = 4.0;', 'insert_pilot = 4.2; // selected fit-test pilot for user inserts'),
+        ('translate([x,y,2.5]) cylinder(d=4,h=5.02);', 'translate([x,y,2.5]) cylinder(d=4.2,h=5.02);'),
         ('xz_prism([[32.7,3.8],[36.4,3.8],[36.4,5.9],[32.7,9.6]],-52.1,-43);',
          'xz_prism([[32.7,3.8],[36.3,3.8],[36.3,41.8+sqrt(2)*.25-36.3],[32.7,41.8+sqrt(2)*.25-32.7]],-52.1,-43);'),
         ('box_bounds(-33,33,-53,-42.5,0,27.3);','box_bounds(-33.1,33.1,-53,-42.5,0,27.4);'),
@@ -126,6 +131,8 @@ def main():
         if result.returncode:raise RuntimeError('Candidate fit verification failed')
         measured=subprocess.run([sys.executable,str(HERE/'verify_running_clearance.py')])
         if measured.returncode:raise RuntimeError('Exported running-clearance measurement failed')
+        holes=subprocess.run([sys.executable,str(HERE/'verify_insert_holes.py')])
+        if holes.returncode:raise RuntimeError('Exported insert pilot measurement failed')
     if kept and kept!={n:sha(HERE/n) for n in keep_names}:raise RuntimeError("A retained fit-test STL changed")
     after=protect()
     if before!=after:raise RuntimeError('A protected release artifact changed during generation')

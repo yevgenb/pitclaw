@@ -1,8 +1,19 @@
 # Clamped enclosure-fit test
 
-This update increases the guide's outer-side clearance from 0.20 to 0.30 mm,
-following the improved fit after light filing. **Reprint only `bottom.stl`**
-if you already printed the fit-test set: its `top.stl` and `fascia.stl` are unchanged.
+The candidate now uses **4.2 mm heat-set pilot holes, 5 mm deep**, for the
+user's inserts measured at **5 mm maximum and 4 mm minimum outside diameter**.
+The new pilots are in `bottom.stl` and `top.stl`. For the guide/closure test,
+reprint the bottom; the existing top can still be used because its closure
+screw passage is unchanged. Reprint the top when testing its retainer-insert
+pilot. The fascia and both control parts are unchanged. Screw-through holes
+remain 3.4 mm.
+
+The insert length remains assumed to be 4 mm, as in the previous fit kit.
+The selected pilot has 0.2 mm diametral clearance over the narrow end and
+0.8 mm diametral interference with the maximum knurl diameter. This is a
+heat-setting fit; grip must be checked after the plastic cools. The 9 mm bosses
+retain 2 mm of radial plastic around the 5 mm maximum insert diameter, and
+the 10 mm accessory-mount bosses retain 2.5 mm.
 
 The sloping upper gap stays at 0.40 mm measured normal to the face. The underside
 retains 0.30 mm running
@@ -21,10 +32,12 @@ this physical fit check.
 | Top/bottom closure plane | 0 mm gap | 0 mm gap |
 | Fascia side and top edges | 0.20 mm | 0.20 mm |
 | Fascia rear floor joint | 0.20 mm | 0.20 mm |
-| Guide outer-side clearance | 0.20 mm | 0.30 mm |
+| Guide outer-side clearance | 0.30 mm | 0.30 mm |
 | Clearance normal to the sloping guide roof | 0.40 mm | 0.40 mm |
 | Clearance below the rail's running areas | 0.30 mm | 0.30 mm |
 | Locating-lip corner clearance | 0.30 mm | 0.30 mm |
+| Heat-set pilot diameter | 4.0 mm | 4.2 mm |
+| Heat-set pilot depth | 5 mm | 5 mm |
 
 These are CAD dimensions, not measurements extracted from the photograph.
 The support lands remain at Z3.8, the stop at Y−43, the probe seating face at
@@ -44,8 +57,8 @@ a second support, approximately 6.1 mm away, to control pitching.
 
 ## Parts in the test kit
 
-- `bottom.stl`: revised receiver with upper/lower relief and actual tall closure post.
-- `top.stl`: reuse the matching top fragment with the existing screw recess and corrected
+- `bottom.stl`: revised receiver and tall closure post with 4.2 mm insert pilots.
+- `top.stl`: matching top fragment with 4.2 mm retainer-insert pilots, existing screw recess and corrected
   locating-lip corner.
 - `fascia.stl`: unchanged from the first fit-test set.
 
@@ -54,7 +67,8 @@ same printer, material and profile as the photographed parts. The bottom and
 top footprints are 33 × 30 mm. The fascia is 26 × 27.4 × 9.8 mm in its supplied
 print orientation. These are test fragments, not complete enclosure parts.
 
-Use **one short M3 × 4 mm heat-set insert** and **one M3 × 18 mm closure screw**.
+Use **one 4 mm-long M3 heat-set insert, measured OD 4–5 mm**, and
+**one M3 × 18 mm closure screw**.
 Install the insert in the **tall closure post**, whose top reaches the shell
 seam. Leave the nearby low accessory-mount boss empty for this test. The screw
 passes through the top fragment and enters the tall post from above.
@@ -91,6 +105,9 @@ The revised candidate is checked for nominal closure, the lower starting
 position and ramp-up path, and support at both lands. All five coupon meshes
 are single watertight solids; all 37 geometry checks pass. The released Fusion
 model, reference and production meshes were checked unchanged, as were the
-test kit's top, fascia and both control meshes.
+test kit's fascia and both control meshes. Candidate bottom/top pilots are
+larger; the surrounding geometry and all guide clearances are unchanged.
+The exported pilots were also measured at multiple depths to confirm 4.2 mm;
+screw passages and control pilots were checked unchanged.
 Sources and the regeneration/verification scripts are kept in this repository's
 `fit-test/` directory; the ZIP contains the printable test kit and its records.

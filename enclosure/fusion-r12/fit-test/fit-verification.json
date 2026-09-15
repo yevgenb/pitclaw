@@ -1,9 +1,9 @@
 {
   "status": "PASS: FIT PROTOTYPE",
   "revision": "bounded-clamped-fit-test",
-  "created_utc": "2026-09-15T02:44:17.671020+00:00",
+  "created_utc": "2026-09-15T16:21:40.287630+00:00",
   "sources_sha256": {
-    "enclosure/fusion-r12/fit-test/sources/candidate.scad": "403067363459b69a413a9312c744886f40fa17832a49108ba1ed6165092d7a43",
+    "enclosure/fusion-r12/fit-test/sources/candidate.scad": "a839dc2903acecc7a2c3922405676633c65c926ab2e5d0c4f8a002b1205e9545",
     "enclosure/fusion-r12/fit-test/sources/control.scad": "8d09dfcb16905414399b2522c31586c25eeafcf0f9ba4d8d4d908f370a6e7355",
     "enclosure/fusion-r12/fit-test/sources/carrier-interface.scad": "645127e0effdb7c1fed8978f7d0312136b530cf465ddc3ba7a8aa9584ee016e4",
     "hardware/carrier-revb/mechanical/enclosure-interface.json": "dfd9c0abf2a2648a673ce457d45b12c425651a65cd0b414647fef36a81bab82e",
@@ -93,7 +93,7 @@
       "log": "logs/nominal-electronics-closure-check.log",
       "log_sha256": "27477ddd6e7e422a21159ea81e62c6adf225e249d1912907f48408d05c518228",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.3
+      "elapsed_seconds": 0.31
     },
     "nominal-carrier-installation-check": {
       "name": "nominal-carrier-installation-check",
@@ -165,7 +165,7 @@
       "log": "logs/nominal-fascia-fit-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.38
+      "elapsed_seconds": 0.4
     },
     "nominal-lid-closing-check": {
       "name": "nominal-lid-closing-check",
@@ -199,42 +199,6 @@
       ],
       "returncode": 1,
       "log": "logs/nominal-lid-closing-check.log",
-      "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
-      "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.37
-    },
-    "nominal-fascia-lift-check": {
-      "name": "nominal-fascia-lift-check",
-      "part": "fascia-lift-check",
-      "witness_inputs_mm": {
-        "check_pcb_thickness": 1.6,
-        "check_pd_thickness": 1.6,
-        "check_pd_spacer_height": 3,
-        "check_board_edge_growth": 0,
-        "check_module_shift_x": 0
-      },
-      "command": [
-        "arch",
-        "-x86_64",
-        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
-        "-o",
-        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r12/fit-test/logs/nominal-fascia-lift-check-intersection.stl",
-        "-D",
-        "part=\"fascia-lift-check\"",
-        "-D",
-        "check_pcb_thickness=1.6",
-        "-D",
-        "check_pd_thickness=1.6",
-        "-D",
-        "check_pd_spacer_height=3",
-        "-D",
-        "check_board_edge_growth=0",
-        "-D",
-        "check_module_shift_x=0",
-        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r12/fit-test/sources/candidate.scad"
-      ],
-      "returncode": 1,
-      "log": "logs/nominal-fascia-lift-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
       "elapsed_seconds": 0.35
@@ -271,10 +235,10 @@
       ],
       "returncode": 0,
       "log": "logs/nominal-shell-closure-check.log",
-      "log_sha256": "a9bb0d884b55c16e15d09a2873dd6d196e21f540d4a64f51e56f5fe3bcc07ca0",
+      "log_sha256": "c0cffd0526a892e5215ae3b3b6e89d4ac3ff29cbd6e9e89ec4a72c39c1cef5b0",
       "intentional_seam_contact": {
         "file": "logs/nominal-shell-closure-check-intersection.stl",
-        "sha256": "813773b4191198f20f102a4af40692321099397182bc3dfa32fe6fc8b34fe0ae",
+        "sha256": "2f4882e3a681151a36bd53d6dc3e71ee2768ece3d14d485657dfaf171263ceea",
         "bounds_mm": [
           [
             -43.0,
@@ -287,15 +251,51 @@
             27.6
           ]
         ],
-        "triangles": 508,
-        "signed_volume_mm3": -1.2126596023639044e-11,
+        "triangles": 520,
+        "signed_volume_mm3": -2.4253192047278085e-12,
         "z_thickness_mm": 0.0,
         "maximum_distance_from_seam_mm": 0.0,
         "seam_z_mm": 27.6,
         "numeric_tolerance": 1e-05
       },
       "result": "PASS: intentional coplanar seam contact",
-      "elapsed_seconds": 1.38
+      "elapsed_seconds": 1.04
+    },
+    "nominal-fascia-lift-check": {
+      "name": "nominal-fascia-lift-check",
+      "part": "fascia-lift-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.6,
+        "check_pd_thickness": 1.6,
+        "check_pd_spacer_height": 3,
+        "check_board_edge_growth": 0,
+        "check_module_shift_x": 0
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r12/fit-test/logs/nominal-fascia-lift-check-intersection.stl",
+        "-D",
+        "part=\"fascia-lift-check\"",
+        "-D",
+        "check_pcb_thickness=1.6",
+        "-D",
+        "check_pd_thickness=1.6",
+        "-D",
+        "check_pd_spacer_height=3",
+        "-D",
+        "check_board_edge_growth=0",
+        "-D",
+        "check_module_shift_x=0",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r12/fit-test/sources/candidate.scad"
+      ],
+      "returncode": 1,
+      "log": "logs/nominal-fascia-lift-check.log",
+      "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
+      "result": "PASS: empty intersection",
+      "elapsed_seconds": 0.36
     },
     "nominal-mount-screw-check": {
       "name": "nominal-mount-screw-check",
@@ -331,7 +331,7 @@
       "log": "logs/nominal-mount-screw-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.27
+      "elapsed_seconds": 0.28
     },
     "nominal-mount-tool-check": {
       "name": "nominal-mount-tool-check",
@@ -401,10 +401,10 @@
       ],
       "returncode": 0,
       "log": "logs/nominal-shell-closure-with-fascia-check.log",
-      "log_sha256": "6e299147a4ffb9ce6457388684aa19520f92643b7e3e705b6f9a5108a145173a",
+      "log_sha256": "288a8dac6d4a762d9758f8dd87d763887971564c48f6d20e47e7fbfbaeae2148",
       "intentional_seam_contact": {
         "file": "logs/nominal-shell-closure-with-fascia-check-intersection.stl",
-        "sha256": "7780f58ec37b2187247272999a9a4c22927adea39674226af8de2284c08f9385",
+        "sha256": "c9d004103b3b51cb7ae279a6d8a2ac492c5105b47f09406d5877ac8d0ccefd8e",
         "bounds_mm": [
           [
             -43.0,
@@ -417,15 +417,15 @@
             27.6
           ]
         ],
-        "triangles": 138,
-        "signed_volume_mm3": 1.4248750327775875e-11,
+        "triangles": 106,
+        "signed_volume_mm3": 1.574562702444382e-11,
         "z_thickness_mm": 0.0,
         "maximum_distance_from_seam_mm": 0.0,
         "seam_z_mm": 27.6,
         "numeric_tolerance": 1e-05
       },
       "result": "PASS: intentional coplanar seam contact",
-      "elapsed_seconds": 0.29
+      "elapsed_seconds": 0.3
     },
     "guide-capture-front-check": {
       "name": "guide-capture-front-check",
@@ -459,7 +459,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-capture-front-check.log",
-      "log_sha256": "7a72da1ea64b22825700c030539b4089c9c21a8e906f8c0458d68c7b0ab98da2",
+      "log_sha256": "cd0aab9cbec11523a3823232a506bd3fef819dcfb00a4d1bc1a40d1ab2faa115",
       "contact": {
         "station_y_mm": -51.8,
         "translation_z_mm": 0.7,
@@ -474,7 +474,7 @@
         "lid_present": false
       },
       "result": "PASS: both guides block upward motion",
-      "elapsed_seconds": 0.23
+      "elapsed_seconds": 0.24
     },
     "guide-capture-early-check": {
       "name": "guide-capture-early-check",
@@ -508,7 +508,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-capture-early-check.log",
-      "log_sha256": "0494cf64dd5ff23ecead04e607baf127804898e7c534aa49ebcc598eddd15aff",
+      "log_sha256": "c917776781a2bae9bf17c49d0b6ea5e9eeadca64741c19dcc1e8bca868be74ef",
       "contact": {
         "station_y_mm": -50.8,
         "translation_z_mm": 0.7,
@@ -523,7 +523,7 @@
         "lid_present": false
       },
       "result": "PASS: both guides block upward motion",
-      "elapsed_seconds": 0.23
+      "elapsed_seconds": 0.24
     },
     "guide-capture-midfront-check": {
       "name": "guide-capture-midfront-check",
@@ -557,7 +557,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-capture-midfront-check.log",
-      "log_sha256": "0494cf64dd5ff23ecead04e607baf127804898e7c534aa49ebcc598eddd15aff",
+      "log_sha256": "75a28b9296a124443c1f88d6e9bd555f6458cd330c82cbb73a5c4bfd681fcd62",
       "contact": {
         "station_y_mm": -49,
         "translation_z_mm": 0.7,
@@ -606,7 +606,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-capture-middle-check.log",
-      "log_sha256": "0494cf64dd5ff23ecead04e607baf127804898e7c534aa49ebcc598eddd15aff",
+      "log_sha256": "cd0aab9cbec11523a3823232a506bd3fef819dcfb00a4d1bc1a40d1ab2faa115",
       "contact": {
         "station_y_mm": -47,
         "translation_z_mm": 0.7,
@@ -621,7 +621,7 @@
         "lid_present": false
       },
       "result": "PASS: both guides block upward motion",
-      "elapsed_seconds": 0.23
+      "elapsed_seconds": 0.24
     },
     "guide-capture-rear-check": {
       "name": "guide-capture-rear-check",
@@ -655,7 +655,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-capture-rear-check.log",
-      "log_sha256": "0494cf64dd5ff23ecead04e607baf127804898e7c534aa49ebcc598eddd15aff",
+      "log_sha256": "c917776781a2bae9bf17c49d0b6ea5e9eeadca64741c19dcc1e8bca868be74ef",
       "contact": {
         "station_y_mm": -44,
         "translation_z_mm": 0.7,
@@ -704,7 +704,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-support-front-005-check.log",
-      "log_sha256": "f51d9e1d76f5f31c33a415d90cea7030fa896b9021e70269e6d02e8bdec557d3",
+      "log_sha256": "7bec1d1ee397b92a8b172bda9b9ff0892cf69c9bfdddef8d4a43e16b357a49a9",
       "contact": {
         "station_y_mm": -49.6,
         "translation_z_mm": -0.05,
@@ -719,7 +719,7 @@
         "lid_present": false
       },
       "result": "PASS: both lands support downward motion",
-      "elapsed_seconds": 0.23
+      "elapsed_seconds": 0.24
     },
     "guide-support-front-010-check": {
       "name": "guide-support-front-010-check",
@@ -753,7 +753,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-support-front-010-check.log",
-      "log_sha256": "a25acf8648d797f3ed08dab59b2bb93602e3fae3ca79c93940129ec55686fe4c",
+      "log_sha256": "7bec1d1ee397b92a8b172bda9b9ff0892cf69c9bfdddef8d4a43e16b357a49a9",
       "contact": {
         "station_y_mm": -49.6,
         "translation_z_mm": -0.1,
@@ -765,6 +765,55 @@
         "expected_volume_each_mm3": 0.10800000000000001,
         "volume_tolerance_mm3": 0.003,
         "witness_sha256": "a5fc6d597418c7ebe60670faee3923c755506edcb77a6e1b2d0569a01730b948",
+        "lid_present": false
+      },
+      "result": "PASS: both lands support downward motion",
+      "elapsed_seconds": 0.24
+    },
+    "guide-support-rear-010-check": {
+      "name": "guide-support-rear-010-check",
+      "part": "guide-support-rear-010-check",
+      "witness_inputs_mm": {
+        "check_pcb_thickness": 1.6,
+        "check_pd_thickness": 1.6,
+        "check_pd_spacer_height": 3,
+        "check_board_edge_growth": 0,
+        "check_module_shift_x": 0
+      },
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r12/fit-test/logs/guide-support-rear-010-check-intersection.stl",
+        "-D",
+        "part=\"guide-support-rear-010-check\"",
+        "-D",
+        "check_pcb_thickness=1.6",
+        "-D",
+        "check_pd_thickness=1.6",
+        "-D",
+        "check_pd_spacer_height=3",
+        "-D",
+        "check_board_edge_growth=0",
+        "-D",
+        "check_module_shift_x=0",
+        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r12/fit-test/sources/candidate.scad"
+      ],
+      "returncode": 0,
+      "log": "logs/guide-support-rear-010-check.log",
+      "log_sha256": "75a28b9296a124443c1f88d6e9bd555f6458cd330c82cbb73a5c4bfd681fcd62",
+      "contact": {
+        "station_y_mm": -43.5,
+        "translation_z_mm": -0.1,
+        "slice_depth_mm": 0.4,
+        "left_right_intersection_mm3": [
+          0.1080000032186524,
+          0.1080000032186524
+        ],
+        "expected_volume_each_mm3": 0.10800000000000001,
+        "volume_tolerance_mm3": 0.003,
+        "witness_sha256": "88a6c8bd16d6d2fc42076572149e28d0643fd956a41af86552d20e00d54839cf",
         "lid_present": false
       },
       "result": "PASS: both lands support downward motion",
@@ -802,7 +851,7 @@
       ],
       "returncode": 0,
       "log": "logs/guide-support-rear-005-check.log",
-      "log_sha256": "0494cf64dd5ff23ecead04e607baf127804898e7c534aa49ebcc598eddd15aff",
+      "log_sha256": "75a28b9296a124443c1f88d6e9bd555f6458cd330c82cbb73a5c4bfd681fcd62",
       "contact": {
         "station_y_mm": -43.5,
         "translation_z_mm": -0.05,
@@ -817,56 +866,7 @@
         "lid_present": false
       },
       "result": "PASS: both lands support downward motion",
-      "elapsed_seconds": 0.23
-    },
-    "guide-support-rear-010-check": {
-      "name": "guide-support-rear-010-check",
-      "part": "guide-support-rear-010-check",
-      "witness_inputs_mm": {
-        "check_pcb_thickness": 1.6,
-        "check_pd_thickness": 1.6,
-        "check_pd_spacer_height": 3,
-        "check_board_edge_growth": 0,
-        "check_module_shift_x": 0
-      },
-      "command": [
-        "arch",
-        "-x86_64",
-        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
-        "-o",
-        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r12/fit-test/logs/guide-support-rear-010-check-intersection.stl",
-        "-D",
-        "part=\"guide-support-rear-010-check\"",
-        "-D",
-        "check_pcb_thickness=1.6",
-        "-D",
-        "check_pd_thickness=1.6",
-        "-D",
-        "check_pd_spacer_height=3",
-        "-D",
-        "check_board_edge_growth=0",
-        "-D",
-        "check_module_shift_x=0",
-        "/Users/eugene.borokhov/Documents/Code/pitclaw/enclosure/fusion-r12/fit-test/sources/candidate.scad"
-      ],
-      "returncode": 0,
-      "log": "logs/guide-support-rear-010-check.log",
-      "log_sha256": "011124f99f93f41e723d0e1d2f926c104749ec654c03d64ab55a17cf3edd6a4a",
-      "contact": {
-        "station_y_mm": -43.5,
-        "translation_z_mm": -0.1,
-        "slice_depth_mm": 0.4,
-        "left_right_intersection_mm3": [
-          0.1080000032186524,
-          0.1080000032186524
-        ],
-        "expected_volume_each_mm3": 0.10800000000000001,
-        "volume_tolerance_mm3": 0.003,
-        "witness_sha256": "88a6c8bd16d6d2fc42076572149e28d0643fd956a41af86552d20e00d54839cf",
-        "lid_present": false
-      },
-      "result": "PASS: both lands support downward motion",
-      "elapsed_seconds": 0.23
+      "elapsed_seconds": 0.24
     },
     "low-stack-x-minus-0.2-carrier-installation-check": {
       "name": "low-stack-x-minus-0.2-carrier-installation-check",
@@ -902,7 +902,7 @@
       "log": "logs/low-stack-x-minus-0.2-carrier-installation-check.log",
       "log_sha256": "82b718cb4e7e35dd54a2070e0ae81716c55b2c1b011bac4c8349837104e17436",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.46
+      "elapsed_seconds": 0.47
     },
     "low-stack-x-minus-0.2-electronics-closure-check": {
       "name": "low-stack-x-minus-0.2-electronics-closure-check",
@@ -938,7 +938,7 @@
       "log": "logs/low-stack-x-minus-0.2-electronics-closure-check.log",
       "log_sha256": "e3f926cb217dce266350f6c0fe9af8e6ea9303c7ab60753a75152551211f3b87",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.29
+      "elapsed_seconds": 0.28
     },
     "low-stack-x-minus-0.2-fascia-fit-check": {
       "name": "low-stack-x-minus-0.2-fascia-fit-check",
@@ -974,7 +974,7 @@
       "log": "logs/low-stack-x-minus-0.2-fascia-fit-check.log",
       "log_sha256": "82b718cb4e7e35dd54a2070e0ae81716c55b2c1b011bac4c8349837104e17436",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.35
+      "elapsed_seconds": 0.36
     },
     "nominal-fascia-insertion-check": {
       "name": "nominal-fascia-insertion-check",
@@ -1082,7 +1082,7 @@
       "log": "logs/low-stack-x-plus-0.2-electronics-closure-check.log",
       "log_sha256": "bc7174d4f55b214063d75360f42686b75ff8b024166502701535e58328565353",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.28
+      "elapsed_seconds": 0.29
     },
     "low-stack-x-plus-0.2-fascia-fit-check": {
       "name": "low-stack-x-plus-0.2-fascia-fit-check",
@@ -1118,7 +1118,7 @@
       "log": "logs/low-stack-x-plus-0.2-fascia-fit-check.log",
       "log_sha256": "582b6c65cab97bdc03bef3a40784e8775afcf37c5351e59ae935e7f3c9ab1cc5",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.35
+      "elapsed_seconds": 0.36
     },
     "low-stack-x-minus-0.2-fascia-insertion-check": {
       "name": "low-stack-x-minus-0.2-fascia-insertion-check",
@@ -1154,7 +1154,7 @@
       "log": "logs/low-stack-x-minus-0.2-fascia-insertion-check.log",
       "log_sha256": "82b718cb4e7e35dd54a2070e0ae81716c55b2c1b011bac4c8349837104e17436",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 10.56
+      "elapsed_seconds": 10.65
     },
     "high-stack-x-minus-0.2-carrier-installation-check": {
       "name": "high-stack-x-minus-0.2-carrier-installation-check",
@@ -1190,7 +1190,7 @@
       "log": "logs/high-stack-x-minus-0.2-carrier-installation-check.log",
       "log_sha256": "c5474c9e1237516add4f38bf22ba0b82fcff1820b994c602a375bb0ca78b0da7",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.47
+      "elapsed_seconds": 0.46
     },
     "high-stack-x-minus-0.2-electronics-closure-check": {
       "name": "high-stack-x-minus-0.2-electronics-closure-check",
@@ -1226,7 +1226,7 @@
       "log": "logs/high-stack-x-minus-0.2-electronics-closure-check.log",
       "log_sha256": "36a4f4f0dc29d81a70f67d6371f1d621af42ee0685f6bd822613d27f58342697",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.28
+      "elapsed_seconds": 0.29
     },
     "high-stack-x-minus-0.2-fascia-fit-check": {
       "name": "high-stack-x-minus-0.2-fascia-fit-check",
@@ -1298,7 +1298,7 @@
       "log": "logs/low-stack-x-plus-0.2-fascia-insertion-check.log",
       "log_sha256": "582b6c65cab97bdc03bef3a40784e8775afcf37c5351e59ae935e7f3c9ab1cc5",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 10.62
+      "elapsed_seconds": 10.6
     },
     "high-stack-x-plus-0.2-carrier-installation-check": {
       "name": "high-stack-x-plus-0.2-carrier-installation-check",
@@ -1406,7 +1406,7 @@
       "log": "logs/high-stack-x-plus-0.2-fascia-fit-check.log",
       "log_sha256": "7bb6ae7d67d750dfc1f0a0595b6916722c2752087695c559c8cb329ac9f1e946",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 0.36
+      "elapsed_seconds": 0.37
     },
     "high-stack-x-minus-0.2-fascia-insertion-check": {
       "name": "high-stack-x-minus-0.2-fascia-insertion-check",
@@ -1442,7 +1442,7 @@
       "log": "logs/high-stack-x-minus-0.2-fascia-insertion-check.log",
       "log_sha256": "c5474c9e1237516add4f38bf22ba0b82fcff1820b994c602a375bb0ca78b0da7",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 10.45
+      "elapsed_seconds": 10.57
     },
     "lowered-entry-check": {
       "name": "lowered-entry-check",
@@ -1478,7 +1478,7 @@
       "log": "logs/lowered-entry-check.log",
       "log_sha256": "71778b5fb5667d354402b76f35195f5a2b5fd9295553d8abf206df47a1a6b972",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 31.1
+      "elapsed_seconds": 31.06
     },
     "high-stack-x-plus-0.2-fascia-insertion-check": {
       "name": "high-stack-x-plus-0.2-fascia-insertion-check",
@@ -1514,13 +1514,13 @@
       "log": "logs/high-stack-x-plus-0.2-fascia-insertion-check.log",
       "log_sha256": "7bb6ae7d67d750dfc1f0a0595b6916722c2752087695c559c8cb329ac9f1e946",
       "result": "PASS: empty intersection",
-      "elapsed_seconds": 10.4
+      "elapsed_seconds": 10.57
     }
   },
   "meshes": {
     "candidate_bottom": {
       "file": "bottom.stl",
-      "sha256": "ff05da8db340410bdd9f22ae12888238b031dfde7d8cd48343e51716db1811a6",
+      "sha256": "cf26e005e4af6eb09a8fd4a05162f2260939c06204cef4b32808e1a91f255fe7",
       "connected_components": 1,
       "watertight": true,
       "consistent_winding": true,
@@ -1541,13 +1541,13 @@
         30.0,
         27.600000381469727
       ],
-      "volume_mm3": 6174.028,
-      "triangles": 1478,
+      "volume_mm3": 6154.762,
+      "triangles": 1480,
       "result": "PASS"
     },
     "candidate_top": {
       "file": "top.stl",
-      "sha256": "984ce28f3d8ba8507683161b590e9f6da12e112043593cecaf37c7d5180bf1a9",
+      "sha256": "da335eb4a46f14da0beaffcb620a94ae513199d06f1e01e1e0dcbda46ed2f7fe",
       "connected_components": 1,
       "watertight": true,
       "consistent_winding": true,
@@ -1568,7 +1568,7 @@
         30.0,
         21.899999618530273
       ],
-      "volume_mm3": 5139.474,
+      "volume_mm3": 5133.052,
       "triangles": 2832,
       "result": "PASS"
     },
