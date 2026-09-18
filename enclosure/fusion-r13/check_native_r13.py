@@ -1,4 +1,4 @@
-"""Check actual visible component geometry against the four enclosure solids.
+"""Check actual visible component geometry against the enclosure solids and printed USB base.
 
 Only positive-volume component/case intersections are counted. Internal overlaps
 between a visual package's leads/housing, and display copper/mask sheets, are not
@@ -18,7 +18,7 @@ def run(_context):
     pop=d.rootComponent.occurrences.item(5)
     expected=[-1,0,0,0,0,-1,0,.45,0,0,1,.75,0,0,0,1]
     assert all(abs(a-b)<1e-9 for a,b in zip(pop.transform2.asArray(),expected))
-    case_occ=[d.rootComponent.occurrences.item(i) for i in (0,1,2,7)]
+    case_occ=[d.rootComponent.occurrences.item(i) for i in (0,1,2,7,9)]
     cases=[o.bRepBodies.item(0) for o in case_occ]
     parts=[];stock=0
     for o in d.rootComponent.allOccurrences:

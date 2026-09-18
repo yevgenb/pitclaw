@@ -8,6 +8,9 @@
 - Q3, R7 and R19 are deleted; GPIO14 drives BZ1 through R6 = 330 ohm.
 - The ADS1115 uses the WT32 DEBUG 3.3 V rail; no 3.3 V LDO is fitted.
 - MOD1 is the Adafruit 5807 HUSB238 breakout, directly mounted through H5/H6.
+- Its printed base now replaces both nylon spacers and the adhesive rear
+  support. The 3 mm total seat height and existing two M2 fasteners are retained;
+  case and PCB geometry are unchanged.
 - J9 is the Tensility 54-00133 barrel inlet. Its sleeve switch (pins 2–3) is
   unused; pin 1 feeds WALL_12V. K1 automatically selects wall power when its coil
   is energized, and PD otherwise. D3 suppresses the relay coil. JP2 is removed.
@@ -26,7 +29,7 @@ branch-selective overcurrent protection. The TSR 2-2450N's internal protection
 primarily protects the converter and does not establish safe current limits for
 the MG90S, blower, RJ45 cable/contact or PCB traces.
 
-## Still blocking routing/fabrication
+## Physical bring-up and fit checks
 
 1. Measure WT32 plus MG90S startup and loaded current on 5 V, including voltage
    droop and converter temperature in the intended enclosure.
@@ -39,9 +42,12 @@ the MG90S, blower, RJ45 cable/contact or PCB traces.
    inrush and brownout with the actual adapter and loads.
 4. Confirm the owned ADS1115 pitch, edge offsets, insertion height, pull-ups and
    insulating support.
-5. Fit-test the 5807 with M2 hardware, 3 mm spacers, rear support and actual USB
-   cable; verify screw, nut, connector and WT32 clearances.
-6. Confirm WT32 antenna location and freeze enclosure openings before routing.
+5. Fit-test the new [5807 printed base](../../enclosure/fusion-r13/usb-base/README.md)
+   with the existing M2 hardware and actual USB cable. Confirm the 3 mm total
+   seat, clamp retention, output-wire path and ≤2.5 mm underside solder tails.
+   Verify screw, nut, connector and WT32 clearances. The original R13 case fit
+   is confirmed; this new base remains physically unverified.
+6. Confirm WT32 antenna and internal harness clearance in the assembled case.
 7. Complete the WT32 display/touch driver integration described in
    `docs/hardware-review.md`; temperature conversion and provisional blower defaults
    are corrected, but embedded display/touch operation remains unverified.

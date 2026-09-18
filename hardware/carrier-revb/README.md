@@ -157,21 +157,27 @@ The module occupies X = 34.34–54.66 mm and Y = 66.862–90.357 mm, with H5/H6 
 power edge. The USB-C face remains 1.143 mm beyond the module PCB, placing it
 at carrier Y = 91.5 mm: **0.5 mm inside the carrier edge**.
 
-Use two provisional M2 × 10 screws, four washers no larger than Ø5 mm, two 3 mm nylon spacers
-and nuts under the carrier. Add one adhesive insulating support beneath the
-module's rear/free edge and maintain clearance to the WT32. The
+Use the [printed USB base](../../enclosure/fusion-r13/usb-base/README.md) with
+the existing two M2 screws, four washers no larger than Ø5 mm and two nuts
+under the carrier. It replaces both 3 mm nylon spacers and the adhesive rear
+support. Its **total seat height remains 3 mm**, preserving connector and WT32
+clearances; do not add spacers beneath it. The
 [current enclosure fit prototype](../../enclosure/fusion-r13/README.md) provides
 flush RJ45/barrel openings and a 2 mm-deep outside USB pocket. The USB face
-is level with the pocket floor, inside a fitted 9.54 × 4.1 mm opening.
+is level with the pocket floor, inside a fitted 10.14 × 4.7 mm opening.
 The cable housing sits in the 20 × 10 mm exterior pocket. Internal backing
 has blind PCB/head clearances, with at least 0.943 mm of plastic locally;
 there are no exterior board/hardware cutouts. The main carrier-edge channel
-remains. Solid plastic separates the three ports. Verify full insertion and the carrier's slide-in assembly with
-the actual cables and populated PCB before final printing.
+remains. Solid plastic separates the three ports. The original R13 case fit
+has been confirmed and its four printed case parts are unchanged. Fit-check
+the new base, full cable insertion and the populated carrier's slide-in path.
 
 The board-mount holes and module body have an F.Cu/B.Cu keepout with no current
 component-courtyard collisions. Connect V+/GND to J1 with a short secured
-20-22 AWG pair; the wires must not carry USB insertion force.
+20–22 AWG pair through the base's rear wire gap. No terminal block belongs
+under the module. Limit module solder tails to 2.5 mm below its underside,
+leaving 0.5 mm above the carrier. Rear stops resist insertion; the two M2
+clamps carry extraction. The wires must not carry USB insertion force.
 
 ## Design files
 
@@ -231,8 +237,9 @@ first-board respin risk; measuring them before ordering reduces that risk.
    blower current. Verify the shared RJ45 ground contact under combined load.
 6. Confirm antenna, enclosure, screw, rear-component, barrel-plug and USB clearances
    using the [current enclosure fit prototype](../../enclosure/fusion-r13/README.md).
-   It has not passed physical fit testing. Earlier perfboard enclosure SCAD/STLs
-   remain legacy designs and do not fit this carrier.
+   The user confirmed the original R13 case fits; the new printed USB base still
+   needs its physical fit check. Earlier perfboard enclosure SCAD/STLs remain
+   legacy designs and do not fit this carrier.
 7. Validate the routed power paths against measured current, voltage drop and
    enclosed temperature. Confirm the combined fan/servo return stays within
    J2's 1.5 A/contact rating and D2 is suitable for the measured freewheel load.

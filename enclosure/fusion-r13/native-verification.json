@@ -3,7 +3,7 @@
   "stock_models_visible": 20,
   "custom_components": 18,
   "coverage": "37 carrier electrical references plus Adafruit5807 module",
-  "body_case_boolean_tests": 131,
+  "body_case_boolean_tests": 130,
   "positive_volume_clashes": [],
   "timeline_issues": [],
   "pcb_rigid_transform": [

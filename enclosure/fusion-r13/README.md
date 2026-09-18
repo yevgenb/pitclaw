@@ -1,13 +1,13 @@
 # Complete enclosure — Fusion r13
 
-R13 applies the accepted joint-fit dimensions to the **complete enclosure**:
-bottom, top, removable probe fascia and internal display retainer. The overall
-case remains **104 × 86 × 44.9 mm**. PCB, screen, connector positions and the
+R13 includes the **complete enclosure**—bottom, top, removable probe fascia and
+internal display retainer—plus a printed Adafruit 5807 base. The overall case
+remains **104 × 86 × 44.9 mm**. PCB, screen, connector positions and the
 72 × 74 mm accessory-mount pattern are unchanged.
 
-**CAD and export verification passed.** The accepted dimensions are applied to
-all four full parts. Physical assembly of the complete case, display and harness
-remains to be checked.
+The user has confirmed the existing R13 case fit. **Its four enclosure parts
+have unchanged geometry and do not need reprinting.** Print only the new USB
+base if the case is already made. The base's physical fit still needs checking.
 
 ![Complete R13 enclosure](assembled-probe-face.png)
 
@@ -15,12 +15,13 @@ remains to be checked.
 
 - [Complete Fusion model](pitclaw-enclosure-r13.f3d)
 - [Enclosure and print package](pitclaw-enclosure-r13.zip)
-- `step/`: four complete part exports.
-- `stl/`: four complete parts and six coupons, already oriented for printing.
+- `step/`: five complete part exports.
+- `stl/`: five complete parts and six coupons: **11 STLs**, oriented for printing.
+- [Adafruit 5807 base and installation](usb-base/README.md)
 - [Guide review](guide-review.md) · [Mount review](mount-review.md)
 - [Mount dimensions](mount-interface.json) · [Mount-hole drawing](mount-pattern.dxf)
 
-The four complete print meshes come from Fusion. Coupon meshes come from the
+The five complete print meshes come from Fusion. Coupon meshes come from the
 independent reference. Electronics shown in Fusion are reference geometry.
 
 | STL | Size, mm | Orientation |
@@ -29,6 +30,7 @@ independent reference. Electronics shown in Fusion are reference geometry.
 | [carrier-top.stl](stl/carrier-top.stl) | 86 × 104 × 21.9 | Display face down |
 | [carrier-retainer.stl](stl/carrier-retainer.stl) | 80 × 96 × 2.5 | Flat |
 | [probe-fascia.stl](stl/probe-fascia.stl) | 72 × 27.4 × 9.8 | Outside probe face down |
+| [adafruit5807-base.stl](stl/adafruit5807-base.stl) | 23.32 × 24.995 × 4.2 | Flat floor down; no supports |
 | joint-coupon-bottom.stl | 33 × 30 × 27.6 | Floor down |
 | joint-coupon-top.stl | 33 × 30 × 21.9 | Display face down |
 | joint-coupon-fascia.stl | 26 × 27.4 × 9.8 | Outside probe face down |
@@ -69,10 +71,14 @@ physical check in the chosen material.
 | 4 | M3 × 6 button-head screws for retainer anchors |
 | 4 | Small screws matched to the actual WT32 rear blind bosses |
 | 1 | Soft perimeter strip on the inactive display border; establish preload physically |
-| 2 sets | Existing USB-module M2 hardware and 3 mm spacers |
+| 1 | Printed Adafruit 5807 base; total board seating height 3 mm |
+| 2 sets | Existing USB-module M2 screws, washers and nuts |
 
-The fascia adds no screws. USB hardware must remain within Ø5 mm, with at most
-2 mm above its PCB and 3.3 mm below the carrier. Keep solder tails within 3 mm.
+The fascia and USB base add no screws or inserts. The base replaces both 3 mm
+nylon spacers and the adhesive rear support; do not stack them under it. USB
+hardware must remain within Ø5 mm, with at most 2 mm above its PCB and 3.3 mm
+below the carrier. Trim module solder tails to at most **2.5 mm below the module**,
+leaving 0.5 mm above the carrier. Other carrier tails remain limited to 3 mm.
 Accessory-mount screws enter from outside; choose their length for **6.5–7 mm
 protrusion from the bracket's case-contact surface**, accounting for washers.
 
@@ -80,6 +86,8 @@ protrusion from the bracket's case-contact surface**, accounting for washers.
 
 1. Check the inserts in a coupon, then install them with the bottom empty and
    top removed. The mount coupon does not reproduce the full-height tool path.
+   Fit the USB module on its [printed base](usb-base/README.md), using the
+   existing two M2 fasteners. Route its output wires through the rear gap.
 2. Leave fascia and top off. Lower the carrier 4 mm toward the probe end from
    its final position, 0.3 mm above the posts. Slide it 4 mm toward power, lower
    onto the posts, then fasten it.
@@ -125,16 +133,23 @@ check the coupons after treatment before applying that process to the case;
 [Protopasta explains the heat-treatment requirement for its HTPLA](https://proto-pasta.com/pages/high-temp-pla).
 These settings do not establish a heat or load rating.
 
+Print the USB base flat, without supports, in the same case material and at
+100% scale. Its 0.8 mm floor is already included in the 3 mm seating height.
+
 ## Verification and reproduction
 
-The independent reference passes **37 geometry checks and 10 mesh checks**.
-Native checks pass **131 component/case pairs**, ten guide-capture checks,
+The independent reference passes **37 geometry checks and 11 mesh checks**.
+Native checks pass **130 component/case pairs**, ten guide-capture checks,
 eight seating-land checks, screw/tool access and secondary insert capture.
 Measurements from the full native meshes verify **84 hole sections** and
-**14 guide sections**. All four native meshes match the reference within the
-declared 0.03 mm sampled surface allowance. See the linked reviews and JSON
-reports for scope and hashes; these results do not qualify the unmeasured
-full physical assembly.
+**14 guide sections**. The four enclosure meshes retain their checked geometry.
+The USB base also passes eight seat/stop checks, six module-descent checks,
+14 solder/peg-envelope checks and two M2-shaft checks; see its
+[native report](usb-base/native-verification.json). Its native STL measurements
+and reference comparison pass as well. All five native/reference mesh
+comparisons pass; the base's maximum sampled difference is below 0.003 mm.
+These geometry checks do
+not establish the new base's actual solder fit, clamp force or durability.
 
 To reproduce exports, open the R13 archive in Fusion and run `export_r13.py`
 through Fusion's Python API. Then, from this directory, use a Python environment
@@ -143,6 +158,7 @@ with NumPy, Trimesh, SciPy and rtree, plus OpenSCAD, to run:
 ```sh
 python reference/export_reference.py --copy-coupons
 python verify_exports.py
+python usb-base/verify_mesh.py
 python verify_running_clearance.py
 python verify_insert_holes.py
 python package_release.py

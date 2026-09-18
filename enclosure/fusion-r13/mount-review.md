@@ -55,7 +55,7 @@ each: **84 sections pass**. The independent reference passes 37 geometry and
 within the declared 0.03 mm sampled allowance.
 
 Reviewed native archive SHA-256:
-`8198eecc4b9cd7a57a5312d8c23e085012d4658d8eb8328b3f4c280ce7d9437d`.
+`00ab8e3195ccaa0b291149328ca0acde9f45e5b6cc622f8dd61d751e90544316`.
 Current source/export hashes are recorded in the verification reports and
 package manifest. No remaining geometry objection was found. Material creep,
 tightening torque and the future bracket's load distribution remain physical

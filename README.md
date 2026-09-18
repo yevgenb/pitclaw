@@ -91,7 +91,7 @@ A relay selects wall power when present and USB-PD otherwise.
 | [Verification](hardware/carrier-revb/verification/README.md) | Native electrical/layout checks and physical validation limits |
 | [JLCPCB prototype package](hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/README.md) | Reviewed Gerber/drill archive for a small bare-board order |
 | [Fusion enclosure model](enclosure/fusion-r13/pitclaw-enclosure-r13.f3d) | Editable 104×86×44.9 mm controller case |
-| [STL package and print guide](enclosure/fusion-r13/README.md) | Top, bottom, probe fascia, display retainer, coupons, and assembly guide |
+| [STL package and print guide](enclosure/fusion-r13/README.md) | Top, bottom, probe fascia, display retainer, USB base, coupons, and assembly guide |
 
 The fabrication documentation records no submitted PCB order. Carrier load,
 relay-transfer, thermal, and module-fit checks remain, along with printed

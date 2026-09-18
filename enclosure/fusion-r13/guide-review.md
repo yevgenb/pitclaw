@@ -44,7 +44,7 @@ pressure alone. Smooth seating must precede screw tightening.
 
 The promoted full R13 reference passes **37 geometry and 10 mesh checks**,
 including the low-entry slide/rise, both bearing lands and closure with the
-fascia. Native checks pass 131 component/case pairs, ten local guide-capture
+fascia. Native checks pass 130 component/case pairs, ten local guide-capture
 checks and eight seating-land checks. The allowed +0.1999 mm fascia lift is
 clear; larger specified motions meet their retaining surfaces.
 
@@ -59,11 +59,11 @@ seated datum, increasing to 1.8 mm at the 0.2 mm upper stop. Its notches remain
 open through the raised fascia edge. No added hardware is used for retention.
 
 Reference source SHA-256:
-`4531ee58aa448ceb6a8686a38cc279357e2b913e9a52384ae681c15a8758413c`.
+`16b80457079cdaf16f63532c3e2527456ab3959ff25d5feb5606f8637d058153`.
 Reference report SHA-256:
-`7f9874e066741a7a4ae35eb564d4a64a0780356dde2a0d08856bf8f5161a14c9`.
+`5f6e34e9a3477166d501065919501093bdf4fa44fa284e3e8804bdf05f952442`.
 Native archive SHA-256:
-`8198eecc4b9cd7a57a5312d8c23e085012d4658d8eb8328b3f4c280ce7d9437d`.
+`00ab8e3195ccaa0b291149328ca0acde9f45e5b6cc622f8dd61d751e90544316`.
 
 No additional geometry blocker was found. Full physical assembly and printed
 durability remain to be checked; intersection volumes are not force ratings.

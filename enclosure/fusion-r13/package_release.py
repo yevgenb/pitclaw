@@ -15,6 +15,7 @@ PROTECTED = {
     'hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/pitclaw-carrier-jlcpcb.zip': 'd75ea76ef0e9b0892459d3f8e0c6367630f1d467716bc774757389a562409497',
 }
 SIZES = {
+    'adafruit5807-base': [23.32,24.995,4.2],
     'carrier-bottom': [86, 104, 27.6], 'carrier-top': [86, 104, 21.9],
     'carrier-retainer': [80, 96, 2.5], 'probe-fascia': [72, 27.4, 9.8],
     'joint-coupon-bottom': [33, 30, 27.6], 'joint-coupon-top': [33, 30, 21.9],
@@ -36,6 +37,11 @@ def main():
     reference = json.loads((OUT / 'reference/fit-verification.json').read_text())
     assert native['status'] == 'PASS' and comparison['status'] == 'PASS'
     assert reference['status'] == 'PASS: CAD GEOMETRY'
+    usb_native=json.loads((OUT/'usb-base/native-verification.json').read_text())
+    usb_mesh=json.loads((OUT/'usb-base/mesh-verification.json').read_text())
+    assert usb_native['status']=='PASS' and usb_mesh['status']=='PASS'
+    assert sha(OUT/'native-stl/adafruit5807-base.stl')==usb_mesh['native_sha256']
+    assert sha(OUT/'stl/adafruit5807-base.stl')==usb_mesh['print_sha256']
     for report_name in ('running-clearance-verification.json','insert-hole-verification.json'):
         measured=json.loads((OUT/report_name).read_text())
         assert measured['status'].startswith('PASS'),report_name
@@ -56,7 +62,7 @@ def main():
                         'connected_solids': 1, 'volume_mm3': float(m.volume),
                         'sha256': sha(path)}
     for part, record in comparison['parts'].items():
-        name = 'probe-fascia' if part == 'fascia' else 'carrier-' + part
+        name = {'fascia':'probe-fascia','usb_base':'adafruit5807-base'}.get(part,'carrier-'+part)
         assert meshes[name]['sha256'] == record['print_stl_sha256']
         assert sha(OUT / 'native-stl' / (name + '.stl')) == record['native_source_sha256']
         assert sha(OUT / 'reference' / (name + '.stl')) == record['reference_sha256']
@@ -81,18 +87,20 @@ def main():
     files += sorted((OUT/'native-stl').glob('*.stl'))
     files += [p for p in sorted((OUT/'reference').iterdir()) if p.is_file()]
     files += sorted(OUT.glob('*.py'))
+    files += [p for p in sorted((OUT/'usb-base').iterdir()) if p.is_file()]
     files = sorted(set(files))
-    assert len(list((OUT / 'stl').glob('*.stl'))) == 10
-    assert len(list((OUT / 'step').glob('*.step'))) == 4
+    assert len(list((OUT / 'stl').glob('*.stl'))) == 11
+    assert len(list((OUT / 'step').glob('*.step'))) == 5
     assert all(p.is_file() and p.stat().st_size > 0 for p in files)
     manifest = {
-        'revision': 'r13 fitted complete enclosure',
+        'revision': 'r13 fitted enclosure with printed Adafruit5807 base',
         'created_utc': datetime.now(timezone.utc).isoformat(),
-        'status': 'CAD VERIFIED FIT PROTOTYPE; physical print validation pending',
+        'status': 'CAD VERIFIED; original case fit confirmed by user; added USB base awaits physical fit',
         'geometry_checks': len(reference['geometry_checks']),
         'reference_meshes': len(reference['meshes']),
         'native_body_case_tests': native['body_case_boolean_tests'],
         'native_mesh_comparison': comparison['status'],
+        'usb_base_seat_height_mm': 3, 'usb_base_replaces': ['two nylon spacers','adhesive rear support'],
         'additional_mount_inserts': 4, 'total_case_inserts': 16,
         'mount_pitch_mm': [72, 74], 'mount_thread': 'M3',
         'guide_engagement_mm': 9, 'guide_side_clearance_mm': .3,

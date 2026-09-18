@@ -1,0 +1,257 @@
+{
+  "status": "PASS",
+  "seat_and_stop_checks": {
+    "nominal": {
+      "offset_xyz_mm": [
+        0,
+        0,
+        0
+      ],
+      "intersection_mm3": 0,
+      "expected_contact": false
+    },
+    "seat_negative_control": {
+      "offset_xyz_mm": [
+        0,
+        0,
+        -0.05
+      ],
+      "intersection_mm3": 5.1920578835229305,
+      "expected_contact": true
+    },
+    "rear_clearance": {
+      "offset_xyz_mm": [
+        0,
+        -0.2999,
+        0
+      ],
+      "intersection_mm3": 0,
+      "expected_contact": false
+    },
+    "rear_stop": {
+      "offset_xyz_mm": [
+        0,
+        -0.4,
+        0
+      ],
+      "intersection_mm3": 0.3840000000000266,
+      "expected_contact": true
+    },
+    "left_clearance": {
+      "offset_xyz_mm": [
+        -0.2999,
+        0,
+        0
+      ],
+      "intersection_mm3": 0,
+      "expected_contact": false
+    },
+    "right_clearance": {
+      "offset_xyz_mm": [
+        0.2999,
+        0,
+        0
+      ],
+      "intersection_mm3": 0,
+      "expected_contact": false
+    },
+    "left_guide": {
+      "offset_xyz_mm": [
+        -0.4,
+        0,
+        0
+      ],
+      "intersection_mm3": 1.9244080415016869,
+      "expected_contact": true
+    },
+    "right_guide": {
+      "offset_xyz_mm": [
+        0.4,
+        0,
+        0
+      ],
+      "intersection_mm3": 1.9244080415016205,
+      "expected_contact": true
+    }
+  },
+  "module_descent_checks": [
+    {
+      "z_offset_mm": 5,
+      "clash_mm3": 0
+    },
+    {
+      "z_offset_mm": 2,
+      "clash_mm3": 0
+    },
+    {
+      "z_offset_mm": 1,
+      "clash_mm3": 0
+    },
+    {
+      "z_offset_mm": 0.5,
+      "clash_mm3": 0
+    },
+    {
+      "z_offset_mm": 0.1,
+      "clash_mm3": 0
+    },
+    {
+      "z_offset_mm": 0,
+      "clash_mm3": 0
+    }
+  ],
+  "solder_and_peg_envelope_checks": [
+    {
+      "kind": "header solder",
+      "uv_mm": [
+        2.54,
+        2.54
+      ],
+      "diameter_mm": 2.2764,
+      "clash_mm3": 0
+    },
+    {
+      "kind": "header solder",
+      "uv_mm": [
+        5.08,
+        2.54
+      ],
+      "diameter_mm": 2.2764,
+      "clash_mm3": 0
+    },
+    {
+      "kind": "header solder",
+      "uv_mm": [
+        7.62,
+        2.54
+      ],
+      "diameter_mm": 2.2764,
+      "clash_mm3": 0
+    },
+    {
+      "kind": "header solder",
+      "uv_mm": [
+        12.7,
+        2.54
+      ],
+      "diameter_mm": 2.2764,
+      "clash_mm3": 0
+    },
+    {
+      "kind": "header solder",
+      "uv_mm": [
+        15.24,
+        2.54
+      ],
+      "diameter_mm": 2.2764,
+      "clash_mm3": 0
+    },
+    {
+      "kind": "header solder",
+      "uv_mm": [
+        17.78,
+        2.54
+      ],
+      "diameter_mm": 2.2764,
+      "clash_mm3": 0
+    },
+    {
+      "kind": "output solder",
+      "uv_mm": [
+        8.36,
+        4.572
+      ],
+      "diameter_mm": 2.7844,
+      "clash_mm3": 0
+    },
+    {
+      "kind": "output solder",
+      "uv_mm": [
+        11.86,
+        4.572
+      ],
+      "diameter_mm": 2.7844,
+      "clash_mm3": 0
+    },
+    {
+      "kind": "USB shell stake solder",
+      "uv_mm": [
+        5.84,
+        17.858
+      ],
+      "xy_mm": [
+        1.6,
+        2.6
+      ],
+      "clash_mm3": 0
+    },
+    {
+      "kind": "USB shell stake solder",
+      "uv_mm": [
+        5.84,
+        22.038
+      ],
+      "xy_mm": [
+        1.6,
+        2.6
+      ],
+      "clash_mm3": 0
+    },
+    {
+      "kind": "USB shell stake solder",
+      "uv_mm": [
+        14.48,
+        17.858
+      ],
+      "xy_mm": [
+        1.6,
+        2.6
+      ],
+      "clash_mm3": 0
+    },
+    {
+      "kind": "USB shell stake solder",
+      "uv_mm": [
+        14.48,
+        22.038
+      ],
+      "xy_mm": [
+        1.6,
+        2.6
+      ],
+      "clash_mm3": 0
+    },
+    {
+      "kind": "USB locating peg allowance",
+      "uv_mm": [
+        7.27,
+        18.358
+      ],
+      "diameter_mm": 1.25,
+      "clash_mm3": 0
+    },
+    {
+      "kind": "USB locating peg allowance",
+      "uv_mm": [
+        13.05,
+        18.358
+      ],
+      "diameter_mm": 1.25,
+      "clash_mm3": 0
+    }
+  ],
+  "screw_checks": [
+    {
+      "eagle_u_mm": 2.413,
+      "nominal_M2_shaft_clash_mm3": 0
+    },
+    {
+      "eagle_u_mm": 17.653,
+      "nominal_M2_shaft_clash_mm3": 0
+    }
+  ],
+  "seat_height_mm": 3.0,
+  "solder_tail_limit_below_module_mm": 2.5,
+  "tail_to_carrier_gap_mm": 0.5,
+  "scope": "Geometric envelopes, not measured solder, clamp force, temperature or retention rating. M2 clamps carry extraction; curved front guides do not stop travel before the case pocket."
+}

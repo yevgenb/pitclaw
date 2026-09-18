@@ -3,7 +3,7 @@
   "sources_sha256": {
     "carrier-bottom.stl": "8704ed2ae37f5a7c59a7f54089c8778bcc285769dc54e45c8646a83ba81bdda5",
     "probe-fascia.stl": "a616e305056fc59a6772810a0cc0f3f50703d4857b44ac5ee0a3a2146bf1ead5",
-    "carrier-case.scad": "4531ee58aa448ceb6a8686a38cc279357e2b913e9a52384ae681c15a8758413c"
+    "carrier-case.scad": "16b80457079cdaf16f63532c3e2527456ab3959ff25d5feb5606f8637d058153"
   },
   "verifier_sha256": "73fe8aa45482ee7492bd44d571b404359f965a57993564248372b51b86f609aa",
   "scope": "Actual exported full-part sections on both guides; nominal assembly geometry is checked separately.",

@@ -6,6 +6,7 @@
 // See ../README.md for assembly, dimensions and physical qualification limits.
 // All construction stages and the generated interface are included locally.
 include <carrier-interface.scad>
+use <adafruit5807-base.scad>
 
 // Views also include fit-coupon and insert-coupon for first-print calibration.
 // Single-part views are oriented flat on the build plate.
@@ -521,6 +522,14 @@ module carrier_sweep_board_coordinates(offset0,offset1,lift0,lift1) {
             checked_pd_base+check_pd_thickness],pd_hardware_diameter,
             pd_hardware_head_height,offset0,offset1,lift0,lift1);
     }
+    // Sweep the actual printed base, retaining its solder openings and low front floor.
+    // A tiny centred box gives the translation segment a valid3D volume.
+    minkowski() {
+        translate([carrier_power_x[2]-30,pd_pcb_front_y-46-pd_pcb_size[1],checked_top])
+            mirror([1,0,0]) scale([1,1,check_pd_spacer_height/3]) ada5807_base();
+        hull() for(v=[[offset0,lift0],[offset1,lift1]])
+            translate([0,v[0],v[1]]) cube([.0001,.0001,.0001],center=true);
+    }
     // Generated pad diameters include solder fillet allowance. Actual lead tails
     // must be clipped and inspected to stay within the declared 3 mm projection.
     for(p=carrier_underside_pads)
@@ -587,10 +596,9 @@ module carrier_witness_board_coordinates() {
             for(p=pd_mount_xy)
                 translate([p[0]-30,p[1]-46,carrier_bottom_z-pd_hardware_below_pcb])
                     cylinder(d=pd_hardware_diameter,h=pd_hardware_below_pcb,$fn=24);
-        color([0.8,0.8,0.75])
-            for(p=pd_mount_xy)
-                translate([p[0]-30,p[1]-46,carrier_top_z])
-                    cylinder(d=pd_hardware_diameter,h=pd_spacer_height,$fn=24);
+        color([.95,.51,.14])
+            translate([carrier_power_x[2]-30,pd_pcb_front_y-46-pd_pcb_size[1],carrier_top_z])
+                mirror([1,0,0]) ada5807_base();
     }
 }
 
@@ -747,6 +755,7 @@ else if(part=="joint-coupon-bottom") translate([-26.5,37,0]) joint_coupon_bottom
 else if(part=="joint-coupon-top") translate([-26.5,-37,case_height]) rotate([180,0,0]) joint_coupon_top();
 else if(part=="joint-coupon-fascia") translate([-23,13.7,52]) rotate([90,0,0]) joint_coupon_fascia();
 else if(part=="fascia") translate([0,0,52]) rotate([90,0,0]) probe_fascia();
+else if(part=="usb-base") ada5807_base();
 else if(part=="fascia-installed") probe_fascia();
 else if(part=="fascia-lift-check") fascia_lift_collision();
 else if(part=="fascia-fit-check") fascia_fit_collision();

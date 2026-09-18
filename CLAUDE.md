@@ -304,8 +304,11 @@ Use `enclosure/fusion-r13/README.md` and the editable
 `pitclaw-enclosure-r13.f3d` model. Only the latest controller enclosure remains
 in the working tree; earlier versions are in Git history.
 
-The 104 × 86 × 44.9 mm landscape case has four printed parts: top bezel,
-bottom shell, display retainer and removable probe fascia. It fits the Rev B
+The 104 × 86 × 44.9 mm landscape case has four main printed parts: top bezel,
+bottom shell, display retainer and removable probe fascia. A fifth printed part,
+`stl/adafruit5807-base.stl`, replaces both USB-module nylon spacers and the rear
+adhesive prop, preserving the total 3 mm board spacing. Keep the two M2 clamps;
+rear stops carry insertion and the screw clamps carry extraction. It fits the Rev B
 60 × 92 mm carrier. Power connectors occupy one short end and probes the other.
 The fascia uses captured rails with 0.3 mm side clearance, 0.4 mm normal roof
 clearance and 0.3 mm lower relief between two seating lands. The reinforced

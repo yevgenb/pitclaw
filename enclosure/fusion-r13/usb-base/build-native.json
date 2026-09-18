@@ -1,0 +1,17 @@
+{
+  "seat_height_mm": 3,
+  "overall_height_mm": 4.2,
+  "floor_thickness_mm": 0.8,
+  "wall_mm": 1.2,
+  "board_edge_clearance_mm": 0.3,
+  "screw_clearance_mm": 2.4,
+  "board_corner_radius_mm": 2.54,
+  "base_volume_mm3": 755.4930163385397,
+  "case_solids_unchanged": true,
+  "pcb_transform_unchanged": true,
+  "assembly_translation_from_print_mm": [
+    -14.5,
+    25.362,
+    9.1
+  ]
+}

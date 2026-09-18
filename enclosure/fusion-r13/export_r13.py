@@ -1,4 +1,4 @@
-"""Export the four printed r13 parts and illustrate the assembly sequence."""
+"""Export the five printed r13 parts and illustrate the assembly sequence."""
 import adsk.core as C
 import adsk.fusion as F
 import runpy,json,hashlib
@@ -19,10 +19,10 @@ def run(_context):
     app=C.Application.get();d=F.Design.cast(app.activeProduct)
     assert app.activeDocument.name.lower().startswith(('pitclaw enclosure r13', 'pitclaw-enclosure-r13')), 'Open the r13 enclosure archive before running this script.'
     assert d.activateRootComponent()
-    occ=list(d.rootComponent.occurrences);assert len(occ)==9
-    for i,o in enumerate(occ):o.isLightBulbOn=i in [0,1,2,4,5,6,7,8]
+    occ=list(d.rootComponent.occurrences);assert len(occ)==10
+    for i,o in enumerate(occ):o.isLightBulbOn=i in [0,1,2,4,5,6,7,8,9]
     (OUT/'native-stl').mkdir(exist_ok=True);(OUT/'step').mkdir(exist_ok=True)
-    for index,name in [(0,'carrier-bottom'),(1,'carrier-top'),(2,'carrier-retainer'),(7,'probe-fascia')]:
+    for index,name in [(0,'carrier-bottom'),(1,'carrier-top'),(2,'carrier-retainer'),(7,'probe-fascia'),(9,'adafruit5807-base')]:
         component=occ[index].component
         opt=d.exportManager.createSTLExportOptions(component,str(OUT/'native-stl'/f'{name}.stl'))
         opt.unitType=F.DistanceUnits.MillimeterDistanceUnits;opt.isBinaryFormat=True
@@ -32,7 +32,7 @@ def run(_context):
     camera(app,(9,-20,5))
     assert app.activeViewport.saveAsImageFile(str(OUT/'assembled-probe-face.png'),1600,1100)
     # Sequence1: installed carrier with the probe insert and upper assembly absent.
-    for i,o in enumerate(occ):o.isLightBulbOn=i in [0,5,6,8]
+    for i,o in enumerate(occ):o.isLightBulbOn=i in [0,5,6,8,9]
     camera(app)
     assert app.activeViewport.saveAsImageFile(str(OUT/'assembly-1-carrier.png'),1600,1200)
     # Sequence2: panel is positioned on its straight insertion axis.
@@ -71,13 +71,14 @@ def run(_context):
     cam.upVector=C.Vector3D.create(0,1,0);cam.isFitView=True;cam.isSmoothTransition=False
     app.activeViewport.camera=cam;app.activeViewport.refresh()
     assert app.activeViewport.saveAsImageFile(str(OUT/'mount-pattern-top-view.png'),1400,1500)
-    for i,o in enumerate(occ):o.isLightBulbOn=i in [0,1,2,4,5,6,7,8]
+    for i,o in enumerate(occ):o.isLightBulbOn=i in [0,1,2,4,5,6,7,8,9]
     camera(app,(13,16,-20),(0,0,2.2))
     assert app.activeViewport.saveAsImageFile(str(OUT/'bottom-mounts-outside.png'),1600,1200)
     camera(app,(9,-20,5))
     runpy.run_path(str(OUT/'check_native_r13.py'))['run'](_context)
+    runpy.run_path(str(OUT/'usb-base/check_native_base.py'))['run'](_context)
     target=OUT/'pitclaw-enclosure-r13.f3d'
     assert d.exportManager.execute(d.exportManager.createFusionArchiveExportOptions(str(target)))
     print(json.dumps({'archive':str(target),'sha256':hashlib.sha256(target.read_bytes()).hexdigest(),
-        'printed_parts':4,'additional_mount_inserts':4,'mount_pitch_mm':[72,74],
+        'printed_parts':5,'additional_mount_inserts':4,'mount_pitch_mm':[72,74],
         'overall_envelope_mm':[104,86,44.9]}))

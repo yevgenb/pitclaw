@@ -7,6 +7,12 @@ are Ø4.2 mm; the full parts include the accepted guide and seam adjustments.
 Four internal M3 inserts provide a 72 × 74 mm mounting pattern with screw access
 from underneath.
 
+A fifth printable part, the [Adafruit 5807 base](fusion-r13/usb-base/README.md),
+replaces both module spacers and the adhesive rear support. It uses the existing
+M2 hardware and keeps the same 3 mm board seating height. The user confirmed
+the original R13 case fit; its four enclosure parts are unchanged, so **no case
+reprint is needed**. Only the new base needs a physical fit check.
+
 - [Print package and editable Fusion model](fusion-r13/pitclaw-enclosure-r13.zip)
 - [Print settings, coupons, hardware and assembly](fusion-r13/README.md)
 - [Native Fusion design](fusion-r13/pitclaw-enclosure-r13.f3d)
@@ -15,9 +21,10 @@ from underneath.
 - [Matching joint coupons](fusion-r13/README.md#coupons) for checking the same guide,
   seam and insert geometry used by the complete enclosure.
 
-Only the latest controller enclosure is kept in the working tree. Older designs
-remain in Git history. The CAD checks pass; physical fit, printed joint strength
-and mounting load capacity still need prototype testing.
+The current package has five complete parts and six coupons. Only the latest
+controller enclosure is kept in the working tree; older designs remain in Git
+history. CAD checks pass. Printed strength and mounting load capacity remain
+unrated.
 
 ## Separate blower and damper assembly
 

@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "scope": "All previously supplied case parts and coupons retain their exact STL/STEP bytes; no case reprint required.",
+  "files_sha256": {
+    "enclosure/fusion-r13/stl/joint-coupon-bottom.stl": "cf26e005e4af6eb09a8fd4a05162f2260939c06204cef4b32808e1a91f255fe7",
+    "enclosure/fusion-r13/stl/insert-coupon.stl": "ae7ea4d04560875b8cd0fe6083c8da4c2cd6aeab0f6031d84b585f22d1df8b9e",
+    "enclosure/fusion-r13/stl/carrier-retainer.stl": "992e3f1d4e6c708155129f651bffb29cae8ffea10237358fa6be79d396820cda",
+    "enclosure/fusion-r13/stl/fit-coupon.stl": "9eee06274f194beb706cf7037c0d22a6a6fc810ac7048a739b63924f9b1dd789",
+    "enclosure/fusion-r13/stl/carrier-top.stl": "48a63a04014f3aed13caf647003b697cc2a477d248c9a35021cbbe46d2f699bb",
+    "enclosure/fusion-r13/stl/probe-fascia.stl": "554ba6a4a3c42c5d61f1ffaf96b342215f32943c6e97b4912b3a181deb3fe00a",
+    "enclosure/fusion-r13/stl/carrier-bottom.stl": "5ecd498ca5c0acf812095874985f04709656e45499da0d5feab16a7d7f08e1c4",
+    "enclosure/fusion-r13/stl/joint-coupon-fascia.stl": "efb80b6c9233ababc6cde465fe42e9b9f5a80344b3ab422df85ee40e1196e665",
+    "enclosure/fusion-r13/stl/mount-coupon.stl": "a810f0075a2ddfc11419c7194a6870bd8d4baaf6c536a2e59d94e9feee625fee",
+    "enclosure/fusion-r13/stl/joint-coupon-top.stl": "da335eb4a46f14da0beaffcb620a94ae513199d06f1e01e1e0dcbda46ed2f7fe",
+    "enclosure/fusion-r13/native-stl/carrier-retainer.stl": "c8b7d0e3520a7615e1e04ea9628d26d5f4d1d6508f67e783b261970f84ffb55e",
+    "enclosure/fusion-r13/native-stl/carrier-top.stl": "5c87b29b35170254c2c1ac6849545404653317d5776a171e5e8af5d7b18d7d6f",
+    "enclosure/fusion-r13/native-stl/probe-fascia.stl": "0a264c73699dde68bd73470d90c56387092efb7f592ee04258fb1c9fd5fdcc84",
+    "enclosure/fusion-r13/native-stl/carrier-bottom.stl": "bf56c07e3d6270ca00659f2fb539fb083a7821b4db27ecbeab5e58cb36b73a43",
+    "enclosure/fusion-r13/step/probe-fascia.step": "057c3ca78f84b4014cc03cc784b8fb999080315abcf3f8fb9a7c819380f836d7",
+    "enclosure/fusion-r13/step/carrier-retainer.step": "0aa2b82b9ee92db5d95ba06ee95f540c564cb2de6b4015335202e1be799d55fb",
+    "enclosure/fusion-r13/step/carrier-top.step": "1c39ded5698b070a63547f16c87537d2d794b8ae58027b3f389f4cbbf67965ec",
+    "enclosure/fusion-r13/step/carrier-bottom.step": "c113e1a08cc4b36b6f42c374ead7e61676136806f955968ff78f5673e910d5ae"
+  }
+}

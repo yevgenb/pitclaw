@@ -38,11 +38,13 @@ def main():
             'surface_allowance_mm':.03,'allowance_reason':'Analytic CAD arcs versus SCAD faceting and 0.02mm Boolean construction overlaps.',
             'parts':{}}
     (OUT/'stl').mkdir(exist_ok=True)
-    for part in ('bottom','top','retainer','fascia'):
-        filename='probe-fascia.stl' if part=='fascia' else f'carrier-{part}.stl'
+    for part in ('bottom','top','retainer','fascia','usb_base'):
+        filename={'fascia':'probe-fascia.stl','usb_base':'adafruit5807-base.stl'}.get(part,f'carrier-{part}.stl')
         path=OUT/'native-stl'/filename
         native=trimesh.load(path,force='mesh')
-        if part=='top':
+        if part=='usb_base':
+            native.vertices-=np.array([-14.5,25.362,9.1])
+        elif part=='top':
             native.vertices*=np.array([1,-1,-1])
             native.vertices+=np.array([0,0,44.9])
         elif part=='retainer':

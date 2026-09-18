@@ -1,0 +1,177 @@
+{
+  "part": "Adafruit5807 full-board base support",
+  "units": "mm",
+  "print_coordinates": {
+    "mapping": "X=10.16-u, Y=v, Z=height above carrier top",
+    "board_outline_eagle": [
+      0,
+      20.32,
+      0,
+      23.495
+    ],
+    "board_corner_radius": 2.54
+  },
+  "case_placement_translation_mm": [
+    -14.5,
+    25.362,
+    9.1
+  ],
+  "seat_height_mm": 3,
+  "floor_thickness_mm": 0.8,
+  "total_height_mm": 4.2,
+  "lower_bearing": {
+    "outer_offset": 1.5,
+    "inner_offset": -1.5,
+    "v_range": [
+      0.9,
+      22.8
+    ],
+    "z_range": [
+      0,
+      3
+    ]
+  },
+  "side_corner_guides": {
+    "outer_offset": 1.5,
+    "inner_offset": 0.3,
+    "v_range": [
+      6.2,
+      22.8
+    ],
+    "z_range": [
+      3,
+      4.2
+    ],
+    "wall_thickness": 1.2,
+    "purpose": "Lateral/corner guidance; not a positive forward load stop"
+  },
+  "rear_bearing_v_range": [
+    0,
+    1.1
+  ],
+  "rear_stop_tabs": {
+    "u_ranges": [
+      [
+        6.2,
+        7.8
+      ],
+      [
+        12.9,
+        14.5
+      ]
+    ],
+    "base_v_range": [
+      -1.5,
+      1.1
+    ],
+    "stop_v_range": [
+      -1.5,
+      -0.3
+    ],
+    "seat_z": 3,
+    "top_z": 4.2
+  },
+  "mounts": {
+    "eagle_centres": [
+      [
+        2.413,
+        20.955
+      ],
+      [
+        17.653,
+        20.955
+      ]
+    ],
+    "print_centres": [
+      [
+        7.747,
+        20.955
+      ],
+      [
+        -7.493,
+        20.955
+      ]
+    ],
+    "bearing_disk_diameter": 5,
+    "clearance_hole_diameter": 2.4
+  },
+  "through_reliefs": {
+    "output_header": {
+      "u_range": [
+        0.8,
+        19.52
+      ],
+      "v_range": [
+        1.3,
+        6.3
+      ],
+      "corner_radius": 0.3
+    },
+    "usb_slots": [
+      {
+        "u_range": [
+          4.84,
+          7.995
+        ],
+        "v_range": [
+          16.3,
+          24
+        ],
+        "corner_radius": 0.3
+      },
+      {
+        "u_range": [
+          12.325,
+          15.48
+        ],
+        "v_range": [
+          16.3,
+          24
+        ],
+        "corner_radius": 0.3
+      }
+    ]
+  },
+  "sources": {
+    "eagle_board_sha256": "5c99400328f11ad21f835db0b2ade5e4f43ff88045cffdbcf1c84359ce222794",
+    "interface_sha256": "5b1b58cc1bae905a8c56012471a8ea5b5f3cf3908d6fc8ddb7ee6b3a575beee3",
+    "scad_sha256": "31261dd900500338b8d19f62d7e68799b7a20438f9d36852007111de43ecac1a",
+    "stl_sha256": "593688ea6d460518efe0de61cf7e750a74043c9481f8b7f59c640ff9c73b4209"
+  },
+  "mesh_verification": {
+    "status": "PASS",
+    "method": "Binary STL triangle/edge audit; vertices merged to0.000001mm",
+    "watertight": true,
+    "winding_consistent": true,
+    "connected_solids": 1,
+    "bounds_mm": [
+      [
+        -11.66,
+        -1.5,
+        0.0
+      ],
+      [
+        11.66,
+        23.495001,
+        4.2
+      ]
+    ],
+    "size_mm": [
+      23.32,
+      24.995001,
+      4.2
+    ],
+    "volume_mm3": 755.4347156725337,
+    "triangles": 3608
+  },
+  "assembly_requirements": [
+    "Use the two existing M2 clamps; they carry extraction load.",
+    "Rear stops take insertion load; side/corner guides are not positive forward stops.",
+    "Do not fit the terminal block or header bodies beneath the module.",
+    "The central pocket above the0.8mm floor is2.2mm deep; the Eagle board has no fitted bottom-side SMD components there.",
+    "Keep solder/wire/USB-stake projections within2.5mm below the module for0.5mm clearance to the carrier in the through openings.",
+    "The3mm total seat replaces both nylon spacers and rear prop; do not stack either beneath this part."
+  ],
+  "qualification": "Individual printed-part geometry checked; parent assembly collision/insertion checks and physical sample fit are separate.",
+  "central_relief_depth_mm": 2.2
+}

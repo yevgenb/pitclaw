@@ -1,5 +1,5 @@
 {
-  "document": "PitClaw enclosure r13 - fitted enclosure",
+  "document": "PitClaw enclosure r13 - fitted enclosure with USB base",
   "source_f3d_sha256": "ca7851904af2cbe75ff7c9a623b59fd13645fee92741013a807a5e538b02906f",
   "mount_centres_mm": [
     [
@@ -103,5 +103,11 @@
     ]
   ],
   "fascia_seam_clearance_mm": 0.2,
-  "locating_lip_outer_radius_mm": 2.2
+  "locating_lip_outer_radius_mm": 2.2,
+  "printed_part_count": 5,
+  "usb_base": {
+    "seat_height_mm": 3,
+    "report": "usb-base/build-native.json",
+    "case_solids_unchanged": true
+  }
 }

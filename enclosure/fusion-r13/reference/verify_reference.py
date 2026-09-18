@@ -29,6 +29,7 @@ import time
 ROOT = Path(__file__).resolve().parents[3]
 SOURCES = (
     "enclosure/fusion-r13/reference/carrier-case.scad",
+    "enclosure/fusion-r13/reference/adafruit5807-base.scad",
     "enclosure/fusion-r13/reference/carrier-interface.scad",
     "hardware/carrier-revb/mechanical/enclosure-interface.json",
     "hardware/carrier-revb/pitclaw-carrier.kicad_pcb",
@@ -41,12 +42,14 @@ INPUT_NAMES = (
 )
 EMPTY_MESSAGE = "Current top level object is empty."
 EXPECTED_SIZE = {
+    "usb_base":[23.32,24.995,4.2],
     "bottom":[86,104,27.6],"top":[86,104,21.9],"retainer":[80,96,2.5],
     "fascia":[72,27.4,9.8],"joint_bottom":[33,30,27.6],
     "joint_top":[33,30,21.9],"joint_fascia":[26,27.4,9.8],
     "coupon":[86,22,27.6],"insert_coupon":[36,16,7.5],"mount_coupon":[16,21,10],
 }
 MESH_NAMES = {
+    "usb_base":"adafruit5807-base.stl",
     "bottom":"carrier-bottom.stl","top":"carrier-top.stl",
     "retainer":"carrier-retainer.stl","fascia":"probe-fascia.stl",
     "joint_bottom":"joint-coupon-bottom.stl","joint_top":"joint-coupon-top.stl",
@@ -321,7 +324,7 @@ def main() -> int:
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "sources_sha256": sources_before,
         "verifier_sha256": sha256(Path(__file__)),
-        "scope": "Accepted enclosure geometry, assembly paths and ten meshes. Physical qualification beyond observed coupon fit is not inferred.",
+        "scope": "Accepted enclosure geometry, assembly paths and eleven meshes. Physical qualification beyond observed coupon fit is not inferred.",
         "assumptions": [
             "Carrier PCB and USB module thickness 1.44–1.76 mm; USB spacer 2.9–3.1 mm.",
             "Board edge growth 0.2 mm and USB module lateral placement shift ±0.2 mm.",

@@ -67,9 +67,13 @@ Remove the jig after curing. Do not install a tab bolt. Fit-check the lead form,
 minimum under-body gap, adhesion and thermal behavior with the actual part.
 
 Also required: WT32; owned blue 10-pin ADS1115; Adafruit 5807 MOD1; ADC
-free-edge insulating support; insulating adhesive for Q1; 2x M2x10 provisional screws, 2x 3mm nylon spacers,
-4x M2 washers (5mm maximum OD) and 2x M2 nuts under the carrier; one adhesive insulating rear
-module support; harness mates, contacts, wire and one shunt for JP1; 4 M3 carrier screws into heat-set inserts in the bottom shell; WT32 mounts
+free-edge insulating support; insulating adhesive for Q1; one
+[printed Adafruit 5807 base](../../enclosure/fusion-r13/usb-base/README.md);
+2x M2x10 provisional screws, 4x M2 washers (5mm maximum OD) and 2x M2 nuts
+under the carrier. The base replaces both 3mm nylon spacers and the adhesive
+rear module support, with a total 3mm seat height; no extra screws or inserts
+are required. Also supply harness mates, contacts, wire and one shunt for JP1;
+4 M3 carrier screws into heat-set inserts in the bottom shell. WT32 mounts
 separately inside the top bezel using an internal retainer and four small screws
 matched to the WT32 rear blind bosses (diameter, thread and length require
 sample verification). Enclosure closure uses separate M3 screws/inserts.

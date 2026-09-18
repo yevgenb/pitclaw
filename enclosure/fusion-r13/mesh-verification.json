@@ -138,6 +138,40 @@
       "relative_volume_difference": -1.0051492398492357e-05,
       "surface_comparison_pass": true,
       "print_stl_sha256": "554ba6a4a3c42c5d61f1ffaf96b342215f32943c6e97b4912b3a181deb3fe00a"
+    },
+    "usb_base": {
+      "watertight": true,
+      "winding_consistent": true,
+      "connected_solids": 1,
+      "volume_mm3": 755.4882290731533,
+      "bounds_mm": [
+        [
+          -11.65999984741211,
+          -1.5000004882812483,
+          3.8146972691777137e-07
+        ],
+        [
+          11.660000085830688,
+          23.494998443603517,
+          4.200000190734864
+        ]
+      ],
+      "triangles": 4090,
+      "native_source_sha256": "596951c2cfd432727cc054319e8fdcf227622e813ab2ee8e1a125735582388db",
+      "reference_sha256": "593688ea6d460518efe0de61cf7e750a74043c9481f8b7f59c640ff9c73b4209",
+      "native_to_reference": {
+        "samples": 11131,
+        "max_mm": 0.0021607638133022793,
+        "p99_mm": 0.0017544733972934834
+      },
+      "reference_to_native": {
+        "samples": 10408,
+        "max_mm": 0.0021001070610423447,
+        "p99_mm": 0.0016449042930892076
+      },
+      "relative_volume_difference": 7.086404678373898e-05,
+      "surface_comparison_pass": true,
+      "print_stl_sha256": "2c2301e630511445c4711ea227dbe9fc4d4d97c244edbef54e31307652b70588"
     }
   },
   "status": "PASS"

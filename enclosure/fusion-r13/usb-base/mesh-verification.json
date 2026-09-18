@@ -1,0 +1,107 @@
+{
+  "status": "PASS",
+  "dimensions_mm": [
+    23.319999933242798,
+    24.994998931884766,
+    4.199999809265137
+  ],
+  "single_watertight_solid": true,
+  "native_sha256": "596951c2cfd432727cc054319e8fdcf227622e813ab2ee8e1a125735582388db",
+  "print_sha256": "2c2301e630511445c4711ea227dbe9fc4d4d97c244edbef54e31307652b70588",
+  "hole_sections": [
+    {
+      "uvz_mm": [
+        2.413,
+        20.955,
+        0.4
+      ],
+      "diameter_mm": 2.3995017618260563
+    },
+    {
+      "uvz_mm": [
+        2.413,
+        20.955,
+        1.5
+      ],
+      "diameter_mm": 2.3995017618260563
+    },
+    {
+      "uvz_mm": [
+        2.413,
+        20.955,
+        2.8
+      ],
+      "diameter_mm": 2.3995017618260563
+    },
+    {
+      "uvz_mm": [
+        17.653,
+        20.955,
+        0.4
+      ],
+      "diameter_mm": 2.3995017618260572
+    },
+    {
+      "uvz_mm": [
+        17.653,
+        20.955,
+        1.5
+      ],
+      "diameter_mm": 2.3995017618260555
+    },
+    {
+      "uvz_mm": [
+        17.653,
+        20.955,
+        2.8
+      ],
+      "diameter_mm": 2.3995017618260572
+    }
+  ],
+  "bearing_and_floor_samples": [
+    {
+      "uv_mm": [
+        10.16,
+        0.55
+      ],
+      "height_mm": 3.000000381469727
+    },
+    {
+      "uv_mm": [
+        0.4,
+        10
+      ],
+      "height_mm": 3.000000381469727
+    },
+    {
+      "uv_mm": [
+        19.92,
+        10
+      ],
+      "height_mm": 3.000000381469727
+    },
+    {
+      "uv_mm": [
+        4.213,
+        20.955
+      ],
+      "height_mm": 3.000000381469727
+    },
+    {
+      "uv_mm": [
+        15.853,
+        20.955
+      ],
+      "height_mm": 3.000000381469727
+    },
+    {
+      "uv_mm": [
+        10.16,
+        10
+      ],
+      "height_mm": 0.7999996185302738
+    }
+  ],
+  "open_solder_window_samples": 8,
+  "scope": "Exported mesh geometry, not physical print fit or measured strength."
+}
