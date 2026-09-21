@@ -61,6 +61,7 @@ public:
 
     void onLidEnabled(LidEnabledCallback cb) { _onLidEnabled = cb; }
     void onResumeLid(ResumeLidCallback cb) { _onResumeLid = cb; }
+    void onOpenLid(ResumeLidCallback cb) { _onOpenLid = cb; }
 
     // Send history replay to a specific client on connect
     void sendHistory(uint8_t clientId);
@@ -118,4 +119,5 @@ private:
     FanModeCallback  _onFanMode;
     LidEnabledCallback _onLidEnabled;
     ResumeLidCallback _onResumeLid;
+    ResumeLidCallback _onOpenLid = nullptr;
 };

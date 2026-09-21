@@ -181,24 +181,27 @@ All user settings stored in `config.json` on LittleFS. Survives reboots and firm
 The detector uses the internal Fahrenheit pit reading and target. It first waits
 for 30 continuous seconds within ±2% of the target, checked with each 4-second PID
 update. Only then can a reading below 94% of target trigger a pause. A setpoint
-change or pit-probe fault clears and disarms the detector.
+change or pit-probe fault clears and disarms automatic detection. An explicit
+manual pause remains bounded by its original deadline; the probe interlock still
+holds outputs off whenever the pit probe is invalid.
 
 During a pause the fan is off, including any kick-start. Fan + Damper and Damper
 Primary close the damper; Fan Only preserves its normal fully-open damper command.
 The probe-fault interlock always stops the fan and closes the damper in every mode.
 
-A pause ends when the temperature reaches at least 98% of target, after a
+An automatic pause ends when the temperature reaches at least 98% of target, after a
 two-minute timeout, when **Resume now** is pressed, or when detection is disabled.
 PID integral/derivative history is reset using the current reading before control
-resumes. Every exit requires a fresh settling period before another pause can
+resumes. Every exit requires a fresh settling period before another automatic pause can
 trigger, so a still-cold pit cannot immediately retrigger it.
 
 - Touchscreen: **Settings → Lid detection → Off** disables detection. Scroll below
-  the Fan row if necessary. **Resume now** appears in the lid banner and in Settings
-  during a pause; the Settings action remains accessible when another alarm owns
-  the banner.
-- Web: **Settings → Lid detection** uses the same device setting. **Resume now** is
-  available in the pause banner and Settings, with a remaining-time display.
+  the Fan row if necessary. **Open lid / Close lid** is always available on the
+  dashboard and in Settings. **Resume now** remains in the lid banner; Settings
+  still provides Close lid when another alarm owns the banner.
+- Web: **Settings → Lid detection** uses the same device setting. **Open lid /
+  Close lid** is in the header and Settings; the pause banner has **Resume now**
+  and a remaining-time display.
 - Detection defaults to On, including when loading an older config. The setting is
   saved as `lid.enabled` in `/config.json`; it persists across device restarts.
   Resume clears one pause without disabling future detection.
@@ -213,3 +216,27 @@ engine, JSON command parsing and configuration migration/round-trips using cache
 firmware dependencies. `python test/ui/run_checks.py` taps production LVGL controls;
 `node test/web/test_lid_controls.cjs` checks browser commands and state synchronization.
 Deploy both firmware and the LittleFS web assets to make the new controls available.
+
+### Optional meat probes and manual lid control
+
+Meat 1 and Meat 2 are optional. An unplugged/open-circuit meat probe displays
+`---`, leaves a gap in history, and produces no probe error. Existing meat targets
+are retained for reconnection. A shorted meat probe remains a fault. The pit
+probe is required: an open or shorted pit probe still stops fan/damper control.
+
+Both UIs provide **Open lid / Close lid** on the dashboard and in Settings:
+
+- **Open lid** immediately requests a manual fan pause, even before warm-up or
+  when automatic detection is Off. It does not move the physical lid.
+- A manual pause ignores temperature recovery and target changes. Turning auto
+  detection On/Off does not cancel it. This lets you pause before lifting a hot lid.
+- **Close lid**, the existing **Resume now**, or the original two-minute deadline
+  ends the pause. Repeated Open requests do not extend that deadline.
+- No lid action overrides a pit-probe fault. A manual pause can remain indicated
+  during a fault, but the outputs stay stopped and the fault is shown first.
+- Manual pause is temporary, not a saved mode. The auto-detection setting remains
+  the separate persistent On/Off option.
+
+The same `ErrorManager::probeHasFault` rule supplies the error list and touchscreen
+banner. Web telemetry keeps missing readings as null and reports shorts as -1;
+completion estimates are cleared while meat readings are unavailable.

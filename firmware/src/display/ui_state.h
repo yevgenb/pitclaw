@@ -6,7 +6,7 @@
 // editor increments use the selected unit, so changing units cannot change a cook.
 struct UiState {
     bool fahrenheit = true;
-    bool lidEnabled = true, lidOpen = false;
+    bool lidEnabled = true, lidOpen = false, lidManual = false;
     uint16_t lidRemaining = 0;
     float temps[3] = {};
     bool connected[3] = {};

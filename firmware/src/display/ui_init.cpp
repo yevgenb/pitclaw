@@ -76,7 +76,8 @@ lv_obj_t *lbl_meat1_est = nullptr, *lbl_meat2_est = nullptr;
 lv_obj_t *meat_edit_icons[2] = {}, *meat_target_captions[2] = {};
 lv_obj_t *bar_fan = nullptr, *bar_damper = nullptr, *lbl_fan_bar = nullptr, *lbl_damper_bar = nullptr;
 lv_obj_t *alert_banner = nullptr, *lbl_alert_text = nullptr, *btn_alert_ack = nullptr;
-lv_obj_t *btn_lid_resume = nullptr, *btn_lid_toggle = nullptr, *btn_lid_settings_resume = nullptr, *lbl_lid_status = nullptr;
+lv_obj_t *btn_lid_action = nullptr;
+lv_obj_t *btn_lid_resume = nullptr, *btn_lid_toggle = nullptr, *btn_lid_settings_action = nullptr, *lbl_lid_status = nullptr;
 lv_obj_t *chart_temps = nullptr, *lbl_graph_title = nullptr, *lbl_graph_span = nullptr;
 lv_chart_series_t *ser_pit = nullptr, *ser_meat1 = nullptr, *ser_meat2 = nullptr, *ser_setpoint = nullptr;
 lv_obj_t* graph_y_labels[5] = {};
@@ -98,6 +99,7 @@ static UiMeatTargetCb cb_meat_target = nullptr;
 static UiAlarmAckCb cb_alarm_ack = nullptr;
 static UiLidEnabledCb cb_lid_enabled = nullptr;
 static UiResumeLidCb cb_lid_resume = nullptr;
+static UiResumeLidCb cb_lid_open = nullptr;
 static UiUnitsCb cb_units = nullptr;
 static UiFanModeCb cb_fan_mode = nullptr;
 static UiNewSessionCb cb_new_session = nullptr;
@@ -111,8 +113,8 @@ void ui_set_settings_callbacks(UiUnitsCb units, UiFanModeCb fan, UiNewSessionCb 
     cb_units = units; cb_fan_mode = fan; cb_new_session = session; cb_factory_reset = reset;
 }
 void ui_set_wifi_callback(UiWifiActionCb cb) { cb_wifi_action = cb; }
-void ui_set_lid_callbacks(UiLidEnabledCb enabled, UiResumeLidCb resume) {
-    cb_lid_enabled = enabled; cb_lid_resume = resume;
+void ui_set_lid_callbacks(UiLidEnabledCb enabled, UiResumeLidCb resume, UiResumeLidCb open) {
+    cb_lid_enabled = enabled; cb_lid_resume = resume; cb_lid_open = open;
 }
 
 static lv_obj_t* new_screen() { return UiStyle::box(nullptr, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT, COLOR_BG, 0); }
@@ -353,6 +355,10 @@ static void create_confirm_modal() {
 
 static void alert_tap_cb(lv_event_t*) { if (cb_alarm_ack) cb_alarm_ack(); }
 static void lid_resume_click(lv_event_t*) { if (cb_lid_resume) cb_lid_resume(); }
+static void lid_action_click(lv_event_t*) {
+    if (ui_state.lidOpen) { if (cb_lid_resume) cb_lid_resume(); }
+    else if (cb_lid_open) cb_lid_open();
+}
 static void lid_toggle_click(lv_event_t*) { if (cb_lid_enabled) cb_lid_enabled(!ui_state.lidEnabled); }
 static lv_obj_t* output_bar(lv_obj_t* parent, int x, int width, lv_color_t color) {
     auto bar = lv_bar_create(parent); lv_obj_remove_style_all(bar);
@@ -366,7 +372,8 @@ static void create_dashboard_screen() {
     scr_dashboard = new_screen();
     auto header = UiStyle::box(scr_dashboard, 0, 0, 480, 32, COLOR_NAV_BG, 0);
     lbl_wifi_icon = UiStyle::label(header, LV_SYMBOL_WIFI, 12, 8, &lv_font_montserrat_16, COLOR_GREEN);
-    UiStyle::label(header, "Cook", 40, 7, &lv_font_montserrat_16, COLOR_TEXT_DIM);
+    btn_lid_action = UiStyle::button(header, "Open lid", 40, 0, 96, 32, Button::Secondary, &lv_font_montserrat_14);
+    lv_obj_add_event_cb(btn_lid_action, lid_action_click, LV_EVENT_CLICKED, nullptr);
     lbl_elapsed = UiStyle::label(header, "00:00:00", 142, 2, &lv_font_montserrat_24, COLOR_TEXT, 196, LV_TEXT_ALIGN_CENTER);
     lbl_units = UiStyle::label(header, "\xC2\xB0" "F", 428, 5, &lv_font_montserrat_18, COLOR_TEXT_DIM, 40, LV_TEXT_ALIGN_RIGHT);
     lbl_fan_bar = UiStyle::label(scr_dashboard, "Fan 0%", 12, 38, &lv_font_montserrat_16, COLOR_TEXT_DIM);
@@ -499,9 +506,8 @@ static void create_settings_screen() {
     btn_lid_toggle = UiStyle::button(row, "On", 344, 4, 104, 44);
     lv_obj_add_event_cb(btn_lid_toggle, lid_toggle_click, LV_EVENT_CLICKED, nullptr);
     lbl_lid_status = UiStyle::label(row, "2 min max pause", 16, 75, &lv_font_montserrat_16, COLOR_TEXT_DIM, 224);
-    btn_lid_settings_resume = UiStyle::button(row, "Resume now", 256, 58, 192, 44, Button::Secondary);
-    lv_obj_add_event_cb(btn_lid_settings_resume, lid_resume_click, LV_EVENT_CLICKED, nullptr);
-    lv_obj_add_flag(btn_lid_settings_resume, LV_OBJ_FLAG_HIDDEN);
+    btn_lid_settings_action = UiStyle::button(row, "Open lid", 256, 58, 192, 44, Button::Secondary);
+    lv_obj_add_event_cb(btn_lid_settings_action, lid_action_click, LV_EVENT_CLICKED, nullptr);
     auto session = UiStyle::button(settings_content, "New session", 0, 256, 464, 56);
     lv_obj_add_event_cb(session, new_session_click, LV_EVENT_CLICKED, nullptr);
     UiStyle::label(settings_content, "Wi-Fi and device settings " LV_SYMBOL_DOWN, 8, 317, &lv_font_montserrat_14, COLOR_TEXT_DIM, 448, LV_TEXT_ALIGN_CENTER);
@@ -602,5 +608,5 @@ void ui_handler() {}
 void ui_set_callbacks(UiSetpointCb, UiMeatTargetCb, UiAlarmAckCb) {}
 void ui_set_settings_callbacks(UiUnitsCb, UiFanModeCb, UiNewSessionCb, UiFactoryResetCb) {}
 void ui_set_wifi_callback(UiWifiActionCb) {}
-void ui_set_lid_callbacks(UiLidEnabledCb, UiResumeLidCb) {}
+void ui_set_lid_callbacks(UiLidEnabledCb, UiResumeLidCb, UiResumeLidCb) {}
 #endif

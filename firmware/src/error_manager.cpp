@@ -37,7 +37,12 @@ void ErrorManager::update(float pitTemp, float fanPct, const ProbeState probeSta
     const char* probeNames[] = {"Pit", "Meat 1", "Meat 2"};
 
     for (uint8_t i = 0; i < 3; i++) {
-        if (probeStates[i].openCircuit) {
+        if (!probeHasFault(i, probeStates[i].openCircuit, probeStates[i].shortCircuit)) {
+            removeError(ErrorCode::PROBE_OPEN, i);
+            removeError(ErrorCode::PROBE_SHORT, i);
+            continue;
+        }
+        if (probeStates[i].openCircuit && !probeStates[i].shortCircuit) {
             char msg[48];
             snprintf(msg, sizeof(msg), "%s probe disconnected", probeNames[i]);
             addError(ErrorCode::PROBE_OPEN, i, msg);

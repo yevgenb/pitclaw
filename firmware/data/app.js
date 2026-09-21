@@ -33,7 +33,7 @@
 
   var currentUnits = 'F';        // 'F' or 'C' — display only
   var currentTimeFormat = '12h'; // '12h' or '24h'
-  var lidControlsAvailable = false, lidEnabled = true, lidPaused = false;
+  var lidControlsAvailable = false, manualLidAvailable = false, lidEnabled = true, lidPaused = false;
 
   var currentFanMode = 'fan_and_damper'; // 'fan_only', 'fan_and_damper', 'damper_primary'
   var currentTheme = 'dark'; // 'dark' or 'light' — synced from firmware
@@ -82,10 +82,11 @@
     dom.fanBarValue = document.getElementById('fanBarValue');
     dom.damperBarValue = document.getElementById('damperBarValue');
     dom.lidEnabled = document.getElementById('lidEnabled');
+    dom.btnLidAction = document.getElementById('btnLidAction');
     dom.lidBanner = document.getElementById('lidBanner');
     dom.lidStatus = document.getElementById('lidStatus');
     dom.btnResumeLid = document.getElementById('btnResumeLid');
-    dom.btnSettingsResumeLid = document.getElementById('btnSettingsResumeLid');
+    dom.btnSettingsLidAction = document.getElementById('btnSettingsLidAction');
     dom.btnFanOnly = document.getElementById('btnFanOnly');
     dom.btnFanAndDamper = document.getElementById('btnFanAndDamper');
     dom.btnDamperPrimary = document.getElementById('btnDamperPrimary');
@@ -371,18 +372,23 @@
     var ready = connected && lidControlsAvailable;
     dom.lidEnabled.disabled = !ready;
     dom.btnResumeLid.disabled = !ready || !lidPaused;
-    dom.btnSettingsResumeLid.disabled = !ready || !lidPaused;
+    dom.btnSettingsLidAction.disabled = !ready || (!lidPaused && !manualLidAvailable);
+    dom.btnLidAction.disabled = dom.btnSettingsLidAction.disabled;
   }
 
   function applyLidState(msg) {
     lidControlsAvailable = typeof msg.lidEnabled === 'boolean';
+    manualLidAvailable = typeof msg.lidManual === 'boolean';
     if (lidControlsAvailable) lidEnabled = msg.lidEnabled;
     lidPaused = msg.lid === true;
     dom.lidEnabled.checked = lidEnabled;
     dom.lidBanner.hidden = !lidPaused;
-    dom.btnSettingsResumeLid.hidden = !lidPaused;
+    [dom.btnLidAction, dom.btnSettingsLidAction].forEach(function (button) {
+      button.textContent = lidPaused ? 'Close lid' : 'Open lid';
+      button.setAttribute('aria-pressed', String(lidPaused));
+    });
     var seconds = Number.isFinite(msg.lidRemaining) ? Math.max(0, Math.floor(msg.lidRemaining)) : 0;
-    dom.lidStatus.textContent = 'Lid open — fan paused' + (seconds > 0 ?
+    dom.lidStatus.textContent = (msg.lidManual ? 'Lid open — manual pause' : 'Lid open — fan paused') + (seconds > 0 ?
       ' · ' + Math.floor(seconds / 60) + ':' + String(seconds % 60).padStart(2, '0') + ' remaining' : '');
     updateLidButtons();
   }
@@ -392,6 +398,12 @@
     dom.lidEnabled.checked = lidEnabled;
     if (!connected || !lidControlsAvailable) return;
     wsSend({ type: 'config', lidEnabled: enabled });
+  }
+
+  function lidAction() {
+    if (lidPaused) return resumeLid();
+    if (!connected || !lidControlsAvailable || !manualLidAvailable) return;
+    wsSend({ type: 'lid', action: 'open' });
   }
 
   function resumeLid() {
@@ -1040,6 +1052,12 @@
       return;
     }
 
+    var readings = chartData[seriesIndex];
+    if (!readings.length || readings[readings.length - 1] === null) {
+      domElement.textContent = ''; // An unused/faulty probe has no completion estimate.
+      return;
+    }
+
     if (chartData[0].length < MIN_PREDICTION_POINTS) {
       domElement.textContent = 'Calculating...';
       return;
@@ -1359,7 +1377,8 @@
 
     dom.lidEnabled.addEventListener('change', function () { setLidEnabled(this.checked); });
     dom.btnResumeLid.addEventListener('click', resumeLid);
-    dom.btnSettingsResumeLid.addEventListener('click', resumeLid);
+    dom.btnSettingsLidAction.addEventListener('click', lidAction);
+    dom.btnLidAction.addEventListener('click', lidAction);
 
     // Fan mode buttons
     var fanModeButtons = [dom.btnFanOnly, dom.btnFanAndDamper, dom.btnDamperPrimary];

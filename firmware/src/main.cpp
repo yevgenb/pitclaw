@@ -87,9 +87,10 @@ static uint8_t cb_getFlags() {
 
 // UI/WebSocket requests are applied on the control task, never the network task.
 static std::atomic<int> g_lidEnabledRequest{-1};
-static std::atomic<bool> g_resumeLidRequest{false};
+static std::atomic<int> g_lidActionRequest{0}; //0 none,1 open,2 close/resume; latest action wins.
 static void request_lid_enabled(bool enabled) { g_lidEnabledRequest.store(enabled ? 1 : 0); }
-static void request_lid_resume() { g_resumeLidRequest.store(true); }
+static void request_lid_resume() { g_lidActionRequest.store(2); }
+static void request_lid_open() { g_lidActionRequest.store(1); }
 
 // --- WebSocket command callbacks ---
 static void ws_onSetpoint(float sp) {
@@ -281,6 +282,7 @@ void setup() {
     webServer.onFanMode(ws_onFanMode);
     webServer.onLidEnabled(request_lid_enabled);
     webServer.onResumeLid(request_lid_resume);
+    webServer.onOpenLid(request_lid_open);
 
     // 12. Initialize OTA updates (needs the AsyncWebServer to register /update route)
     otaManager.begin(webServer.getAsyncServer());
@@ -294,7 +296,7 @@ void setup() {
     ui_set_callbacks(ui_cb_setpoint, ui_cb_meat_target, ui_cb_alarm_ack);
     ui_set_settings_callbacks(ui_cb_units, ui_cb_fan_mode, ui_cb_new_session, ui_cb_factory_reset);
     ui_set_wifi_callback(ui_cb_wifi_action);
-    ui_set_lid_callbacks(request_lid_enabled, request_lid_resume);
+    ui_set_lid_callbacks(request_lid_enabled, request_lid_resume, request_lid_open);
     ui_update_lid_detection(pidController.isLidDetectionEnabled(), false, 0);
 
     // Set initial display state
@@ -451,8 +453,10 @@ void loop() {
         pidController.setLidDetectionEnabled(enabled);
         lidCommandApplied = true;
     }
-    if (g_resumeLidRequest.exchange(false)) {
-        pidController.resumeLid();
+    const int lidAction = g_lidActionRequest.exchange(0);
+    if (lidAction) {
+        if (lidAction == 1) pidController.openLid(now);
+        else pidController.resumeLid();
         lidCommandApplied = true;
     }
     if (lidCommandApplied) g_lastPidMs = now - PID_SAMPLE_MS;
@@ -494,6 +498,10 @@ void loop() {
                     g_pitReached = true;
                 }
             }
+        } else {
+            // Keep a manual pause's deadline running while the independent
+            // probe interlock holds outputs off.
+            pidController.compute(NAN, g_setpoint, now);
         }
     }
 
@@ -507,7 +515,7 @@ void loop() {
 
     if (lidCommandApplied) {
         ui_update_lid_detection(pidController.isLidDetectionEnabled(), pidController.isLidOpen(),
-                                pidController.lidRemainingSeconds(now));
+                                pidController.lidRemainingSeconds(now), pidController.isLidManual());
         g_lastDisplayMs = now - 1000; // Clear the pause banner promptly too.
         webServer.broadcastNow();
     }
@@ -598,11 +606,13 @@ void loop() {
             break; // Take the first active alarm
         }
         uint8_t probeErrors = 0;
-        if (tempManager.getStatus(PROBE_PIT) != ProbeStatus::OK)   probeErrors |= 0x01;
-        if (tempManager.getStatus(PROBE_MEAT1) != ProbeStatus::OK) probeErrors |= 0x02;
-        if (tempManager.getStatus(PROBE_MEAT2) != ProbeStatus::OK) probeErrors |= 0x04;
+        for (uint8_t i = 0; i < NUM_PROBES; ++i) {
+            const ProbeStatus status = tempManager.getStatus(i);
+            if (ErrorManager::probeHasFault(i, status == ProbeStatus::OPEN_CIRCUIT,
+                                           status == ProbeStatus::SHORT_CIRCUIT)) probeErrors |= (1u << i);
+        }
         ui_update_lid_detection(pidController.isLidDetectionEnabled(), pidController.isLidOpen(),
-                                pidController.lidRemainingSeconds(now));
+                                pidController.lidRemainingSeconds(now), pidController.isLidManual());
         ui_update_alerts(topAlarm, pidController.isLidOpen(), errorManager.isFireOut(), probeErrors);
 
         // Meat targets

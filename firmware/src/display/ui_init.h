@@ -47,7 +47,7 @@ void ui_set_callbacks(UiSetpointCb sp, UiMeatTargetCb meat, UiAlarmAckCb ack);
 void ui_set_settings_callbacks(UiUnitsCb units, UiFanModeCb fan,
                                 UiNewSessionCb session, UiFactoryResetCb reset);
 
-void ui_set_lid_callbacks(UiLidEnabledCb enabled, UiResumeLidCb resume);
+void ui_set_lid_callbacks(UiLidEnabledCb enabled, UiResumeLidCb resume, UiResumeLidCb open = nullptr);
 
 // Set callback for Wi-Fi action buttons (Disconnect/Reconnect/Setup Mode)
 void ui_set_wifi_callback(UiWifiActionCb cb);

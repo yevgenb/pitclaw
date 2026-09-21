@@ -118,7 +118,12 @@ static void on_units(bool isFahrenheit) {
 static void on_lid_enabled(bool enabled) {
     if (!g_model) return;
     g_model->setLidDetectionEnabled(enabled);
-    ui_update_lid_detection(enabled, g_model->isLidPaused(), g_model->lidRemainingSeconds());
+    ui_update_lid_detection(enabled, g_model->isLidPaused(), g_model->lidRemainingSeconds(), g_model->isLidManual());
+}
+static void on_lid_open() {
+    if (!g_model) return;
+    g_model->openLid();
+    ui_update_lid_detection(g_model->isLidDetectionEnabled(), true, g_model->lidRemainingSeconds(), true);
 }
 static void on_lid_resume() {
     if (!g_model) return;
@@ -352,7 +357,7 @@ int main(int argc, char* argv[]) {
     ui_set_callbacks(on_setpoint, on_meat_target, on_alarm_ack);
     ui_set_settings_callbacks(on_units, on_fan_mode, on_new_session, on_factory_reset);
     ui_set_wifi_callback(on_wifi_action);
-    ui_set_lid_callbacks(on_lid_enabled, on_lid_resume);
+    ui_set_lid_callbacks(on_lid_enabled, on_lid_resume, on_lid_open);
 
     // Initialize thermal model
     SimThermalModel model;
@@ -380,6 +385,7 @@ int main(int argc, char* argv[]) {
     webServer.onFanMode(web_on_fan_mode);
     webServer.onLidEnabled(on_lid_enabled);
     webServer.onResumeLid(on_lid_resume);
+    webServer.onOpenLid(on_lid_open);
     webServer.setState(model.setpoint, g_meat1_target, g_meat2_target);
 
     // Boot phase: wizard mode starts with splash, normal mode goes straight to running
@@ -496,7 +502,7 @@ int main(int argc, char* argv[]) {
 
                 // Check and display alarms
                 check_alarms(result);
-                ui_update_lid_detection(model.isLidDetectionEnabled(), model.isLidPaused(), model.lidRemainingSeconds());
+                ui_update_lid_detection(model.isLidDetectionEnabled(), model.isLidPaused(), model.lidRemainingSeconds(), model.isLidManual());
                 ui_update_alerts(
                     g_alarm_active ? g_alarm_type : 0,
                     result.lidOpen,
@@ -519,6 +525,7 @@ int main(int argc, char* argv[]) {
                     payload.lid   = model.isLidPaused();
                     payload.lidEnabled = model.isLidDetectionEnabled();
                     payload.lidRemaining = model.lidRemainingSeconds();
+                    payload.lidManual = model.isLidManual();
                     payload.meat1Target = g_meat1_target;
                     payload.meat2Target = g_meat2_target;
                     payload.est   = 0;

@@ -21,6 +21,7 @@ struct DataPayload {
     uint8_t errorCount;
     bool lidEnabled = true;
     uint16_t lidRemaining = 0;
+    bool lidManual = false;
 };
 
 // Single point for history replay
@@ -33,7 +34,7 @@ struct HistoryPoint {
 };
 
 // Parsed incoming command
-enum class CmdType { SET_SP, ALARM, SESSION_NEW, SESSION_DOWNLOAD, SET_FAN_MODE, SET_LID_ENABLED, RESUME_LID, UNKNOWN };
+enum class CmdType { SET_SP, ALARM, SESSION_NEW, SESSION_DOWNLOAD, SET_FAN_MODE, SET_LID_ENABLED, OPEN_LID, RESUME_LID, UNKNOWN };
 struct ParsedCommand {
     CmdType type;
     float setpoint;

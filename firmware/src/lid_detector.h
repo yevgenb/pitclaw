@@ -7,11 +7,21 @@
 class LidDetector {
 public:
     void reset() {
-        _open = _armed = _warming = _haveTarget = false;
+        _open = _manual = _armed = _warming = _haveTarget = false;
     }
+    // Automatic detection and the operator's explicit pause are independent.
+    void resetAutomatic() { if (!_manual) reset(); }
     void setEnabled(bool enabled) {
-        if (_enabled != enabled) { _enabled = enabled; reset(); }
+        if (_enabled != enabled) { _enabled = enabled; resetAutomatic(); }
     }
+    bool openManual(uint32_t now) {
+        const bool changed = !_open || !_manual;
+        if (!_open) _openedAt = now; // Repeated commands never extend a pause.
+        _open = _manual = true;
+        _armed = _warming = _haveTarget = false;
+        return changed;
+    }
+    bool isManual() const { return _open && _manual; }
     bool isEnabled() const { return _enabled; }
     bool isOpen() const { return _open; }
     bool isArmed() const { return _armed; }
@@ -29,6 +39,12 @@ public:
     // Returns true when the pause starts or ends, so the PID can reset its history.
     bool update(float temp, float target, uint32_t now) {
         const bool wasOpen = _open;
+        if (_manual) {
+            // Hot readings, a changed target or auto-detection Off must not undo
+            // an operator's pause while they are opening the lid.
+            if (static_cast<uint32_t>(now - _openedAt) >= LID_OPEN_TIMEOUT_MS) reset();
+            return wasOpen != _open;
+        }
         if (!_enabled || !std::isfinite(temp) || !std::isfinite(target) || target <= 0) {
             reset();
             return wasOpen;
@@ -57,7 +73,7 @@ public:
         return wasOpen != _open;
     }
 private:
-    bool _enabled = true, _open = false, _armed = false, _warming = false, _haveTarget = false;
+    bool _enabled = true, _open = false, _manual = false, _armed = false, _warming = false, _haveTarget = false;
     float _target = 0;
     uint32_t _warmSince = 0, _openedAt = 0;
 };

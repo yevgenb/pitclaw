@@ -66,7 +66,8 @@ float PidController::compute(float currentTemp, float setpoint) {
 
 float PidController::compute(float currentTemp, float setpoint, uint32_t nowMs) {
     if (!_enabled || !std::isfinite(currentTemp) || !std::isfinite(setpoint) || setpoint <= 0) {
-        _lid.reset();
+        if (!_enabled) _lid.reset();
+        else _lid.update(currentTemp, setpoint, nowMs); // Manual pause still expires during a probe fault.
         _pidNeedsReset = true;
         _pidOutput = 0;
         return 0;
@@ -132,17 +133,21 @@ void PidController::setLidDetectionEnabled(bool enabled) {
     if (paused && !_lid.isOpen()) resetIntegrator();
 }
 
+void PidController::openLid(uint32_t nowMs) {
+    if (_enabled && _lid.openManual(nowMs)) resetIntegrator();
+}
+
 void PidController::resumeLid() {
     if (_lid.resume()) resetIntegrator();
 }
 
 void PidController::resetLidDetection() {
-    _lid.reset();
+    _lid.resetAutomatic();
     resetIntegrator();
 }
 
 void PidController::setEnabled(bool enabled) {
-    if (_enabled != enabled) resetLidDetection();
+    if (_enabled != enabled) { _lid.reset(); resetIntegrator(); }
     _enabled = enabled;
     if (!enabled) _pidOutput = 0;
 }

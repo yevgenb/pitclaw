@@ -1145,10 +1145,14 @@ body {
 .lid-banner { display:flex; align-items:center; justify-content:space-between; gap:12px;
   margin:12px 16px; padding:12px 16px; border:1px solid var(--accent);
   border-radius:var(--border-radius); background:var(--bg-card); color:var(--pit-color); }
-.lid-banner[hidden], #btnSettingsResumeLid[hidden] { display:none; }
+.lid-banner[hidden] { display:none; }
 .lid-banner .btn { flex-shrink:0; }
 .lid-setting { display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:44px; }
 .lid-setting .settings-label { margin:0; }
 .lid-setting input { width:26px; height:26px; accent-color:var(--accent); cursor:pointer; }
 .lid-help { color:var(--text-secondary); font-size:0.875rem; line-height:1.5; margin:8px 0; }
 @media (max-width:400px) { .lid-banner { flex-wrap:wrap; } }
+
+.lid-action { min-height:36px; padding:6px 10px; white-space:nowrap; }
+.lid-action[aria-pressed="true"], #btnSettingsLidAction[aria-pressed="true"] { border:1px solid var(--accent); color:var(--pit-color); }
+@media (max-width:480px) { .header-right .lid-action { padding:6px 8px; font-size:.8rem; } }

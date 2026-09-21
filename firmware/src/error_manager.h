@@ -40,6 +40,12 @@ class ErrorManager {
 public:
     ErrorManager();
 
+    // Meat channels are optional. Shorts are faults on every channel; an open
+    // circuit is only a fault on the required pit channel (index0).
+    static bool probeHasFault(uint8_t index, bool openCircuit, bool shortCircuit) {
+        return shortCircuit || (index == 0 && openCircuit);
+    }
+
     // Initialize error manager. Call once from setup().
     void begin();
 

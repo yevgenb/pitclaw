@@ -39,6 +39,9 @@ public:
     bool isLidDetectionEnabled() const { return _lid.isEnabled(); }
     void setLidDetectionEnabled(bool enabled);
     void resumeLid();
+    void openLid(uint32_t nowMs);
+    bool isLidManual() const { return _lid.isManual(); }
+    // Re-arm automatic detection after a fault/target change; retain an explicit manual pause.
     void resetLidDetection();
     uint16_t lidRemainingSeconds(uint32_t nowMs) const { return _lid.remainingSeconds(nowMs); }
 

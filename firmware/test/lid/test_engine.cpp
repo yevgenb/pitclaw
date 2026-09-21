@@ -23,5 +23,10 @@ int main() {
     assert(compute(timeout,200,250,158000)>0 && !timeout.isLidOpen());
     PidController disabled; disabled.begin(); pause(disabled); disabled.setLidDetectionEnabled(false);
     assert(std::fabs(compute(disabled,230,250,38000)-1.6f)<.001f && !disabled.isLidOpen());
+    PidController opened; opened.begin(); opened.setLidDetectionEnabled(false); opened.openLid(0);
+    assert(compute(opened,250,250,0)==0 && opened.isLidManual());
+    assert(compute(opened,250,250,10000)==0 && opened.isLidOpen());
+    opened.resumeLid();
+    assert(std::fabs(compute(opened,220,250,14000)-2.4f)<.001f && !opened.isLidOpen());
     std::puts("PASS: real QuickPID cold start and clean history after resume, recovery, timeout and disable");
 }

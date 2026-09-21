@@ -111,8 +111,53 @@ void timer_wraparound() {
     pid->compute(230,250,opened+LID_OPEN_TIMEOUT_MS-1); TEST_ASSERT_TRUE(pid->isLidOpen());
     pid->compute(230,250,opened+LID_OPEN_TIMEOUT_MS); TEST_ASSERT_FALSE(pid->isLidOpen());
 }
+void manual_pause_works_cold_and_hot_with_auto_off() {
+    pid->setLidDetectionEnabled(false); pid->openLid(1000);
+    TEST_ASSERT_TRUE(pid->isLidOpen()); TEST_ASSERT_TRUE(pid->isLidManual());
+    TEST_ASSERT_EQUAL_FLOAT(0,pid->compute(250,250,1000));
+    pid->compute(300,250,5000); TEST_ASSERT_TRUE(pid->isLidOpen());
+    pid->setLidDetectionEnabled(true); TEST_ASSERT_TRUE(pid->isLidManual());
+    pid->setLidDetectionEnabled(false); TEST_ASSERT_TRUE(pid->isLidManual());
+    pid->resumeLid(); TEST_ASSERT_FALSE(pid->isLidOpen());
+    TEST_ASSERT_FALSE(pid->isLidDetectionEnabled());
+    pid->compute(70,250,9000); TEST_ASSERT_FALSE(pid->isLidOpen());
+}
+void manual_pause_survives_target_changes_and_faults_but_expires() {
+    pid->openLid(1000); pid->compute(250,250,1000);
+    pid->resetLidDetection(); // Same call used by the main loop on a target change/fault.
+    pid->compute(350,350,5000); TEST_ASSERT_TRUE(pid->isLidManual());
+    TEST_ASSERT_EQUAL_FLOAT(0,pid->compute(NAN,350,9000));
+    TEST_ASSERT_TRUE(pid->isLidOpen());
+    pid->compute(NAN,350,121000); TEST_ASSERT_FALSE(pid->isLidOpen());
+    pid->compute(70,350,125000); TEST_ASSERT_FALSE(pid->isLidOpen());
+}
+void repeated_manual_commands_do_not_extend_timeout() {
+    pid->openLid(1000); pid->compute(250,250,1000);
+    pid->openLid(119000); TEST_ASSERT_EQUAL_UINT16(2,pid->lidRemainingSeconds(119000));
+    pid->compute(250,250,121000); TEST_ASSERT_FALSE(pid->isLidOpen());
+    pid->compute(230,250,125000); TEST_ASSERT_FALSE(pid->isLidOpen());
+}
+void converting_auto_pause_preserves_original_deadline() {
+    pause(); pid->openLid(100000); TEST_ASSERT_TRUE(pid->isLidManual());
+    TEST_ASSERT_EQUAL_UINT16(52,pid->lidRemainingSeconds(100000));
+    pid->compute(250,250,152000); TEST_ASSERT_FALSE(pid->isLidOpen());
+}
+void pid_disable_clears_manual_pause_immediately() {
+    pid->openLid(1000); pid->setEnabled(false); TEST_ASSERT_FALSE(pid->isLidOpen());
+    pid->openLid(2000); TEST_ASSERT_FALSE(pid->isLidOpen());
+}
+void manual_timer_wraparound() {
+    uint32_t start=UINT32_MAX-1000; pid->openLid(start);
+    pid->compute(250,250,start+LID_OPEN_TIMEOUT_MS-1); TEST_ASSERT_TRUE(pid->isLidOpen());
+    pid->compute(250,250,start+LID_OPEN_TIMEOUT_MS); TEST_ASSERT_FALSE(pid->isLidOpen());
+}
 int main() {
     UNITY_BEGIN();
+    RUN_TEST(manual_pause_works_cold_and_hot_with_auto_off);
+    RUN_TEST(manual_pause_survives_target_changes_and_faults_but_expires);
+    RUN_TEST(repeated_manual_commands_do_not_extend_timeout);
+    RUN_TEST(converting_auto_pause_preserves_original_deadline);
+    RUN_TEST(pid_disable_clears_manual_pause_immediately); RUN_TEST(manual_timer_wraparound);
     RUN_TEST(defaults); RUN_TEST(tuning); RUN_TEST(cold_start_never_pauses);
     RUN_TEST(warm_up_must_be_continuous); RUN_TEST(overshoot_does_not_count_as_settled);
     RUN_TEST(thresholds_and_recovery); RUN_TEST(target_change_clears_and_disarms);

@@ -4,6 +4,7 @@
 #include "ui_state.h"
 #include "graph_history.h"
 #include <stdio.h>
+#include <initializer_list>
 #include <string.h>
 #include <time.h>
 #include <math.h>
@@ -14,7 +15,7 @@ extern lv_obj_t *lbl_meat1_temp, *lbl_meat2_temp, *lbl_meat1_target, *lbl_meat2_
 extern lv_obj_t *meat_edit_icons[2];
 extern lv_obj_t *bar_fan, *bar_damper, *lbl_fan_bar, *lbl_damper_bar;
 extern lv_obj_t *alert_banner, *lbl_alert_text, *btn_alert_ack;
-extern lv_obj_t *btn_lid_resume, *btn_lid_toggle, *btn_lid_settings_resume, *lbl_lid_status;
+extern lv_obj_t *btn_lid_action, *btn_lid_resume, *btn_lid_toggle, *btn_lid_settings_action, *lbl_lid_status;
 extern lv_obj_t *chart_temps, *lbl_graph_title, *lbl_graph_span;
 extern lv_chart_series_t *ser_pit, *ser_meat1, *ser_meat2, *ser_setpoint;
 extern lv_obj_t *graph_y_labels[5], *graph_x_labels[3];
@@ -81,20 +82,21 @@ static void estimate(int probe, uint32_t epoch) {
 void ui_update_meat1_estimate(uint32_t epoch) { estimate(0, epoch); }
 void ui_update_meat2_estimate(uint32_t epoch) { estimate(1, epoch); }
 
-void ui_update_lid_detection(bool enabled, bool active, uint16_t remainingSeconds) {
-    ui_state.lidEnabled = enabled; ui_state.lidOpen = active; ui_state.lidRemaining = remainingSeconds;
+void ui_update_lid_detection(bool enabled, bool active, uint16_t remainingSeconds, bool manual) {
+    ui_state.lidEnabled = enabled; ui_state.lidOpen = active; ui_state.lidRemaining = remainingSeconds; ui_state.lidManual = manual;
     if (btn_lid_toggle) {
         lv_label_set_text(lv_obj_get_child(btn_lid_toggle, 0), enabled ? "On" : "Off");
         UiStyle::selected(btn_lid_toggle, enabled);
     }
     if (lbl_lid_status) {
-        if (active) UiStyle::text_fmt(lbl_lid_status, "Paused %u:%02u", remainingSeconds / 60, remainingSeconds % 60);
+        if (active) UiStyle::text_fmt(lbl_lid_status, manual ? "Manual %u:%02u" : "Paused %u:%02u", remainingSeconds / 60, remainingSeconds % 60);
         else if (enabled) UiStyle::text_fmt(lbl_lid_status, "%lu min max pause", LID_OPEN_TIMEOUT_MS / 60000);
         else lv_label_set_text(lbl_lid_status, "Disabled");
     }
-    if (btn_lid_settings_resume) {
-        if (active) lv_obj_remove_flag(btn_lid_settings_resume, LV_OBJ_FLAG_HIDDEN);
-        else lv_obj_add_flag(btn_lid_settings_resume, LV_OBJ_FLAG_HIDDEN);
+    for (auto button : {btn_lid_action, btn_lid_settings_action}) {
+        if (!button) continue;
+        lv_label_set_text(lv_obj_get_child(button, 0), active ? "Close lid" : "Open lid");
+        UiStyle::selected(button, active);
     }
 }
 
@@ -110,12 +112,12 @@ void ui_update_alerts(uint8_t alarm, bool lidOpen, bool fireOut, uint8_t errors)
     bool warning = false;
     char message[64];
     if (!text && fireOut) text = LV_SYMBOL_WARNING " FIRE MAY BE OUT";
-    const bool resume = !text && lidOpen;
-    if (resume) { text = "LID OPEN"; warning = true; }
     if (!text && errors) {
         snprintf(message, sizeof(message), "Probe error:%s%s%s", errors & 1 ? " Pit" : "", errors & 2 ? " Meat 1" : "", errors & 4 ? " Meat 2" : "");
         text = message; warning = true;
     }
+    const bool resume = !text && lidOpen;
+    if (resume) { text = ui_state.lidManual ? "LID OPEN (MANUAL)" : "LID OPEN"; warning = true; }
     if (text) {
         lv_label_set_text(lbl_alert_text, text);
         lv_obj_set_width(lbl_alert_text, resume ? 292 : acknowledge ? 314 : 440);
@@ -292,7 +294,7 @@ void ui_update_meat2_target(float) {}
 void ui_update_meat1_estimate(uint32_t) {}
 void ui_update_meat2_estimate(uint32_t) {}
 void ui_update_alerts(uint8_t, bool, bool, uint8_t) {}
-void ui_update_lid_detection(bool, bool, uint16_t) {}
+void ui_update_lid_detection(bool, bool, uint16_t, bool) {}
 void ui_update_output_bars(float, float) {}
 void ui_update_wifi(bool) {}
 void ui_update_wifi_info(const WifiInfo&) {}

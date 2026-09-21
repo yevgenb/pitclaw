@@ -16,6 +16,7 @@ int main() {
     auto on=parse(R"({"type":"config","lidEnabled":true})");
     assert(on.type==CmdType::SET_LID_ENABLED && on.lidEnabled);
     assert(parse(R"({"type":"lid","action":"resume"})").type==CmdType::RESUME_LID);
+    assert(parse(R"({"type":"lid","action":"open"})").type==CmdType::OPEN_LID);
     for (const char* bad : {R"({"type":"config","lidEnabled":"false"})",R"({"type":"config","lidEnabled":0})",R"({"type":"config","lidEnabled":false,"fanMode":"fan_only"})",R"({"type":"lid","action":"disable"})"})
         assert(parse(bad).type==CmdType::UNKNOWN);
     ConfigManager cfg;
@@ -34,8 +35,13 @@ int main() {
     JsonDocument result; assert(!deserializeJson(result,packet,len));
     assert(result["lidEnabled"].is<bool>() && !result["lidEnabled"].as<bool>());
     assert(result["errors"].size()==8);
-    d.lidEnabled=true; d.lid=true; d.lidRemaining=83;
+    d.lidEnabled=false; d.lid=true; d.lidRemaining=83; d.lidManual=true;
     len=bbq_protocol::buildDataMessage(packet,sizeof(packet),d);
     assert(!deserializeJson(result,packet,len) && result["lid"].as<bool>() && result["lidRemaining"]==83);
+    assert(result["lidManual"].as<bool>() && !result["lidEnabled"].as<bool>());
+    d.errorCount=0; d.meat1=NAN; d.meat2=-1;
+    len=bbq_protocol::buildDataMessage(packet,sizeof(packet),d);
+    assert(!deserializeJson(result,packet,len));
+    assert(result["meat1"].isNull() && result["meat2"]==-1 && result["errors"].size()==0);
     std::puts("PASS: lid commands, invalid command rejection, old-config migration, disabled-setting persistence and complete broadcasts");
 }

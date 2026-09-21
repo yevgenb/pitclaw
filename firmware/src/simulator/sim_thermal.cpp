@@ -23,6 +23,10 @@ void SimThermalModel::setLidDetectionEnabled(bool enabled) {
     if (paused && !lidDetector_.isOpen()) { pidIntegral_ = 0; pidPrevError_ = setpoint - pitTemp; }
 }
 
+void SimThermalModel::openLid() {
+    if (lidDetector_.openManual(static_cast<uint32_t>(simTime * 1000))) { pidIntegral_ = 0; pidPrevError_ = setpoint - pitTemp; }
+}
+
 void SimThermalModel::resumeLid() {
     if (lidDetector_.resume()) { pidIntegral_ = 0; pidPrevError_ = setpoint - pitTemp; }
 }

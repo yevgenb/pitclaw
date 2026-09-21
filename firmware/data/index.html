@@ -56,6 +56,7 @@
       </div>
     </div>
     <div class="header-right">
+      <button class="btn btn-secondary lid-action" id="btnLidAction" disabled aria-pressed="false" title="Pause the fan before opening the lid">Open lid</button>
       <svg class="wifi-icon" id="wifiIcon" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
         <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
       </svg>
@@ -263,8 +264,8 @@
           <span class="settings-label">Lid detection</span>
           <input type="checkbox" id="lidEnabled" role="switch" disabled>
         </label>
-        <p class="lid-help">Arms after warm-up. Pauses the fan for up to 2 minutes.</p>
-        <button class="btn btn-secondary" id="btnSettingsResumeLid" hidden disabled>Resume now</button>
+        <p class="lid-help">Automatic detection arms after warm-up. Open lid also works with detection off. Pauses last up to 2 minutes.</p>
+        <button class="btn btn-secondary" id="btnSettingsLidAction" disabled aria-pressed="false">Open lid</button>
       </div>
       <div class="settings-divider"></div>
       <div class="settings-group">

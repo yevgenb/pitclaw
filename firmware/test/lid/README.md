@@ -6,7 +6,8 @@ run `python test/lid/run_checks.py` from `firmware/`. The runner uses `CXX` (or
 
 - The real embedded `PidController` and QuickPID run against a fake clock/Serial
   boundary. Checks cover cold-start output and integral/derivative reset on
-  recovery, resume, timeout and disabling detection.
+  recovery, resume, timeout and disabling detection. Manual pause tests also cover
+  a hot pit with automatic detection Off.
 - The real JSON codec and configuration serializer cover command validation,
   old-config migration, disabled-setting round trips, and complete status packets
   with all eight error slots occupied. These checks do not exercise flash hardware.

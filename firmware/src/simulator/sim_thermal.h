@@ -50,6 +50,8 @@ public:
     void setFanOnThreshold(float threshold);
     void setLidDetectionEnabled(bool enabled);
     void resumeLid();
+    void openLid();
+    bool isLidManual() const { return lidDetector_.isManual(); }
     bool isLidDetectionEnabled() const { return lidDetector_.isEnabled(); }
     bool isLidPaused() const { return lidDetector_.isOpen(); }
     uint16_t lidRemainingSeconds() const { return lidDetector_.remainingSeconds(static_cast<uint32_t>(simTime * 1000)); }

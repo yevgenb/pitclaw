@@ -132,3 +132,11 @@ All settings stored in `/config.json` on LittleFS via ArduinoJson. Structure mir
 - [x] Session CSV/JSON export produces valid output (test_session.cpp)
 - [x] Desktop tests pass (`pio test -e native`)
 - [x] Firmware builds (`pio run -e wt32_sc01_plus`)
+
+
+Manual lid pause: Open lid / Close lid controls on both UIs can start a bounded
+pause without waiting for detection, including with detection Off. It ignores
+warm readings and target changes; only Close/Resume or the original two-minute
+deadline releases it. Repeated Open requests do not extend the deadline. Probe
+faults continue to stop outputs independently. Missing meat probes are optional,
+not errors; shorts and a missing/shorted pit probe remain faults.

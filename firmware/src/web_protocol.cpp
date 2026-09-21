@@ -42,6 +42,7 @@ size_t buildDataMessage(char* buf, size_t bufSize, const DataPayload& d) {
     doc["lid"] = d.lid;
     doc["lidEnabled"] = d.lidEnabled;
     doc["lidRemaining"] = d.lidRemaining;
+    doc["lidManual"] = d.lidManual;
     if (d.fanMode) doc["fanMode"] = d.fanMode;
 
     // Meat targets: 0 → null
@@ -232,7 +233,8 @@ ParsedCommand parseCommand(const char* data, size_t len) {
         }
     }
     else if (strcmp(type, "lid") == 0) {
-        if (strcmp(doc["action"] | "", "resume") == 0) cmd.type = CmdType::RESUME_LID;
+        if (strcmp(doc["action"] | "", "open") == 0) cmd.type = CmdType::OPEN_LID;
+        else if (strcmp(doc["action"] | "", "resume") == 0) cmd.type = CmdType::RESUME_LID;
     }
     else if (strcmp(type, "config") == 0) {
         // Each command changes one setting; reject ambiguous or mistyped lid values.

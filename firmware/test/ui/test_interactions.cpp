@@ -18,7 +18,7 @@ static bool pressed = false;
 static lv_point_t pointer = {};
 static float applied_setpoint = -1, applied_target = -1;
 static uint8_t applied_probe = 0;
-static unsigned acknowledgments = 0, hardware_tests = 0, lid_resumes = 0;
+static unsigned acknowledgments = 0, hardware_tests = 0, lid_resumes = 0, lid_opens = 0;
 static bool requested_lid_enabled = true;
 static void flush(lv_display_t* disp, const lv_area_t* area, uint8_t* data) {
     auto pixels = reinterpret_cast<uint16_t*>(data);
@@ -127,8 +127,21 @@ int main() {
     capture("dashboard");
     check_temperature_updates();
 
-    ui_set_lid_callbacks([](bool enabled) { requested_lid_enabled=enabled; }, []() { ++lid_resumes; });
+    ui_set_lid_callbacks([](bool enabled) { requested_lid_enabled=enabled; }, []() { ++lid_resumes; }, []() { ++lid_opens; });
+    ui_update_lid_detection(false,false,0);
+    tap(btn_lid_action); assert(lid_opens==1); // Auto Off does not disable manual control.
     ui_update_output_bars(0,0);
+    ui_update_lid_detection(false,true,120,true); ui_update_alerts(0,true,false,0); pump();
+    assert(strcmp(lv_label_get_text(lv_obj_get_child(btn_lid_action,0)),"Close lid")==0);
+    assert(!overlap(btn_lid_action,lbl_elapsed)); capture("manual-lid-open");
+    tap(btn_lid_action); assert(lid_resumes==1);
+    ui_update_lid_detection(true,false,0); ui_update_alerts(0,false,false,0);
+    ui_update_temps(225,NAN,NAN,true,false,false); ui_update_alerts(0,false,false,0);
+    assert(!lv_obj_is_visible(alert_banner)); // Optional meat readings do not create a UI error.
+    assert(strcmp(lv_label_get_text(lbl_meat1_temp),"---")==0);
+    capture("optional-meat-probes");
+    ui_update_temps(225,200,200,true,true,true);
+    lid_resumes=0;
     ui_update_lid_detection(true,true,83); ui_update_alerts(0,true,false,0); pump();
     assert(lv_obj_is_visible(btn_lid_resume) && !lv_obj_is_visible(btn_alert_ack));
     assert(!overlap(lbl_alert_text,btn_lid_resume)); capture("lid-open");
@@ -144,8 +157,13 @@ int main() {
     ui_update_lid_detection(true,true,83); ui_update_alerts(3,true,false,0);
     assert(!lv_obj_is_visible(btn_lid_resume) && lv_obj_is_visible(btn_alert_ack));
     // Resume remains reachable in Settings while another alarm owns the banner.
-    pump(); lv_obj_scroll_to_view_recursive(btn_lid_settings_resume,LV_ANIM_OFF); pump(); capture("lid-settings");
-    tap(btn_lid_settings_resume); assert(lid_resumes==2 && acknowledgments==0);
+    pump(); lv_obj_scroll_to_view_recursive(btn_lid_settings_action,LV_ANIM_OFF); pump(); capture("lid-settings");
+    tap(btn_lid_settings_action); assert(lid_resumes==2 && acknowledgments==0);
+    ui_update_lid_detection(false,true,80,true); ui_update_alerts(0,true,false,1); pump();
+    assert(strstr(lv_label_get_text(lbl_alert_text),"Pit") && !lv_obj_is_visible(btn_lid_resume));
+    ui_update_lid_detection(false,false,0); ui_update_alerts(0,false,false,0);
+    lv_obj_scroll_to_view_recursive(btn_lid_settings_action,LV_ANIM_OFF); pump();
+    tap(btn_lid_settings_action); assert(lid_opens==2);
     ui_update_lid_detection(true,false,0); ui_update_alerts(0,false,false,0);
     lv_obj_scroll_to_y(settings_content,0,LV_ANIM_OFF); ui_switch_screen(Screen::DASHBOARD);
     ui_update_output_bars(100,100);

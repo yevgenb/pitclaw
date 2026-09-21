@@ -167,9 +167,13 @@ bbq_protocol::DataPayload BBQWebServer::buildDataPayload() {
 
     // Temperatures
     if (_temp) {
-        payload.pit   = _temp->isConnected(PROBE_PIT)   ? _temp->getPitTemp()   : NAN;
-        payload.meat1 = _temp->isConnected(PROBE_MEAT1)  ? _temp->getMeat1Temp() : NAN;
-        payload.meat2 = _temp->isConnected(PROBE_MEAT2)  ? _temp->getMeat2Temp() : NAN;
+        auto reading = [this](uint8_t probe) -> float {
+            if (_temp->getStatus(probe) == ProbeStatus::SHORT_CIRCUIT) return -1.0f;
+            return _temp->isConnected(probe) ? _temp->getTemp(probe) : NAN;
+        };
+        payload.pit = reading(PROBE_PIT);
+        payload.meat1 = reading(PROBE_MEAT1);
+        payload.meat2 = reading(PROBE_MEAT2);
     } else {
         payload.pit = payload.meat1 = payload.meat2 = NAN;
     }
@@ -185,6 +189,7 @@ bbq_protocol::DataPayload BBQWebServer::buildDataPayload() {
     payload.lid = _pid ? _pid->isLidOpen() : false;
     payload.lidEnabled = _pid ? _pid->isLidDetectionEnabled() : true;
     payload.lidRemaining = _pid ? _pid->lidRemainingSeconds(millis()) : 0;
+    payload.lidManual = _pid && _pid->isLidManual();
 
     // Meat targets from alarm manager
     payload.meat1Target = _alarm ? _alarm->getMeat1Target() : 0;
@@ -294,6 +299,10 @@ void BBQWebServer::handleWebSocketMessage(uint8_t clientId, const char* data, si
         case bbq_protocol::CmdType::SET_LID_ENABLED:
             if (_onLidEnabled) _onLidEnabled(cmd.lidEnabled);
             break; // Main loop applies and broadcasts the new controller state.
+
+        case bbq_protocol::CmdType::OPEN_LID:
+            if (_onOpenLid) _onOpenLid();
+            break;
 
         case bbq_protocol::CmdType::RESUME_LID:
             if (_onResumeLid) _onResumeLid();

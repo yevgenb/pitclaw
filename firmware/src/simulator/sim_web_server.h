@@ -44,6 +44,7 @@ public:
     void onFanMode(void (*cb)(const char*));
     void onLidEnabled(void (*cb)(bool)) { _onLidEnabled = cb; }
     void onResumeLid(void (*cb)()) { _onResumeLid = cb; }
+    void onOpenLid(void (*cb)()) { _onOpenLid = cb; }
 
     // Number of connected WebSocket clients
     int getClientCount() const;
@@ -70,6 +71,7 @@ private:
     void (*_onFanMode)(const char*);
     void (*_onLidEnabled)(bool) = nullptr;
     void (*_onResumeLid)() = nullptr;
+    void (*_onOpenLid)() = nullptr;
 
     // Handle incoming WS message
     void handleMessage(struct mg_connection* c, const char* data, size_t len);

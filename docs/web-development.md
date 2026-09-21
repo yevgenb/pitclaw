@@ -111,6 +111,7 @@ All communication between the web UI and device (or simulator) uses JSON over We
   "lid": false,
   "lidEnabled": true,
   "lidRemaining": 0,
+  "lidManual": false,
   "est": 1707614400,
   "meat1Target": 203,
   "meat2Target": null,
@@ -163,3 +164,11 @@ setting changes. The firmware applies requests on its control task, saves settin
 changes, then broadcasts the new state. Resume never overrides a pit-probe fault.
 The C++ thermal simulator uses the same detector while its physical lid events
 continue separately; Resume does not pretend the simulated lid has closed.
+
+`{"type":"lid","action":"open"}` starts a manual pause. The dashboard and Settings
+Open lid / Close lid buttons send `open` or the existing `resume` action according
+to the latest device state. `lidManual` identifies manual pauses and advertises
+manual-control support; older firmware can still be resumed but cannot be sent
+an unsupported Open action. Automatic detection may remain disabled throughout.
+A manual pause ends only on Close/Resume or timeout, not on a warm reading.
+Missing meat probes are normal null readings; shorts remain -1/ERR.
