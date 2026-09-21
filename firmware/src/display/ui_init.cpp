@@ -81,7 +81,7 @@ lv_obj_t *lbl_meat1_est = nullptr, *lbl_meat2_est = nullptr;
 lv_obj_t *meat_edit_icons[2] = {}, *meat_target_captions[2] = {};
 lv_obj_t *bar_fan = nullptr, *bar_damper = nullptr, *lbl_fan_bar = nullptr, *lbl_damper_bar = nullptr;
 lv_obj_t *alert_banner = nullptr, *lbl_alert_text = nullptr, *btn_alert_ack = nullptr;
-lv_obj_t *btn_lid_action = nullptr;
+lv_obj_t *btn_lid_action = nullptr, *lbl_lid_compact = nullptr;
 lv_obj_t *btn_lid_toggle = nullptr, *btn_lid_settings_action = nullptr, *lbl_lid_status = nullptr;
 lv_obj_t *chart_temps = nullptr, *lbl_graph_title = nullptr, *lbl_graph_span = nullptr;
 lv_chart_series_t *ser_pit = nullptr, *ser_meat1 = nullptr, *ser_meat2 = nullptr, *ser_setpoint = nullptr;
@@ -207,6 +207,11 @@ void ui_refresh_alert_layout() {
     if (!alert_active || !main) lv_obj_add_flag(alert_banner, LV_OBJ_FLAG_HIDDEN);
     else lv_obj_remove_flag(alert_banner, LV_OBJ_FLAG_HIDDEN);
     bool editing = modal_open(modal_setpoint) || modal_open(modal_meat) || modal_open(modal_confirm);
+    if (lbl_lid_compact) {
+        if (main && !editing && ui_state.lidOpen) lv_obj_remove_flag(lbl_lid_compact, LV_OBJ_FLAG_HIDDEN);
+        else lv_obj_add_flag(lbl_lid_compact, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_set_x(lbl_lid_compact, active == scr_graph ? 284 : active == scr_settings ? 188 : 340);
+    }
     // A modal leaves a full-width alarm row above it. Silence stays accessible.
     lv_obj_set_y(alert_banner, editing ? 4 : 208);
     for (auto m : {modal_setpoint, modal_meat, modal_confirm}) {
@@ -380,6 +385,8 @@ static void create_dashboard_screen() {
     lv_obj_add_event_cb(btn_lid_action, lid_action_click, LV_EVENT_CLICKED, nullptr);
     lbl_elapsed = UiStyle::label(header, "00:00:00", 150, 2, &lv_font_montserrat_24, COLOR_TEXT, 188, LV_TEXT_ALIGN_CENTER);
     lbl_units = UiStyle::label(header, "\xC2\xB0" "F", 428, 5, &lv_font_montserrat_18, COLOR_TEXT_DIM, 40, LV_TEXT_ALIGN_RIGHT);
+    lbl_lid_compact = UiStyle::label(lv_layer_top(), "", 340, 1, &lv_font_montserrat_14, COLOR_ORANGE, 84, LV_TEXT_ALIGN_CENTER);
+    lv_obj_add_flag(lbl_lid_compact, LV_OBJ_FLAG_HIDDEN);
     lbl_fan_bar = UiStyle::label(header, "Fan 0%", 160, 36, &lv_font_montserrat_14, COLOR_TEXT_DIM);
     bar_fan = output_bar(header, 230, 44, COLOR_GREEN);
     lbl_damper_bar = UiStyle::label(header, "Damper 0%", 290, 36, &lv_font_montserrat_14, COLOR_TEXT_DIM);

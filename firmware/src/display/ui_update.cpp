@@ -15,7 +15,7 @@ extern lv_obj_t *lbl_meat1_temp, *lbl_meat2_temp, *lbl_meat1_target, *lbl_meat2_
 extern lv_obj_t *meat_edit_icons[2];
 extern lv_obj_t *bar_fan, *bar_damper, *lbl_fan_bar, *lbl_damper_bar;
 extern lv_obj_t *alert_banner, *lbl_alert_text, *btn_alert_ack;
-extern lv_obj_t *btn_lid_action, *btn_lid_toggle, *btn_lid_settings_action, *lbl_lid_status;
+extern lv_obj_t *btn_lid_action, *btn_lid_toggle, *btn_lid_settings_action, *lbl_lid_status, *lbl_lid_compact;
 extern lv_obj_t *chart_temps, *lbl_graph_title, *lbl_graph_span;
 extern lv_chart_series_t *ser_pit, *ser_meat1, *ser_meat2, *ser_setpoint;
 extern lv_obj_t *graph_y_labels[5], *graph_x_labels[3];
@@ -98,9 +98,12 @@ void ui_update_lid_detection(bool enabled, bool active, uint16_t remainingSecond
         lv_label_set_text(lv_obj_get_child(button, 0), active ? "Close lid" : "Open lid");
         UiStyle::selected(button, active);
     }
+    if (lbl_lid_compact && active)
+        UiStyle::text_fmt(lbl_lid_compact, "Lid open\n%u:%02u", remainingSeconds / 60, remainingSeconds % 60);
+    ui_refresh_alert_layout();
 }
 
-void ui_update_alerts(uint8_t alarm, bool lidOpen, bool fireOut, uint8_t errors) {
+void ui_update_alerts(uint8_t alarm, bool, bool fireOut, uint8_t errors) {
     if (!alert_banner) return;
     const char* text = nullptr; bool acknowledge = alarm >= 1 && alarm <= 4;
     switch (alarm) {
@@ -116,7 +119,6 @@ void ui_update_alerts(uint8_t alarm, bool lidOpen, bool fireOut, uint8_t errors)
         snprintf(message, sizeof(message), "Probe error:%s%s%s", errors & 1 ? " Pit" : "", errors & 2 ? " Meat 1" : "", errors & 4 ? " Meat 2" : "");
         text = message; warning = true;
     }
-    if (!text && lidOpen) { text = ui_state.lidManual ? "LID OPEN (MANUAL)" : "LID OPEN"; warning = true; }
     if (text) {
         lv_label_set_text(lbl_alert_text, text);
         lv_obj_set_width(lbl_alert_text, acknowledge ? 314 : 440);

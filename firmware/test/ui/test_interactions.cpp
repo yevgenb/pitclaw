@@ -163,6 +163,9 @@ int main() {
     ui_update_output_bars(0,0);
     ui_update_lid_detection(false,true,120,true); ui_update_alerts(0,true,false,0); pump();
     assert(strcmp(lv_label_get_text(lv_obj_get_child(btn_lid_action,0)),"Close lid")==0);
+    assert(!lv_obj_is_visible(alert_banner) && lv_obj_is_visible(lbl_lid_compact));
+    assert(lv_obj_get_height(pit_card) == 190 && lv_obj_get_height(meat_cards[1]) == 91);
+    for (auto obj : {btn_lid_action, lbl_elapsed, lbl_units, lbl_damper_bar}) assert(!overlap(lbl_lid_compact, obj));
     assert(!overlap(btn_lid_action,lbl_elapsed)); capture("manual-lid-open");
     check_button_face(btn_lid_action, lid_resumes);
     tap(btn_lid_action); assert(lid_resumes==1);
@@ -174,12 +177,18 @@ int main() {
     ui_update_temps(225,200,200,true,true,true);
     lid_resumes=0;
     ui_update_lid_detection(true,true,83); ui_update_alerts(0,true,false,0); pump();
-    assert(lv_obj_is_visible(alert_banner) && !lv_obj_is_visible(btn_alert_ack));
+    assert(!lv_obj_is_visible(alert_banner) && lv_obj_is_visible(lbl_lid_compact));
     assert(!button(lv_layer_top(), "Resume now"));
     capture("lid-open");
+    ui_switch_screen(Screen::GRAPH); pump();
+    assert(lv_obj_is_visible(lbl_lid_compact) && lv_obj_get_height(chart_temps) == 168);
+    assert(!overlap(lbl_lid_compact, lbl_graph_title) && !overlap(lbl_lid_compact, lbl_graph_span));
+    capture("lid-graph");
+    ui_switch_screen(Screen::DASHBOARD);
     tap(btn_lid_action); assert(lid_resumes==1 && acknowledgments==0);
     ui_update_lid_detection(true,false,0); ui_update_alerts(0,false,false,0);
     assert(!lv_obj_is_visible(alert_banner));
+    assert(!lv_obj_is_visible(lbl_lid_compact));
     ui_switch_screen(Screen::SETTINGS);
     lv_obj_scroll_to_view_recursive(btn_lid_toggle,LV_ANIM_OFF); pump();
     tap(btn_lid_toggle); assert(!requested_lid_enabled);
@@ -188,6 +197,8 @@ int main() {
     tap(btn_lid_toggle); assert(requested_lid_enabled);
     ui_update_lid_detection(true,true,83); ui_update_alerts(3,true,false,0);
     assert(lv_obj_is_visible(btn_alert_ack));
+    pump(); assert(lv_obj_get_height(settings_content) == 158);
+    assert(!overlap(lbl_lid_compact, button(scr_settings, "Touch test")));
     // The same toggle remains reachable while another alarm owns the banner.
     pump(); lv_obj_scroll_to_view_recursive(btn_lid_settings_action,LV_ANIM_OFF); pump(); capture("lid-settings");
     check_button_face(btn_lid_settings_action, lid_resumes);

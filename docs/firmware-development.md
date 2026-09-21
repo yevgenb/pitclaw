@@ -197,8 +197,10 @@ trigger, so a still-cold pit cannot immediately retrigger it.
 
 - Touchscreen: **Settings → Lid detection → Off** disables detection. Scroll below
   the Fan row if necessary. **Open lid / Close lid** is always available on the
-  dashboard and in Settings. The lid banner only displays status; the same toggle
-  remains available when another alarm owns the banner.
+  dashboard and in Settings. A small header label shows **Lid open** and the
+  remaining pause time. Lid pauses keep the temperature cards and graph at full
+  size; alarms and probe faults retain their banner. Settings shows whether the
+  pause is manual or automatic.
 - Web: **Settings → Lid detection** uses the same device setting. **Open lid /
   Close lid** is in the header and Settings; the pause banner displays remaining
   time without a second action button.
