@@ -66,7 +66,7 @@ loop():
 
 ### PID Controller
 
-Uses QuickPID library with pOnMeas, dOnMeas, and iAwCondition anti-windup. Lid-open detection triggers when pit drops >6% below setpoint; recovery at 2% below. During lid-open, PID output is zeroed and integrator is reset for bumpless transfer back to normal control.
+Uses QuickPID library with pOnMeas, dOnMeas, and iAwCondition anti-windup. Lid-open detection arms after 30 seconds continuously within ±2% of setpoint, then triggers below 94% and recovers at 98%. A two-minute timeout, Resume now, disabling detection, a changed target or invalid probe clears the pause and requires fresh settling. PID history resets using the current measurement; the saved lid.enabled setting is shared by touchscreen and web controls.
 
 ### Temperature Pipeline
 

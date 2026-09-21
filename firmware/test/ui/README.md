@@ -12,6 +12,7 @@ which do not link LVGL.
   Cancel, one-degree and held adjustments, bounds, Fahrenheit/Celsius conversion,
   condensed history timestamps, axis layout, alarms on all main screens and over
   editors, Settings scrolling, and setup navigation/test feedback. It also checks
+  lid toggle/resume controls (including higher-priority alarm overlap), and
   raised degree symbols through changing digit widths, negative/zero Celsius
   readings, disconnection/reconnection, and compact alarm layouts.
 

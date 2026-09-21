@@ -59,7 +59,7 @@ void SimWebServer::tick() {
 void SimWebServer::broadcastData(const bbq_protocol::DataPayload& data) {
     if (!_mgr) return;
 
-    char buf[512];
+    char buf[1024];
     size_t len = bbq_protocol::buildDataMessage(buf, sizeof(buf), data);
 
     // Iterate all connections, send to WebSocket ones
@@ -195,6 +195,12 @@ void SimWebServer::handleMessage(struct mg_connection* c, const char* data, size
             sendCSVDownload(c);
             break;
 
+        case bbq_protocol::CmdType::SET_LID_ENABLED:
+            if (_onLidEnabled) _onLidEnabled(cmd.lidEnabled);
+            break;
+        case bbq_protocol::CmdType::RESUME_LID:
+            if (_onResumeLid) _onResumeLid();
+            break;
         case bbq_protocol::CmdType::SET_FAN_MODE:
             printf("[WEB] Fan mode changed to %s\n", cmd.fanMode);
             if (_onFanMode) _onFanMode(cmd.fanMode);

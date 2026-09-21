@@ -18,6 +18,8 @@ enum class Screen : uint8_t {
 typedef void (*UiSetpointCb)(float setpoint);
 typedef void (*UiMeatTargetCb)(uint8_t probe, float target);  // probe 1 or 2, target=0 means clear
 typedef void (*UiAlarmAckCb)();
+typedef void (*UiLidEnabledCb)(bool enabled);
+typedef void (*UiResumeLidCb)();
 typedef void (*UiUnitsCb)(bool isFahrenheit);
 typedef void (*UiFanModeCb)(const char* mode);
 typedef void (*UiNewSessionCb)();
@@ -44,6 +46,8 @@ void ui_set_callbacks(UiSetpointCb sp, UiMeatTargetCb meat, UiAlarmAckCb ack);
 // Set callbacks for settings screen actions
 void ui_set_settings_callbacks(UiUnitsCb units, UiFanModeCb fan,
                                 UiNewSessionCb session, UiFactoryResetCb reset);
+
+void ui_set_lid_callbacks(UiLidEnabledCb enabled, UiResumeLidCb resume);
 
 // Set callback for Wi-Fi action buttons (Disconnect/Reconnect/Setup Mode)
 void ui_set_wifi_callback(UiWifiActionCb cb);

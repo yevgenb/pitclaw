@@ -38,6 +38,8 @@ BBQWebServer::BBQWebServer()
     , _onAlarm(nullptr)
     , _onSession(nullptr)
     , _onFanMode(nullptr)
+    , _onLidEnabled(nullptr)
+    , _onResumeLid(nullptr)
 {
 }
 
@@ -109,7 +111,7 @@ void BBQWebServer::update() {
 
         if (_ws && _ws->count() > 0) {
             bbq_protocol::DataPayload payload = buildDataPayload();
-            char buf[512];
+            char buf[1024];
             size_t len = bbq_protocol::buildDataMessage(buf, sizeof(buf), payload);
             _ws->textAll(buf, len);
         }
@@ -139,7 +141,7 @@ void BBQWebServer::broadcastNow() {
 #ifndef NATIVE_BUILD
     if (_ws && _ws->count() > 0) {
         bbq_protocol::DataPayload payload = buildDataPayload();
-        char buf[512];
+        char buf[1024];
         size_t len = bbq_protocol::buildDataMessage(buf, sizeof(buf), payload);
         _ws->textAll(buf, len);
     }
@@ -181,6 +183,8 @@ bbq_protocol::DataPayload BBQWebServer::buildDataPayload() {
 
     // Lid-open
     payload.lid = _pid ? _pid->isLidOpen() : false;
+    payload.lidEnabled = _pid ? _pid->isLidDetectionEnabled() : true;
+    payload.lidRemaining = _pid ? _pid->lidRemainingSeconds(millis()) : 0;
 
     // Meat targets from alarm manager
     payload.meat1Target = _alarm ? _alarm->getMeat1Target() : 0;
@@ -287,6 +291,14 @@ void BBQWebServer::handleWebSocketMessage(uint8_t clientId, const char* data, si
             broadcastNow();
             break;
 
+        case bbq_protocol::CmdType::SET_LID_ENABLED:
+            if (_onLidEnabled) _onLidEnabled(cmd.lidEnabled);
+            break; // Main loop applies and broadcasts the new controller state.
+
+        case bbq_protocol::CmdType::RESUME_LID:
+            if (_onResumeLid) _onResumeLid();
+            break;
+
         case bbq_protocol::CmdType::SESSION_DOWNLOAD:
             if (_session) {
                 String csvData = _session->toCSV();
@@ -319,7 +331,7 @@ void BBQWebServer::onWsEvent(AsyncWebSocket* server, AsyncWebSocketClient* clien
                 sendHistory(client->id());
             } else {
                 bbq_protocol::DataPayload payload = buildDataPayload();
-                char buf[512];
+                char buf[1024];
                 size_t n = bbq_protocol::buildDataMessage(buf, sizeof(buf), payload);
                 _ws->text(client->id(), buf, n);
             }

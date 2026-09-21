@@ -65,6 +65,7 @@ struct AppConfig {
     ProbeSettings   probes[3];    // pit, meat1, meat2
     AlarmSettings   alarms;
     bool            setupComplete;
+    bool            lidDetectionEnabled;
 };
 
 class ConfigManager {
@@ -127,6 +128,9 @@ public:
     void setAlarmPitBand(float band);
     const PushoverSettings& getPushoverSettings() const { return _config.alarms.pushover; }
     void setPushoverSettings(bool enabled, const char* userKey, const char* apiToken);
+
+    bool isLidDetectionEnabled() const { return _config.lidDetectionEnabled; }
+    void setLidDetectionEnabled(bool enabled) { _config.lidDetectionEnabled = enabled; }
 
     // --- Setup ---
     bool isSetupComplete() const { return _config.setupComplete; }

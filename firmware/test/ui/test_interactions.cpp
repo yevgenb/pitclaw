@@ -18,7 +18,8 @@ static bool pressed = false;
 static lv_point_t pointer = {};
 static float applied_setpoint = -1, applied_target = -1;
 static uint8_t applied_probe = 0;
-static unsigned acknowledgments = 0, hardware_tests = 0;
+static unsigned acknowledgments = 0, hardware_tests = 0, lid_resumes = 0;
+static bool requested_lid_enabled = true;
 static void flush(lv_display_t* disp, const lv_area_t* area, uint8_t* data) {
     auto pixels = reinterpret_cast<uint16_t*>(data);
     for (int y = area->y1; y <= area->y2; ++y) for (int x = area->x1; x <= area->x2; ++x) {
@@ -125,6 +126,30 @@ int main() {
     assert(!overlap(lbl_damper_bar, bar_damper));
     capture("dashboard");
     check_temperature_updates();
+
+    ui_set_lid_callbacks([](bool enabled) { requested_lid_enabled=enabled; }, []() { ++lid_resumes; });
+    ui_update_output_bars(0,0);
+    ui_update_lid_detection(true,true,83); ui_update_alerts(0,true,false,0); pump();
+    assert(lv_obj_is_visible(btn_lid_resume) && !lv_obj_is_visible(btn_alert_ack));
+    assert(!overlap(lbl_alert_text,btn_lid_resume)); capture("lid-open");
+    tap(btn_lid_resume); assert(lid_resumes==1 && acknowledgments==0);
+    ui_update_lid_detection(true,false,0); ui_update_alerts(0,false,false,0);
+    assert(!lv_obj_is_visible(btn_lid_resume));
+    ui_switch_screen(Screen::SETTINGS);
+    lv_obj_scroll_to_view_recursive(btn_lid_toggle,LV_ANIM_OFF); pump();
+    tap(btn_lid_toggle); assert(!requested_lid_enabled);
+    ui_update_lid_detection(false,false,0);
+    assert(strcmp(lv_label_get_text(lv_obj_get_child(btn_lid_toggle,0)),"Off")==0);
+    tap(btn_lid_toggle); assert(requested_lid_enabled);
+    ui_update_lid_detection(true,true,83); ui_update_alerts(3,true,false,0);
+    assert(!lv_obj_is_visible(btn_lid_resume) && lv_obj_is_visible(btn_alert_ack));
+    // Resume remains reachable in Settings while another alarm owns the banner.
+    pump(); lv_obj_scroll_to_view_recursive(btn_lid_settings_resume,LV_ANIM_OFF); pump(); capture("lid-settings");
+    tap(btn_lid_settings_resume); assert(lid_resumes==2 && acknowledgments==0);
+    ui_update_lid_detection(true,false,0); ui_update_alerts(0,false,false,0);
+    lv_obj_scroll_to_y(settings_content,0,LV_ANIM_OFF); ui_switch_screen(Screen::DASHBOARD);
+    ui_update_output_bars(100,100);
+
 
     // Opening/accepting reflects the current committed value. Cancel discards a draft.
     tap(pit_card); assert(modal_open(modal_setpoint));

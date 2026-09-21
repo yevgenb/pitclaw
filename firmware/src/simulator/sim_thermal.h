@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sim_profiles.h"
+#include "../lid_detector.h"
 #include <cmath>
 #include <cstring>
 
@@ -47,8 +48,14 @@ public:
 
     void setFanMode(const char* mode);
     void setFanOnThreshold(float threshold);
+    void setLidDetectionEnabled(bool enabled);
+    void resumeLid();
+    bool isLidDetectionEnabled() const { return lidDetector_.isEnabled(); }
+    bool isLidPaused() const { return lidDetector_.isOpen(); }
+    uint16_t lidRemainingSeconds() const { return lidDetector_.remainingSeconds(static_cast<uint32_t>(simTime * 1000)); }
 
 private:
+    LidDetector lidDetector_;
     // Internal state
     bool lidDropApplied_;
     float preLidPitTemp_;

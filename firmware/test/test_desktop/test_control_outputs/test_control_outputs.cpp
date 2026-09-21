@@ -69,8 +69,22 @@ void test_valid_fan_only_zero_preserves_normal_damper_behavior(void) {
     TEST_ASSERT_FLOAT_WITHIN(0.001f, 100.0f, damper.getCurrentPositionPct());
 }
 
+void test_lid_pause_cancels_kickstart_and_fault_still_wins(void) {
+    for (const char* mode : modes) {
+        applyControlOutputs(fan, damper, true, 100, mode, 30);
+        fan.update(); TEST_ASSERT_TRUE(fan.isKickStarting());
+        applyControlOutputs(fan, damper, true, 100, mode, 30, true);
+        fan.update();
+        TEST_ASSERT_FALSE(fan.isKickStarting()); TEST_ASSERT_EQUAL_UINT8(0,fan.getCurrentDuty());
+        TEST_ASSERT_EQUAL_FLOAT(strcmp(mode,"fan_only")==0 ? 100 : 0,damper.getCurrentPositionPct());
+        applyControlOutputs(fan, damper, false, 100, mode, 30, true);
+        assertStopped();
+    }
+}
+
 int main(int argc, char** argv) {
     UNITY_BEGIN();
+    RUN_TEST(test_lid_pause_cancels_kickstart_and_fault_still_wins);
     RUN_TEST(test_fault_cancels_kickstart_and_closes_every_mode);
     RUN_TEST(test_fault_overrides_manual_duty_in_every_mode);
     RUN_TEST(test_outputs_stay_closed_until_control_is_ready);

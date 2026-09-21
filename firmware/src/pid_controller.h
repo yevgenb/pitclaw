@@ -1,17 +1,12 @@
 #pragma once
 
 #include "config.h"
+#include "lid_detector.h"
 #include <stdint.h>
 
 #ifndef NATIVE_BUILD
 #include <QuickPID.h>
 #endif
-
-// Lid-open state machine
-enum class LidState : uint8_t {
-    CLOSED,     // Normal operation
-    OPEN        // Lid detected open, PID output suspended
-};
 
 class PidController {
 public:
@@ -26,6 +21,7 @@ public:
     // Run one PID computation if the sample interval has elapsed.
     // Returns the PID output (0-100%). Handles lid-open detection internally.
     float compute(float currentTemp, float setpoint);
+    float compute(float currentTemp, float setpoint, uint32_t nowMs);
 
     // PID output in the range [0..100] percent
     float getOutput() const;
@@ -40,6 +36,11 @@ public:
 
     // Lid-open detection
     bool isLidOpen() const;
+    bool isLidDetectionEnabled() const { return _lid.isEnabled(); }
+    void setLidDetectionEnabled(bool enabled);
+    void resumeLid();
+    void resetLidDetection();
+    uint16_t lidRemainingSeconds(uint32_t nowMs) const { return _lid.remainingSeconds(nowMs); }
 
     // Reset integrator for bumpless transfer on setpoint change
     void resetIntegrator();
@@ -49,8 +50,7 @@ public:
     bool isEnabled() const;
 
 private:
-    // Check lid-open condition and update state
-    void updateLidState(float currentTemp, float setpoint);
+    void restartPid(bool automatic);
 
     float _kp, _ki, _kd;
 
@@ -63,9 +63,8 @@ private:
     QuickPID* _pid;
 #endif
 
-    LidState _lidState;
+    LidDetector _lid;
+    bool _pidNeedsReset;
     bool _enabled;
 
-    // Timing
-    unsigned long _lastComputeMs;
 };

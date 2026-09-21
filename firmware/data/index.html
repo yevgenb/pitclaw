@@ -72,6 +72,11 @@
     </div>
   </header>
 
+  <div class="lid-banner" id="lidBanner" role="status" hidden>
+    <span id="lidStatus">Lid open — fan paused</span>
+    <button class="btn btn-secondary" id="btnResumeLid" disabled>Resume now</button>
+  </div>
+
   <!-- Update Banner -->
   <div class="update-banner" id="updateBanner" style="display:none">
     <span id="updateMessage">Update available</span>
@@ -251,6 +256,15 @@
           <button class="btn btn-fan-mode active" id="btnFanAndDamper" data-mode="fan_and_damper">Fan + Damper</button>
           <button class="btn btn-fan-mode" id="btnDamperPrimary" data-mode="damper_primary">Damper Primary</button>
         </div>
+      </div>
+      <div class="settings-divider"></div>
+      <div class="settings-group">
+        <label class="lid-setting" for="lidEnabled">
+          <span class="settings-label">Lid detection</span>
+          <input type="checkbox" id="lidEnabled" role="switch" disabled>
+        </label>
+        <p class="lid-help">Arms after warm-up. Pauses the fan for up to 2 minutes.</p>
+        <button class="btn btn-secondary" id="btnSettingsResumeLid" hidden disabled>Resume now</button>
       </div>
       <div class="settings-divider"></div>
       <div class="settings-group">

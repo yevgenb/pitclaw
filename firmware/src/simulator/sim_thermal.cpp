@@ -17,7 +17,18 @@ void SimThermalModel::setFanOnThreshold(float threshold) {
     fanOnThreshold = threshold;
 }
 
+void SimThermalModel::setLidDetectionEnabled(bool enabled) {
+    const bool paused = lidDetector_.isOpen();
+    lidDetector_.setEnabled(enabled);
+    if (paused && !lidDetector_.isOpen()) { pidIntegral_ = 0; pidPrevError_ = setpoint - pitTemp; }
+}
+
+void SimThermalModel::resumeLid() {
+    if (lidDetector_.resume()) { pidIntegral_ = 0; pidPrevError_ = setpoint - pitTemp; }
+}
+
 void SimThermalModel::init(const SimProfile& profile) {
+    lidDetector_.reset();
     pitTemp = profile.initialPitTemp;
     meat1Temp = profile.meat1Start;
     meat2Temp = profile.meat2Start;
@@ -87,7 +98,7 @@ SimResult SimThermalModel::update(float dt) {
     }
 
     // If fire is out, fan runs at 100% but has no effect
-    if (fireOut) {
+    if (fireOut && !lidDetector_.isOpen()) {
         fanPercent = 100;
         damperPercent = 100;
     }
@@ -120,7 +131,7 @@ SimResult SimThermalModel::update(float dt) {
     result.meat2Temp = meat2Connected ? addNoise(meat2Temp, 0.3f) : 0;
     result.fanPercent = roundf(fanPercent);
     result.damperPercent = roundf(damperPercent);
-    result.lidOpen = lidOpen;
+    result.lidOpen = lidDetector_.isOpen();
     result.fireOut = fireOut;
     result.meat1Connected = meat1Connected;
     result.meat2Connected = meat2Connected;
@@ -133,6 +144,10 @@ float SimThermalModel::computePID(float dt) {
     const float Kd = 5.0f;
 
     float error = setpoint - pitTemp;
+    if (lidDetector_.update(pitTemp, setpoint, static_cast<uint32_t>(simTime * 1000))) {
+        pidIntegral_ = 0; pidPrevError_ = error;
+    }
+    if (lidDetector_.isOpen()) return 0;
 
     // Integral with anti-windup
     pidIntegral_ += error * dt;
@@ -145,10 +160,6 @@ float SimThermalModel::computePID(float dt) {
 
     float output = Kp * error + Ki * pidIntegral_ + Kd * derivative;
 
-    // If lid is open, back off
-    if (lidOpen) {
-        output = 0;
-    }
 
     return fmaxf(0, fminf(100, output));
 }

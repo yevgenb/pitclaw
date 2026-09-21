@@ -14,9 +14,8 @@ PidController::PidController()
 #ifndef NATIVE_BUILD
     , _pid(nullptr)
 #endif
-    , _lidState(LidState::CLOSED)
+    , _pidNeedsReset(true)
     , _enabled(true)
-    , _lastComputeMs(0)
 {
 }
 
@@ -31,7 +30,8 @@ void PidController::begin(float kp, float ki, float kd) {
     _pidInput = 0.0f;
     _pidOutput = 0.0f;
     _pidSetpoint = 0.0f;
-    _lidState = LidState::CLOSED;
+    _lid.reset();
+    _pidNeedsReset = true;
     _enabled = true;
 
 #ifndef NATIVE_BUILD
@@ -50,7 +50,6 @@ void PidController::begin(float kp, float ki, float kd) {
     _pid->SetSampleTimeUs(PID_SAMPLE_MS * 1000UL);
     _pid->SetMode(QuickPID::Control::automatic);
 
-    _lastComputeMs = millis();
 
     Serial.printf("[PID] Initialized: Kp=%.2f Ki=%.3f Kd=%.2f, interval=%dms\n",
                   _kp, _ki, _kd, PID_SAMPLE_MS);
@@ -58,36 +57,49 @@ void PidController::begin(float kp, float ki, float kd) {
 }
 
 float PidController::compute(float currentTemp, float setpoint) {
-    if (!_enabled) {
-        _pidOutput = 0.0f;
-        return 0.0f;
-    }
-
-    // Update lid-open detection
-    updateLidState(currentTemp, setpoint);
-
-    // If lid is open, suspend PID output
-    if (_lidState == LidState::OPEN) {
-        _pidOutput = 0.0f;
-        return 0.0f;
-    }
-
 #ifndef NATIVE_BUILD
-    unsigned long now = millis();
+    return compute(currentTemp, setpoint, millis());
+#else
+    return compute(currentTemp, setpoint, 0); // Tests use the explicit clock overload.
+#endif
+}
 
-    // QuickPID manages its own sample timing internally, but we feed it
-    // current values each call
+float PidController::compute(float currentTemp, float setpoint, uint32_t nowMs) {
+    if (!_enabled || !std::isfinite(currentTemp) || !std::isfinite(setpoint) || setpoint <= 0) {
+        _lid.reset();
+        _pidNeedsReset = true;
+        _pidOutput = 0;
+        return 0;
+    }
+    if (setpoint != _pidSetpoint) _pidNeedsReset = true;
+    // Supply fresh measurements BEFORE initializing derivative/integral history.
     _pidInput = currentTemp;
     _pidSetpoint = setpoint;
-
-    _pid->Compute();
-
-    // Clamp output to 0-100%
+    if (_lid.update(currentTemp, setpoint, nowMs)) _pidNeedsReset = true;
+    if (_lid.isOpen()) {
+        _pidOutput = 0;
+        if (_pidNeedsReset) restartPid(false);
+        return 0;
+    }
+    if (_pidNeedsReset) restartPid(true);
+#ifndef NATIVE_BUILD
+    if (_pid) _pid->Compute();
     if (_pidOutput < PID_OUTPUT_MIN) _pidOutput = PID_OUTPUT_MIN;
     if (_pidOutput > PID_OUTPUT_MAX) _pidOutput = PID_OUTPUT_MAX;
 #endif
-
     return _pidOutput;
+}
+
+void PidController::restartPid(bool automatic) {
+    _pidOutput = 0;
+#ifndef NATIVE_BUILD
+    if (_pid) {
+        _pid->SetMode(QuickPID::Control::manual);
+        _pid->Reset();
+        if (automatic && _enabled) _pid->SetMode(QuickPID::Control::automatic);
+    }
+#endif
+    _pidNeedsReset = false;
 }
 
 float PidController::getOutput() const {
@@ -108,65 +120,31 @@ void PidController::setTunings(float kp, float ki, float kd) {
 }
 
 void PidController::resetIntegrator() {
-    _pidOutput = 0.0f;
-#ifndef NATIVE_BUILD
-    if (_pid != nullptr) {
-        _pid->Reset();
-        _pid->SetMode(_enabled ? QuickPID::Control::automatic : QuickPID::Control::manual);
-    }
-    Serial.println("[PID] Integrator and output reset");
-#endif
+    _pidOutput = 0;
+    _pidNeedsReset = true;
 }
 
-bool PidController::isLidOpen() const {
-    return _lidState == LidState::OPEN;
+bool PidController::isLidOpen() const { return _lid.isOpen(); }
+
+void PidController::setLidDetectionEnabled(bool enabled) {
+    const bool paused = _lid.isOpen();
+    _lid.setEnabled(enabled);
+    if (paused && !_lid.isOpen()) resetIntegrator();
+}
+
+void PidController::resumeLid() {
+    if (_lid.resume()) resetIntegrator();
+}
+
+void PidController::resetLidDetection() {
+    _lid.reset();
+    resetIntegrator();
 }
 
 void PidController::setEnabled(bool enabled) {
+    if (_enabled != enabled) resetLidDetection();
     _enabled = enabled;
-
-#ifndef NATIVE_BUILD
-    if (_pid != nullptr) {
-        _pid->SetMode(enabled ? QuickPID::Control::automatic : QuickPID::Control::manual);
-    }
-#endif
-
-    if (!enabled) {
-        _pidOutput = 0.0f;
-    }
+    if (!enabled) _pidOutput = 0;
 }
 
-bool PidController::isEnabled() const {
-    return _enabled;
-}
-
-void PidController::updateLidState(float currentTemp, float setpoint) {
-    if (setpoint <= 0.0f) return;  // No setpoint, no lid detection
-
-    float dropThreshold = setpoint * (1.0f - LID_OPEN_DROP_PCT / 100.0f);
-    float recoverThreshold = setpoint * (1.0f - LID_OPEN_RECOVER_PCT / 100.0f);
-
-    switch (_lidState) {
-        case LidState::CLOSED:
-            // Detect lid open: temp drops more than LID_OPEN_DROP_PCT below setpoint
-            if (currentTemp < dropThreshold) {
-                _lidState = LidState::OPEN;
-#ifndef NATIVE_BUILD
-                Serial.printf("[PID] Lid-open detected! Temp=%.1f, threshold=%.1f\n",
-                              currentTemp, dropThreshold);
-#endif
-            }
-            break;
-
-        case LidState::OPEN:
-            // Recover: temp comes back within LID_OPEN_RECOVER_PCT of setpoint
-            if (currentTemp >= recoverThreshold) {
-                _lidState = LidState::CLOSED;
-#ifndef NATIVE_BUILD
-                Serial.printf("[PID] Lid-open recovery. Temp=%.1f, threshold=%.1f\n",
-                              currentTemp, recoverThreshold);
-#endif
-            }
-            break;
-    }
-}
+bool PidController::isEnabled() const { return _enabled; }

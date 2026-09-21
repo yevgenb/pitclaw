@@ -121,7 +121,7 @@ firmware/
 
 ### Key Modules
 
-**PID Controller** (`pid_controller.h/.cpp`) — wraps QuickPID with BBQ-specific features: proportional-on-measurement, derivative-on-measurement, integral anti-windup conditioning. Includes lid-open detection (6% drop below setpoint) and startup mode.
+**PID Controller** (`pid_controller.h/.cpp`) — wraps QuickPID with BBQ-specific features: proportional-on-measurement, derivative-on-measurement, integral anti-windup conditioning. Includes temperature-based lid detection with a warm-up guard, a two-minute timeout and shared UI controls.
 
 **Temperature Manager** (`temp_manager.h/.cpp`) — reads ADS1115 ADC via I2C, converts raw ADC counts to temperature using Steinhart-Hart equation, applies EMA (exponential moving average) filtering, and supports per-probe calibration offsets.
 
@@ -168,10 +168,48 @@ All user settings stored in `config.json` on LittleFS. Survives reboots and firm
 - P = 4.0, I = 0.02, D = 5.0
 - Temp sampling: 1s interval, 4-reading average
 - PID compute: every 4 seconds
-- Lid-open threshold: 6% drop below setpoint
+- Lid detection: arm after 30 seconds within ±2% of target; trigger below 94%, recover at 98%, timeout after two minutes.
 
 **Fan Control:**
 - PWM frequency: 100 Hz with 10-bit duty resolution (provisional; bench-verify the blower)
 - Kick-start: 100% for 500ms
 - Long-pulse mode below 10% (10s cycle)
 - Min sustained speed: 15%
+
+## Lid-open pause
+
+The detector uses the internal Fahrenheit pit reading and target. It first waits
+for 30 continuous seconds within ±2% of the target, checked with each 4-second PID
+update. Only then can a reading below 94% of target trigger a pause. A setpoint
+change or pit-probe fault clears and disarms the detector.
+
+During a pause the fan is off, including any kick-start. Fan + Damper and Damper
+Primary close the damper; Fan Only preserves its normal fully-open damper command.
+The probe-fault interlock always stops the fan and closes the damper in every mode.
+
+A pause ends when the temperature reaches at least 98% of target, after a
+two-minute timeout, when **Resume now** is pressed, or when detection is disabled.
+PID integral/derivative history is reset using the current reading before control
+resumes. Every exit requires a fresh settling period before another pause can
+trigger, so a still-cold pit cannot immediately retrigger it.
+
+- Touchscreen: **Settings → Lid detection → Off** disables detection. Scroll below
+  the Fan row if necessary. **Resume now** appears in the lid banner and in Settings
+  during a pause; the Settings action remains accessible when another alarm owns
+  the banner.
+- Web: **Settings → Lid detection** uses the same device setting. **Resume now** is
+  available in the pause banner and Settings, with a remaining-time display.
+- Detection defaults to On, including when loading an older config. The setting is
+  saved as `lid.enabled` in `/config.json`; it persists across device restarts.
+  Resume clears one pause without disabling future detection.
+
+This is temperature inference, not a lid-position sensor. It retains the existing
+6% threshold after arming; it does not measure the rate of cooling. Physical
+blower behavior and PID tuning still need testing on the smoker.
+
+Regression coverage: `pio test -e native` includes deterministic state/timer and
+output-interlock tests. `python test/lid/run_checks.py` tests the actual QuickPID
+engine, JSON command parsing and configuration migration/round-trips using cached
+firmware dependencies. `python test/ui/run_checks.py` taps production LVGL controls;
+`node test/web/test_lid_controls.cjs` checks browser commands and state synchronization.
+Deploy both firmware and the LittleFS web assets to make the new controls available.

@@ -1,10 +1,13 @@
 #pragma once
 #include "../units.h"
+#include <stdint.h>
 
 // UI input values and action callbacks use Fahrenheit. Only presentation and
 // editor increments use the selected unit, so changing units cannot change a cook.
 struct UiState {
     bool fahrenheit = true;
+    bool lidEnabled = true, lidOpen = false;
+    uint16_t lidRemaining = 0;
     float temps[3] = {};
     bool connected[3] = {};
     float setpoint = 225;

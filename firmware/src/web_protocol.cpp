@@ -40,6 +40,8 @@ size_t buildDataMessage(char* buf, size_t bufSize, const DataPayload& d) {
     doc["damper"] = (int)d.damper;
     doc["sp"] = (int)d.sp;
     doc["lid"] = d.lid;
+    doc["lidEnabled"] = d.lidEnabled;
+    doc["lidRemaining"] = d.lidRemaining;
     if (d.fanMode) doc["fanMode"] = d.fanMode;
 
     // Meat targets: 0 → null
@@ -229,7 +231,18 @@ ParsedCommand parseCommand(const char* data, size_t len) {
             cmd.pitBand = doc["pitBand"].as<float>();
         }
     }
+    else if (strcmp(type, "lid") == 0) {
+        if (strcmp(doc["action"] | "", "resume") == 0) cmd.type = CmdType::RESUME_LID;
+    }
     else if (strcmp(type, "config") == 0) {
+        // Each command changes one setting; reject ambiguous or mistyped lid values.
+        if (!doc["lidEnabled"].isNull()) {
+            if (doc["lidEnabled"].is<bool>() && doc["fanMode"].isNull()) {
+                cmd.type = CmdType::SET_LID_ENABLED;
+                cmd.lidEnabled = doc["lidEnabled"].as<bool>();
+            }
+            return cmd;
+        }
         const char* fm = doc["fanMode"] | "";
         if (fm[0] != '\0') {
             cmd.type = CmdType::SET_FAN_MODE;

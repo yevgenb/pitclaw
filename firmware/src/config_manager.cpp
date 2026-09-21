@@ -210,6 +210,7 @@ void ConfigManager::applyDefaults() {
 
     // Setup
     _config.setupComplete = false;
+    _config.lidDetectionEnabled = true;
 }
 
 void ConfigManager::toJson(JsonDocument& doc) const {
@@ -255,11 +256,14 @@ void ConfigManager::toJson(JsonDocument& doc) const {
 
     // Setup
     doc["setupComplete"] = _config.setupComplete;
+    doc["lid"]["enabled"] = _config.lidDetectionEnabled;
 }
 
 void ConfigManager::fromJson(const JsonDocument& doc) {
     // Start from defaults, then overlay with what's in JSON
     applyDefaults();
+    if (doc["lid"]["enabled"].is<bool>())
+        _config.lidDetectionEnabled = doc["lid"]["enabled"].as<bool>();
 
     // WiFi
     if (doc["wifi"]["ssid"].is<const char*>()) {

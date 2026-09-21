@@ -68,7 +68,9 @@
 
 // --- Lid-Open Detection ---
 #define LID_OPEN_DROP_PCT   6    // 6% drop below setpoint triggers lid-open
-#define LID_OPEN_RECOVER_PCT 2   // Recovered when within 2% of setpoint
+#define LID_OPEN_RECOVER_PCT 2   // Recover/arm near the target (internal Fahrenheit)
+#define LID_OPEN_ARM_MS     30000UL  // 30 seconds continuously within +/-2%
+#define LID_OPEN_TIMEOUT_MS 120000UL // Resume after at most two minutes
 
 // --- Cook Session ---
 #define SESSION_BUFFER_SIZE     600     // RAM buffer samples

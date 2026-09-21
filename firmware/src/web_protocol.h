@@ -19,6 +19,8 @@ struct DataPayload {
     // before this payload is serialized by the web server.
     char errors[8][48];
     uint8_t errorCount;
+    bool lidEnabled = true;
+    uint16_t lidRemaining = 0;
 };
 
 // Single point for history replay
@@ -31,13 +33,14 @@ struct HistoryPoint {
 };
 
 // Parsed incoming command
-enum class CmdType { SET_SP, ALARM, SESSION_NEW, SESSION_DOWNLOAD, SET_FAN_MODE, UNKNOWN };
+enum class CmdType { SET_SP, ALARM, SESSION_NEW, SESSION_DOWNLOAD, SET_FAN_MODE, SET_LID_ENABLED, RESUME_LID, UNKNOWN };
 struct ParsedCommand {
     CmdType type;
     float setpoint;
     float meat1Target, meat2Target, pitBand;
     bool hasMeat1Target, hasMeat2Target, hasPitBand;
     char format[8]; // "csv" or "json"
+    bool lidEnabled;
     char fanMode[20]; // "fan_only", "fan_and_damper", "damper_primary"
 };
 

@@ -109,6 +109,8 @@ All communication between the web UI and device (or simulator) uses JSON over We
   "damper": 80,
   "sp": 225,
   "lid": false,
+  "lidEnabled": true,
+  "lidRemaining": 0,
   "est": 1707614400,
   "meat1Target": 203,
   "meat2Target": null,
@@ -145,3 +147,19 @@ All communication between the web UI and device (or simulator) uses JSON over We
 ### Timestamps
 
 All timestamps from the ESP32 are UTC epoch seconds. The browser converts to local timezone for display. The chart library (uPlot) handles timezone-aware axis labels.
+
+### Lid pause controls
+
+`lid` reports an active pause. `lidEnabled` is the saved detection setting and
+`lidRemaining` is the remaining timeout in seconds (zero when inactive). The
+browser reads these from device snapshots so touchscreen changes and reconnects
+stay synchronized. It disables the controls while disconnected or if older
+firmware does not publish `lidEnabled`.
+
+Send `{"type":"config","lidEnabled":false}` to disable detection (or `true` to
+enable it), and `{"type":"lid","action":"resume"}` to end the current pause.
+These are separate commands; a config command must not combine fan mode and lid
+setting changes. The firmware applies requests on its control task, saves setting
+changes, then broadcasts the new state. Resume never overrides a pit-probe fault.
+The C++ thermal simulator uses the same detector while its physical lid events
+continue separately; Resume does not pretend the simulated lid has closed.

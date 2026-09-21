@@ -1,294 +1,125 @@
-/**
- * test_pid.cpp
- *
- * Tests for PidController logic on the native platform.
- *
- * On native build, QuickPID is not available (guarded by #ifndef NATIVE_BUILD).
- * The PID compute() path that calls QuickPID::Compute() is compiled out, so
- * _pidOutput stays at 0 on native. However, we CAN test:
- *   - Lid-open detection state machine (updateLidState is fully compiled)
- *   - Enabled/disabled logic
- *   - Tuning parameter storage
- *   - Output clamping behavior when disabled
- *   - Constructor defaults
- */
-
+// Real controller state machine with an injected clock. QuickPID numerical output
+// is compiled out here; firmware and integration builds cover that dependency.
 #include <unity.h>
+#include <cmath>
+#include <initializer_list>
 #include <stdint.h>
-
-// Include the actual module under test
 #include "pid_controller.h"
 #include "pid_controller.cpp"
 
-// --------------------------------------------------------------------------
-// setUp / tearDown
-// --------------------------------------------------------------------------
-
 static PidController* pid;
-
-void setUp(void) {
-    pid = new PidController();
-    pid->begin();
+void setUp() { pid = new PidController(); pid->begin(); }
+void tearDown() { delete pid; }
+static void arm(uint32_t start = 0, float target = 250) {
+    pid->compute(target, target, start);
+    pid->compute(target, target, start + LID_OPEN_ARM_MS);
 }
-
-void tearDown(void) {
-    delete pid;
-    pid = nullptr;
+static void pause() {
+    arm(); pid->compute(230,250,32000); TEST_ASSERT_TRUE(pid->isLidOpen());
 }
-
-// --------------------------------------------------------------------------
-// Tests: Constructor defaults and begin()
-// --------------------------------------------------------------------------
-
-void test_default_tunings(void) {
-    // After begin(), tunings should be the defaults from config.h
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, PID_KP, pid->getKp());
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, PID_KI, pid->getKi());
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, PID_KD, pid->getKd());
+void defaults() {
+    TEST_ASSERT_TRUE(pid->isEnabled()); TEST_ASSERT_TRUE(pid->isLidDetectionEnabled());
+    TEST_ASSERT_FALSE(pid->isLidOpen()); TEST_ASSERT_EQUAL_FLOAT(0,pid->getOutput());
+    TEST_ASSERT_EQUAL_FLOAT(PID_KP,pid->getKp());
+    TEST_ASSERT_EQUAL_FLOAT(PID_KI,pid->getKi()); TEST_ASSERT_EQUAL_FLOAT(PID_KD,pid->getKd());
 }
-
-void test_initially_enabled(void) {
-    TEST_ASSERT_TRUE(pid->isEnabled());
+void tuning() {
+    pid->setTunings(8,.1f,3); TEST_ASSERT_EQUAL_FLOAT(8,pid->getKp());
+    TEST_ASSERT_EQUAL_FLOAT(.1f,pid->getKi()); TEST_ASSERT_EQUAL_FLOAT(3,pid->getKd());
+    pid->begin(1,2,3); TEST_ASSERT_EQUAL_FLOAT(1,pid->getKp());
 }
-
-void test_initially_lid_closed(void) {
+void cold_start_never_pauses() {
+    for(uint32_t t=0;t<600000;t+=4000) pid->compute(70+t/10000.0f,250,t);
     TEST_ASSERT_FALSE(pid->isLidOpen());
 }
-
-void test_initial_output_is_zero(void) {
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, pid->getOutput());
+void warm_up_must_be_continuous() {
+    pid->compute(250,250,0); pid->compute(250,250,29000);
+    pid->compute(240,250,30000); // Interrupt settling.
+    pid->compute(250,250,31000); pid->compute(250,250,60000);
+    pid->compute(230,250,61000); TEST_ASSERT_FALSE(pid->isLidOpen());
+    arm(62000); pid->compute(230,250,94000); TEST_ASSERT_TRUE(pid->isLidOpen());
 }
-
-// --------------------------------------------------------------------------
-// Tests: Disabled state
-// --------------------------------------------------------------------------
-
-void test_disabled_output_is_zero(void) {
-    pid->setEnabled(false);
-    float output = pid->compute(200.0f, 250.0f);
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, output);
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, pid->getOutput());
+void overshoot_does_not_count_as_settled() {
+    pid->compute(270,250,0); pid->compute(270,250,60000);
+    pid->compute(230,250,64000); TEST_ASSERT_FALSE(pid->isLidOpen());
 }
-
-void test_disable_clears_output(void) {
-    pid->setEnabled(false);
-    TEST_ASSERT_FALSE(pid->isEnabled());
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, pid->getOutput());
+void thresholds_and_recovery() {
+    arm(); pid->compute(235,250,31000); TEST_ASSERT_FALSE(pid->isLidOpen());
+    TEST_ASSERT_EQUAL_FLOAT(0,pid->compute(234.9f,250,32000)); TEST_ASSERT_TRUE(pid->isLidOpen());
+    pid->compute(240,250,36000); TEST_ASSERT_TRUE(pid->isLidOpen());
+    pid->compute(245,250,40000); TEST_ASSERT_FALSE(pid->isLidOpen());
+    pid->compute(230,250,44000); TEST_ASSERT_FALSE(pid->isLidOpen()); // Requires settling again.
+    arm(48000); pid->compute(230,250,80000); TEST_ASSERT_TRUE(pid->isLidOpen());
 }
-
-void test_enable_after_disable(void) {
-    pid->setEnabled(false);
-    TEST_ASSERT_FALSE(pid->isEnabled());
-    pid->setEnabled(true);
-    TEST_ASSERT_TRUE(pid->isEnabled());
+void target_change_clears_and_disarms() {
+    arm(); pid->compute(250,350,32000); TEST_ASSERT_FALSE(pid->isLidOpen());
+    pid->compute(250,350,100000); TEST_ASSERT_FALSE(pid->isLidOpen());
+    arm(104000,350); pid->compute(320,350,136000); TEST_ASSERT_TRUE(pid->isLidOpen());
+    pid->compute(320,400,140000); TEST_ASSERT_FALSE(pid->isLidOpen());
 }
-
-// --------------------------------------------------------------------------
-// Tests: setTunings
-// --------------------------------------------------------------------------
-
-void test_setTunings_updates_gains(void) {
-    pid->setTunings(10.0f, 0.5f, 2.0f);
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 10.0f, pid->getKp());
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.5f, pid->getKi());
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 2.0f, pid->getKd());
+void timeout_resumes_without_retriggering() {
+    pause();
+    TEST_ASSERT_EQUAL_UINT16(120,pid->lidRemainingSeconds(32000));
+    pid->compute(200,250,151999); TEST_ASSERT_TRUE(pid->isLidOpen());
+    TEST_ASSERT_EQUAL_UINT16(1,pid->lidRemainingSeconds(151999));
+    pid->compute(200,250,152000); TEST_ASSERT_FALSE(pid->isLidOpen());
+    TEST_ASSERT_EQUAL_UINT16(0,pid->lidRemainingSeconds(152000));
+    pid->compute(200,250,156000); TEST_ASSERT_FALSE(pid->isLidOpen());
 }
-
-void test_setTunings_zero_gains(void) {
-    pid->setTunings(0.0f, 0.0f, 0.0f);
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, pid->getKp());
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, pid->getKi());
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, pid->getKd());
-}
-
-void test_begin_with_custom_tunings(void) {
-    pid->begin(8.0f, 0.1f, 3.0f);
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 8.0f, pid->getKp());
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.1f, pid->getKi());
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 3.0f, pid->getKd());
-}
-
-// --------------------------------------------------------------------------
-// Tests: Lid-open detection
-//
-// Lid-open triggers when temp drops more than LID_OPEN_DROP_PCT (6%) below
-// setpoint. Recovery when temp comes back within LID_OPEN_RECOVER_PCT (2%)
-// of setpoint.
-//
-// For setpoint 250F:
-//   Drop threshold  = 250 * (1 - 0.06) = 235.0
-//   Recover threshold = 250 * (1 - 0.02) = 245.0
-// --------------------------------------------------------------------------
-
-void test_lid_open_detection_temp_drop(void) {
-    float setpoint = 250.0f;
-
-    // Temperature at setpoint -- lid should stay closed
-    pid->compute(250.0f, setpoint);
+void resume_now_requires_fresh_settling() {
+    pause(); pid->resumeLid(); TEST_ASSERT_FALSE(pid->isLidOpen());
+    pid->compute(200,250,36000); pid->compute(200,250,600000);
     TEST_ASSERT_FALSE(pid->isLidOpen());
-
-    // Temperature drops slightly but not enough (still above 235)
-    pid->compute(236.0f, setpoint);
-    TEST_ASSERT_FALSE(pid->isLidOpen());
-
-    // Temperature drops below 6% threshold (below 235)
-    pid->compute(230.0f, setpoint);
-    TEST_ASSERT_TRUE(pid->isLidOpen());
+    arm(604000); pid->compute(230,250,636000); TEST_ASSERT_TRUE(pid->isLidOpen());
 }
-
-void test_lid_open_output_is_zero(void) {
-    float setpoint = 250.0f;
-
-    // Trigger lid-open
-    pid->compute(230.0f, setpoint);
-    TEST_ASSERT_TRUE(pid->isLidOpen());
-
-    // Output should be 0 when lid is open
-    float output = pid->compute(230.0f, setpoint);
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, output);
+void disable_and_reenable() {
+    pause(); pid->setLidDetectionEnabled(false);
+    TEST_ASSERT_FALSE(pid->isLidOpen()); TEST_ASSERT_FALSE(pid->isLidDetectionEnabled());
+    arm(36000); pid->compute(200,250,68000); TEST_ASSERT_FALSE(pid->isLidOpen());
+    pid->setLidDetectionEnabled(true); pid->compute(200,250,72000); TEST_ASSERT_FALSE(pid->isLidOpen());
+    arm(76000); pid->compute(230,250,108000); TEST_ASSERT_TRUE(pid->isLidOpen());
 }
-
-void test_lid_open_recovery(void) {
-    float setpoint = 250.0f;
-
-    // Trigger lid-open
-    pid->compute(230.0f, setpoint);
-    TEST_ASSERT_TRUE(pid->isLidOpen());
-
-    // Temperature recovers but not enough (between 235 and 245)
-    pid->compute(240.0f, setpoint);
-    TEST_ASSERT_TRUE(pid->isLidOpen());  // Still open, need to reach 245
-
-    // Temperature recovers to within 2% (at or above 245)
-    pid->compute(245.0f, setpoint);
-    TEST_ASSERT_FALSE(pid->isLidOpen());
+void duplicate_enable_does_not_interrupt_a_pause() {
+    pause(); pid->setLidDetectionEnabled(true); TEST_ASSERT_TRUE(pid->isLidOpen());
 }
-
-void test_lid_open_recovery_exact_threshold(void) {
-    float setpoint = 250.0f;
-    float recoverThreshold = setpoint * (1.0f - LID_OPEN_RECOVER_PCT / 100.0f);  // 245.0
-
-    // Trigger lid-open
-    pid->compute(230.0f, setpoint);
-    TEST_ASSERT_TRUE(pid->isLidOpen());
-
-    // Exactly at recover threshold should recover (>= comparison in source)
-    pid->compute(recoverThreshold, setpoint);
-    TEST_ASSERT_FALSE(pid->isLidOpen());
+void invalid_measurement_or_target_clears_pause() {
+    for(float bad : {NAN,INFINITY,-INFINITY}) {
+        pid->begin(); pause(); pid->compute(bad,250,36000); TEST_ASSERT_FALSE(pid->isLidOpen());
+        pid->compute(230,250,40000); TEST_ASSERT_FALSE(pid->isLidOpen());
+        arm(44000); pid->compute(230,250,76000); TEST_ASSERT_TRUE(pid->isLidOpen());
+        pid->compute(230,bad,80000); TEST_ASSERT_FALSE(pid->isLidOpen());
+    }
+    pid->begin(); pause(); pid->compute(200,0,36000); TEST_ASSERT_FALSE(pid->isLidOpen());
 }
-
-void test_lid_open_no_detection_at_zero_setpoint(void) {
-    // With setpoint <= 0, lid detection should not activate
-    pid->compute(0.0f, 0.0f);
-    TEST_ASSERT_FALSE(pid->isLidOpen());
-
-    // Even a huge temperature (or zero) shouldn't trigger anything
-    pid->compute(-50.0f, 0.0f);
-    TEST_ASSERT_FALSE(pid->isLidOpen());
+void fault_reset_disarms() {
+    pause(); pid->resetLidDetection(); TEST_ASSERT_FALSE(pid->isLidOpen());
+    pid->compute(230,250,36000); TEST_ASSERT_FALSE(pid->isLidOpen());
 }
-
-void test_lid_open_with_different_setpoint(void) {
-    // Test with setpoint 400F
-    // Drop threshold = 400 * 0.94 = 376
-    // Recover threshold = 400 * 0.98 = 392
-    float setpoint = 400.0f;
-
-    pid->compute(375.0f, setpoint);
-    TEST_ASSERT_TRUE(pid->isLidOpen());
-
-    pid->compute(390.0f, setpoint);
-    TEST_ASSERT_TRUE(pid->isLidOpen());  // Still below 392
-
-    pid->compute(392.0f, setpoint);
-    TEST_ASSERT_FALSE(pid->isLidOpen());
+void disabling_pid_clears_pause_and_output() {
+    pause(); pid->setEnabled(false); TEST_ASSERT_FALSE(pid->isLidOpen());
+    TEST_ASSERT_EQUAL_FLOAT(0,pid->compute(250,250,36000));
+    pid->setEnabled(true); pid->compute(230,250,40000); TEST_ASSERT_FALSE(pid->isLidOpen());
 }
-
-void test_lid_open_repeated_cycles(void) {
-    float setpoint = 250.0f;
-
-    // First lid-open cycle
-    pid->compute(230.0f, setpoint);
-    TEST_ASSERT_TRUE(pid->isLidOpen());
-    pid->compute(246.0f, setpoint);
-    TEST_ASSERT_FALSE(pid->isLidOpen());
-
-    // Second lid-open cycle
-    pid->compute(230.0f, setpoint);
-    TEST_ASSERT_TRUE(pid->isLidOpen());
-    pid->compute(248.0f, setpoint);
-    TEST_ASSERT_FALSE(pid->isLidOpen());
+void begin_clears_transient_state() {
+    pause(); pid->begin(); TEST_ASSERT_FALSE(pid->isLidOpen());
+    pid->compute(230,250,36000); TEST_ASSERT_FALSE(pid->isLidOpen());
 }
-
-// --------------------------------------------------------------------------
-// Tests: Compute returns zero on native (QuickPID not available)
-// --------------------------------------------------------------------------
-
-void test_compute_returns_zero_on_native(void) {
-    // On native build, the QuickPID section is compiled out, so output stays 0
-    float output = pid->compute(200.0f, 250.0f);
-    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, output);
+void timer_wraparound() {
+    uint32_t start=UINT32_MAX-40000;
+    arm(start); uint32_t opened=start+32000;
+    pid->compute(230,250,opened); TEST_ASSERT_TRUE(pid->isLidOpen());
+    pid->compute(230,250,opened+LID_OPEN_TIMEOUT_MS-1); TEST_ASSERT_TRUE(pid->isLidOpen());
+    pid->compute(230,250,opened+LID_OPEN_TIMEOUT_MS); TEST_ASSERT_FALSE(pid->isLidOpen());
 }
-
-// --------------------------------------------------------------------------
-// Tests: begin() resets state
-// --------------------------------------------------------------------------
-
-void test_begin_resets_lid_state(void) {
-    float setpoint = 250.0f;
-
-    // Trigger lid-open
-    pid->compute(230.0f, setpoint);
-    TEST_ASSERT_TRUE(pid->isLidOpen());
-
-    // Re-initialize
-    pid->begin();
-    TEST_ASSERT_FALSE(pid->isLidOpen());
-}
-
-void test_begin_resets_enabled(void) {
-    pid->setEnabled(false);
-    pid->begin();
-    TEST_ASSERT_TRUE(pid->isEnabled());
-}
-
-// --------------------------------------------------------------------------
-// Main
-// --------------------------------------------------------------------------
-
-int main(int argc, char** argv) {
+int main() {
     UNITY_BEGIN();
-
-    // Constructor/begin defaults
-    RUN_TEST(test_default_tunings);
-    RUN_TEST(test_initially_enabled);
-    RUN_TEST(test_initially_lid_closed);
-    RUN_TEST(test_initial_output_is_zero);
-
-    // Disabled state
-    RUN_TEST(test_disabled_output_is_zero);
-    RUN_TEST(test_disable_clears_output);
-    RUN_TEST(test_enable_after_disable);
-
-    // setTunings
-    RUN_TEST(test_setTunings_updates_gains);
-    RUN_TEST(test_setTunings_zero_gains);
-    RUN_TEST(test_begin_with_custom_tunings);
-
-    // Lid-open detection
-    RUN_TEST(test_lid_open_detection_temp_drop);
-    RUN_TEST(test_lid_open_output_is_zero);
-    RUN_TEST(test_lid_open_recovery);
-    RUN_TEST(test_lid_open_recovery_exact_threshold);
-    RUN_TEST(test_lid_open_no_detection_at_zero_setpoint);
-    RUN_TEST(test_lid_open_with_different_setpoint);
-    RUN_TEST(test_lid_open_repeated_cycles);
-
-    // Native-specific behavior
-    RUN_TEST(test_compute_returns_zero_on_native);
-
-    // begin() resets
-    RUN_TEST(test_begin_resets_lid_state);
-    RUN_TEST(test_begin_resets_enabled);
-
+    RUN_TEST(defaults); RUN_TEST(tuning); RUN_TEST(cold_start_never_pauses);
+    RUN_TEST(warm_up_must_be_continuous); RUN_TEST(overshoot_does_not_count_as_settled);
+    RUN_TEST(thresholds_and_recovery); RUN_TEST(target_change_clears_and_disarms);
+    RUN_TEST(timeout_resumes_without_retriggering); RUN_TEST(resume_now_requires_fresh_settling);
+    RUN_TEST(disable_and_reenable); RUN_TEST(duplicate_enable_does_not_interrupt_a_pause);
+    RUN_TEST(invalid_measurement_or_target_clears_pause); RUN_TEST(fault_reset_disarms);
+    RUN_TEST(disabling_pid_clears_pause_and_output); RUN_TEST(begin_clears_transient_state);
+    RUN_TEST(timer_wraparound);
     return UNITY_END();
 }
