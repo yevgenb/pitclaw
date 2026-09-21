@@ -280,8 +280,10 @@ Outside setup, the normal pit-probe fault interlock closes the calibrated damper
 Servo output uses dedicated LEDC channel 2 / timer 1 at 50 Hz and 14-bit
 resolution (about 1.22 µs per tick), separate from the blower, buzzer, and display
 backlight timers. Stop clears the duty, disconnects GPIO13 from PWM, and holds it
-low. The next adjustment preloads its requested duty before reconnecting the pin;
-normal updates change duty without restarting the timer. Setup failure leaves the
+low. The next adjustment preloads its requested duty before reconnecting the pin
+and reapplies it after attachment. Arduino's attach reads the previous latched
+duty, so the second write is necessary when the new pulse has not reached the next
+20 ms frame yet. Normal updates change duty without restarting the timer. Setup failure leaves the
 signal low. The earlier ESP32Servo 3.2.1 backend used 10-bit pulse steps (~19.53 µs)
 and its ESP32-S3 MCPWM detach path did not disconnect the hardware output.
 
@@ -292,6 +294,13 @@ the endpoint reports zero duty/frequency. These are internal register readings,
 not a measurement at the cable or confirmation of servo movement. If they follow
 adjustments but the servo does not, check the physical signal, common ground and
 5 V supply at the servo end of the cable.
+
+`GET /api/servo?sample=1` additionally samples the digital level at GPIO13,
+reporting `pinHighUs`, `pinLowUs`, and `pinFrequencyHz`. It enables the input
+receiver without changing the output routing and waits at most 50 ms for each
+pulse phase. These software-timed measurements may jitter under interrupt load;
+they establish whether pulses reach the processor pad, not their voltage amplitude
+or whether they survive the carrier/cable. Sampling does not command a servo move.
 
 ### Optional meat probes and manual lid control
 

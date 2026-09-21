@@ -71,9 +71,17 @@ void BBQWebServer::begin(bool startListening) {
         const uint32_t duty = _servo->getPwmDutyTicks();
         const uint32_t frequency = _servo->getPwmFrequencyHz();
         const double pulse = frequency ? double(duty) * 1000000.0 / (frequency * (1UL << SERVO_PWM_RESOLUTION)) : 0;
-        char json[256];
-        snprintf(json, sizeof(json), "{\"source\":\"PWM registers\",\"gpio\":%u,\"channel\":%u,\"frequencyHz\":%lu,\"dutyTicks\":%lu,\"pulseUs\":%.2f}",
-                 PIN_SERVO, SERVO_PWM_CHANNEL, (unsigned long)frequency, (unsigned long)duty, pulse);
+        char sampled[192] = "";
+        if (request->hasParam("sample") && request->getParam("sample")->value() == "1") {
+            const auto sample = _servo->sampleSignal();
+            const bool complete = sample.highUs && sample.lowUs;
+            const double measuredHz = complete ? 1000000.0 / (sample.highUs + sample.lowUs) : 0;
+            snprintf(sampled, sizeof(sampled), ",\"pinSampleComplete\":%s,\"pinHighUs\":%lu,\"pinLowUs\":%lu,\"pinFrequencyHz\":%.2f",
+                     complete ? "true" : "false", (unsigned long)sample.highUs, (unsigned long)sample.lowUs, measuredHz);
+        }
+        char json[448];
+        snprintf(json, sizeof(json), "{\"source\":\"PWM registers\",\"gpio\":%u,\"channel\":%u,\"frequencyHz\":%lu,\"dutyTicks\":%lu,\"pulseUs\":%.2f%s}",
+                 PIN_SERVO, SERVO_PWM_CHANNEL, (unsigned long)frequency, (unsigned long)duty, pulse, sampled);
         request->send(200, "application/json", json);
     });
 

@@ -4,6 +4,10 @@
 #include "damper_calibration.h"
 #include <stdint.h>
 
+struct ServoSignalSample {
+    uint32_t highUs = 0, lowUs = 0;
+};
+
 class ServoController {
 public:
     ServoController();
@@ -21,6 +25,7 @@ public:
     // Hardware register readback, not voltage at the connector or flap feedback.
     uint32_t getPwmFrequencyHz() const;
     uint32_t getPwmDutyTicks() const;
+    ServoSignalSample sampleSignal() const;
 
     // Move servo to a specific angle in degrees. Useful for testing.
     void setAngle(uint8_t angleDeg);

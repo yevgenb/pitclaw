@@ -2,6 +2,7 @@
 
 #ifndef NATIVE_BUILD
 #include <Arduino.h>
+#include <hal/gpio_ll.h>
 #endif
 
 ServoController::ServoController()
@@ -85,6 +86,9 @@ void ServoController::writeMicroseconds(uint16_t us) {
     if (!_attached) {
 #ifndef NATIVE_BUILD
         ledcAttachPin(PIN_SERVO, SERVO_PWM_CHANNEL);
+        // Arduino's attach reads the *latched* duty, which may still be zero
+        // until the next 20 ms frame. Reapply after binding the pin/timer.
+        ledcWrite(SERVO_PWM_CHANNEL, ticks);
 #endif
         _attached = true;
     }
@@ -104,6 +108,18 @@ uint32_t ServoController::getPwmDutyTicks() const {
 #else
     return 0;
 #endif
+}
+
+ServoSignalSample ServoController::sampleSignal() const {
+    ServoSignalSample sample;
+#ifndef NATIVE_BUILD
+    // Enable only the pad's input receiver. pinMode(INPUT/OUTPUT) would reset
+    // its output matrix routing and disturb the servo being diagnosed.
+    gpio_ll_input_enable(&GPIO, static_cast<gpio_num_t>(PIN_SERVO));
+    sample.highUs = pulseIn(PIN_SERVO, HIGH, 50000);
+    sample.lowUs = pulseIn(PIN_SERVO, LOW, 50000);
+#endif
+    return sample;
 }
 
 uint16_t ServoController::angleToMicroseconds(float angle) const {
