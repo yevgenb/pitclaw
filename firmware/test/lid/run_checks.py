@@ -8,7 +8,8 @@ flags=['-std=c++17','-I'+str(root/'src'),'-I'+str(root/'test/lid')]
 cxx=os.environ.get('CXX','c++')
 with tempfile.TemporaryDirectory(prefix='pitclaw-lid-tests-') as out:
     cases=[('engine',['-DARDUINO=100','-I'+str(quick)], [root/'src/pid_controller.cpp',quick/'QuickPID.cpp']),
-           ('protocol',['-DNATIVE_BUILD','-I'+str(json)], [root/'src/web_protocol.cpp'])]
+           ('protocol',['-DNATIVE_BUILD','-I'+str(json)], [root/'src/web_protocol.cpp']),
+           ('damper',['-DNATIVE_BUILD'], [])]
     for name,extra,sources in cases:
         binary=Path(out)/name
         subprocess.run([cxx,*flags,*extra,str(root/f'test/lid/test_{name}.cpp'),*map(str,sources),'-o',str(binary)],check=True)

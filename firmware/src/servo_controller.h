@@ -1,6 +1,7 @@
 #pragma once
 
 #include "config.h"
+#include "damper_calibration.h"
 #include <stdint.h>
 
 #ifndef NATIVE_BUILD
@@ -15,16 +16,20 @@ public:
     void begin();
 
     // Set damper position from 0-100% (0=closed, 100=open).
-    // Maps to DAMPER_CLOSED..DAMPER_OPEN angle range.
+    // Maps to the saved endpoints, in either direction.
     void setPosition(float percent);
+    void setCalibration(const DamperCalibration& calibration);
+    const DamperCalibration& getCalibration() const { return _calibration; }
+    void setPulseWidth(uint16_t us);
+    uint16_t getCurrentPulseUs() const { return _currentPulseUs; }
 
     // Move servo to a specific angle in degrees. Useful for testing.
     void setAngle(uint8_t angleDeg);
 
-    // Current servo angle in degrees
+    // Commanded servo angle in degrees, not physical feedback.
     uint8_t getCurrentAngle() const;
 
-    // Current position as a percentage (0-100)
+    // Commanded position as a percentage of the calibrated range (0-100).
     float getCurrentPositionPct() const;
 
     // Detach the servo signal to avoid jitter when not actively moving
@@ -41,6 +46,7 @@ private:
     Servo _servo;
 #endif
 
-    uint8_t _currentAngle;
+    DamperCalibration _calibration;
+    uint16_t _currentPulseUs;
     bool    _attached;
 };

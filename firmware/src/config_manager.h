@@ -2,6 +2,7 @@
 
 #include "config.h"
 #include "touch_calibration.h"
+#include "damper_calibration.h"
 #include <stdint.h>
 
 #ifndef NATIVE_BUILD
@@ -68,6 +69,7 @@ struct AppConfig {
     bool            setupComplete;
     bool            lidDetectionEnabled;
     TouchCalibration touch;
+    DamperCalibration damper;
 };
 
 class ConfigManager {

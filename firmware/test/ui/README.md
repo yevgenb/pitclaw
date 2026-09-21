@@ -24,6 +24,10 @@ which do not link LVGL.
   screen height, Cancel/timeout rollback, failed Save, successful Save, Reset,
   and bottom navigation with corrected input. Config round trips and invalid
   calibration rejection run with `test/lid/run_checks.py`.
+  Damper setup checks cover entry without movement, marking both endpoints,
+  reversed travel, the three test positions, Stop signal, save failure, Save,
+  Cancel, and a timeout that keeps setup open. The host controller checks also
+  verify calibrated fault-close and suppression of blower/PID output in setup.
 
 Build the simulator to obtain the matching LVGL library, then run both checks:
 

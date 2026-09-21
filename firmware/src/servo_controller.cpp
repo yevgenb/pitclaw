@@ -5,7 +5,7 @@
 #endif
 
 ServoController::ServoController()
-    : _currentAngle(DAMPER_CLOSED)
+    : _currentPulseUs(_calibration.closedUs)
     , _attached(false)
 {
 }
@@ -17,55 +17,44 @@ void ServoController::begin() {
     _servo.setPeriodHertz(50);  // Standard 50Hz servo frequency
     _servo.attach(PIN_SERVO, SERVO_MIN_US, SERVO_MAX_US);
     _attached = true;
+#endif
 
     // Start at closed position
-    uint16_t us = angleToMicroseconds((float)DAMPER_CLOSED);
-    _servo.writeMicroseconds(us);
-    _currentAngle = DAMPER_CLOSED;
+    setPosition(0);
 
-    Serial.printf("[SERVO] Attached to pin %d, range %d-%d us, closed=%d deg, open=%d deg\n",
-                  PIN_SERVO, SERVO_MIN_US, SERVO_MAX_US, DAMPER_CLOSED, DAMPER_OPEN);
+#ifndef NATIVE_BUILD
+    Serial.printf("[SERVO] Attached to pin %d, closed=%u us, open=%u us\n",
+                  PIN_SERVO, _calibration.closedUs, _calibration.openUs);
 #endif
 }
 
 void ServoController::setPosition(float percent) {
-    // Clamp to 0-100%
-    if (percent < 0.0f) percent = 0.0f;
-    if (percent > 100.0f) percent = 100.0f;
+    writeMicroseconds(_calibration.pulseAt(percent));
+}
 
-    // Map 0-100% to DAMPER_CLOSED..DAMPER_OPEN angle range
-    float angle = (float)DAMPER_CLOSED +
-                  (percent / 100.0f) * (float)(DAMPER_OPEN - DAMPER_CLOSED);
+void ServoController::setCalibration(const DamperCalibration& calibration) {
+    if (calibration.valid()) _calibration = calibration; // No movement on configuration alone.
+}
 
-    // Clamp angle to valid range
-    if (angle < (float)DAMPER_CLOSED) angle = (float)DAMPER_CLOSED;
-    if (angle > (float)DAMPER_OPEN) angle = (float)DAMPER_OPEN;
-
-    _currentAngle = (uint8_t)(angle + 0.5f);
-
-    uint16_t us = angleToMicroseconds(angle);
+void ServoController::setPulseWidth(uint16_t us) {
+    if (us < SERVO_MIN_US) us = SERVO_MIN_US;
+    if (us > SERVO_MAX_US) us = SERVO_MAX_US;
     writeMicroseconds(us);
 }
 
 void ServoController::setAngle(uint8_t angleDeg) {
     if (angleDeg > 180) angleDeg = 180;
-    _currentAngle = angleDeg;
 
     uint16_t us = angleToMicroseconds((float)angleDeg);
     writeMicroseconds(us);
 }
 
 uint8_t ServoController::getCurrentAngle() const {
-    return _currentAngle;
+    return uint8_t(std::lround((_currentPulseUs - SERVO_MIN_US) * 180.0f / (SERVO_MAX_US - SERVO_MIN_US)));
 }
 
 float ServoController::getCurrentPositionPct() const {
-    if (DAMPER_OPEN == DAMPER_CLOSED) return 0.0f;
-    float pct = (float)(_currentAngle - DAMPER_CLOSED) /
-                (float)(DAMPER_OPEN - DAMPER_CLOSED) * 100.0f;
-    if (pct < 0.0f) pct = 0.0f;
-    if (pct > 100.0f) pct = 100.0f;
-    return pct;
+    return _calibration.percentAt(_currentPulseUs);
 }
 
 void ServoController::detach() {
@@ -79,6 +68,7 @@ void ServoController::detach() {
 }
 
 void ServoController::writeMicroseconds(uint16_t us) {
+    _currentPulseUs = us;
 #ifndef NATIVE_BUILD
     if (!_attached) {
         _servo.attach(PIN_SERVO, SERVO_MIN_US, SERVO_MAX_US);

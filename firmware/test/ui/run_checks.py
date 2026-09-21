@@ -55,6 +55,7 @@ def main():
             subprocess.run([os.environ.get("CXX", "c++"), *flags,
                             str(root / f"test/ui/{name}.cpp"),
                             str(root / "src/display/ui_update.cpp"),
+                            str(root / "src/display/ui_damper_setup.cpp"),
                             str(root / "src/display/graph_history.cpp"), str(libraries[0]),
                             f"-L{args.sdl_prefix / 'lib'}", "-lSDL2", "-o", str(binary)], check=True)
             subprocess.run([str(binary)], env=env, check=True)

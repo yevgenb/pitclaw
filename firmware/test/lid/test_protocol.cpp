@@ -50,6 +50,18 @@ int main() {
     calibrated["touch"]["enabled"] = false; cfg.fromJson(calibrated); cfg.toJson(persisted);
     rebooted.fromJson(persisted);
     assert(!rebooted.getConfig().touch.enabled && rebooted.getConfig().touch.hasCorrection());
+    assert(rebooted.getConfig().damper.closedUs == 544 && rebooted.getConfig().damper.openUs == 1472);
+    JsonDocument endpoints; endpoints["damper"]["closedUs"] = 1600; endpoints["damper"]["openUs"] = 900;
+    cfg.fromJson(endpoints); cfg.toJson(persisted); rebooted.fromJson(persisted);
+    assert(rebooted.getConfig().damper.closedUs == 1600 && rebooted.getConfig().damper.openUs == 900);
+    for (const char* invalid : {R"({"damper":{"closedUs":100,"openUs":900}})",
+                               R"({"damper":{"closedUs":900,"openUs":900}})",
+                               R"({"damper":{"closedUs":-1,"openUs":1600}})",
+                               R"({"damper":{"closedUs":1500,"openUs":2401}})",
+                               R"({"damper":{"closedUs":1500}})"}) {
+        JsonDocument bad; assert(!deserializeJson(bad,invalid)); cfg.fromJson(bad);
+        assert(cfg.getConfig().damper.closedUs == 544 && cfg.getConfig().damper.openUs == 1472);
+    }
     bbq_protocol::DataPayload d{}; d.lidEnabled=false; d.lid=false; d.lidRemaining=0;
     d.errorCount=8; for(auto& e:d.errors) { memset(e,'E',47); e[47]=0; }
     char packet[1024]; auto len=bbq_protocol::buildDataMessage(packet,sizeof(packet),d);

@@ -21,6 +21,7 @@
 #include "display/ui_update.h"
 #include "display/ui_setup_wizard.h"
 #include "display/ui_boot_splash.h"
+#include "display/ui_damper_setup.h"
 
 // --- Module instances ---
 TempManager     tempManager;
@@ -34,6 +35,7 @@ ErrorManager    errorManager;
 WifiManager     wifiManager;
 BBQWebServer    webServer;
 OtaManager      otaManager;
+static DamperSetup g_damperSetup;
 
 static bool ui_cb_touch_calibration(const TouchCalibration& calibration) {
     if (!calibration.valid()) return false;
@@ -135,6 +137,46 @@ static unsigned long g_lastDisplayMs = 0;
 static unsigned long g_lastGraphMs   = 0;
 
 // --- UI callbacks ---
+static bool ui_cb_damper_setup(DamperSetupAction action, int value) {
+    const uint32_t now = millis();
+    if (action == DamperSetupAction::Begin) {
+        if (g_damperSetup.state().active) return false;
+        fanController.off(); pidController.resetIntegrator();
+        g_damperSetup.begin(servoController.getCalibration(), servoController.getCurrentPulseUs(), now);
+        return true;
+    }
+    if (!g_damperSetup.state().active) return false;
+    fanController.off();
+    switch (action) {
+        case DamperSetupAction::Jog:
+            if (!g_damperSetup.jog(value, now)) return false;
+            servoController.setPulseWidth(g_damperSetup.state().pulseUs); return true;
+        case DamperSetupAction::MarkClosed: return g_damperSetup.mark(true, now);
+        case DamperSetupAction::MarkOpen: return g_damperSetup.mark(false, now);
+        case DamperSetupAction::Test:
+            if (!g_damperSetup.test(value, now)) return false;
+            servoController.setPulseWidth(g_damperSetup.state().pulseUs); return true;
+        case DamperSetupAction::Stop:
+            g_damperSetup.stop(); servoController.detach(); return true;
+        case DamperSetupAction::Save: {
+            if (!g_damperSetup.state().ready()) return false;
+            auto& saved = configManager.getConfigMutable().damper;
+            const auto previous = saved;
+            saved = g_damperSetup.state().endpoints;
+            if (!configManager.save()) { saved = previous; return false; }
+            servoController.setCalibration(saved);
+            break;
+        }
+        case DamperSetupAction::Cancel: break;
+        default: return false;
+    }
+    g_damperSetup.end();
+    pidController.resetLidDetection(); // Fresh control computation before outputs resume.
+    g_pitControlReady = false;
+    g_lastPidMs = now - PID_SAMPLE_MS;
+    g_lastDisplayMs = now - 1000;
+    return true;
+}
 static void ui_cb_setpoint(float sp) {
     g_setpoint = sp;
     ui_update_setpoint(g_setpoint);
@@ -244,6 +286,7 @@ void setup() {
     //    Splash is visible while remaining hardware modules initialize.
     ui_set_touch_calibration(cfg.touch);
     ui_set_touch_calibration_callback(ui_cb_touch_calibration);
+    ui_damper_setup_set_callbacks(ui_cb_damper_setup, []() { return g_damperSetup.state(); });
     ui_init();
     ui_boot_splash_init();
     // Paint the splash before blocking setup, without waiting for a refresh tick.
@@ -270,6 +313,7 @@ void setup() {
     fanController.begin();
 
     // 7. Initialize servo / damper output
+    servoController.setCalibration(cfg.damper);
     servoController.begin();
 
     // 8. Initialize alarm manager (buzzer)
@@ -487,8 +531,8 @@ void loop() {
     }
 
     // 2. PID computation (every PID_SAMPLE_MS)
-    if (now - g_lastPidMs >= PID_SAMPLE_MS ||
-        (pidController.isLidOpen() && pidController.lidRemainingSeconds(now) == 0)) {
+    if (!g_damperSetup.state().active && (now - g_lastPidMs >= PID_SAMPLE_MS ||
+        (pidController.isLidOpen() && pidController.lidRemainingSeconds(now) == 0))) {
         g_lastPidMs = now;
 
         // Reset integrator on setpoint change for bumpless transfer
@@ -518,9 +562,10 @@ void loop() {
     }
 
     // 3. Mode-aware fan + damper from PID output (split-range coordination)
+    if (g_damperSetup.timeout(now)) servoController.detach();
     applyControlOutputs(fanController, servoController, g_pitControlReady,
                         pidController.getOutput(), configManager.getFanMode(),
-                        configManager.getFanOnThreshold(), pidController.isLidOpen());
+                        configManager.getFanOnThreshold(), pidController.isLidOpen(), g_damperSetup.state().active);
 
     // 4. Fan controller update (kick-start timing, long-pulse cycling)
     fanController.update();

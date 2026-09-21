@@ -23,6 +23,26 @@ static bool requested_lid_enabled = true;
 static TouchCalibration persisted_touch;
 static unsigned touch_saves = 0;
 static bool touch_save_success = true;
+static DamperSetup damper_fixture;
+static DamperCalibration damper_saved;
+static unsigned damper_moves = 0, damper_saves = 0;
+static bool damper_save_success = true;
+static bool damper_command(DamperSetupAction action, int value) {
+    switch (action) {
+        case DamperSetupAction::Begin: damper_fixture.begin(damper_saved,1472,time_ms); return true;
+        case DamperSetupAction::Jog: ++damper_moves; return damper_fixture.jog(value,time_ms);
+        case DamperSetupAction::MarkClosed: return damper_fixture.mark(true,time_ms);
+        case DamperSetupAction::MarkOpen: return damper_fixture.mark(false,time_ms);
+        case DamperSetupAction::Test: ++damper_moves; return damper_fixture.test(value,time_ms);
+        case DamperSetupAction::Stop: damper_fixture.stop(); return true;
+        case DamperSetupAction::Save:
+            if (!damper_fixture.state().ready() || !damper_save_success) return false;
+            damper_saved = damper_fixture.state().endpoints; ++damper_saves;
+            damper_fixture.end(); return true;
+        case DamperSetupAction::Cancel: damper_fixture.end(); return true;
+        default: return false;
+    }
+}
 static void flush(lv_display_t* disp, const lv_area_t* area, uint8_t* data) {
     auto pixels = reinterpret_cast<uint16_t*>(data);
     for (int y = area->y1; y <= area->y2; ++y) for (int x = area->x1; x <= area->x2; ++x) {
@@ -152,8 +172,9 @@ int main() {
     auto input = lv_indev_create(); lv_indev_set_type(input, LV_INDEV_TYPE_POINTER);
     lv_indev_set_display(input, display); lv_indev_set_read_cb(input, touch);
     lv_timer_set_period(lv_indev_get_read_timer(input), 10);
+    ui_damper_setup_set_callbacks(damper_command, []() { return damper_fixture.state(); });
     create_dashboard_screen(); create_graph_screen(); create_settings_screen();
-    create_setpoint_modal(); create_meat_target_modal(); create_confirm_modal(); create_touch_test(input); ui_graph_init();
+    create_setpoint_modal(); create_meat_target_modal(); create_confirm_modal(); create_touch_test(input); ui_damper_setup_init(); ui_graph_init();
     ui_set_callbacks([](float v) { applied_setpoint = v; }, [](uint8_t p, float v) { applied_probe = p; applied_target = v; }, []() { ++acknowledgments; });
     ui_switch_screen(Screen::DASHBOARD); ui_set_units(true);
     ui_update_temps(225, 200, 200, true, true, true); ui_update_setpoint(300);
@@ -366,6 +387,36 @@ int main() {
     assert(!active_touch_calibration.enabled && !persisted_touch.enabled && touch_saves == 2);
     tap(button(touch_test, "Close test")); pump();
     ui_set_touch_calibration({}); ui_set_touch_calibration_callback(nullptr);
+    // Damper setup begins without moving. Require two distinct marked endpoints
+    // before testing/saving; reverse travel is determined by the physical marks.
+    auto damper_entry = button(scr_settings, "Damper setup");
+    lv_obj_scroll_to_view_recursive(damper_entry,LV_ANIM_OFF); pump(); tap(damper_entry); pump();
+    assert(damper_fixture.state().active && damper_moves == 0);
+    auto damper_save = button(lv_layer_sys(), "Save & exit");
+    assert(lv_obj_has_state(damper_save, LV_STATE_DISABLED));
+    capture("damper-setup");
+    tap(button(lv_layer_sys(), "Set closed")); tap(button(lv_layer_sys(), "Set open"));
+    assert(!damper_fixture.state().ready() && lv_obj_has_state(damper_save, LV_STATE_DISABLED));
+    for (int i=0; i<4; ++i) tap(button(lv_layer_sys(), "-50"));
+    tap(button(lv_layer_sys(), "Open: 1472 us"));
+    assert(damper_fixture.state().ready() && !lv_obj_has_state(damper_save, LV_STATE_DISABLED));
+    tap(button(lv_layer_sys(), "0% Closed")); assert(damper_fixture.state().pulseUs == 1472);
+    tap(button(lv_layer_sys(), "50%")); assert(damper_fixture.state().pulseUs == 1372);
+    tap(button(lv_layer_sys(), "100% Open")); assert(damper_fixture.state().pulseUs == 1272);
+    capture("damper-reversed");
+    tap(button(lv_layer_sys(), "Stop signal")); assert(damper_fixture.state().stopped);
+    tap(button(lv_layer_sys(), "+10")); assert(!damper_fixture.state().stopped);
+    assert(damper_fixture.timeout(time_ms + DamperSetup::IDLE_MS)); pump();
+    assert(lv_obj_is_visible(damper_save) && damper_fixture.state().active);
+    damper_save_success = false; tap(damper_save);
+    assert(damper_fixture.state().active && damper_saves == 0);
+    damper_save_success = true; tap(damper_save);
+    assert(!damper_fixture.state().active && !lv_obj_is_visible(damper_save) && damper_saves == 1);
+    assert(damper_saved.closedUs == 1472 && damper_saved.openUs == 1272);
+    pump(); tap(damper_entry); pump(); tap(button(lv_layer_sys(), "+50"));
+    tap(button(lv_layer_sys(), "Cancel"));
+    assert(!damper_fixture.state().active && damper_saves == 1 && damper_saved.closedUs == 1472);
+    lv_obj_scroll_to_y(settings_content,0,LV_ANIM_OFF); pump();
     // Dragging Settings scrolls content without changing a mode or losing navigation.
     pointer = {110, 234}; pressed = true; pump(10);
     for (int i = 0; i < 12; ++i) { pointer.y -= 10; pump(10); }

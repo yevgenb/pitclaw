@@ -250,6 +250,33 @@ physical verification, especially near the screen edges, is still required.
 for any held finger to lift before normal controls respond again. Cook control keeps
 running during the test.
 
+### Damper endpoint calibration
+
+The damper percentage is a command, not physical position feedback. In
+**Settings → Damper setup**, the blower is stopped and PID output is suspended.
+Opening setup keeps the current servo command; it does not move to an endpoint.
+Use the **±10 / ±50** microsecond adjustments to move the flap gradually. Mark
+**Set closed** when it is physically closed without forcing its stop, then move
+to the desired open position and mark **Set open**. Both positions must be marked
+and at least 20 µs apart before the **0% / 50% / 100%** test buttons and
+**Save & exit** are enabled. Test the positions visually before saving.
+
+Closed and open can be in either numeric order, so reversed linkages need no
+separate direction switch. `config.json` stores `damper.closedUs` and
+`damper.openUs`. Old configs preserve the previous 544/1472 µs endpoints; invalid
+values fall back to those defaults. Pulse commands stay within the existing
+544–2400 µs driver range; these electrical limits do not establish the linkage's
+safe mechanical travel. Saved endpoints also apply to startup and fault-close.
+
+**Stop signal**, or 60 seconds without an adjustment/test/mark, detaches servo
+pulses. Servo power remains connected. Setup stays open with the blower off;
+an explicit adjustment/test resumes pulses. **Cancel** discards draft endpoints.
+Save failure leaves the draft open and the live mapping unchanged. Save & exit
+and Cancel return to normal control after a fresh PID computation, respecting any
+remaining lid pause. During manual setup the servo is deliberately controlled by
+the setup buttons even without a pit probe; the blower stays off in every mode.
+Outside setup, the normal pit-probe fault interlock closes the calibrated damper.
+
 ### Optional meat probes and manual lid control
 
 Meat 1 and Meat 2 are optional. An unplugged/open-circuit meat probe displays

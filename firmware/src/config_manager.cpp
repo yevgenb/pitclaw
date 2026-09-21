@@ -212,6 +212,7 @@ void ConfigManager::applyDefaults() {
     _config.setupComplete = false;
     _config.lidDetectionEnabled = true;
     _config.touch = {};
+    _config.damper = {};
 }
 
 void ConfigManager::toJson(JsonDocument& doc) const {
@@ -261,11 +262,19 @@ void ConfigManager::toJson(JsonDocument& doc) const {
     doc["touch"]["enabled"] = _config.touch.enabled;
     doc["touch"]["yScale"] = _config.touch.yScale;
     doc["touch"]["yOffset"] = _config.touch.yOffset;
+    doc["damper"]["closedUs"] = _config.damper.closedUs;
+    doc["damper"]["openUs"] = _config.damper.openUs;
 }
 
 void ConfigManager::fromJson(const JsonDocument& doc) {
     // Start from defaults, then overlay with what's in JSON
     applyDefaults();
+    if (doc["damper"]["closedUs"].is<uint16_t>() && doc["damper"]["openUs"].is<uint16_t>()) {
+        DamperCalibration damper;
+        damper.closedUs = doc["damper"]["closedUs"].as<uint16_t>();
+        damper.openUs = doc["damper"]["openUs"].as<uint16_t>();
+        if (damper.valid()) _config.damper = damper;
+    }
     if (doc["lid"]["enabled"].is<bool>())
         _config.lidDetectionEnabled = doc["lid"]["enabled"].as<bool>();
     if (doc["touch"]["enabled"].is<bool>() && doc["touch"]["yScale"].is<float>() &&

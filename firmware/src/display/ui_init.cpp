@@ -1,6 +1,7 @@
 #include "ui_init.h"
 #include "ui_update.h"
 #include "ui_setup_wizard.h"
+#include "ui_damper_setup.h"
 #include "ui_colors.h"
 
 #if !defined(NATIVE_BUILD) || defined(SIMULATOR_BUILD)
@@ -629,30 +630,33 @@ static void create_settings_screen() {
     lv_obj_add_event_cb(btn_fan_damper, fan_damper_click, LV_EVENT_CLICKED, nullptr);
     lv_obj_add_event_cb(btn_damper_pri, damper_pri_click, LV_EVENT_CLICKED, nullptr);
     UiStyle::selected(btn_fan_damper, true);
-    row = UiStyle::box(settings_content, 0, 136, 464, 112, COLOR_CARD_BG);
+    auto damper_setup = UiStyle::button(settings_content, "Damper setup", 0, 136, 464, 48);
+    lv_obj_add_event_cb(damper_setup, [](lv_event_t*) { ui_damper_setup_show(); }, LV_EVENT_CLICKED, nullptr);
+    if (!ui_damper_setup_available()) lv_obj_add_state(damper_setup, LV_STATE_DISABLED);
+    row = UiStyle::box(settings_content, 0, 192, 464, 112, COLOR_CARD_BG);
     UiStyle::label(row, "Lid detection", 16, 15, &lv_font_montserrat_18);
     btn_lid_toggle = UiStyle::button(row, "On", 344, 4, 104, 44);
     lv_obj_add_event_cb(btn_lid_toggle, lid_toggle_click, LV_EVENT_CLICKED, nullptr);
     lbl_lid_status = UiStyle::label(row, "2 min max pause", 16, 75, &lv_font_montserrat_16, COLOR_TEXT_DIM, 224);
     btn_lid_settings_action = UiStyle::button(row, "Open lid", 256, 58, 192, 44, Button::Secondary);
     lv_obj_add_event_cb(btn_lid_settings_action, lid_action_click, LV_EVENT_CLICKED, nullptr);
-    auto session = UiStyle::button(settings_content, "New session", 0, 256, 464, 56);
+    auto session = UiStyle::button(settings_content, "New session", 0, 312, 464, 56);
     lv_obj_add_event_cb(session, new_session_click, LV_EVENT_CLICKED, nullptr);
-    UiStyle::label(settings_content, "Wi-Fi and device settings " LV_SYMBOL_DOWN, 8, 317, &lv_font_montserrat_14, COLOR_TEXT_DIM, 448, LV_TEXT_ALIGN_CENTER);
-    row = UiStyle::box(settings_content, 0, 346, 464, 104, COLOR_CARD_BG);
+    UiStyle::label(settings_content, "Wi-Fi and device settings " LV_SYMBOL_DOWN, 8, 373, &lv_font_montserrat_14, COLOR_TEXT_DIM, 448, LV_TEXT_ALIGN_CENTER);
+    row = UiStyle::box(settings_content, 0, 402, 464, 104, COLOR_CARD_BG);
     lbl_wifi_status = UiStyle::label(row, "Disconnected", 14, 5, &lv_font_montserrat_16, COLOR_RED, 430);
     lbl_wifi_ssid = UiStyle::label(row, "SSID: ---", 14, 29, &lv_font_montserrat_16, COLOR_TEXT_DIM, 430);
     lv_label_set_long_mode(lbl_wifi_ssid, LV_LABEL_LONG_DOT);
     lbl_wifi_ip = UiStyle::label(row, "IP: ---", 14, 53, &lv_font_montserrat_16, COLOR_TEXT_DIM, 430);
     lv_label_set_long_mode(lbl_wifi_ip, LV_LABEL_LONG_DOT);
     lbl_wifi_signal = UiStyle::label(row, "Signal: ---", 14, 77, &lv_font_montserrat_16, COLOR_TEXT_DIM);
-    btn_wifi_action = UiStyle::button(settings_content, "Reconnect", 0, 458, 228);
+    btn_wifi_action = UiStyle::button(settings_content, "Reconnect", 0, 514, 228);
     lbl_wifi_action = lv_obj_get_child(btn_wifi_action, 0);
     lv_obj_add_event_cb(btn_wifi_action, wifi_action_click, LV_EVENT_CLICKED, nullptr);
-    auto setup = UiStyle::button(settings_content, "Setup mode", 236, 458, 228);
+    auto setup = UiStyle::button(settings_content, "Setup mode", 236, 514, 228);
     lv_obj_add_event_cb(setup, wifi_setup_click, LV_EVENT_CLICKED, nullptr);
-    UiStyle::label(settings_content, "Firmware v" FIRMWARE_VERSION, 8, 518, &lv_font_montserrat_14, COLOR_TEXT_DIM);
-    auto reset = UiStyle::button(settings_content, "Factory reset", 0, 544, 464, 52, Button::Danger);
+    UiStyle::label(settings_content, "Firmware v" FIRMWARE_VERSION, 8, 574, &lv_font_montserrat_14, COLOR_TEXT_DIM);
+    auto reset = UiStyle::button(settings_content, "Factory reset", 0, 600, 464, 52, Button::Danger);
     lv_obj_add_event_cb(reset, factory_reset_click, LV_EVENT_CLICKED, nullptr);
     create_nav_bar(scr_settings, 2);
 }
@@ -706,6 +710,7 @@ void ui_init() {
     create_meat_target_modal();
     create_confirm_modal();
     create_touch_test(indev);
+    ui_damper_setup_init();
 
     // Bind external arrays to chart series for adaptive condensing
     ui_graph_init();
