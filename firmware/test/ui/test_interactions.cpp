@@ -141,7 +141,7 @@ int main() {
     lv_indev_set_display(input, display); lv_indev_set_read_cb(input, touch);
     lv_timer_set_period(lv_indev_get_read_timer(input), 10);
     create_dashboard_screen(); create_graph_screen(); create_settings_screen();
-    create_setpoint_modal(); create_meat_target_modal(); create_confirm_modal(); ui_graph_init();
+    create_setpoint_modal(); create_meat_target_modal(); create_confirm_modal(); create_touch_test(input); ui_graph_init();
     ui_set_callbacks([](float v) { applied_setpoint = v; }, [](uint8_t p, float v) { applied_probe = p; applied_target = v; }, []() { ++acknowledgments; });
     ui_switch_screen(Screen::DASHBOARD); ui_set_units(true);
     ui_update_temps(225, 200, 200, true, true, true); ui_update_setpoint(300);
@@ -278,6 +278,31 @@ int main() {
     capture("settings");
     tap(btn_units_c); assert(!ui_state.fahrenheit && lv_obj_has_state(btn_units_c, LV_STATE_CHECKED));
     tap(btn_units_f); assert(ui_state.fahrenheit);
+    // The physical touch diagnostic reports input coordinates unchanged, leaves
+    // the last point visible, and intercepts all taps above the normal UI.
+    const UiState before_touch_test = ui_state;
+    tap(button(scr_settings, "Touch test")); pump();
+    assert(lv_obj_is_visible(touch_test) && touch_test_taps == 0);
+    for (auto point : {lv_point_t{48,100}, lv_point_t{432,100}, lv_point_t{240,184},
+                       lv_point_t{48,236}, lv_point_t{432,236}}) {
+        const auto taps = touch_test_taps;
+        pointer = point; pressed = true; pump(10); pressed = false; pump(10);
+        assert(touch_test_taps == taps + 1);
+        lv_obj_update_layout(touch_test);
+        assert(lv_obj_get_x(touch_dot) + 6 == point.x && lv_obj_get_y(touch_dot) + 6 == point.y);
+        assert(lv_obj_is_visible(touch_dot));
+        char expected[64]; snprintf(expected, sizeof(expected), "Touch %u:  X %ld  Y %ld", touch_test_taps, (long)point.x, (long)point.y);
+        assert(strcmp(lv_label_get_text(touch_coordinates), expected) == 0);
+        if (point.x == 240) capture("touch-test-offset");
+    }
+    assert(ui_state.setpoint == before_touch_test.setpoint && ui_state.fahrenheit == before_touch_test.fahrenheit);
+    tap(button(touch_test, "Close test")); assert(!lv_obj_is_visible(touch_test)); pump();
+    tap(button(scr_settings, "Touch test")); pump();
+    assert(lv_obj_is_visible(touch_test) && !lv_obj_is_visible(touch_dot) && touch_test_taps == 0);
+    // Timeout also works with a held finger and cannot click through to Settings.
+    pointer = {420, 70}; pressed = true; pump(60010);
+    assert(!lv_obj_is_visible(touch_test));
+    pressed = false; pump(); assert(ui_state.fahrenheit == before_touch_test.fahrenheit);
     // Dragging Settings scrolls content without changing a mode or losing navigation.
     pointer = {110, 234}; pressed = true; pump(10);
     for (int i = 0; i < 12; ++i) { pointer.y -= 10; pump(10); }

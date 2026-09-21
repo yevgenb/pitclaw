@@ -217,6 +217,21 @@ firmware dependencies. `python test/ui/run_checks.py` taps production LVGL contr
 `node test/web/test_lid_controls.cjs` checks browser commands and state synchronization.
 Deploy both firmware and the LittleFS web assets to make the new controls available.
 
+### Physical touch alignment check
+
+Use **Settings → Touch test** to check the coordinates received from the physical
+touchscreen. Tap the center of each numbered cross and lift your finger. The orange
+ring stays at the reported position and the readout shows its X/Y coordinates.
+Targets 1–5 are at (48,100), (432,100), (240,160), (48,236), and (432,236).
+The same input coordinates drive the normal buttons; the diagnostic applies no
+correction and changes no saved settings. A consistent displacement suggests a
+coordinate correction; missed taps or jumping positions need input-driver/sensing
+investigation instead. Software-only hitbox tests do not establish physical alignment.
+
+**Close test** returns to Settings. The test also closes after 60 seconds, waiting
+for any held finger to lift before normal controls respond again. Cook control keeps
+running during the test.
+
 ### Optional meat probes and manual lid control
 
 Meat 1 and Meat 2 are optional. An unplugged/open-circuit meat probe displays

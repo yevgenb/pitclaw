@@ -17,6 +17,9 @@ which do not link LVGL.
   Settings scrolling and higher-priority alarm overlap, and
   raised degree symbols through changing digit widths, negative/zero Celsius
   readings, disconnection/reconnection, and compact alarm layouts.
+  The physical touch-test screen is checked with five injected positions (including
+  a deliberate offset), retained markers/readouts, close/reopen, and timeout with
+  a held finger. Actual panel alignment still requires touching the hardware.
 
 Build the simulator to obtain the matching LVGL library, then run both checks:
 

@@ -67,6 +67,11 @@ static lv_obj_t* temp_degrees[3] = {};
 static lv_obj_t* settings_content = nullptr;
 static lv_obj_t* graph_legend = nullptr;
 static bool alert_active = false;
+static lv_obj_t *touch_test = nullptr, *touch_dot = nullptr, *touch_coordinates = nullptr, *touch_countdown = nullptr;
+static lv_indev_t* touch_test_input = nullptr;
+static lv_timer_t* touch_test_timer = nullptr;
+static uint32_t touch_test_started = 0;
+static unsigned touch_test_taps = 0;
 
 lv_obj_t *lbl_wifi_icon = nullptr, *lbl_elapsed = nullptr, *lbl_units = nullptr;
 lv_obj_t *lbl_pit_temp = nullptr, *lbl_setpoint = nullptr;
@@ -471,9 +476,72 @@ static void wifi_action_click(lv_event_t*) {
     else if (cb_wifi_action) cb_wifi_action("reconnect");
 }
 static void wifi_setup_click(lv_event_t*) { show_confirm("Setup mode", "Start Wi-Fi setup AP?\nCurrent connection will drop.", []() { if (cb_wifi_action) cb_wifi_action("setup_ap"); }); }
+static void close_touch_test(lv_event_t*) {
+    lv_obj_add_flag(touch_test, LV_OBJ_FLAG_HIDDEN);
+    lv_timer_pause(touch_test_timer);
+    // A finger held through timeout must not press the Settings controls below.
+    lv_indev_wait_release(touch_test_input);
+}
+static void touch_test_event(lv_event_t* e) {
+    const auto code = lv_event_get_code(e);
+    if (code != LV_EVENT_PRESSED && code != LV_EVENT_PRESSING && code != LV_EVENT_RELEASED) return;
+    if (code == LV_EVENT_PRESSED) ++touch_test_taps;
+    lv_point_t p;
+    lv_indev_get_point(touch_test_input, &p);
+    lv_obj_set_pos(touch_dot, p.x - 6, p.y - 6);
+    lv_obj_remove_flag(touch_dot, LV_OBJ_FLAG_HIDDEN);
+    UiStyle::text_fmt(touch_coordinates, "Touch %u:  X %ld  Y %ld", touch_test_taps, (long)p.x, (long)p.y);
+    // Leave the actual reported position visible after lifting the finger.
+}
+static void create_touch_test(lv_indev_t* input) {
+    touch_test_input = input;
+    // A full-screen diagnostic intercepts touches without changing cook settings.
+    touch_test = UiStyle::box(lv_layer_sys(), 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT, COLOR_BG, 0);
+    lv_obj_add_flag(touch_test, LV_OBJ_FLAG_HIDDEN);
+    UiStyle::label(touch_test, "Touch test", 12, 6, &lv_font_montserrat_24);
+    touch_countdown = UiStyle::label(touch_test, "Closes in 60s", 320, 10, &lv_font_montserrat_14, COLOR_TEXT_DIM, 148, LV_TEXT_ALIGN_RIGHT);
+    UiStyle::label(touch_test, "Tap each +, then lift. Orange dot = detected touch.", 12, 36, &lv_font_montserrat_14);
+    touch_coordinates = UiStyle::label(touch_test, "No touch yet", 12, 58, &lv_font_montserrat_16, COLOR_ORANGE, 456, LV_TEXT_ALIGN_CENTER);
+    const lv_point_t targets[] = {{48,100}, {432,100}, {240,160}, {48,236}, {432,236}};
+    for (unsigned i = 0; i < 5; ++i) {
+        const auto p = targets[i];
+        for (auto line : {UiStyle::box(touch_test, p.x - 12, p.y - 1, 25, 3, COLOR_TEXT, 0),
+                          UiStyle::box(touch_test, p.x - 1, p.y - 12, 3, 25, COLOR_TEXT, 0)})
+            lv_obj_remove_flag(line, LV_OBJ_FLAG_CLICKABLE);
+        char number[2] = {static_cast<char>('1' + i), 0};
+        UiStyle::label(touch_test, number, p.x - 12, p.y + 15, &lv_font_montserrat_14, COLOR_TEXT_DIM, 25, LV_TEXT_ALIGN_CENTER);
+    }
+    auto close = UiStyle::button(touch_test, "Close test", 140, 268, 200, 44);
+    lv_obj_add_event_cb(close, close_touch_test, LV_EVENT_CLICKED, nullptr);
+    touch_dot = UiStyle::box(touch_test, 0, 0, 13, 13, COLOR_ORANGE, LV_RADIUS_CIRCLE);
+    lv_obj_remove_flag(touch_dot, LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_set_style_bg_opa(touch_dot, LV_OPA_TRANSP, 0);
+    lv_obj_set_style_border_color(touch_dot, COLOR_ORANGE, 0);
+    lv_obj_set_style_border_width(touch_dot, 2, 0);
+    lv_obj_add_flag(touch_dot, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_event_cb(touch_test, touch_test_event, LV_EVENT_ALL, nullptr);
+    touch_test_timer = lv_timer_create([](lv_timer_t*) {
+        const uint32_t elapsed = lv_tick_elaps(touch_test_started);
+        if (elapsed >= 60000) { close_touch_test(nullptr); return; }
+        UiStyle::text_fmt(touch_countdown, "Closes in %lus", (unsigned long)((60000 - elapsed + 999) / 1000));
+    }, 250, nullptr);
+    lv_timer_pause(touch_test_timer);
+}
+static void show_touch_test(lv_event_t*) {
+    touch_test_started = lv_tick_get(); touch_test_taps = 0;
+    lv_label_set_text(touch_coordinates, "No touch yet");
+    lv_label_set_text(touch_countdown, "Closes in 60s");
+    lv_obj_add_flag(touch_dot, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_remove_flag(touch_test, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_move_foreground(touch_test);
+    lv_indev_wait_release(touch_test_input);
+    lv_timer_reset(touch_test_timer); lv_timer_resume(touch_test_timer);
+}
 static void create_settings_screen() {
     scr_settings = new_screen();
-    UiStyle::label(scr_settings, "Settings", 8, 8, &lv_font_montserrat_24, COLOR_TEXT, 464, LV_TEXT_ALIGN_CENTER);
+    UiStyle::label(scr_settings, "Settings", 12, 8, &lv_font_montserrat_24, COLOR_TEXT, 300);
+    auto touch_button = UiStyle::button(scr_settings, "Touch test", 320, 0, 152, 44);
+    lv_obj_add_event_cb(touch_button, show_touch_test, LV_EVENT_CLICKED, nullptr);
     settings_content = UiStyle::box(scr_settings, 8, 46, 464, 214, COLOR_BG, 0);
     lv_obj_add_flag(settings_content, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_set_scroll_dir(settings_content, LV_DIR_VER);
@@ -573,6 +641,7 @@ void ui_init() {
     create_setpoint_modal();
     create_meat_target_modal();
     create_confirm_modal();
+    create_touch_test(indev);
 
     // Bind external arrays to chart series for adaptive condensing
     ui_graph_init();
