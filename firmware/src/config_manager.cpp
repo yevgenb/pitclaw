@@ -211,6 +211,7 @@ void ConfigManager::applyDefaults() {
     // Setup
     _config.setupComplete = false;
     _config.lidDetectionEnabled = true;
+    _config.touch = {};
 }
 
 void ConfigManager::toJson(JsonDocument& doc) const {
@@ -257,6 +258,9 @@ void ConfigManager::toJson(JsonDocument& doc) const {
     // Setup
     doc["setupComplete"] = _config.setupComplete;
     doc["lid"]["enabled"] = _config.lidDetectionEnabled;
+    doc["touch"]["enabled"] = _config.touch.enabled;
+    doc["touch"]["yScale"] = _config.touch.yScale;
+    doc["touch"]["yOffset"] = _config.touch.yOffset;
 }
 
 void ConfigManager::fromJson(const JsonDocument& doc) {
@@ -264,6 +268,14 @@ void ConfigManager::fromJson(const JsonDocument& doc) {
     applyDefaults();
     if (doc["lid"]["enabled"].is<bool>())
         _config.lidDetectionEnabled = doc["lid"]["enabled"].as<bool>();
+    if (doc["touch"]["enabled"].is<bool>() && doc["touch"]["yScale"].is<float>() &&
+        doc["touch"]["yOffset"].is<float>()) {
+        TouchCalibration touch;
+        touch.enabled = doc["touch"]["enabled"].as<bool>();
+        touch.yScale = doc["touch"]["yScale"].as<float>();
+        touch.yOffset = doc["touch"]["yOffset"].as<float>();
+        if (touch.valid()) _config.touch = touch;
+    }
 
     // WiFi
     if (doc["wifi"]["ssid"].is<const char*>()) {

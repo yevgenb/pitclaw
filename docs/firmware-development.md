@@ -225,10 +225,26 @@ Use **Settings → Touch test** to check the coordinates received from the physi
 touchscreen. Tap the center of each numbered cross and lift your finger. The orange
 ring stays at the reported position and the readout shows its X/Y coordinates.
 Targets 1–5 are at (48,100), (432,100), (240,160), (48,236), and (432,236).
-The same input coordinates drive the normal buttons; the diagnostic applies no
-correction and changes no saved settings. A consistent displacement suggests a
-coordinate correction; missed taps or jumping positions need input-driver/sensing
-investigation instead. Software-only hitbox tests do not establish physical alignment.
+The same input coordinates drive the normal buttons. A consistent displacement
+suggests a coordinate correction; missed taps or jumping positions need
+input-driver/sensing investigation instead. Software-only hitbox tests do not
+establish physical alignment.
+
+For a device with measured correction values, **Try calibration** previews its
+vertical correction. Retap the targets, then choose **Save calibration** only if
+the orange ring aligns with your finger. **Cancel** or the 60-second timeout
+restores the saved mapping. **Reset calibration** disables a saved correction,
+retaining its values so it can be tried again. Failed saves leave the preview
+unsaved. The test reports the corrected coordinates during preview and after Save.
+
+`config.json` stores `touch.enabled`, `touch.yScale`, and `touch.yOffset`.
+Absent/invalid settings preserve the panel's original mapping. A prepared profile
+uses `enabled: false` until the owner saves it on the screen. Correction is applied
+after panel rotation and before screen bounds: `y = yScale * reportedY + yOffset`.
+X is unchanged. The reported Y readings 98, 101, 167, 257, 259 at targets
+100, 100, 160, 236, 236 fit scale 0.85704777 and offset 15.216774, with a largest
+fit residual of 1.8 pixels. These are measured device values, not firmware defaults;
+physical verification, especially near the screen edges, is still required.
 
 **Close test** returns to Settings. The test also closes after 60 seconds, waiting
 for any held finger to lift before normal controls respond again. Cook control keeps

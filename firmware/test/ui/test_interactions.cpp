@@ -20,6 +20,9 @@ static float applied_setpoint = -1, applied_target = -1;
 static uint8_t applied_probe = 0;
 static unsigned acknowledgments = 0, hardware_tests = 0, lid_resumes = 0, lid_opens = 0;
 static bool requested_lid_enabled = true;
+static TouchCalibration persisted_touch;
+static unsigned touch_saves = 0;
+static bool touch_save_success = true;
 static void flush(lv_display_t* disp, const lv_area_t* area, uint8_t* data) {
     auto pixels = reinterpret_cast<uint16_t*>(data);
     for (int y = area->y1; y <= area->y2; ++y) for (int x = area->x1; x <= area->x2; ++x) {
@@ -32,6 +35,7 @@ static void flush(lv_display_t* disp, const lv_area_t* area, uint8_t* data) {
 }
 static void touch(lv_indev_t*, lv_indev_data_t* data) {
     data->point = pointer; data->state = pressed ? LV_INDEV_STATE_PRESSED : LV_INDEV_STATE_RELEASED;
+    data->point.y = active_touch_calibration.mapY(pointer.y, DISPLAY_HEIGHT);
 }
 static void pump(unsigned duration = 100) {
     for (unsigned i = 0; i < duration; i += 10) { time_ms += 10; lv_timer_handler(); }
@@ -75,6 +79,14 @@ static lv_obj_t* button(lv_obj_t* parent, const char* label) {
         if (auto found = button(obj, label)) return found;
     }
     return nullptr;
+}
+static void tap_calibrated(lv_obj_t* obj) {
+    lv_obj_update_layout(obj);
+    lv_area_t a; lv_obj_get_coords(obj, &a);
+    pointer = {(a.x1 + a.x2) / 2, (a.y1 + a.y2) / 2};
+    if (active_touch_calibration.enabled)
+        pointer.y = lroundf((pointer.y - active_touch_calibration.yOffset) / active_touch_calibration.yScale);
+    pressed = true; pump(10); pressed = false; pump(20);
 }
 static void capture(const char* name) {
     const char* dir = getenv("PITCLAW_UI_CAPTURE_DIR"); if (!dir) return;
@@ -314,6 +326,46 @@ int main() {
     pointer = {420, 70}; pressed = true; pump(60010);
     assert(!lv_obj_is_visible(touch_test));
     pressed = false; pump(); assert(ui_state.fahrenheit == before_touch_test.fahrenheit);
+    // A device-specific correction is tried without saving; Cancel and timeout
+    // roll it back. Use unbounded sensor coordinates before the production map.
+    TouchCalibration candidate; candidate.yScale = .85704777f; candidate.yOffset = 15.216774f;
+    ui_set_touch_calibration(candidate);
+    ui_set_touch_calibration_callback([](const TouchCalibration& c) {
+        if (!touch_save_success) return false;
+        persisted_touch = c; ++touch_saves; return true;
+    });
+    tap(button(scr_settings, "Touch test")); pump();
+    tap(button(touch_test, "Try calibration")); pump();
+    assert(touch_calibration_preview && active_touch_calibration.enabled && touch_saves == 0);
+    for (auto pair : {lv_point_t{98,99}, lv_point_t{101,102}, lv_point_t{167,158},
+                      lv_point_t{257,235}, lv_point_t{259,237}}) {
+        pointer = {48,pair.x}; pressed = true; pump(10); pressed = false; pump(10);
+        lv_obj_update_layout(touch_test);
+        assert(lv_obj_get_x(touch_dot) + 6 == 48 && lv_obj_get_y(touch_dot) + 6 == pair.y);
+    }
+    capture("touch-calibration-preview");
+    tap_calibrated(button(touch_test, "Cancel")); pump();
+    assert(!active_touch_calibration.enabled && !lv_obj_is_visible(touch_test) && touch_saves == 0);
+    tap(button(scr_settings, "Touch test")); pump(); tap(button(touch_test, "Try calibration")); pump(60010);
+    assert(!active_touch_calibration.enabled && !lv_obj_is_visible(touch_test) && touch_saves == 0);
+    tap(button(scr_settings, "Touch test")); pump(); tap(button(touch_test, "Try calibration")); pump();
+    touch_save_success = false;
+    tap_calibrated(button(touch_test, "Save calibration"));
+    assert(touch_calibration_preview && touch_saves == 0 && !saved_touch_calibration.enabled);
+    assert(strcmp(lv_label_get_text(touch_coordinates), "Could not save. Try again.") == 0);
+    touch_save_success = true;
+    tap_calibrated(button(touch_test, "Save calibration"));
+    assert(!touch_calibration_preview && persisted_touch.enabled && touch_saves == 1);
+    tap_calibrated(button(touch_test, "Close test")); pump();
+    assert(active_touch_calibration.enabled);
+    // A raw Y above 319 must still reach a bottom navigation button.
+    tap_calibrated(nav_btns[2][0]); assert(ui_get_current_screen() == Screen::DASHBOARD);
+    tap_calibrated(nav_btns[0][2]); assert(ui_get_current_screen() == Screen::SETTINGS);
+    tap_calibrated(button(scr_settings, "Touch test")); pump();
+    tap_calibrated(button(touch_test, "Reset calibration"));
+    assert(!active_touch_calibration.enabled && !persisted_touch.enabled && touch_saves == 2);
+    tap(button(touch_test, "Close test")); pump();
+    ui_set_touch_calibration({}); ui_set_touch_calibration_callback(nullptr);
     // Dragging Settings scrolls content without changing a mode or losing navigation.
     pointer = {110, 234}; pressed = true; pump(10);
     for (int i = 0; i < 12; ++i) { pointer.y -= 10; pump(10); }

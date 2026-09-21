@@ -29,6 +29,27 @@ int main() {
     ConfigManager rebooted; rebooted.fromJson(loaded);
     assert(!rebooted.isLidDetectionEnabled() && strcmp(rebooted.getFanMode(),"fan_only")==0);
     rebooted.resetDefaults(); assert(rebooted.isLidDetectionEnabled());
+    // Old configs retain the panel map. Calibration is enabled only by Save.
+    assert(!rebooted.getConfig().touch.enabled && rebooted.getConfig().touch.mapY(257,320) == 257);
+    JsonDocument calibrated;
+    calibrated["touch"]["enabled"] = true;
+    calibrated["touch"]["yScale"] = .85704777f;
+    calibrated["touch"]["yOffset"] = 15.216774f;
+    cfg.fromJson(calibrated); cfg.toJson(persisted); rebooted.fromJson(persisted);
+    const auto& touch = rebooted.getConfig().touch;
+    assert(touch.enabled && touch.mapY(257,320) == 235 && touch.mapY(259,320) == 237);
+    assert(touch.mapY(324,320) == 293); // No premature clipping to screen height.
+    assert(touch.mapY(-100,320) == 0 && touch.mapY(1000,320) == 319);
+    for (const char* invalid : {R"({"touch":{"enabled":true,"yScale":0,"yOffset":0}})",
+                               R"({"touch":{"enabled":true,"yScale":1,"yOffset":1000}})",
+                               R"({"touch":{"enabled":true,"yScale":".85","yOffset":15}})",
+                               R"({"touch":{"enabled":true,"yScale":0.85}})"}) {
+        JsonDocument bad; assert(!deserializeJson(bad,invalid)); cfg.fromJson(bad);
+        assert(!cfg.getConfig().touch.enabled && cfg.getConfig().touch.mapY(257,320) == 257);
+    }
+    calibrated["touch"]["enabled"] = false; cfg.fromJson(calibrated); cfg.toJson(persisted);
+    rebooted.fromJson(persisted);
+    assert(!rebooted.getConfig().touch.enabled && rebooted.getConfig().touch.hasCorrection());
     bbq_protocol::DataPayload d{}; d.lidEnabled=false; d.lid=false; d.lidRemaining=0;
     d.errorCount=8; for(auto& e:d.errors) { memset(e,'E',47); e[47]=0; }
     char packet[1024]; auto len=bbq_protocol::buildDataMessage(packet,sizeof(packet),d);

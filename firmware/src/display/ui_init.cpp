@@ -10,6 +10,14 @@
 #include <string.h>
 #include <cstring>
 
+static TouchCalibration saved_touch_calibration, active_touch_calibration;
+static UiTouchCalibrationCb cb_touch_calibration = nullptr;
+void ui_set_touch_calibration(const TouchCalibration& calibration) {
+    saved_touch_calibration = calibration.valid() ? calibration : TouchCalibration{};
+    active_touch_calibration = saved_touch_calibration;
+}
+void ui_set_touch_calibration_callback(UiTouchCalibrationCb callback) { cb_touch_calibration = callback; }
+
 #ifndef SIMULATOR_BUILD
 #include <PanelLan.h>
 
@@ -43,7 +51,7 @@ static void touchpad_read_cb(lv_indev_t* indev, lv_indev_data_t* data) {
     if (touched) {
         data->state = LV_INDEV_STATE_PRESSED;
         data->point.x = touchX;
-        data->point.y = touchY;
+        data->point.y = active_touch_calibration.mapY(touchY, DISPLAY_HEIGHT);
     } else {
         data->state = LV_INDEV_STATE_RELEASED;
     }
@@ -72,6 +80,8 @@ static lv_indev_t* touch_test_input = nullptr;
 static lv_timer_t* touch_test_timer = nullptr;
 static uint32_t touch_test_started = 0;
 static unsigned touch_test_taps = 0;
+static bool touch_calibration_preview = false;
+static lv_obj_t *touch_calibration_button = nullptr, *touch_close_button = nullptr, *touch_hint = nullptr;
 
 lv_obj_t *lbl_wifi_icon = nullptr, *lbl_elapsed = nullptr, *lbl_units = nullptr;
 lv_obj_t *lbl_pit_temp = nullptr, *lbl_setpoint = nullptr;
@@ -484,10 +494,52 @@ static void wifi_action_click(lv_event_t*) {
 }
 static void wifi_setup_click(lv_event_t*) { show_confirm("Setup mode", "Start Wi-Fi setup AP?\nCurrent connection will drop.", []() { if (cb_wifi_action) cb_wifi_action("setup_ap"); }); }
 static void close_touch_test(lv_event_t*) {
+    active_touch_calibration = saved_touch_calibration;
+    touch_calibration_preview = false;
     lv_obj_add_flag(touch_test, LV_OBJ_FLAG_HIDDEN);
     lv_timer_pause(touch_test_timer);
     // A finger held through timeout must not press the Settings controls below.
     lv_indev_wait_release(touch_test_input);
+}
+static void refresh_touch_calibration_controls() {
+    const char* action = touch_calibration_preview ? "Save calibration" :
+        saved_touch_calibration.enabled ? "Reset calibration" :
+        saved_touch_calibration.hasCorrection() ? "Try calibration" : "Calibration not set";
+    lv_label_set_text(lv_obj_get_child(touch_calibration_button, 0), action);
+    lv_label_set_text(lv_obj_get_child(touch_close_button, 0), touch_calibration_preview ? "Cancel" : "Close test");
+    lv_label_set_text(touch_hint, touch_calibration_preview ?
+        "Check all targets, then Save. Cancel keeps the old mapping." :
+        "Tap each +, then lift. Orange dot = detected touch.");
+    if (saved_touch_calibration.hasCorrection() && cb_touch_calibration)
+        lv_obj_remove_state(touch_calibration_button, LV_STATE_DISABLED);
+    else lv_obj_add_state(touch_calibration_button, LV_STATE_DISABLED);
+}
+static void touch_calibration_click(lv_event_t*) {
+    if (!saved_touch_calibration.hasCorrection() || !cb_touch_calibration) return;
+    if (touch_calibration_preview || saved_touch_calibration.enabled) {
+        auto requested = saved_touch_calibration;
+        requested.enabled = touch_calibration_preview; // Save preview, or reset an active correction.
+        if (!cb_touch_calibration(requested)) {
+            lv_label_set_text(touch_coordinates, "Could not save. Try again.");
+            return;
+        }
+        saved_touch_calibration = requested;
+        active_touch_calibration = requested;
+        touch_calibration_preview = false;
+    } else {
+        active_touch_calibration = saved_touch_calibration;
+        active_touch_calibration.enabled = true;
+        touch_calibration_preview = true;
+    }
+    lv_indev_wait_release(touch_test_input);
+    lv_obj_add_flag(touch_dot, LV_OBJ_FLAG_HIDDEN);
+    touch_test_taps = 0;
+    lv_label_set_text(touch_coordinates, touch_calibration_preview ? "Preview: tap the targets to check alignment" :
+        saved_touch_calibration.enabled ? "Calibration saved" : "Original mapping restored");
+    touch_test_started = lv_tick_get();
+    lv_timer_reset(touch_test_timer);
+    lv_label_set_text(touch_countdown, "Closes in 60s");
+    refresh_touch_calibration_controls();
 }
 static void touch_test_event(lv_event_t* e) {
     const auto code = lv_event_get_code(e);
@@ -507,7 +559,7 @@ static void create_touch_test(lv_indev_t* input) {
     lv_obj_add_flag(touch_test, LV_OBJ_FLAG_HIDDEN);
     UiStyle::label(touch_test, "Touch test", 12, 6, &lv_font_montserrat_24);
     touch_countdown = UiStyle::label(touch_test, "Closes in 60s", 320, 10, &lv_font_montserrat_14, COLOR_TEXT_DIM, 148, LV_TEXT_ALIGN_RIGHT);
-    UiStyle::label(touch_test, "Tap each +, then lift. Orange dot = detected touch.", 12, 36, &lv_font_montserrat_14);
+    touch_hint = UiStyle::label(touch_test, "", 12, 36, &lv_font_montserrat_14, COLOR_TEXT, 456);
     touch_coordinates = UiStyle::label(touch_test, "No touch yet", 12, 58, &lv_font_montserrat_16, COLOR_ORANGE, 456, LV_TEXT_ALIGN_CENTER);
     const lv_point_t targets[] = {{48,100}, {432,100}, {240,160}, {48,236}, {432,236}};
     for (unsigned i = 0; i < 5; ++i) {
@@ -518,8 +570,10 @@ static void create_touch_test(lv_indev_t* input) {
         char number[2] = {static_cast<char>('1' + i), 0};
         UiStyle::label(touch_test, number, p.x - 12, p.y + 15, &lv_font_montserrat_14, COLOR_TEXT_DIM, 25, LV_TEXT_ALIGN_CENTER);
     }
-    auto close = UiStyle::button(touch_test, "Close test", 140, 268, 200, 44);
-    lv_obj_add_event_cb(close, close_touch_test, LV_EVENT_CLICKED, nullptr);
+    touch_calibration_button = UiStyle::button(touch_test, "Try calibration", 8, 268, 228, 44, Button::Secondary, &lv_font_montserrat_16);
+    lv_obj_add_event_cb(touch_calibration_button, touch_calibration_click, LV_EVENT_CLICKED, nullptr);
+    touch_close_button = UiStyle::button(touch_test, "Close test", 244, 268, 228, 44);
+    lv_obj_add_event_cb(touch_close_button, close_touch_test, LV_EVENT_CLICKED, nullptr);
     touch_dot = UiStyle::box(touch_test, 0, 0, 13, 13, COLOR_ORANGE, LV_RADIUS_CIRCLE);
     lv_obj_remove_flag(touch_dot, LV_OBJ_FLAG_CLICKABLE);
     lv_obj_set_style_bg_opa(touch_dot, LV_OPA_TRANSP, 0);
@@ -535,12 +589,15 @@ static void create_touch_test(lv_indev_t* input) {
     lv_timer_pause(touch_test_timer);
 }
 static void show_touch_test(lv_event_t*) {
+    active_touch_calibration = saved_touch_calibration;
+    touch_calibration_preview = false;
     touch_test_started = lv_tick_get(); touch_test_taps = 0;
     lv_label_set_text(touch_coordinates, "No touch yet");
     lv_label_set_text(touch_countdown, "Closes in 60s");
     lv_obj_add_flag(touch_dot, LV_OBJ_FLAG_HIDDEN);
     lv_obj_remove_flag(touch_test, LV_OBJ_FLAG_HIDDEN);
     lv_obj_move_foreground(touch_test);
+    refresh_touch_calibration_controls();
     lv_indev_wait_release(touch_test_input);
     lv_timer_reset(touch_test_timer); lv_timer_resume(touch_test_timer);
 }
@@ -673,6 +730,8 @@ void ui_handler() { lv_timer_handler(); }
 
 #else // NATIVE_BUILD && !SIMULATOR_BUILD
 // Native test stubs
+void ui_set_touch_calibration(const TouchCalibration&) {}
+void ui_set_touch_calibration_callback(UiTouchCalibrationCb) {}
 void ui_init() {}
 void ui_switch_screen(Screen) {}
 Screen ui_get_current_screen() { return Screen::DASHBOARD; }

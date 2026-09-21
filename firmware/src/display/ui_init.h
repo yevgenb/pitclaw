@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../config.h"
+#include "../touch_calibration.h"
 #include <stdint.h>
 
 #if !defined(NATIVE_BUILD) || defined(SIMULATOR_BUILD)
@@ -25,6 +26,11 @@ typedef void (*UiFanModeCb)(const char* mode);
 typedef void (*UiNewSessionCb)();
 typedef void (*UiFactoryResetCb)();
 typedef void (*UiWifiActionCb)(const char* action);  // "disconnect", "reconnect", "setup_ap"
+typedef bool (*UiTouchCalibrationCb)(const TouchCalibration& calibration);
+
+// Load the saved mapping and persist only an explicit Save/Reset in Touch test.
+void ui_set_touch_calibration(const TouchCalibration& calibration);
+void ui_set_touch_calibration_callback(UiTouchCalibrationCb callback);
 
 // Initialize LVGL display driver, touch input, and create all screens.
 // Call once from setup() before showing the splash or updating widgets.

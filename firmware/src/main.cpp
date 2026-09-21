@@ -35,6 +35,16 @@ WifiManager     wifiManager;
 BBQWebServer    webServer;
 OtaManager      otaManager;
 
+static bool ui_cb_touch_calibration(const TouchCalibration& calibration) {
+    if (!calibration.valid()) return false;
+    auto& saved = configManager.getConfigMutable().touch;
+    const auto previous = saved;
+    saved = calibration;
+    if (configManager.save()) return true;
+    saved = previous;
+    return false;
+}
+
 // --- Control state ---
 static float    g_setpoint       = 225.0f;   // Default pit setpoint (degrees F)
 static float    g_prevSetpoint   = 225.0f;   // Previous setpoint for change detection
@@ -232,6 +242,8 @@ void setup() {
 
     // 3. Initialize display and show boot splash immediately
     //    Splash is visible while remaining hardware modules initialize.
+    ui_set_touch_calibration(cfg.touch);
+    ui_set_touch_calibration_callback(ui_cb_touch_calibration);
     ui_init();
     ui_boot_splash_init();
     // Paint the splash before blocking setup, without waiting for a refresh tick.

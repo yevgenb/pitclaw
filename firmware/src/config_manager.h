@@ -1,6 +1,7 @@
 #pragma once
 
 #include "config.h"
+#include "touch_calibration.h"
 #include <stdint.h>
 
 #ifndef NATIVE_BUILD
@@ -66,6 +67,7 @@ struct AppConfig {
     AlarmSettings   alarms;
     bool            setupComplete;
     bool            lidDetectionEnabled;
+    TouchCalibration touch;
 };
 
 class ConfigManager {

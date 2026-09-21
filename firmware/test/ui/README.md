@@ -20,6 +20,10 @@ which do not link LVGL.
   The physical touch-test screen is checked with five injected positions (including
   a deliberate offset), retained markers/readouts, close/reopen, and timeout with
   a held finger. Actual panel alignment still requires touching the hardware.
+  Calibration checks cover the measured Y correction, input beyond the original
+  screen height, Cancel/timeout rollback, failed Save, successful Save, Reset,
+  and bottom navigation with corrected input. Config round trips and invalid
+  calibration rejection run with `test/lid/run_checks.py`.
 
 Build the simulator to obtain the matching LVGL library, then run both checks:
 
