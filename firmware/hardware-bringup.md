@@ -64,7 +64,7 @@ assignments also prevent buzzer or backlight activity from changing fan PWM:
 | Function | LEDC resource |
 |---|---|
 | Fan | Channel 0, timer 0, 100 Hz / 10 bits |
-| Servo fallback | Timer 1 reserved through ESP32Servo (which may use MCPWM) |
+| Servo | LEDC channel 2 / timer 1, fixed 50 Hz with 14-bit pulse resolution |
 | Buzzer | Channel 4, timer 2 |
 | PanelLan backlight | Channel 7, timer 3 |
 

@@ -4,10 +4,6 @@
 #include "damper_calibration.h"
 #include <stdint.h>
 
-#ifndef NATIVE_BUILD
-#include <ESP32Servo.h>
-#endif
-
 class ServoController {
 public:
     ServoController();
@@ -22,6 +18,9 @@ public:
     const DamperCalibration& getCalibration() const { return _calibration; }
     void setPulseWidth(uint16_t us);
     uint16_t getCurrentPulseUs() const { return _currentPulseUs; }
+    // Hardware register readback, not voltage at the connector or flap feedback.
+    uint32_t getPwmFrequencyHz() const;
+    uint32_t getPwmDutyTicks() const;
 
     // Move servo to a specific angle in degrees. Useful for testing.
     void setAngle(uint8_t angleDeg);
@@ -42,11 +41,8 @@ private:
     // Map angle to microseconds for precise control
     uint16_t angleToMicroseconds(float angle) const;
 
-#ifndef NATIVE_BUILD
-    Servo _servo;
-#endif
-
     DamperCalibration _calibration;
     uint16_t _currentPulseUs;
     bool    _attached;
+    bool    _pwmReady;
 };

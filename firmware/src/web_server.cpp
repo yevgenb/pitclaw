@@ -65,6 +65,18 @@ void BBQWebServer::begin(bool startListening) {
         request->send(200, "application/json", json);
     });
 
+    // Read-only timer register diagnostics; this does not measure the external signal.
+    _server->on("/api/servo", HTTP_GET, [this](AsyncWebServerRequest* request) {
+        if (!_servo) { request->send(503, "application/json", "{\"error\":\"Servo unavailable\"}"); return; }
+        const uint32_t duty = _servo->getPwmDutyTicks();
+        const uint32_t frequency = _servo->getPwmFrequencyHz();
+        const double pulse = frequency ? double(duty) * 1000000.0 / (frequency * (1UL << SERVO_PWM_RESOLUTION)) : 0;
+        char json[256];
+        snprintf(json, sizeof(json), "{\"source\":\"PWM registers\",\"gpio\":%u,\"channel\":%u,\"frequencyHz\":%lu,\"dutyTicks\":%lu,\"pulseUs\":%.2f}",
+                 PIN_SERVO, SERVO_PWM_CHANNEL, (unsigned long)frequency, (unsigned long)duty, pulse);
+        request->send(200, "application/json", json);
+    });
+
     // Serve static files from LittleFS (web UI)
     _server->serveStatic("/", LittleFS, "/")
         .setDefaultFile("index.html")

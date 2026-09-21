@@ -44,7 +44,10 @@
 #define FAN_PWM_FREQ       100     // Provisional two-wire power PWM; bench-verify blower
 #define FAN_PWM_CHANNEL    0
 #define FAN_PWM_RESOLUTION 10      // 100 Hz needs >=9 bits with the S3 40 MHz LEDC clock
-#define SERVO_PWM_TIMER    1       // Reserve LEDC timer 1 if ESP32Servo uses LEDC
+#define SERVO_PWM_CHANNEL  2       // Timer 1; separate from fan, buzzer and backlight
+#define SERVO_PWM_TIMER    (SERVO_PWM_CHANNEL / 2)
+#define SERVO_PWM_FREQ     50
+#define SERVO_PWM_RESOLUTION 14    // 1.22 us per tick at 50 Hz on ESP32-S3
 #define BUZZER_PWM_CHANNEL 4       // Timer 2; fan uses timer 0, backlight uses timer 3
 #define FAN_KICKSTART_PCT  100     // Full supply voltage for reliable startup
 #define FAN_KICKSTART_MS   500     // for 500ms

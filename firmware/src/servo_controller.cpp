@@ -7,24 +7,27 @@
 ServoController::ServoController()
     : _currentPulseUs(_calibration.closedUs)
     , _attached(false)
+    , _pwmReady(false)
 {
 }
 
 void ServoController::begin() {
+    detach();
 #ifndef NATIVE_BUILD
-    // Keep the LEDC fallback away from fan, buzzer and LCD backlight timers.
-    ESP32PWM::allocateTimer(SERVO_PWM_TIMER);
-    _servo.setPeriodHertz(50);  // Standard 50Hz servo frequency
-    _servo.attach(PIN_SERVO, SERVO_MIN_US, SERVO_MAX_US);
-    _attached = true;
+    pinMode(PIN_SERVO, OUTPUT);
+    digitalWrite(PIN_SERVO, LOW);
+    _pwmReady = ledcSetup(SERVO_PWM_CHANNEL, SERVO_PWM_FREQ, SERVO_PWM_RESOLUTION) != 0;
+    if (!_pwmReady) Serial.println("[SERVO] PWM setup failed; signal held low.");
+#else
+    _pwmReady = true;
 #endif
 
     // Start at closed position
     setPosition(0);
 
 #ifndef NATIVE_BUILD
-    Serial.printf("[SERVO] Attached to pin %d, closed=%u us, open=%u us\n",
-                  PIN_SERVO, _calibration.closedUs, _calibration.openUs);
+    Serial.printf("[SERVO] GPIO%d channel %d: %lu Hz, closed=%u us, open=%u us\n",
+                  PIN_SERVO, SERVO_PWM_CHANNEL, (unsigned long)getPwmFrequencyHz(), _calibration.closedUs, _calibration.openUs);
 #endif
 }
 
@@ -58,29 +61,54 @@ float ServoController::getCurrentPositionPct() const {
 }
 
 void ServoController::detach() {
-#ifndef NATIVE_BUILD
     if (_attached) {
-        _servo.detach();
-        _attached = false;
-        Serial.println("[SERVO] Detached.");
-    }
+#ifndef NATIVE_BUILD
+        ledcWrite(SERVO_PWM_CHANNEL, 0);
+        ledcDetachPin(PIN_SERVO);
+        pinMode(PIN_SERVO, OUTPUT);
+        digitalWrite(PIN_SERVO, LOW);
+        Serial.println("[SERVO] Signal stopped.");
 #endif
+        _attached = false;
+    }
 }
 
 void ServoController::writeMicroseconds(uint16_t us) {
     _currentPulseUs = us;
+    if (!_pwmReady) return;
 #ifndef NATIVE_BUILD
+    // Keep a continuous 50 Hz train. Preload the requested pulse before routing
+    // the pin, including after Stop, so reattachment cannot emit a neutral pulse.
+    const uint32_t ticks = (uint64_t(us) * SERVO_PWM_FREQ * (1UL << SERVO_PWM_RESOLUTION) + 500000) / 1000000;
+    ledcWrite(SERVO_PWM_CHANNEL, ticks);
+#endif
     if (!_attached) {
-        _servo.attach(PIN_SERVO, SERVO_MIN_US, SERVO_MAX_US);
+#ifndef NATIVE_BUILD
+        ledcAttachPin(PIN_SERVO, SERVO_PWM_CHANNEL);
+#endif
         _attached = true;
     }
-    _servo.writeMicroseconds(us);
+}
+
+uint32_t ServoController::getPwmFrequencyHz() const {
+#ifndef NATIVE_BUILD
+    return ledcReadFreq(SERVO_PWM_CHANNEL);
+#else
+    return 0;
+#endif
+}
+
+uint32_t ServoController::getPwmDutyTicks() const {
+#ifndef NATIVE_BUILD
+    return ledcRead(SERVO_PWM_CHANNEL);
+#else
+    return 0;
 #endif
 }
 
 uint16_t ServoController::angleToMicroseconds(float angle) const {
     // Linear interpolation from 0-180 degrees to SERVO_MIN_US-SERVO_MAX_US
-    // This maps the full servo range. The damper only uses 0-90 degrees.
+    // Direct angle tests use the full range; saved endpoints set damper travel.
     if (angle < 0.0f) angle = 0.0f;
     if (angle > 180.0f) angle = 180.0f;
 

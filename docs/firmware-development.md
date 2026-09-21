@@ -277,6 +277,22 @@ remaining lid pause. During manual setup the servo is deliberately controlled by
 the setup buttons even without a pit probe; the blower stays off in every mode.
 Outside setup, the normal pit-probe fault interlock closes the calibrated damper.
 
+Servo output uses dedicated LEDC channel 2 / timer 1 at 50 Hz and 14-bit
+resolution (about 1.22 µs per tick), separate from the blower, buzzer, and display
+backlight timers. Stop clears the duty, disconnects GPIO13 from PWM, and holds it
+low. The next adjustment preloads its requested duty before reconnecting the pin;
+normal updates change duty without restarting the timer. Setup failure leaves the
+signal low. The earlier ESP32Servo 3.2.1 backend used 10-bit pulse steps (~19.53 µs)
+and its ESP32-S3 MCPWM detach path did not disconnect the hardware output.
+
+`GET /api/servo` exposes the PWM register frequency, duty, and calculated pulse
+width for diagnosis. With an active signal, frequency should be 50 Hz and pulse
+width should follow the commanded value within roughly 0.61 µs. During Stop,
+the endpoint reports zero duty/frequency. These are internal register readings,
+not a measurement at the cable or confirmation of servo movement. If they follow
+adjustments but the servo does not, check the physical signal, common ground and
+5 V supply at the servo end of the cable.
+
 ### Optional meat probes and manual lid control
 
 Meat 1 and Meat 2 are optional. An unplugged/open-circuit meat probe displays
