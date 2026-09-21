@@ -77,7 +77,7 @@ lv_obj_t *meat_edit_icons[2] = {}, *meat_target_captions[2] = {};
 lv_obj_t *bar_fan = nullptr, *bar_damper = nullptr, *lbl_fan_bar = nullptr, *lbl_damper_bar = nullptr;
 lv_obj_t *alert_banner = nullptr, *lbl_alert_text = nullptr, *btn_alert_ack = nullptr;
 lv_obj_t *btn_lid_action = nullptr;
-lv_obj_t *btn_lid_resume = nullptr, *btn_lid_toggle = nullptr, *btn_lid_settings_action = nullptr, *lbl_lid_status = nullptr;
+lv_obj_t *btn_lid_toggle = nullptr, *btn_lid_settings_action = nullptr, *lbl_lid_status = nullptr;
 lv_obj_t *chart_temps = nullptr, *lbl_graph_title = nullptr, *lbl_graph_span = nullptr;
 lv_chart_series_t *ser_pit = nullptr, *ser_meat1 = nullptr, *ser_meat2 = nullptr, *ser_setpoint = nullptr;
 lv_obj_t* graph_y_labels[5] = {};
@@ -354,7 +354,6 @@ static void create_confirm_modal() {
 }
 
 static void alert_tap_cb(lv_event_t*) { if (cb_alarm_ack) cb_alarm_ack(); }
-static void lid_resume_click(lv_event_t*) { if (cb_lid_resume) cb_lid_resume(); }
 static void lid_action_click(lv_event_t*) {
     if (ui_state.lidOpen) { if (cb_lid_resume) cb_lid_resume(); }
     else if (cb_lid_open) cb_lid_open();
@@ -370,16 +369,16 @@ static lv_obj_t* output_bar(lv_obj_t* parent, int x, int width, lv_color_t color
 }
 static void create_dashboard_screen() {
     scr_dashboard = new_screen();
-    auto header = UiStyle::box(scr_dashboard, 0, 0, 480, 32, COLOR_NAV_BG, 0);
-    lbl_wifi_icon = UiStyle::label(header, LV_SYMBOL_WIFI, 12, 8, &lv_font_montserrat_16, COLOR_GREEN);
-    btn_lid_action = UiStyle::button(header, "Open lid", 40, 0, 96, 32, Button::Secondary, &lv_font_montserrat_14);
+    auto header = UiStyle::box(scr_dashboard, 0, 0, 480, 56, COLOR_NAV_BG, 0);
+    lbl_wifi_icon = UiStyle::label(header, LV_SYMBOL_WIFI, 12, 20, &lv_font_montserrat_16, COLOR_GREEN);
+    btn_lid_action = UiStyle::button(header, "Open lid", 40, 4, 104, 48, Button::Secondary, &lv_font_montserrat_16);
     lv_obj_add_event_cb(btn_lid_action, lid_action_click, LV_EVENT_CLICKED, nullptr);
-    lbl_elapsed = UiStyle::label(header, "00:00:00", 142, 2, &lv_font_montserrat_24, COLOR_TEXT, 196, LV_TEXT_ALIGN_CENTER);
+    lbl_elapsed = UiStyle::label(header, "00:00:00", 150, 2, &lv_font_montserrat_24, COLOR_TEXT, 188, LV_TEXT_ALIGN_CENTER);
     lbl_units = UiStyle::label(header, "\xC2\xB0" "F", 428, 5, &lv_font_montserrat_18, COLOR_TEXT_DIM, 40, LV_TEXT_ALIGN_RIGHT);
-    lbl_fan_bar = UiStyle::label(scr_dashboard, "Fan 0%", 12, 38, &lv_font_montserrat_16, COLOR_TEXT_DIM);
-    bar_fan = output_bar(scr_dashboard, 105, 111, COLOR_GREEN);
-    lbl_damper_bar = UiStyle::label(scr_dashboard, "Damper 0%", 246, 38, &lv_font_montserrat_16, COLOR_TEXT_DIM);
-    bar_damper = output_bar(scr_dashboard, 373, 95, COLOR_PURPLE);
+    lbl_fan_bar = UiStyle::label(header, "Fan 0%", 160, 36, &lv_font_montserrat_14, COLOR_TEXT_DIM);
+    bar_fan = output_bar(header, 230, 44, COLOR_GREEN);
+    lbl_damper_bar = UiStyle::label(header, "Damper 0%", 290, 36, &lv_font_montserrat_14, COLOR_TEXT_DIM);
+    bar_damper = output_bar(header, 394, 74, COLOR_PURPLE);
     pit_card = UiStyle::card(scr_dashboard, 8, 64, 228, 190, COLOR_ORANGE);
     lv_obj_add_event_cb(pit_card, pit_card_click_cb, LV_EVENT_CLICKED, nullptr);
     UiStyle::label(pit_card, "Pit", 16, 18, &lv_font_montserrat_18, COLOR_ORANGE, 190, LV_TEXT_ALIGN_CENTER);
@@ -413,9 +412,6 @@ static void create_dashboard_screen() {
     btn_alert_ack = UiStyle::button(alert_banner, "Silence", 338, 0, 126, 52, Button::Danger);
     lv_obj_set_style_bg_color(btn_alert_ack, lv_color_hex(0x801A15), 0);
     lv_obj_add_event_cb(btn_alert_ack, alert_tap_cb, LV_EVENT_CLICKED, nullptr);
-    btn_lid_resume = UiStyle::button(alert_banner, "Resume now", 316, 0, 148, 52, Button::Secondary, &lv_font_montserrat_16);
-    lv_obj_add_event_cb(btn_lid_resume, lid_resume_click, LV_EVENT_CLICKED, nullptr);
-    lv_obj_add_flag(btn_lid_resume, LV_OBJ_FLAG_HIDDEN);
 }
 
 static void graph_draw_cb(lv_event_t* e) {

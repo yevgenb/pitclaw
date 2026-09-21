@@ -43,6 +43,31 @@ static void tap(lv_obj_t* obj, unsigned hold = 10) {
     pointer = {(a.x1 + a.x2) / 2, (a.y1 + a.y2) / 2};
     pressed = true; pump(hold); pressed = false; pump(10);
 }
+static void check_button_face(lv_obj_t* obj, unsigned& calls) {
+    // Exercise real pointer dispatch, including text, selection underline,
+    // corners and the outermost pixels. A center-only tap misses clipped edges.
+    pump(); lv_obj_update_layout(obj);
+    lv_area_t a; lv_obj_get_coords(obj, &a);
+    const unsigned before = calls;
+    unsigned taps = 0;
+    for (int y : {a.y1, a.y1 + 4, (a.y1 + a.y2) / 2, a.y2 - 4, a.y2}) {
+        for (int x : {a.x1, a.x1 + 4, (a.x1 + a.x2) / 2, a.x2 - 4, a.x2}) {
+            pointer = {x, y};
+            assert(lv_indev_search_obj(lv_layer_top(), &pointer) == nullptr);
+            assert(lv_indev_search_obj(lv_screen_active(), &pointer) == obj);
+            pressed = true; pump(10); pressed = false; pump(10);
+            assert(calls == before + ++taps);
+        }
+    }
+    // Nearby gaps must not become invisible parts of the button.
+    for (auto point : {lv_point_t{a.x1 - 1, (a.y1 + a.y2) / 2},
+                       lv_point_t{a.x2 + 1, (a.y1 + a.y2) / 2},
+                       lv_point_t{(a.x1 + a.x2) / 2, a.y1 - 1},
+                       lv_point_t{(a.x1 + a.x2) / 2, a.y2 + 1}}) {
+        assert(lv_indev_search_obj(lv_screen_active(), &point) != obj);
+    }
+    calls = before;
+}
 static lv_obj_t* button(lv_obj_t* parent, const char* label) {
     for (uint32_t i = 0; i < lv_obj_get_child_count(parent); ++i) {
         auto obj = lv_obj_get_child(parent, i);
@@ -124,16 +149,22 @@ int main() {
     ui_update_output_bars(100, 100); ui_update_cook_timer(0, 19245, 0); pump();
     assert(!overlap(lbl_meat1_temp, lbl_meat1_target));
     assert(!overlap(lbl_damper_bar, bar_damper));
+    assert(!overlap(lbl_fan_bar, bar_fan));
+    for (auto obj : {lbl_wifi_icon, lbl_elapsed, lbl_units, lbl_fan_bar, lbl_damper_bar, bar_fan, bar_damper, pit_card})
+        assert(!overlap(btn_lid_action, obj));
+    assert(lv_obj_get_height(btn_lid_action) >= 44);
     capture("dashboard");
     check_temperature_updates();
 
     ui_set_lid_callbacks([](bool enabled) { requested_lid_enabled=enabled; }, []() { ++lid_resumes; }, []() { ++lid_opens; });
     ui_update_lid_detection(false,false,0);
+    check_button_face(btn_lid_action, lid_opens);
     tap(btn_lid_action); assert(lid_opens==1); // Auto Off does not disable manual control.
     ui_update_output_bars(0,0);
     ui_update_lid_detection(false,true,120,true); ui_update_alerts(0,true,false,0); pump();
     assert(strcmp(lv_label_get_text(lv_obj_get_child(btn_lid_action,0)),"Close lid")==0);
     assert(!overlap(btn_lid_action,lbl_elapsed)); capture("manual-lid-open");
+    check_button_face(btn_lid_action, lid_resumes);
     tap(btn_lid_action); assert(lid_resumes==1);
     ui_update_lid_detection(true,false,0); ui_update_alerts(0,false,false,0);
     ui_update_temps(225,NAN,NAN,true,false,false); ui_update_alerts(0,false,false,0);
@@ -143,11 +174,12 @@ int main() {
     ui_update_temps(225,200,200,true,true,true);
     lid_resumes=0;
     ui_update_lid_detection(true,true,83); ui_update_alerts(0,true,false,0); pump();
-    assert(lv_obj_is_visible(btn_lid_resume) && !lv_obj_is_visible(btn_alert_ack));
-    assert(!overlap(lbl_alert_text,btn_lid_resume)); capture("lid-open");
-    tap(btn_lid_resume); assert(lid_resumes==1 && acknowledgments==0);
+    assert(lv_obj_is_visible(alert_banner) && !lv_obj_is_visible(btn_alert_ack));
+    assert(!button(lv_layer_top(), "Resume now"));
+    capture("lid-open");
+    tap(btn_lid_action); assert(lid_resumes==1 && acknowledgments==0);
     ui_update_lid_detection(true,false,0); ui_update_alerts(0,false,false,0);
-    assert(!lv_obj_is_visible(btn_lid_resume));
+    assert(!lv_obj_is_visible(alert_banner));
     ui_switch_screen(Screen::SETTINGS);
     lv_obj_scroll_to_view_recursive(btn_lid_toggle,LV_ANIM_OFF); pump();
     tap(btn_lid_toggle); assert(!requested_lid_enabled);
@@ -155,14 +187,16 @@ int main() {
     assert(strcmp(lv_label_get_text(lv_obj_get_child(btn_lid_toggle,0)),"Off")==0);
     tap(btn_lid_toggle); assert(requested_lid_enabled);
     ui_update_lid_detection(true,true,83); ui_update_alerts(3,true,false,0);
-    assert(!lv_obj_is_visible(btn_lid_resume) && lv_obj_is_visible(btn_alert_ack));
-    // Resume remains reachable in Settings while another alarm owns the banner.
+    assert(lv_obj_is_visible(btn_alert_ack));
+    // The same toggle remains reachable while another alarm owns the banner.
     pump(); lv_obj_scroll_to_view_recursive(btn_lid_settings_action,LV_ANIM_OFF); pump(); capture("lid-settings");
+    check_button_face(btn_lid_settings_action, lid_resumes);
     tap(btn_lid_settings_action); assert(lid_resumes==2 && acknowledgments==0);
     ui_update_lid_detection(false,true,80,true); ui_update_alerts(0,true,false,1); pump();
-    assert(strstr(lv_label_get_text(lbl_alert_text),"Pit") && !lv_obj_is_visible(btn_lid_resume));
+    assert(strstr(lv_label_get_text(lbl_alert_text),"Pit") && !lv_obj_is_visible(btn_alert_ack));
     ui_update_lid_detection(false,false,0); ui_update_alerts(0,false,false,0);
     lv_obj_scroll_to_view_recursive(btn_lid_settings_action,LV_ANIM_OFF); pump();
+    check_button_face(btn_lid_settings_action, lid_opens);
     tap(btn_lid_settings_action); assert(lid_opens==2);
     ui_update_lid_detection(true,false,0); ui_update_alerts(0,false,false,0);
     lv_obj_scroll_to_y(settings_content,0,LV_ANIM_OFF); ui_switch_screen(Screen::DASHBOARD);

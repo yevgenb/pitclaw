@@ -85,7 +85,6 @@
     dom.btnLidAction = document.getElementById('btnLidAction');
     dom.lidBanner = document.getElementById('lidBanner');
     dom.lidStatus = document.getElementById('lidStatus');
-    dom.btnResumeLid = document.getElementById('btnResumeLid');
     dom.btnSettingsLidAction = document.getElementById('btnSettingsLidAction');
     dom.btnFanOnly = document.getElementById('btnFanOnly');
     dom.btnFanAndDamper = document.getElementById('btnFanAndDamper');
@@ -371,7 +370,6 @@
   function updateLidButtons() {
     var ready = connected && lidControlsAvailable;
     dom.lidEnabled.disabled = !ready;
-    dom.btnResumeLid.disabled = !ready || !lidPaused;
     dom.btnSettingsLidAction.disabled = !ready || (!lidPaused && !manualLidAvailable);
     dom.btnLidAction.disabled = dom.btnSettingsLidAction.disabled;
   }
@@ -1376,7 +1374,6 @@
     });
 
     dom.lidEnabled.addEventListener('change', function () { setLidEnabled(this.checked); });
-    dom.btnResumeLid.addEventListener('click', resumeLid);
     dom.btnSettingsLidAction.addEventListener('click', lidAction);
     dom.btnLidAction.addEventListener('click', lidAction);
 

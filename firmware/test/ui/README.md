@@ -12,7 +12,9 @@ which do not link LVGL.
   Cancel, one-degree and held adjustments, bounds, Fahrenheit/Celsius conversion,
   condensed history timestamps, axis layout, alarms on all main screens and over
   editors, Settings scrolling, and setup navigation/test feedback. It also checks
-  manual Open/Close lid and auto toggle/resume controls (including higher-priority alarm overlap), and
+  the single Open/Close lid toggle and automatic detection setting, including
+  100 pointer taps across lid button faces, edges and corners in both states,
+  Settings scrolling and higher-priority alarm overlap, and
   raised degree symbols through changing digit widths, negative/zero Celsius
   readings, disconnection/reconnection, and compact alarm layouts.
 

@@ -15,7 +15,7 @@ extern lv_obj_t *lbl_meat1_temp, *lbl_meat2_temp, *lbl_meat1_target, *lbl_meat2_
 extern lv_obj_t *meat_edit_icons[2];
 extern lv_obj_t *bar_fan, *bar_damper, *lbl_fan_bar, *lbl_damper_bar;
 extern lv_obj_t *alert_banner, *lbl_alert_text, *btn_alert_ack;
-extern lv_obj_t *btn_lid_action, *btn_lid_resume, *btn_lid_toggle, *btn_lid_settings_action, *lbl_lid_status;
+extern lv_obj_t *btn_lid_action, *btn_lid_toggle, *btn_lid_settings_action, *lbl_lid_status;
 extern lv_obj_t *chart_temps, *lbl_graph_title, *lbl_graph_span;
 extern lv_chart_series_t *ser_pit, *ser_meat1, *ser_meat2, *ser_setpoint;
 extern lv_obj_t *graph_y_labels[5], *graph_x_labels[3];
@@ -116,19 +116,16 @@ void ui_update_alerts(uint8_t alarm, bool lidOpen, bool fireOut, uint8_t errors)
         snprintf(message, sizeof(message), "Probe error:%s%s%s", errors & 1 ? " Pit" : "", errors & 2 ? " Meat 1" : "", errors & 4 ? " Meat 2" : "");
         text = message; warning = true;
     }
-    const bool resume = !text && lidOpen;
-    if (resume) { text = ui_state.lidManual ? "LID OPEN (MANUAL)" : "LID OPEN"; warning = true; }
+    if (!text && lidOpen) { text = ui_state.lidManual ? "LID OPEN (MANUAL)" : "LID OPEN"; warning = true; }
     if (text) {
         lv_label_set_text(lbl_alert_text, text);
-        lv_obj_set_width(lbl_alert_text, resume ? 292 : acknowledge ? 314 : 440);
+        lv_obj_set_width(lbl_alert_text, acknowledge ? 314 : 440);
         lv_obj_align(lbl_alert_text, LV_ALIGN_LEFT_MID, 12, 0);
         lv_obj_set_style_bg_color(alert_banner, warning ? COLOR_ORANGE : COLOR_DANGER, 0);
         lv_obj_set_style_text_color(lbl_alert_text, warning ? COLOR_BG : COLOR_TEXT, 0);
     }
     if (acknowledge) lv_obj_remove_flag(btn_alert_ack, LV_OBJ_FLAG_HIDDEN);
     else lv_obj_add_flag(btn_alert_ack, LV_OBJ_FLAG_HIDDEN);
-    if (resume) lv_obj_remove_flag(btn_lid_resume, LV_OBJ_FLAG_HIDDEN);
-    else lv_obj_add_flag(btn_lid_resume, LV_OBJ_FLAG_HIDDEN);
     ui_layout_alert(text != nullptr);
 }
 void ui_update_output_bars(float fan, float damper) {

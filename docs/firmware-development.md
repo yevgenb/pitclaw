@@ -190,21 +190,21 @@ Primary close the damper; Fan Only preserves its normal fully-open damper comman
 The probe-fault interlock always stops the fan and closes the damper in every mode.
 
 An automatic pause ends when the temperature reaches at least 98% of target, after a
-two-minute timeout, when **Resume now** is pressed, or when detection is disabled.
+two-minute timeout, when **Close lid** is pressed, or when detection is disabled.
 PID integral/derivative history is reset using the current reading before control
 resumes. Every exit requires a fresh settling period before another automatic pause can
 trigger, so a still-cold pit cannot immediately retrigger it.
 
 - Touchscreen: **Settings → Lid detection → Off** disables detection. Scroll below
   the Fan row if necessary. **Open lid / Close lid** is always available on the
-  dashboard and in Settings. **Resume now** remains in the lid banner; Settings
-  still provides Close lid when another alarm owns the banner.
+  dashboard and in Settings. The lid banner only displays status; the same toggle
+  remains available when another alarm owns the banner.
 - Web: **Settings → Lid detection** uses the same device setting. **Open lid /
-  Close lid** is in the header and Settings; the pause banner has **Resume now**
-  and a remaining-time display.
+  Close lid** is in the header and Settings; the pause banner displays remaining
+  time without a second action button.
 - Detection defaults to On, including when loading an older config. The setting is
   saved as `lid.enabled` in `/config.json`; it persists across device restarts.
-  Resume clears one pause without disabling future detection.
+  Close lid clears one pause without disabling future detection.
 
 This is temperature inference, not a lid-position sensor. It retains the existing
 6% threshold after arming; it does not measure the rate of cooling. Physical
@@ -230,7 +230,7 @@ Both UIs provide **Open lid / Close lid** on the dashboard and in Settings:
   when automatic detection is Off. It does not move the physical lid.
 - A manual pause ignores temperature recovery and target changes. Turning auto
   detection On/Off does not cancel it. This lets you pause before lifting a hot lid.
-- **Close lid**, the existing **Resume now**, or the original two-minute deadline
+- **Close lid** or the original two-minute deadline
   ends the pause. Repeated Open requests do not extend that deadline.
 - No lid action overrides a pit-probe fault. A manual pause can remain indicated
   during a fault, but the outputs stay stopped and the fault is shown first.
