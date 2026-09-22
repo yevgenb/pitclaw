@@ -198,6 +198,9 @@ void SimWebServer::handleMessage(struct mg_connection* c, const char* data, size
         case bbq_protocol::CmdType::SET_LID_ENABLED:
             if (_onLidEnabled) _onLidEnabled(cmd.lidEnabled);
             break;
+        case bbq_protocol::CmdType::SET_LID_TIMEOUT:
+            if (_onLidTimeout) _onLidTimeout(cmd.lidTimeoutSeconds);
+            break;
         case bbq_protocol::CmdType::OPEN_LID:
             if (_onOpenLid) _onOpenLid();
             break;

@@ -20,6 +20,7 @@ typedef void (*UiSetpointCb)(float setpoint);
 typedef void (*UiMeatTargetCb)(uint8_t probe, float target);  // probe 1 or 2, target=0 means clear
 typedef void (*UiAlarmAckCb)();
 typedef void (*UiLidEnabledCb)(bool enabled);
+typedef void (*UiLidTimeoutCb)(uint16_t seconds);
 typedef void (*UiResumeLidCb)();
 typedef void (*UiUnitsCb)(bool isFahrenheit);
 typedef void (*UiFanModeCb)(const char* mode);
@@ -54,6 +55,7 @@ void ui_set_settings_callbacks(UiUnitsCb units, UiFanModeCb fan,
                                 UiNewSessionCb session, UiFactoryResetCb reset);
 
 void ui_set_lid_callbacks(UiLidEnabledCb enabled, UiResumeLidCb resume, UiResumeLidCb open = nullptr);
+void ui_set_lid_timeout_callback(UiLidTimeoutCb callback);
 
 // Set callback for Wi-Fi action buttons (Disconnect/Reconnect/Setup Mode)
 void ui_set_wifi_callback(UiWifiActionCb cb);

@@ -22,6 +22,7 @@ struct DataPayload {
     bool lidEnabled = true;
     uint16_t lidRemaining = 0;
     bool lidManual = false;
+    uint16_t lidTimeoutSeconds = 120;
 };
 
 // Single point for history replay
@@ -34,7 +35,7 @@ struct HistoryPoint {
 };
 
 // Parsed incoming command
-enum class CmdType { SET_SP, ALARM, SESSION_NEW, SESSION_DOWNLOAD, SET_FAN_MODE, SET_LID_ENABLED, OPEN_LID, RESUME_LID, UNKNOWN };
+enum class CmdType { SET_SP, ALARM, SESSION_NEW, SESSION_DOWNLOAD, SET_FAN_MODE, SET_LID_ENABLED, SET_LID_TIMEOUT, OPEN_LID, RESUME_LID, UNKNOWN };
 struct ParsedCommand {
     CmdType type;
     float setpoint;
@@ -42,6 +43,7 @@ struct ParsedCommand {
     bool hasMeat1Target, hasMeat2Target, hasPitBand;
     char format[8]; // "csv" or "json"
     bool lidEnabled;
+    uint16_t lidTimeoutSeconds;
     char fanMode[20]; // "fan_only", "fan_and_damper", "damper_primary"
 };
 

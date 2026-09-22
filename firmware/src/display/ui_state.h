@@ -1,5 +1,6 @@
 #pragma once
 #include "../units.h"
+#include "../config.h"
 #include <stdint.h>
 
 // UI input values and action callbacks use Fahrenheit. Only presentation and
@@ -8,6 +9,7 @@ struct UiState {
     bool fahrenheit = true;
     bool lidEnabled = true, lidOpen = false, lidManual = false;
     uint16_t lidRemaining = 0;
+    uint16_t lidTimeoutSeconds = LID_OPEN_TIMEOUT_MS / 1000;
     float temps[3] = {};
     bool connected[3] = {};
     float setpoint = 225;

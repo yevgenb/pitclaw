@@ -1,4 +1,5 @@
 #include "web_protocol.h"
+#include "config.h"
 #include <ArduinoJson.h>
 #include <cstdio>
 #include <cstdlib>
@@ -41,6 +42,7 @@ size_t buildDataMessage(char* buf, size_t bufSize, const DataPayload& d) {
     doc["sp"] = (int)d.sp;
     doc["lid"] = d.lid;
     doc["lidEnabled"] = d.lidEnabled;
+    doc["lidTimeoutSeconds"] = d.lidTimeoutSeconds;
     doc["lidRemaining"] = d.lidRemaining;
     doc["lidManual"] = d.lidManual;
     if (d.fanMode) doc["fanMode"] = d.fanMode;
@@ -239,9 +241,17 @@ ParsedCommand parseCommand(const char* data, size_t len) {
     else if (strcmp(type, "config") == 0) {
         // Each command changes one setting; reject ambiguous or mistyped lid values.
         if (!doc["lidEnabled"].isNull()) {
-            if (doc["lidEnabled"].is<bool>() && doc["fanMode"].isNull()) {
+            if (doc["lidEnabled"].is<bool>() && doc["fanMode"].isNull() && doc["lidTimeoutSeconds"].isNull()) {
                 cmd.type = CmdType::SET_LID_ENABLED;
                 cmd.lidEnabled = doc["lidEnabled"].as<bool>();
+            }
+            return cmd;
+        }
+        if (!doc["lidTimeoutSeconds"].isNull()) {
+            if (doc["lidTimeoutSeconds"].is<uint16_t>() && doc["fanMode"].isNull() &&
+                isValidLidTimeoutSeconds(doc["lidTimeoutSeconds"].as<uint16_t>())) {
+                cmd.type = CmdType::SET_LID_TIMEOUT;
+                cmd.lidTimeoutSeconds = doc["lidTimeoutSeconds"].as<uint16_t>();
             }
             return cmd;
         }

@@ -68,6 +68,7 @@ struct AppConfig {
     AlarmSettings   alarms;
     bool            setupComplete;
     bool            lidDetectionEnabled;
+    uint16_t        lidTimeoutSeconds;
     TouchCalibration touch;
     DamperCalibration damper;
 };
@@ -135,6 +136,11 @@ public:
 
     bool isLidDetectionEnabled() const { return _config.lidDetectionEnabled; }
     void setLidDetectionEnabled(bool enabled) { _config.lidDetectionEnabled = enabled; }
+    uint16_t getLidTimeoutSeconds() const { return _config.lidTimeoutSeconds; }
+    bool setLidTimeoutSeconds(uint16_t seconds) {
+        if (!isValidLidTimeoutSeconds(seconds)) return false;
+        _config.lidTimeoutSeconds = seconds; return true;
+    }
 
     // --- Setup ---
     bool isSetupComplete() const { return _config.setupComplete; }

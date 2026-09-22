@@ -33,9 +33,6 @@ pio run -e wt32_sc01_plus
 # Flash firmware via USB
 pio run -e wt32_sc01_plus --target upload
 
-# Upload web UI files to LittleFS
-pio run -e wt32_sc01_plus --target uploadfs
-
 # Build simulator (desktop, no hardware needed)
 pio run -e simulator
 
@@ -74,7 +71,8 @@ After the initial USB flash, firmware can be updated over Wi-Fi:
 2. Upload the `.bin` file from `.pio/build/wt32_sc01_plus/firmware.bin`
 3. The device reboots with the new firmware
 
-The LittleFS partition (config, session data, web UI files) is preserved across firmware updates.
+The web UI is bundled in firmware. LittleFS configuration and session data are
+preserved across firmware updates.
 
 ## Architecture
 
@@ -112,7 +110,7 @@ firmware/
       sim_profiles.h            # Pre-built cook profiles
       sim_web_server.h/.cpp     # Mongoose HTTP + WebSocket server
       mongoose.h/.c             # Mongoose embedded web server library
-  data/                         # Web UI files (uploaded to LittleFS)
+  data/                         # Web UI files (embedded in device firmware)
   test/
     test_desktop/               # Native tests
     test_embedded/              # On-device tests
@@ -121,7 +119,7 @@ firmware/
 
 ### Key Modules
 
-**PID Controller** (`pid_controller.h/.cpp`) — wraps QuickPID with BBQ-specific features: proportional-on-measurement, derivative-on-measurement, integral anti-windup conditioning. Includes temperature-based lid detection with a warm-up guard, a two-minute timeout and shared UI controls.
+**PID Controller** (`pid_controller.h/.cpp`) — wraps QuickPID with BBQ-specific features: proportional-on-measurement, derivative-on-measurement, integral anti-windup conditioning. Includes temperature-based lid detection with a warm-up guard, an adjustable timeout and shared UI controls.
 
 **Temperature Manager** (`temp_manager.h/.cpp`) — reads ADS1115 ADC via I2C, converts raw ADC counts to temperature using Steinhart-Hart equation, applies EMA (exponential moving average) filtering, and supports per-probe calibration offsets.
 
@@ -168,7 +166,7 @@ All user settings stored in `config.json` on LittleFS. Survives reboots and firm
 - P = 4.0, I = 0.02, D = 5.0
 - Temp sampling: 1s interval, 4-reading average
 - PID compute: every 4 seconds
-- Lid detection: arm after 30 seconds within ±2% of target; trigger below 94%, recover at 98%, timeout after two minutes.
+- Lid detection: arm after 30 seconds within ±2% of target; trigger below 94%, recover at 98%, timeout defaults to two minutes (30–600 seconds, in 30-second steps).
 
 **Fan Control:**
 - PWM frequency: 100 Hz with 10-bit duty resolution (provisional; bench-verify the blower)
@@ -190,23 +188,28 @@ Primary close the damper; Fan Only preserves its normal fully-open damper comman
 The probe-fault interlock always stops the fan and closes the damper in every mode.
 
 An automatic pause ends when the temperature reaches at least 98% of target, after a
-two-minute timeout, when **Close lid** is pressed, or when detection is disabled.
+configured timeout, when **Close lid** is pressed, or when detection is disabled.
 PID integral/derivative history is reset using the current reading before control
 resumes. Every exit requires a fresh settling period before another automatic pause can
 trigger, so a still-cold pit cannot immediately retrigger it.
 
 - Touchscreen: **Settings → Lid detection → Off** disables detection. Scroll below
   the Fan row if necessary. **Open lid / Close lid** is always available on the
-  dashboard and in Settings. A small header label shows **Lid open** and the
+  dashboard. Settings contains automatic detection and a **Timeout** adjustment
+  instead of a second lid action. A small header label shows **Lid open** and the
   remaining pause time. Lid pauses keep the temperature cards and graph at full
-  size; alarms and probe faults retain their banner. Settings shows whether the
-  pause is manual or automatic.
+  size; alarms and probe faults retain their banner.
 - Web: **Settings → Lid detection** uses the same device setting. **Open lid /
-  Close lid** is in the header and Settings; the pause banner displays remaining
+  Close lid** is in the header; Settings has **Lid timeout (seconds)**. The pause banner displays remaining
   time without a second action button.
 - Detection defaults to On, including when loading an older config. The setting is
   saved as `lid.enabled` in `/config.json`; it persists across device restarts.
   Close lid clears one pause without disabling future detection.
+- Timeout defaults to 120 seconds and is saved as `lid.timeoutSeconds`. Valid values
+  are 30–600 seconds in 30-second steps. It applies to automatic and manual pauses.
+  Changing it during a pause keeps the original start time; shortening below the
+  elapsed time ends the pause on the next control update. Temperature recovery can
+  still end an automatic pause earlier. Invalid stored values use the default.
 
 This is temperature inference, not a lid-position sensor. It retains the existing
 6% threshold after arming; it does not measure the rate of cooling. Physical
@@ -217,11 +220,16 @@ output-interlock tests. `python test/lid/run_checks.py` tests the actual QuickPI
 engine, JSON command parsing and configuration migration/round-trips using cached
 firmware dependencies. `python test/ui/run_checks.py` taps production LVGL controls;
 `node test/web/test_lid_controls.cjs` checks browser commands and state synchronization.
-Deploy both firmware and the LittleFS web assets to make the new controls available.
+The firmware build now embeds the `data/` web assets, so a firmware-only update
+deploys both interfaces without replacing LittleFS configuration or session files.
+Do not upload a fresh filesystem image just to update the web UI on a device with
+saved settings/history. The simulator still serves `data/` directly for development.
 
 ### Physical touch alignment check
 
-Use **Settings → Touch test** to check the coordinates received from the physical
+Touch test is hidden in normal builds; saved calibration remains applied. A
+service build can enable the entry with `-DPITCLAW_SHOW_TOUCH_TEST=1`.
+Use **Settings → Touch test** in that build to check coordinates from the physical
 touchscreen. Tap the center of each numbered cross and lift your finger. The orange
 ring stays at the reported position and the readout shows its X/Y coordinates.
 Targets 1–5 are at (48,100), (432,100), (240,160), (48,236), and (432,236).
@@ -309,13 +317,14 @@ Meat 1 and Meat 2 are optional. An unplugged/open-circuit meat probe displays
 are retained for reconnection. A shorted meat probe remains a fault. The pit
 probe is required: an open or shorted pit probe still stops fan/damper control.
 
-Both UIs provide **Open lid / Close lid** on the dashboard and in Settings:
+Both UIs provide **Open lid / Close lid** on the dashboard; Settings configures
+automatic detection and timeout:
 
 - **Open lid** immediately requests a manual fan pause, even before warm-up or
   when automatic detection is Off. It does not move the physical lid.
 - A manual pause ignores temperature recovery and target changes. Turning auto
   detection On/Off does not cancel it. This lets you pause before lifting a hot lid.
-- **Close lid** or the original two-minute deadline
+- **Close lid** or the configured timeout measured from the original opening
   ends the pause. Repeated Open requests do not extend that deadline.
 - No lid action overrides a pit-probe fault. A manual pause can remain indicated
   during a fault, but the outputs stay stopped and the fault is shown first.

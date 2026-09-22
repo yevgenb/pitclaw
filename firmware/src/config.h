@@ -73,7 +73,14 @@
 #define LID_OPEN_DROP_PCT   6    // 6% drop below setpoint triggers lid-open
 #define LID_OPEN_RECOVER_PCT 2   // Recover/arm near the target (internal Fahrenheit)
 #define LID_OPEN_ARM_MS     30000UL  // 30 seconds continuously within +/-2%
-#define LID_OPEN_TIMEOUT_MS 120000UL // Resume after at most two minutes
+#define LID_OPEN_TIMEOUT_MS 120000UL // Default; configurable at runtime
+#define LID_TIMEOUT_MIN_SECONDS 30
+#define LID_TIMEOUT_MAX_SECONDS 600
+#define LID_TIMEOUT_STEP_SECONDS 30
+constexpr bool isValidLidTimeoutSeconds(unsigned seconds) {
+    return seconds >= LID_TIMEOUT_MIN_SECONDS && seconds <= LID_TIMEOUT_MAX_SECONDS &&
+           seconds % LID_TIMEOUT_STEP_SECONDS == 0;
+}
 
 // --- Cook Session ---
 #define SESSION_BUFFER_SIZE     600     // RAM buffer samples

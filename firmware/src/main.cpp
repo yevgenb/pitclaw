@@ -99,8 +99,12 @@ static uint8_t cb_getFlags() {
 
 // UI/WebSocket requests are applied on the control task, never the network task.
 static std::atomic<int> g_lidEnabledRequest{-1};
+static std::atomic<int> g_lidTimeoutRequest{-1};
 static std::atomic<int> g_lidActionRequest{0}; //0 none,1 open,2 close/resume; latest action wins.
 static void request_lid_enabled(bool enabled) { g_lidEnabledRequest.store(enabled ? 1 : 0); }
+static void request_lid_timeout(uint16_t seconds) {
+    if (isValidLidTimeoutSeconds(seconds)) g_lidTimeoutRequest.store(seconds);
+}
 static void request_lid_resume() { g_lidActionRequest.store(2); }
 static void request_lid_open() { g_lidActionRequest.store(1); }
 
@@ -308,6 +312,7 @@ void setup() {
     // 5. Initialize PID controller with saved tunings
     pidController.begin(cfg.pid.kp, cfg.pid.ki, cfg.pid.kd);
     pidController.setLidDetectionEnabled(configManager.isLidDetectionEnabled());
+    pidController.setLidTimeoutSeconds(configManager.getLidTimeoutSeconds());
 
     // 6. Initialize fan PWM output
     fanController.begin();
@@ -337,6 +342,7 @@ void setup() {
     webServer.onSession(ws_onSession);
     webServer.onFanMode(ws_onFanMode);
     webServer.onLidEnabled(request_lid_enabled);
+    webServer.onLidTimeout(request_lid_timeout);
     webServer.onResumeLid(request_lid_resume);
     webServer.onOpenLid(request_lid_open);
 
@@ -353,7 +359,8 @@ void setup() {
     ui_set_settings_callbacks(ui_cb_units, ui_cb_fan_mode, ui_cb_new_session, ui_cb_factory_reset);
     ui_set_wifi_callback(ui_cb_wifi_action);
     ui_set_lid_callbacks(request_lid_enabled, request_lid_resume, request_lid_open);
-    ui_update_lid_detection(pidController.isLidDetectionEnabled(), false, 0);
+    ui_set_lid_timeout_callback(request_lid_timeout);
+    ui_update_lid_detection(pidController.isLidDetectionEnabled(), false, 0, false, pidController.getLidTimeoutSeconds());
 
     // Set initial display state
     ui_update_setpoint(g_setpoint);
@@ -509,6 +516,18 @@ void loop() {
         pidController.setLidDetectionEnabled(enabled);
         lidCommandApplied = true;
     }
+    const int lidTimeoutRequest = g_lidTimeoutRequest.exchange(-1);
+    if (lidTimeoutRequest >= 0 && isValidLidTimeoutSeconds(lidTimeoutRequest)) {
+        const auto previous = configManager.getLidTimeoutSeconds();
+        configManager.setLidTimeoutSeconds(lidTimeoutRequest);
+        if (previous == lidTimeoutRequest || configManager.save())
+            pidController.setLidTimeoutSeconds(lidTimeoutRequest);
+        else {
+            configManager.setLidTimeoutSeconds(previous);
+            Serial.println("[CFG] Could not persist lid timeout");
+        }
+        lidCommandApplied = true;
+    }
     const int lidAction = g_lidActionRequest.exchange(0);
     if (lidAction) {
         if (lidAction == 1) pidController.openLid(now);
@@ -572,7 +591,7 @@ void loop() {
 
     if (lidCommandApplied) {
         ui_update_lid_detection(pidController.isLidDetectionEnabled(), pidController.isLidOpen(),
-                                pidController.lidRemainingSeconds(now), pidController.isLidManual());
+                                pidController.lidRemainingSeconds(now), pidController.isLidManual(), pidController.getLidTimeoutSeconds());
         g_lastDisplayMs = now - 1000; // Clear the pause banner promptly too.
         webServer.broadcastNow();
     }
@@ -669,7 +688,7 @@ void loop() {
                                            status == ProbeStatus::SHORT_CIRCUIT)) probeErrors |= (1u << i);
         }
         ui_update_lid_detection(pidController.isLidDetectionEnabled(), pidController.isLidOpen(),
-                                pidController.lidRemainingSeconds(now), pidController.isLidManual());
+                                pidController.lidRemainingSeconds(now), pidController.isLidManual(), pidController.getLidTimeoutSeconds());
         ui_update_alerts(topAlarm, pidController.isLidOpen(), errorManager.isFireOut(), probeErrors);
 
         // Meat targets

@@ -211,6 +211,7 @@ void ConfigManager::applyDefaults() {
     // Setup
     _config.setupComplete = false;
     _config.lidDetectionEnabled = true;
+    _config.lidTimeoutSeconds = LID_OPEN_TIMEOUT_MS / 1000;
     _config.touch = {};
     _config.damper = {};
 }
@@ -259,6 +260,7 @@ void ConfigManager::toJson(JsonDocument& doc) const {
     // Setup
     doc["setupComplete"] = _config.setupComplete;
     doc["lid"]["enabled"] = _config.lidDetectionEnabled;
+    doc["lid"]["timeoutSeconds"] = _config.lidTimeoutSeconds;
     doc["touch"]["enabled"] = _config.touch.enabled;
     doc["touch"]["yScale"] = _config.touch.yScale;
     doc["touch"]["yOffset"] = _config.touch.yOffset;
@@ -277,6 +279,8 @@ void ConfigManager::fromJson(const JsonDocument& doc) {
     }
     if (doc["lid"]["enabled"].is<bool>())
         _config.lidDetectionEnabled = doc["lid"]["enabled"].as<bool>();
+    if (doc["lid"]["timeoutSeconds"].is<uint16_t>())
+        setLidTimeoutSeconds(doc["lid"]["timeoutSeconds"].as<uint16_t>());
     if (doc["touch"]["enabled"].is<bool>() && doc["touch"]["yScale"].is<float>() &&
         doc["touch"]["yOffset"].is<float>()) {
         TouchCalibration touch;

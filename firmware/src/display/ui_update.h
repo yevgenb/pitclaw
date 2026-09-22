@@ -26,7 +26,8 @@ void ui_update_meat2_estimate(uint32_t estEpoch);
 
 // Update alert banner. alarmType is a uint8_t cast of AlarmType enum.
 // probeErrors is a bitmask: bit 0=pit, bit 1=meat1, bit 2=meat2.
-void ui_update_lid_detection(bool enabled, bool active, uint16_t remainingSeconds, bool manual = false);
+void ui_update_lid_detection(bool enabled, bool active, uint16_t remainingSeconds, bool manual = false,
+                             uint16_t timeoutSeconds = LID_OPEN_TIMEOUT_MS / 1000);
 void ui_update_alerts(uint8_t alarmType, bool lidOpen, bool fireOut, uint8_t probeErrors);
 
 // Update thin output bars (fan and damper percentage).

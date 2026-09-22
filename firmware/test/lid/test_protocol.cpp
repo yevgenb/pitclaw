@@ -15,6 +15,15 @@ int main() {
     assert(off.type==CmdType::SET_LID_ENABLED && !off.lidEnabled);
     auto on=parse(R"({"type":"config","lidEnabled":true})");
     assert(on.type==CmdType::SET_LID_ENABLED && on.lidEnabled);
+    for (auto seconds : {30,120,300,600}) {
+        char request[80]; snprintf(request,sizeof(request),"{\"type\":\"config\",\"lidTimeoutSeconds\":%d}",seconds);
+        const auto command=parse(request); assert(command.type==CmdType::SET_LID_TIMEOUT && command.lidTimeoutSeconds==seconds);
+    }
+    for (const char* bad : {R"({"type":"config","lidTimeoutSeconds":0})",R"({"type":"config","lidTimeoutSeconds":-30})",
+                           R"({"type":"config","lidTimeoutSeconds":31})",R"({"type":"config","lidTimeoutSeconds":630})",
+                           R"({"type":"config","lidTimeoutSeconds":90.5})",R"({"type":"config","lidTimeoutSeconds":"120"})",
+                           R"({"type":"config","lidTimeoutSeconds":120,"lidEnabled":true})",R"({"type":"config","lidTimeoutSeconds":120,"fanMode":"fan_only"})"})
+        assert(parse(bad).type==CmdType::UNKNOWN);
     assert(parse(R"({"type":"lid","action":"resume"})").type==CmdType::RESUME_LID);
     assert(parse(R"({"type":"lid","action":"open"})").type==CmdType::OPEN_LID);
     for (const char* bad : {R"({"type":"config","lidEnabled":"false"})",R"({"type":"config","lidEnabled":0})",R"({"type":"config","lidEnabled":false,"fanMode":"fan_only"})",R"({"type":"lid","action":"disable"})"})
@@ -23,11 +32,16 @@ int main() {
     assert(cfg.isLidDetectionEnabled());
     JsonDocument old; old["fan"]["mode"]="fan_only"; cfg.fromJson(old);
     assert(cfg.isLidDetectionEnabled() && strcmp(cfg.getFanMode(),"fan_only")==0);
+    assert(cfg.getLidTimeoutSeconds()==120);
+    assert(cfg.setLidTimeoutSeconds(300) && !cfg.setLidTimeoutSeconds(0));
     cfg.setLidDetectionEnabled(false); JsonDocument persisted; cfg.toJson(persisted);
     char stored[2048]; serializeJson(persisted,stored,sizeof(stored));
     JsonDocument loaded; assert(!deserializeJson(loaded,stored));
     ConfigManager rebooted; rebooted.fromJson(loaded);
     assert(!rebooted.isLidDetectionEnabled() && strcmp(rebooted.getFanMode(),"fan_only")==0);
+    assert(rebooted.getLidTimeoutSeconds()==300);
+    JsonDocument badTimeout; badTimeout["lid"]["timeoutSeconds"]=65535;
+    ConfigManager invalidTimeout; invalidTimeout.fromJson(badTimeout); assert(invalidTimeout.getLidTimeoutSeconds()==120);
     rebooted.resetDefaults(); assert(rebooted.isLidDetectionEnabled());
     // Old configs retain the panel map. Calibration is enabled only by Save.
     assert(!rebooted.getConfig().touch.enabled && rebooted.getConfig().touch.mapY(257,320) == 257);
@@ -67,11 +81,14 @@ int main() {
     char packet[1024]; auto len=bbq_protocol::buildDataMessage(packet,sizeof(packet),d);
     JsonDocument result; assert(!deserializeJson(result,packet,len));
     assert(result["lidEnabled"].is<bool>() && !result["lidEnabled"].as<bool>());
+    assert(result["lidTimeoutSeconds"]==120);
     assert(result["errors"].size()==8);
     d.lidEnabled=false; d.lid=true; d.lidRemaining=83; d.lidManual=true;
+    d.lidTimeoutSeconds=300;
     len=bbq_protocol::buildDataMessage(packet,sizeof(packet),d);
     assert(!deserializeJson(result,packet,len) && result["lid"].as<bool>() && result["lidRemaining"]==83);
     assert(result["lidManual"].as<bool>() && !result["lidEnabled"].as<bool>());
+    assert(result["lidTimeoutSeconds"]==300);
     d.errorCount=0; d.meat1=NAN; d.meat2=-1;
     len=bbq_protocol::buildDataMessage(packet,sizeof(packet),d);
     assert(!deserializeJson(result,packet,len));

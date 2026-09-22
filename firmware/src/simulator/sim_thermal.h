@@ -49,6 +49,8 @@ public:
     void setFanMode(const char* mode);
     void setFanOnThreshold(float threshold);
     void setLidDetectionEnabled(bool enabled);
+    bool setLidTimeoutSeconds(uint16_t seconds) { return lidDetector_.setTimeoutSeconds(seconds); }
+    uint16_t getLidTimeoutSeconds() const { return lidDetector_.timeoutSeconds(); }
     void resumeLid();
     void openLid();
     bool isLidManual() const { return lidDetector_.isManual(); }

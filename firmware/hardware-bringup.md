@@ -172,7 +172,11 @@ Deploy both the firmware and web assets for this setting to take effect.
 
 ## Web files and filesystem preservation
 
-The firmware upload does not include `data/`. The initial board had only
+Current builds embed `data/` in firmware; ordinary firmware OTA now updates both
+interfaces without a filesystem upload. The following notes describe earlier
+filesystem-based deployments.
+
+The earlier firmware upload did not include `data/`. The initial board had only
 `config.json` in LittleFS, so dashboard requests produced missing-file diagnostics.
 Missing cook-session files on first boot and missing HTTP paths now use `stat()`
 against the configured mount path; Arduino-ESP32 2.0.14's `LittleFS.exists()` itself

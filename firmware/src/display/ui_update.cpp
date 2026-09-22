@@ -15,7 +15,7 @@ extern lv_obj_t *lbl_meat1_temp, *lbl_meat2_temp, *lbl_meat1_target, *lbl_meat2_
 extern lv_obj_t *meat_edit_icons[2];
 extern lv_obj_t *bar_fan, *bar_damper, *lbl_fan_bar, *lbl_damper_bar;
 extern lv_obj_t *alert_banner, *lbl_alert_text, *btn_alert_ack;
-extern lv_obj_t *btn_lid_action, *btn_lid_toggle, *btn_lid_settings_action, *lbl_lid_status, *lbl_lid_compact;
+extern lv_obj_t *btn_lid_action, *btn_lid_toggle, *btn_lid_timeout_minus, *btn_lid_timeout_plus, *lbl_lid_timeout, *lbl_lid_compact;
 extern lv_obj_t *chart_temps, *lbl_graph_title, *lbl_graph_span;
 extern lv_chart_series_t *ser_pit, *ser_meat1, *ser_meat2, *ser_setpoint;
 extern lv_obj_t *graph_y_labels[5], *graph_x_labels[3];
@@ -82,21 +82,23 @@ static void estimate(int probe, uint32_t epoch) {
 void ui_update_meat1_estimate(uint32_t epoch) { estimate(0, epoch); }
 void ui_update_meat2_estimate(uint32_t epoch) { estimate(1, epoch); }
 
-void ui_update_lid_detection(bool enabled, bool active, uint16_t remainingSeconds, bool manual) {
+void ui_update_lid_detection(bool enabled, bool active, uint16_t remainingSeconds, bool manual, uint16_t timeoutSeconds) {
     ui_state.lidEnabled = enabled; ui_state.lidOpen = active; ui_state.lidRemaining = remainingSeconds; ui_state.lidManual = manual;
     if (btn_lid_toggle) {
         lv_label_set_text(lv_obj_get_child(btn_lid_toggle, 0), enabled ? "On" : "Off");
         UiStyle::selected(btn_lid_toggle, enabled);
     }
-    if (lbl_lid_status) {
-        if (active) UiStyle::text_fmt(lbl_lid_status, manual ? "Manual %u:%02u" : "Paused %u:%02u", remainingSeconds / 60, remainingSeconds % 60);
-        else if (enabled) UiStyle::text_fmt(lbl_lid_status, "%lu min max pause", LID_OPEN_TIMEOUT_MS / 60000);
-        else lv_label_set_text(lbl_lid_status, "Disabled");
+    ui_state.lidTimeoutSeconds = timeoutSeconds;
+    if (lbl_lid_timeout) {
+        UiStyle::text_fmt(lbl_lid_timeout, "%u:%02u", timeoutSeconds / 60, timeoutSeconds % 60);
+        if (timeoutSeconds <= LID_TIMEOUT_MIN_SECONDS) lv_obj_add_state(btn_lid_timeout_minus, LV_STATE_DISABLED);
+        else lv_obj_remove_state(btn_lid_timeout_minus, LV_STATE_DISABLED);
+        if (timeoutSeconds >= LID_TIMEOUT_MAX_SECONDS) lv_obj_add_state(btn_lid_timeout_plus, LV_STATE_DISABLED);
+        else lv_obj_remove_state(btn_lid_timeout_plus, LV_STATE_DISABLED);
     }
-    for (auto button : {btn_lid_action, btn_lid_settings_action}) {
-        if (!button) continue;
-        lv_label_set_text(lv_obj_get_child(button, 0), active ? "Close lid" : "Open lid");
-        UiStyle::selected(button, active);
+    if (btn_lid_action) {
+        lv_label_set_text(lv_obj_get_child(btn_lid_action, 0), active ? "Close lid" : "Open lid");
+        UiStyle::selected(btn_lid_action, active);
     }
     if (lbl_lid_compact && active)
         UiStyle::text_fmt(lbl_lid_compact, "Lid open\n%u:%02u", remainingSeconds / 60, remainingSeconds % 60);
@@ -293,7 +295,7 @@ void ui_update_meat2_target(float) {}
 void ui_update_meat1_estimate(uint32_t) {}
 void ui_update_meat2_estimate(uint32_t) {}
 void ui_update_alerts(uint8_t, bool, bool, uint8_t) {}
-void ui_update_lid_detection(bool, bool, uint16_t, bool) {}
+void ui_update_lid_detection(bool, bool, uint16_t, bool, uint16_t) {}
 void ui_update_output_bars(float, float) {}
 void ui_update_wifi(bool) {}
 void ui_update_wifi_info(const WifiInfo&) {}

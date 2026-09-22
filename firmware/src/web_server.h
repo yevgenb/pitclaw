@@ -27,6 +27,7 @@ typedef void (*AlarmCallback)(const char* probe, float target);
 typedef void (*SessionCallback)(const char* action, const char* format);
 typedef void (*FanModeCallback)(const char* mode);
 typedef void (*LidEnabledCallback)(bool enabled);
+typedef void (*LidTimeoutCallback)(uint16_t seconds);
 typedef void (*ResumeLidCallback)();
 
 class BBQWebServer {
@@ -60,6 +61,7 @@ public:
     void onFanMode(FanModeCallback cb)    { _onFanMode = cb; }
 
     void onLidEnabled(LidEnabledCallback cb) { _onLidEnabled = cb; }
+    void onLidTimeout(LidTimeoutCallback cb) { _onLidTimeout = cb; }
     void onResumeLid(ResumeLidCallback cb) { _onResumeLid = cb; }
     void onOpenLid(ResumeLidCallback cb) { _onOpenLid = cb; }
 
@@ -118,6 +120,7 @@ private:
     SessionCallback  _onSession;
     FanModeCallback  _onFanMode;
     LidEnabledCallback _onLidEnabled;
+    LidTimeoutCallback _onLidTimeout = nullptr;
     ResumeLidCallback _onResumeLid;
     ResumeLidCallback _onOpenLid = nullptr;
 };

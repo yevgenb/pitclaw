@@ -1,5 +1,6 @@
 #include "web_server.h"
 #include "storage_files.h"
+#include "web_assets.h"
 
 #ifndef NATIVE_BUILD
 #include <Arduino.h>
@@ -85,7 +86,9 @@ void BBQWebServer::begin(bool startListening) {
         request->send(200, "application/json", json);
     });
 
-    // Serve static files from LittleFS (web UI)
+    registerWebAssets(*_server);
+
+    // Preserve access to existing filesystem data. Bundled UI routes take priority.
     _server->serveStatic("/", LittleFS, "/")
         .setDefaultFile("index.html")
         .setTryGzipFirst(false)
@@ -208,6 +211,7 @@ bbq_protocol::DataPayload BBQWebServer::buildDataPayload() {
     // Lid-open
     payload.lid = _pid ? _pid->isLidOpen() : false;
     payload.lidEnabled = _pid ? _pid->isLidDetectionEnabled() : true;
+    payload.lidTimeoutSeconds = _pid ? _pid->getLidTimeoutSeconds() : LID_OPEN_TIMEOUT_MS / 1000;
     payload.lidRemaining = _pid ? _pid->lidRemainingSeconds(millis()) : 0;
     payload.lidManual = _pid && _pid->isLidManual();
 
@@ -319,6 +323,9 @@ void BBQWebServer::handleWebSocketMessage(uint8_t clientId, const char* data, si
         case bbq_protocol::CmdType::SET_LID_ENABLED:
             if (_onLidEnabled) _onLidEnabled(cmd.lidEnabled);
             break; // Main loop applies and broadcasts the new controller state.
+        case bbq_protocol::CmdType::SET_LID_TIMEOUT:
+            if (_onLidTimeout) _onLidTimeout(cmd.lidTimeoutSeconds);
+            break;
 
         case bbq_protocol::CmdType::OPEN_LID:
             if (_onOpenLid) _onOpenLid();

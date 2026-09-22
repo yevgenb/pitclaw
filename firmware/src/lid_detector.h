@@ -23,6 +23,12 @@ public:
     }
     bool isManual() const { return _open && _manual; }
     bool isEnabled() const { return _enabled; }
+    uint16_t timeoutSeconds() const { return _timeoutMs / 1000; }
+    bool setTimeoutSeconds(uint16_t seconds) {
+        if (!isValidLidTimeoutSeconds(seconds)) return false;
+        _timeoutMs = uint32_t(seconds) * 1000; // Preserve elapsed time in an active pause.
+        return true;
+    }
     bool isOpen() const { return _open; }
     bool isArmed() const { return _armed; }
     bool resume() {
@@ -33,8 +39,8 @@ public:
     uint16_t remainingSeconds(uint32_t now) const {
         if (!_open) return 0;
         const uint32_t elapsed = now - _openedAt;
-        return elapsed >= LID_OPEN_TIMEOUT_MS ? 0 :
-            static_cast<uint16_t>((LID_OPEN_TIMEOUT_MS - elapsed + 999) / 1000);
+        return elapsed >= _timeoutMs ? 0 :
+            static_cast<uint16_t>((_timeoutMs - elapsed + 999) / 1000);
     }
     // Returns true when the pause starts or ends, so the PID can reset its history.
     bool update(float temp, float target, uint32_t now) {
@@ -42,7 +48,7 @@ public:
         if (_manual) {
             // Hot readings, a changed target or auto-detection Off must not undo
             // an operator's pause while they are opening the lid.
-            if (static_cast<uint32_t>(now - _openedAt) >= LID_OPEN_TIMEOUT_MS) reset();
+            if (static_cast<uint32_t>(now - _openedAt) >= _timeoutMs) reset();
             return wasOpen != _open;
         }
         if (!_enabled || !std::isfinite(temp) || !std::isfinite(target) || target <= 0) {
@@ -56,7 +62,7 @@ public:
         }
         const float recover = target * (1.0f - LID_OPEN_RECOVER_PCT / 100.0f);
         if (_open) {
-            if (temp >= recover || static_cast<uint32_t>(now - _openedAt) >= LID_OPEN_TIMEOUT_MS)
+            if (temp >= recover || static_cast<uint32_t>(now - _openedAt) >= _timeoutMs)
                 reset();
         } else if (!_armed) {
             const bool nearTarget = std::fabs(temp - target) <= target * LID_OPEN_RECOVER_PCT / 100.0f;
@@ -76,4 +82,5 @@ private:
     bool _enabled = true, _open = false, _manual = false, _armed = false, _warming = false, _haveTarget = false;
     float _target = 0;
     uint32_t _warmSince = 0, _openedAt = 0;
+    uint32_t _timeoutMs = LID_OPEN_TIMEOUT_MS;
 };

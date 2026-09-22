@@ -38,6 +38,8 @@ public:
     bool isLidOpen() const;
     bool isLidDetectionEnabled() const { return _lid.isEnabled(); }
     void setLidDetectionEnabled(bool enabled);
+    bool setLidTimeoutSeconds(uint16_t seconds) { return _lid.setTimeoutSeconds(seconds); }
+    uint16_t getLidTimeoutSeconds() const { return _lid.timeoutSeconds(); }
     void resumeLid();
     void openLid(uint32_t nowMs);
     bool isLidManual() const { return _lid.isManual(); }

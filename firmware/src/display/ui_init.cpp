@@ -93,7 +93,7 @@ lv_obj_t *meat_edit_icons[2] = {}, *meat_target_captions[2] = {};
 lv_obj_t *bar_fan = nullptr, *bar_damper = nullptr, *lbl_fan_bar = nullptr, *lbl_damper_bar = nullptr;
 lv_obj_t *alert_banner = nullptr, *lbl_alert_text = nullptr, *btn_alert_ack = nullptr;
 lv_obj_t *btn_lid_action = nullptr, *lbl_lid_compact = nullptr;
-lv_obj_t *btn_lid_toggle = nullptr, *btn_lid_settings_action = nullptr, *lbl_lid_status = nullptr;
+lv_obj_t *btn_lid_toggle = nullptr, *btn_lid_timeout_minus = nullptr, *btn_lid_timeout_plus = nullptr, *lbl_lid_timeout = nullptr;
 lv_obj_t *chart_temps = nullptr, *lbl_graph_title = nullptr, *lbl_graph_span = nullptr;
 lv_chart_series_t *ser_pit = nullptr, *ser_meat1 = nullptr, *ser_meat2 = nullptr, *ser_setpoint = nullptr;
 lv_obj_t* graph_y_labels[5] = {};
@@ -114,6 +114,7 @@ static UiSetpointCb cb_setpoint = nullptr;
 static UiMeatTargetCb cb_meat_target = nullptr;
 static UiAlarmAckCb cb_alarm_ack = nullptr;
 static UiLidEnabledCb cb_lid_enabled = nullptr;
+static UiLidTimeoutCb cb_lid_timeout = nullptr;
 static UiResumeLidCb cb_lid_resume = nullptr;
 static UiResumeLidCb cb_lid_open = nullptr;
 static UiUnitsCb cb_units = nullptr;
@@ -132,6 +133,7 @@ void ui_set_wifi_callback(UiWifiActionCb cb) { cb_wifi_action = cb; }
 void ui_set_lid_callbacks(UiLidEnabledCb enabled, UiResumeLidCb resume, UiResumeLidCb open) {
     cb_lid_enabled = enabled; cb_lid_resume = resume; cb_lid_open = open;
 }
+void ui_set_lid_timeout_callback(UiLidTimeoutCb callback) { cb_lid_timeout = callback; }
 
 static lv_obj_t* new_screen() { return UiStyle::box(nullptr, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT, COLOR_BG, 0); }
 static void nav_event_cb(lv_event_t* e) { ui_switch_screen((Screen)(uintptr_t)lv_event_get_user_data(e)); }
@@ -380,6 +382,10 @@ static void lid_action_click(lv_event_t*) {
     else if (cb_lid_open) cb_lid_open();
 }
 static void lid_toggle_click(lv_event_t*) { if (cb_lid_enabled) cb_lid_enabled(!ui_state.lidEnabled); }
+static void lid_timeout_click(lv_event_t* e) {
+    const int next = ui_state.lidTimeoutSeconds + int(intptr_t(lv_event_get_user_data(e)));
+    if (cb_lid_timeout && isValidLidTimeoutSeconds(next)) cb_lid_timeout(next);
+}
 static lv_obj_t* output_bar(lv_obj_t* parent, int x, int width, lv_color_t color) {
     auto bar = lv_bar_create(parent); lv_obj_remove_style_all(bar);
     lv_obj_set_pos(bar, x, 45); lv_obj_set_size(bar, width, 6);
@@ -605,8 +611,10 @@ static void show_touch_test(lv_event_t*) {
 static void create_settings_screen() {
     scr_settings = new_screen();
     UiStyle::label(scr_settings, "Settings", 12, 8, &lv_font_montserrat_24, COLOR_TEXT, 300);
+#if defined(PITCLAW_SHOW_TOUCH_TEST) && PITCLAW_SHOW_TOUCH_TEST
     auto touch_button = UiStyle::button(scr_settings, "Touch test", 320, 0, 152, 44);
     lv_obj_add_event_cb(touch_button, show_touch_test, LV_EVENT_CLICKED, nullptr);
+#endif
     settings_content = UiStyle::box(scr_settings, 8, 46, 464, 214, COLOR_BG, 0);
     lv_obj_add_flag(settings_content, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_set_scroll_dir(settings_content, LV_DIR_VER);
@@ -637,9 +645,13 @@ static void create_settings_screen() {
     UiStyle::label(row, "Lid detection", 16, 15, &lv_font_montserrat_18);
     btn_lid_toggle = UiStyle::button(row, "On", 344, 4, 104, 44);
     lv_obj_add_event_cb(btn_lid_toggle, lid_toggle_click, LV_EVENT_CLICKED, nullptr);
-    lbl_lid_status = UiStyle::label(row, "2 min max pause", 16, 75, &lv_font_montserrat_16, COLOR_TEXT_DIM, 224);
-    btn_lid_settings_action = UiStyle::button(row, "Open lid", 256, 58, 192, 44, Button::Secondary);
-    lv_obj_add_event_cb(btn_lid_settings_action, lid_action_click, LV_EVENT_CLICKED, nullptr);
+    UiStyle::label(row, "Timeout", 16, 72, &lv_font_montserrat_18);
+    btn_lid_timeout_minus = UiStyle::button(row, "-", 224, 58, 52, 44);
+    lbl_lid_timeout = UiStyle::label(row, "2:00", 284, 59, &lv_font_montserrat_18, COLOR_TEXT, 104, LV_TEXT_ALIGN_CENTER);
+    UiStyle::label(row, "min:sec", 284, 83, &lv_font_montserrat_14, COLOR_TEXT_DIM, 104, LV_TEXT_ALIGN_CENTER);
+    btn_lid_timeout_plus = UiStyle::button(row, "+", 396, 58, 52, 44);
+    lv_obj_add_event_cb(btn_lid_timeout_minus, lid_timeout_click, LV_EVENT_CLICKED, reinterpret_cast<void*>(intptr_t(-LID_TIMEOUT_STEP_SECONDS)));
+    lv_obj_add_event_cb(btn_lid_timeout_plus, lid_timeout_click, LV_EVENT_CLICKED, reinterpret_cast<void*>(intptr_t(LID_TIMEOUT_STEP_SECONDS)));
     auto session = UiStyle::button(settings_content, "New session", 0, 312, 464, 56);
     lv_obj_add_event_cb(session, new_session_click, LV_EVENT_CLICKED, nullptr);
     UiStyle::label(settings_content, "Wi-Fi and device settings " LV_SYMBOL_DOWN, 8, 373, &lv_font_montserrat_14, COLOR_TEXT_DIM, 448, LV_TEXT_ALIGN_CENTER);
@@ -709,7 +721,9 @@ void ui_init() {
     create_setpoint_modal();
     create_meat_target_modal();
     create_confirm_modal();
+#if defined(PITCLAW_SHOW_TOUCH_TEST) && PITCLAW_SHOW_TOUCH_TEST
     create_touch_test(indev);
+#endif
     ui_damper_setup_init();
 
     // Bind external arrays to chart series for adaptive condensing
@@ -737,6 +751,7 @@ void ui_handler() { lv_timer_handler(); }
 // Native test stubs
 void ui_set_touch_calibration(const TouchCalibration&) {}
 void ui_set_touch_calibration_callback(UiTouchCalibrationCb) {}
+void ui_set_lid_timeout_callback(UiLidTimeoutCb) {}
 void ui_init() {}
 void ui_switch_screen(Screen) {}
 Screen ui_get_current_screen() { return Screen::DASHBOARD; }

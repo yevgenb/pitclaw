@@ -20,6 +20,8 @@ static float applied_setpoint = -1, applied_target = -1;
 static uint8_t applied_probe = 0;
 static unsigned acknowledgments = 0, hardware_tests = 0, lid_resumes = 0, lid_opens = 0;
 static bool requested_lid_enabled = true;
+static unsigned timeout_calls = 0;
+static uint16_t requested_timeout = 0;
 static TouchCalibration persisted_touch;
 static unsigned touch_saves = 0;
 static bool touch_save_success = true;
@@ -190,6 +192,7 @@ int main() {
     check_temperature_updates();
 
     ui_set_lid_callbacks([](bool enabled) { requested_lid_enabled=enabled; }, []() { ++lid_resumes; }, []() { ++lid_opens; });
+    ui_set_lid_timeout_callback([](uint16_t seconds) { requested_timeout = seconds; ++timeout_calls; });
     ui_update_lid_detection(false,false,0);
     check_button_face(btn_lid_action, lid_opens);
     tap(btn_lid_action); assert(lid_opens==1); // Auto Off does not disable manual control.
@@ -231,17 +234,22 @@ int main() {
     ui_update_lid_detection(true,true,83); ui_update_alerts(3,true,false,0);
     assert(lv_obj_is_visible(btn_alert_ack));
     pump(); assert(lv_obj_get_height(settings_content) == 158);
-    assert(!overlap(lbl_lid_compact, button(scr_settings, "Touch test")));
-    // The same toggle remains reachable while another alarm owns the banner.
-    pump(); lv_obj_scroll_to_view_recursive(btn_lid_settings_action,LV_ANIM_OFF); pump(); capture("lid-settings");
-    check_button_face(btn_lid_settings_action, lid_resumes);
-    tap(btn_lid_settings_action); assert(lid_resumes==2 && acknowledgments==0);
-    ui_update_lid_detection(false,true,80,true); ui_update_alerts(0,true,false,1); pump();
+    assert(!button(scr_settings, "Touch test") && !button(scr_settings, "Open lid") && !button(scr_settings, "Close lid"));
+    pump(); lv_obj_scroll_to_view_recursive(btn_lid_timeout_plus,LV_ANIM_OFF); pump(); capture("lid-settings");
+    check_button_face(btn_lid_timeout_plus, timeout_calls);
+    check_button_face(btn_lid_timeout_minus, timeout_calls);
+    tap(btn_lid_timeout_plus); assert(requested_timeout == 150);
+    ui_update_lid_detection(true,true,113,false,150);
+    assert(strcmp(lv_label_get_text(lbl_lid_timeout),"2:30")==0);
+    tap(btn_lid_timeout_minus); assert(requested_timeout == 120);
+    ui_update_lid_detection(false,true,80,true,30); ui_update_alerts(0,true,false,1); pump();
     assert(strstr(lv_label_get_text(lbl_alert_text),"Pit") && !lv_obj_is_visible(btn_alert_ack));
-    ui_update_lid_detection(false,false,0); ui_update_alerts(0,false,false,0);
-    lv_obj_scroll_to_view_recursive(btn_lid_settings_action,LV_ANIM_OFF); pump();
-    check_button_face(btn_lid_settings_action, lid_opens);
-    tap(btn_lid_settings_action); assert(lid_opens==2);
+    assert(lv_obj_has_state(btn_lid_timeout_minus,LV_STATE_DISABLED));
+    ui_update_lid_detection(false,false,0,false,600); ui_update_alerts(0,false,false,0); pump();
+    assert(lv_obj_has_state(btn_lid_timeout_plus,LV_STATE_DISABLED));
+    assert(strcmp(lv_label_get_text(lbl_lid_timeout),"10:00")==0);
+    // Dashboard remains the sole manual lid action.
+    ui_switch_screen(Screen::DASHBOARD); tap(btn_lid_action); assert(lid_opens==2);
     ui_update_lid_detection(true,false,0); ui_update_alerts(0,false,false,0);
     lv_obj_scroll_to_y(settings_content,0,LV_ANIM_OFF); ui_switch_screen(Screen::DASHBOARD);
     ui_update_output_bars(100,100);
@@ -325,7 +333,7 @@ int main() {
     // The physical touch diagnostic reports input coordinates unchanged, leaves
     // the last point visible, and intercepts all taps above the normal UI.
     const UiState before_touch_test = ui_state;
-    tap(button(scr_settings, "Touch test")); pump();
+    show_touch_test(nullptr); pump();
     assert(lv_obj_is_visible(touch_test) && touch_test_taps == 0);
     for (auto point : {lv_point_t{48,100}, lv_point_t{432,100}, lv_point_t{240,184},
                        lv_point_t{48,236}, lv_point_t{432,236}}) {
@@ -341,7 +349,7 @@ int main() {
     }
     assert(ui_state.setpoint == before_touch_test.setpoint && ui_state.fahrenheit == before_touch_test.fahrenheit);
     tap(button(touch_test, "Close test")); assert(!lv_obj_is_visible(touch_test)); pump();
-    tap(button(scr_settings, "Touch test")); pump();
+    show_touch_test(nullptr); pump();
     assert(lv_obj_is_visible(touch_test) && !lv_obj_is_visible(touch_dot) && touch_test_taps == 0);
     // Timeout also works with a held finger and cannot click through to Settings.
     pointer = {420, 70}; pressed = true; pump(60010);
@@ -355,7 +363,7 @@ int main() {
         if (!touch_save_success) return false;
         persisted_touch = c; ++touch_saves; return true;
     });
-    tap(button(scr_settings, "Touch test")); pump();
+    show_touch_test(nullptr); pump();
     tap(button(touch_test, "Try calibration")); pump();
     assert(touch_calibration_preview && active_touch_calibration.enabled && touch_saves == 0);
     for (auto pair : {lv_point_t{98,99}, lv_point_t{101,102}, lv_point_t{167,158},
@@ -367,9 +375,9 @@ int main() {
     capture("touch-calibration-preview");
     tap_calibrated(button(touch_test, "Cancel")); pump();
     assert(!active_touch_calibration.enabled && !lv_obj_is_visible(touch_test) && touch_saves == 0);
-    tap(button(scr_settings, "Touch test")); pump(); tap(button(touch_test, "Try calibration")); pump(60010);
+    show_touch_test(nullptr); pump(); tap(button(touch_test, "Try calibration")); pump(60010);
     assert(!active_touch_calibration.enabled && !lv_obj_is_visible(touch_test) && touch_saves == 0);
-    tap(button(scr_settings, "Touch test")); pump(); tap(button(touch_test, "Try calibration")); pump();
+    show_touch_test(nullptr); pump(); tap(button(touch_test, "Try calibration")); pump();
     touch_save_success = false;
     tap_calibrated(button(touch_test, "Save calibration"));
     assert(touch_calibration_preview && touch_saves == 0 && !saved_touch_calibration.enabled);
@@ -382,7 +390,7 @@ int main() {
     // A raw Y above 319 must still reach a bottom navigation button.
     tap_calibrated(nav_btns[2][0]); assert(ui_get_current_screen() == Screen::DASHBOARD);
     tap_calibrated(nav_btns[0][2]); assert(ui_get_current_screen() == Screen::SETTINGS);
-    tap_calibrated(button(scr_settings, "Touch test")); pump();
+    show_touch_test(nullptr); pump();
     tap_calibrated(button(touch_test, "Reset calibration"));
     assert(!active_touch_calibration.enabled && !persisted_touch.enabled && touch_saves == 2);
     tap(button(touch_test, "Close test")); pump();

@@ -62,7 +62,9 @@ firmware/data/
   sw.js               # Service worker (offline shell caching)
 ```
 
-Edit these files and refresh your browser — no recompile needed. Only the simulator itself (C++ code) requires rebuilding.
+With the simulator, edit these files and refresh your browser without recompiling.
+For the ESP32, rebuild/upload firmware; it embeds these assets so web UI updates
+preserve LittleFS settings and session history.
 
 **Key constraint:** The web UI code must work identically on both the simulator and the real ESP32. No simulator-specific code in the web UI — the abstraction boundary is the WebSocket protocol.
 
@@ -152,7 +154,8 @@ All timestamps from the ESP32 are UTC epoch seconds. The browser converts to loc
 ### Lid pause controls
 
 `lid` reports an active pause. `lidEnabled` is the saved detection setting and
-`lidRemaining` is the remaining timeout in seconds (zero when inactive). The
+`lidRemaining` is the remaining timeout in seconds (zero when inactive).
+`lidTimeoutSeconds` is the saved duration (30–600 seconds in 30-second steps). The
 browser reads these from device snapshots so touchscreen changes and reconnects
 stay synchronized. It disables the controls while disconnected or if older
 firmware does not publish `lidEnabled`.
@@ -165,8 +168,13 @@ changes, then broadcasts the new state. Resume never overrides a pit-probe fault
 The C++ thermal simulator uses the same detector while its physical lid events
 continue separately; Resume does not pretend the simulated lid has closed.
 
-`{"type":"lid","action":"open"}` starts a manual pause. The dashboard and Settings
-Open lid / Close lid buttons send `open` or the existing `resume` action according
+`{"type":"config","lidTimeoutSeconds":180}` saves a three-minute timeout.
+Do not combine it with another setting in the same command. Existing pauses keep
+their original start time; changing the duration changes their deadline from that
+time. The browser disables timeout editing when older firmware omits this field.
+
+`{"type":"lid","action":"open"}` starts a manual pause. The dashboard
+Open lid / Close lid button sends `open` or the existing `resume` action according
 to the latest device state. `lidManual` identifies manual pauses and advertises
 manual-control support; older firmware can still be resumed but cannot be sent
 an unsupported Open action. Automatic detection may remain disabled throughout.

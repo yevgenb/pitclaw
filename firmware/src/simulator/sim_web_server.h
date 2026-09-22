@@ -43,6 +43,7 @@ public:
     void onSessionDownload(void (*cb)());
     void onFanMode(void (*cb)(const char*));
     void onLidEnabled(void (*cb)(bool)) { _onLidEnabled = cb; }
+    void onLidTimeout(void (*cb)(uint16_t)) { _onLidTimeout = cb; }
     void onResumeLid(void (*cb)()) { _onResumeLid = cb; }
     void onOpenLid(void (*cb)()) { _onOpenLid = cb; }
 
@@ -70,6 +71,7 @@ private:
     void (*_onSessionDownload)();
     void (*_onFanMode)(const char*);
     void (*_onLidEnabled)(bool) = nullptr;
+    void (*_onLidTimeout)(uint16_t) = nullptr;
     void (*_onResumeLid)() = nullptr;
     void (*_onOpenLid)() = nullptr;
 

@@ -7,7 +7,7 @@ const src = fs.readFileSync(path.join(__dirname,'../../data/app.js'),'utf8').rep
     prediction: values=>{chartData[0]=values.map((_,i)=>i);chartData[2]=values;updateSinglePrediction(2,203,dom.meat1Prediction);}};
 })();`);
 const html = fs.readFileSync(path.join(__dirname, '../../data/index.html'), 'utf8');
-assert.doesNotMatch(html, /btnResumeLid|Resume now/);
+assert.doesNotMatch(html, /btnResumeLid|Resume now|btnSettingsLidAction/);
 const nodes = new Map(), sockets = [], sent = [];
 function node(id) {
   if(!nodes.has(id)) nodes.set(id,{id,style:{},hidden:false,disabled:false,checked:false,events:{},
@@ -35,7 +35,6 @@ assert.deepEqual(sent.pop(),{type:'config',lidEnabled:false});
 assert.equal(node('lidEnabled').checked,true); // Not an optimistic/local-only toggle.
 context.ui.applyLidState({lidEnabled:false,lid:false,lidRemaining:0,lidManual:false});
 assert.equal(node('lidEnabled').checked,false); assert.equal(node('lidBanner').hidden,true);
-assert.equal(node('btnSettingsLidAction').hidden,false);
 assert.equal(node('btnLidAction').textContent,'Open lid');
 assert.equal(node('btnLidAction').disabled,false); // Manual works with detection Off.
 node('btnLidAction').events.click(); assert.deepEqual(sent.pop(),{type:'lid',action:'open'});
@@ -45,15 +44,33 @@ assert.equal(node('btnLidAction').textContent,'Close lid');
 assert.equal(node('btnLidAction')['aria-pressed'],'true');
 node('btnLidAction').events.click(); assert.deepEqual(sent.pop(),{type:'lid',action:'resume'});
 context.ui.applyLidState({lidEnabled:true,lid:true,lidRemaining:120,lidManual:false}); // Touchscreen change syncs.
-node('btnSettingsLidAction').events.click(); assert.deepEqual(sent.pop(),{type:'lid',action:'resume'});
+node('btnLidAction').events.click(); assert.deepEqual(sent.pop(),{type:'lid',action:'resume'});
+context.ui.applyLidState({lidEnabled:true,lid:false,lidManual:false,lidTimeoutSeconds:180});
+assert.equal(node('lidTimeoutSeconds').value,'180');
+assert.equal(node('lidTimeoutSeconds').disabled,false);
+node('lidTimeoutSeconds').value='300'; node('lidTimeoutSeconds').events.change.call(node('lidTimeoutSeconds'));
+assert.deepEqual(sent.pop(),{type:'config',lidTimeoutSeconds:300});
+for(const invalid of ['', '0', '29', '31', '601', '90.5', 'bad']) {
+  node('lidTimeoutSeconds').value=invalid; node('lidTimeoutSeconds').events.change.call(node('lidTimeoutSeconds'));
+  assert.equal(sent.length,0); assert.equal(node('lidTimeoutSeconds').value,'180');
+}
+context.document.activeElement=node('lidTimeoutSeconds'); node('lidTimeoutSeconds').value='60';
+context.ui.applyLidState({lidEnabled:true,lid:false,lidManual:false,lidTimeoutSeconds:300});
+assert.equal(node('lidTimeoutSeconds').value,'60'); // Updates do not overwrite ongoing typing.
+context.document.activeElement=null; node('lidTimeoutSeconds').events.change.call(node('lidTimeoutSeconds'));
+assert.deepEqual(sent.pop(),{type:'config',lidTimeoutSeconds:60});
+context.ui.applyLidState({lidEnabled:true,lid:false,lidManual:false,lidTimeoutSeconds:60});
+assert.equal(node('lidTimeoutSeconds').value,'60');
 sockets[0].readyState=3; sockets[0].onclose();
 assert.equal(node('btnLidAction').disabled,true); assert.equal(node('lidEnabled').disabled,true);
+assert.equal(node('lidTimeoutSeconds').disabled,true);
 node('btnLidAction').events.click(); assert.equal(sent.length,0);
 context.ui.wsConnect(); sockets[1].onopen(); assert.equal(node('lidEnabled').disabled,true);
 context.ui.applyLidState({lidEnabled:false,lid:false,lidRemaining:0,lidManual:false}); assert.equal(node('lidEnabled').checked,false);
 context.ui.applyLidState({lidEnabled:true,lid:false,lidRemaining:0});
 assert.equal(node('btnLidAction').disabled,true); // Old server supports resume but not manual Open.
-context.ui.applyLidState({lid:true}); assert.equal(node('btnLidAction').disabled,true); // Older firmware.
+context.ui.applyLidState({lid:true}); assert.equal(node('btnLidAction').disabled,true);
+assert.equal(node('lidTimeoutSeconds').disabled,true); // Older firmware.
 node('meat1Prediction').textContent='Stale estimate'; context.ui.prediction([150,160,null]);
 assert.equal(node('meat1Prediction').textContent,'');
 context.ui.prediction([150]); assert.equal(node('meat1Prediction').textContent,'Calculating...');

@@ -13,13 +13,14 @@ which do not link LVGL.
   condensed history timestamps, axis layout, alarms on all main screens and over
   editors, Settings scrolling, and setup navigation/test feedback. It also checks
   the single Open/Close lid toggle and automatic detection setting, including
-  100 pointer taps across lid button faces, edges and corners in both states,
+  100 pointer taps across the dashboard lid toggle and timeout adjustment buttons,
   Settings scrolling and higher-priority alarm overlap, and
   raised degree symbols through changing digit widths, negative/zero Celsius
   readings, disconnection/reconnection, and compact alarm layouts.
   The physical touch-test screen is checked with five injected positions (including
   a deliberate offset), retained markers/readouts, close/reopen, and timeout with
-  a held finger. Actual panel alignment still requires touching the hardware.
+  a held finger. The diagnostic is invoked directly in these tests; no Touch test entry appears
+  in normal Settings. Actual panel alignment still requires touching the hardware.
   Calibration checks cover the measured Y correction, input beyond the original
   screen height, Cancel/timeout rollback, failed Save, successful Save, Reset,
   and bottom navigation with corrected input. Config round trips and invalid

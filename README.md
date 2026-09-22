@@ -71,9 +71,9 @@ context; use HTTPS on the reverse proxy for those features. Live readings still
 require a connection to the controller.
 
 Manual firmware updates are available at `/update`. Automatic GitHub release
-checks are disabled in the current PlatformIO configuration. Firmware and web
-assets are separate: uploading `firmware.bin` does not update the files in
-LittleFS.
+checks are disabled in the current PlatformIO configuration. `firmware.bin`
+includes the web UI, so one firmware upload updates both interfaces while
+preserving LittleFS settings and session history.
 
 ## Hardware and enclosure
 
@@ -126,13 +126,11 @@ cd firmware
 pio run -e wt32_sc01_plus
 pio run -e wt32_sc01_plus --target upload
 
-# Initial installation of the web assets in LittleFS
-pio run -e wt32_sc01_plus --target uploadfs
 ```
 
-For an existing installation, a filesystem upload replaces LittleFS: preserve
-configuration and session data before updating its image. A firmware-only update
-preserves that filesystem. The display board's programming USB port requires
+No filesystem upload is needed for the web UI. A filesystem upload replaces
+LittleFS and can erase configuration and session data; normal firmware updates
+preserve that filesystem. The display board's programming USB port requires
 opening the enclosure; the carrier's external USB-C PD port is for power.
 
 For later manual firmware OTA, open `http://bbq.local/update` and upload

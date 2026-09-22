@@ -263,8 +263,11 @@
           <span class="settings-label">Lid detection</span>
           <input type="checkbox" id="lidEnabled" role="switch" disabled>
         </label>
-        <p class="lid-help">Automatic detection arms after warm-up. Open lid also works with detection off. Pauses last up to 2 minutes.</p>
-        <button class="btn btn-secondary" id="btnSettingsLidAction" disabled aria-pressed="false">Open lid</button>
+        <label class="lid-setting" for="lidTimeoutSeconds">
+          <span class="settings-label">Lid timeout (seconds)</span>
+          <input class="lid-timeout-input" type="number" id="lidTimeoutSeconds" min="30" max="600" step="30" value="120" disabled>
+        </label>
+        <p class="lid-help">30 seconds–10 minutes, in 30-second steps. Limits automatic and manual pauses. Changing it keeps the time already elapsed.</p>
       </div>
       <div class="settings-divider"></div>
       <div class="settings-group">

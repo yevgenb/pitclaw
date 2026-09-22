@@ -118,17 +118,21 @@ static void on_units(bool isFahrenheit) {
 static void on_lid_enabled(bool enabled) {
     if (!g_model) return;
     g_model->setLidDetectionEnabled(enabled);
-    ui_update_lid_detection(enabled, g_model->isLidPaused(), g_model->lidRemainingSeconds(), g_model->isLidManual());
+    ui_update_lid_detection(enabled, g_model->isLidPaused(), g_model->lidRemainingSeconds(), g_model->isLidManual(), g_model->getLidTimeoutSeconds());
+}
+static void on_lid_timeout(uint16_t seconds) {
+    if (!g_model || !g_model->setLidTimeoutSeconds(seconds)) return;
+    ui_update_lid_detection(g_model->isLidDetectionEnabled(), g_model->isLidPaused(), g_model->lidRemainingSeconds(), g_model->isLidManual(), seconds);
 }
 static void on_lid_open() {
     if (!g_model) return;
     g_model->openLid();
-    ui_update_lid_detection(g_model->isLidDetectionEnabled(), true, g_model->lidRemainingSeconds(), true);
+    ui_update_lid_detection(g_model->isLidDetectionEnabled(), true, g_model->lidRemainingSeconds(), true, g_model->getLidTimeoutSeconds());
 }
 static void on_lid_resume() {
     if (!g_model) return;
     g_model->resumeLid();
-    ui_update_lid_detection(g_model->isLidDetectionEnabled(), false, 0);
+    ui_update_lid_detection(g_model->isLidDetectionEnabled(), false, 0, false, g_model->getLidTimeoutSeconds());
 }
 
 static void on_fan_mode(const char* mode) {
@@ -384,6 +388,8 @@ int main(int argc, char* argv[]) {
     webServer.onNewSession(web_on_new_session);
     webServer.onFanMode(web_on_fan_mode);
     webServer.onLidEnabled(on_lid_enabled);
+    webServer.onLidTimeout(on_lid_timeout);
+    ui_set_lid_timeout_callback(on_lid_timeout);
     webServer.onResumeLid(on_lid_resume);
     webServer.onOpenLid(on_lid_open);
     webServer.setState(model.setpoint, g_meat1_target, g_meat2_target);
@@ -502,7 +508,7 @@ int main(int argc, char* argv[]) {
 
                 // Check and display alarms
                 check_alarms(result);
-                ui_update_lid_detection(model.isLidDetectionEnabled(), model.isLidPaused(), model.lidRemainingSeconds(), model.isLidManual());
+                ui_update_lid_detection(model.isLidDetectionEnabled(), model.isLidPaused(), model.lidRemainingSeconds(), model.isLidManual(), model.getLidTimeoutSeconds());
                 ui_update_alerts(
                     g_alarm_active ? g_alarm_type : 0,
                     result.lidOpen,
@@ -524,6 +530,7 @@ int main(int argc, char* argv[]) {
                     payload.sp    = model.setpoint;
                     payload.lid   = model.isLidPaused();
                     payload.lidEnabled = model.isLidDetectionEnabled();
+                    payload.lidTimeoutSeconds = model.getLidTimeoutSeconds();
                     payload.lidRemaining = model.lidRemainingSeconds();
                     payload.lidManual = model.isLidManual();
                     payload.meat1Target = g_meat1_target;
