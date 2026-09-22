@@ -265,9 +265,12 @@ The damper percentage is a command, not physical position feedback. In
 Opening setup keeps the current servo command; it does not move to an endpoint.
 Use the **±10 / ±50** microsecond adjustments to move the flap gradually. Mark
 **Set closed** when it is physically closed without forcing its stop, then move
-to the desired open position and mark **Set open**. Both positions must be marked
-and at least 20 µs apart before the **0% / 50% / 100%** test buttons and
-**Save & exit** are enabled. Test the positions visually before saving.
+to the desired open position and mark **Set open**. The **0% / 50% / 100%** test
+buttons are always enabled in setup, including after Stop or idle timeout. They
+use the saved endpoints immediately, with no adjustments, marking or saving
+required. Once both new endpoints are marked and at least 20 µs apart, the buttons
+preview those new positions and **Save & exit** becomes available. Partial or
+invalid edits keep testing the saved positions. Testing itself never saves changes.
 
 Closed and open can be in either numeric order, so reversed linkages need no
 separate direction switch. `config.json` stores `damper.closedUs` and

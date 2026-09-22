@@ -27,12 +27,13 @@ static void refresh() {
     UiStyle::selected(closed_button, state.closedMarked);
     UiStyle::selected(open_button, state.openMarked);
     enabled(closed_button, !state.stopped); enabled(open_button, !state.stopped);
-    for (auto b : test_buttons) enabled(b, state.ready());
+    for (auto b : test_buttons) enabled(b, state.active);
     enabled(save_button, state.ready());
     lv_label_set_text(hint, save_error ? "Could not save. Your old endpoints are unchanged." :
-        state.stopped ? "Servo signal off. Tap an adjustment to move again." :
-        state.closedMarked && state.openMarked && !state.ready() ? "Endpoints are too close. Adjust and mark one again." :
-        "Move gently. Mark both ends, then test 0 / 50 / 100%.");
+        state.stopped ? "Signal off. Tap a test or adjustment to move again." :
+        state.closedMarked && state.openMarked && !state.ready() ? "New ends too close. Tests use saved positions." :
+        state.ready() ? "Tests use new positions. Save to keep them." :
+        "Test saved positions, or mark new closed/open ends.");
 }
 static void send(DamperSetupAction action, int value = 0) {
     if (!ui_damper_setup_available()) return;

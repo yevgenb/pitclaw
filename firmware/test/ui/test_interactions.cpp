@@ -395,16 +395,23 @@ int main() {
     assert(!active_touch_calibration.enabled && !persisted_touch.enabled && touch_saves == 2);
     tap(button(touch_test, "Close test")); pump();
     ui_set_touch_calibration({}); ui_set_touch_calibration_callback(nullptr);
-    // Damper setup begins without moving. Require two distinct marked endpoints
-    // before testing/saving; reverse travel is determined by the physical marks.
+    // Damper setup begins without moving, but the saved-position tests are usable
+    // immediately. Only saving a new calibration requires both endpoints.
     auto damper_entry = button(scr_settings, "Damper setup");
     lv_obj_scroll_to_view_recursive(damper_entry,LV_ANIM_OFF); pump(); tap(damper_entry); pump();
     assert(damper_fixture.state().active && damper_moves == 0);
     auto damper_save = button(lv_layer_sys(), "Save & exit");
     assert(lv_obj_has_state(damper_save, LV_STATE_DISABLED));
     capture("damper-setup");
+    for (const char* label : {"0% Closed", "50%", "100% Open"})
+        assert(!lv_obj_has_state(button(lv_layer_sys(),label),LV_STATE_DISABLED));
+    tap(button(lv_layer_sys(), "0% Closed")); assert(damper_fixture.state().pulseUs == 544);
+    tap(button(lv_layer_sys(), "50%")); assert(damper_fixture.state().pulseUs == 1008);
+    tap(button(lv_layer_sys(), "100% Open")); assert(damper_fixture.state().pulseUs == 1472);
+    assert(!damper_fixture.state().closedMarked && !damper_fixture.state().openMarked && damper_saves == 0);
     tap(button(lv_layer_sys(), "Set closed")); tap(button(lv_layer_sys(), "Set open"));
     assert(!damper_fixture.state().ready() && lv_obj_has_state(damper_save, LV_STATE_DISABLED));
+    tap(button(lv_layer_sys(), "100% Open")); assert(damper_fixture.state().pulseUs == 1472);
     for (int i=0; i<4; ++i) tap(button(lv_layer_sys(), "-50"));
     tap(button(lv_layer_sys(), "Open: 1472 us"));
     assert(damper_fixture.state().ready() && !lv_obj_has_state(damper_save, LV_STATE_DISABLED));
@@ -413,9 +420,10 @@ int main() {
     tap(button(lv_layer_sys(), "100% Open")); assert(damper_fixture.state().pulseUs == 1272);
     capture("damper-reversed");
     tap(button(lv_layer_sys(), "Stop signal")); assert(damper_fixture.state().stopped);
-    tap(button(lv_layer_sys(), "+10")); assert(!damper_fixture.state().stopped);
+    tap(button(lv_layer_sys(), "50%")); assert(!damper_fixture.state().stopped && damper_fixture.state().pulseUs == 1372);
     assert(damper_fixture.timeout(time_ms + DamperSetup::IDLE_MS)); pump();
     assert(lv_obj_is_visible(damper_save) && damper_fixture.state().active);
+    tap(button(lv_layer_sys(), "0% Closed")); assert(!damper_fixture.state().stopped && damper_fixture.state().pulseUs == 1472);
     damper_save_success = false; tap(damper_save);
     assert(damper_fixture.state().active && damper_saves == 0);
     damper_save_success = true; tap(damper_save);
