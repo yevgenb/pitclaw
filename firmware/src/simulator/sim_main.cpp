@@ -511,7 +511,7 @@ int main(int argc, char* argv[]) {
                 ui_update_lid_detection(model.isLidDetectionEnabled(), model.isLidPaused(), model.lidRemainingSeconds(), model.isLidManual(), model.getLidTimeoutSeconds());
                 ui_update_alerts(
                     g_alarm_active ? g_alarm_type : 0,
-                    result.lidOpen,
+                    model.isLidPaused(),
                     result.fireOut,
                     0  // no probe errors in basic sim
                 );

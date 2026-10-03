@@ -743,6 +743,8 @@ void ui_switch_screen(Screen screen) {
     current_screen = screen;
     update_nav_highlight(screen);
     ui_refresh_alert_layout();
+    // The warning lives on the shared top layer; redraw its text over the new screen.
+    if (alert_active) lv_obj_invalidate(alert_banner);
 }
 Screen ui_get_current_screen() { return current_screen; }
 void ui_handler() { lv_timer_handler(); }

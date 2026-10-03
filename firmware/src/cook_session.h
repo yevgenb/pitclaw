@@ -8,7 +8,7 @@
 #include <ArduinoJson.h>
 #endif
 
-// Compact data point struct (13 bytes) for RAM and flash storage
+// Data fields occupy 13 bytes; sizeof(DataPoint) includes platform padding.
 struct DataPoint {
     uint32_t timestamp;     // Unix epoch seconds
     int16_t  pitTemp;       // Pit temperature * 10 (e.g., 2255 = 225.5F)
@@ -18,6 +18,15 @@ struct DataPoint {
     uint8_t  damperPct;     // Damper position 0-100%
     uint8_t  flags;         // Bit flags (lid-open, alarms, errors)
 };
+
+// Recovered sessions may cross the first SNTP sync, or contain uptime from an
+// older firmware/reboot. Such a transition is one sample, not decades of cook.
+inline uint32_t sessionPointElapsed(uint32_t previous, uint32_t current) {
+    constexpr uint32_t wallClockMinimum = 1704067200;
+    if (current < previous || (previous < wallClockMinimum) != (current < wallClockMinimum))
+        return SESSION_SAMPLE_INTERVAL / 1000;
+    return current - previous;
+}
 
 // Flag bits for DataPoint.flags
 #define DP_FLAG_LID_OPEN      0x01
@@ -97,7 +106,6 @@ private:
     DataPoint _buffer[SESSION_BUFFER_SIZE];
     uint32_t  _head;          // Next write position
     uint32_t  _count;         // Number of valid entries in buffer
-    bool      _wrapped;       // Buffer has wrapped around
 
     // Session state
     bool      _active;

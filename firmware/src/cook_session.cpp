@@ -10,7 +10,6 @@
 CookSession::CookSession()
     : _head(0)
     , _count(0)
-    , _wrapped(false)
     , _active(false)
     , _startTime(0)
     , _totalPoints(0)
@@ -115,8 +114,6 @@ void CookSession::addPoint(const DataPoint& point) {
 
     if (_count < SESSION_BUFFER_SIZE) {
         _count++;
-    } else {
-        _wrapped = true;
     }
 
     _totalPoints++;
@@ -135,8 +132,14 @@ void CookSession::flush() {
             Serial.println("[SESSION] Failed to open session file for writing!");
             return;
         }
-        // Write header: start time + data point size for recovery
-        file.write((uint8_t*)&_startTime, sizeof(_startTime));
+    }
+
+    // Opening a missing file in append mode creates it successfully, too.
+    // Every new file needs the header or recovery decodes all points 4 bytes off.
+    if (file.size() == 0 &&
+        file.write((uint8_t*)&_startTime, sizeof(_startTime)) != sizeof(_startTime)) {
+        file.close();
+        return;
     }
 
     // Determine which points to flush (those not yet written)
@@ -148,26 +151,12 @@ void CookSession::flush() {
     }
 
     if (pointsToFlush > 0) {
-        // Write from the oldest unflushed point in the circular buffer
-        uint32_t startIdx;
-        if (_wrapped) {
-            // Buffer has wrapped; oldest point is at _head
-            startIdx = _head;
-        } else {
-            startIdx = 0;
-        }
-
-        // Calculate how far back we need to go for unflushed points
+        // Write the most recent pointsToFlush entries.
         uint32_t flushStart;
-        if (pointsToFlush <= _count) {
-            // Write the most recent pointsToFlush entries
-            if (_head >= pointsToFlush) {
-                flushStart = _head - pointsToFlush;
-            } else {
-                flushStart = SESSION_BUFFER_SIZE - (pointsToFlush - _head);
-            }
+        if (_head >= pointsToFlush) {
+            flushStart = _head - pointsToFlush;
         } else {
-            flushStart = startIdx;
+            flushStart = SESSION_BUFFER_SIZE - (pointsToFlush - _head);
         }
 
         for (uint32_t i = 0; i < pointsToFlush; i++) {
@@ -197,11 +186,20 @@ bool CookSession::loadFromFlash() {
         return false;
     }
 
-    // Read start time header
+    // Older firmware omitted the header on files created in append mode.
+    // Recover those records at their actual boundary, never as shifted fields.
+    const size_t headerSize = fileSize % sizeof(DataPoint) == 0 ? 0 : sizeof(uint32_t);
+    if (fileSize < headerSize || (fileSize - headerSize) % sizeof(DataPoint) != 0) {
+        file.close();
+        return false;
+    }
+    // A legacy file begins with its first point's timestamp, which also gives
+    // us the start time even if only the newest buffer-sized window is retained.
     file.read((uint8_t*)&_startTime, sizeof(_startTime));
+    file.seek(headerSize);
 
     // Read data points
-    size_t dataSize = fileSize - sizeof(uint32_t);
+    size_t dataSize = fileSize - headerSize;
     uint32_t numPoints = dataSize / sizeof(DataPoint);
 
     if (numPoints == 0) {
@@ -212,14 +210,13 @@ bool CookSession::loadFromFlash() {
     // Clear buffer first
     _head = 0;
     _count = 0;
-    _wrapped = false;
     _totalPoints = 0;
 
     // Read points into circular buffer (keep only the most recent SESSION_BUFFER_SIZE)
     if (numPoints > SESSION_BUFFER_SIZE) {
         // Skip older points that don't fit in buffer
         uint32_t skip = numPoints - SESSION_BUFFER_SIZE;
-        file.seek(sizeof(uint32_t) + skip * sizeof(DataPoint));
+        file.seek(headerSize + skip * sizeof(DataPoint));
         numPoints = SESSION_BUFFER_SIZE;
     }
 
@@ -244,7 +241,6 @@ bool CookSession::loadFromFlash() {
 void CookSession::clear() {
     _head = 0;
     _count = 0;
-    _wrapped = false;
     _totalPoints = 0;
     _flushedToIndex = 0;
     _startTime = 0;
@@ -338,16 +334,9 @@ uint32_t CookSession::getElapsedSec() const {
 const DataPoint* CookSession::getPoint(uint32_t index) const {
     if (index >= _count) return nullptr;
 
-    // Calculate actual buffer position
-    // Oldest point is at different positions depending on wrap state
-    uint32_t actualIdx;
-    if (_wrapped) {
-        // When wrapped, oldest is at _head (it was overwritten next)
-        actualIdx = (_head + index) % SESSION_BUFFER_SIZE;
-    } else {
-        // Not wrapped: oldest is at index 0
-        actualIdx = index;
-    }
+    // A full buffer's oldest point is at the next write position.
+    const uint32_t actualIdx = _count == SESSION_BUFFER_SIZE
+        ? (_head + index) % SESSION_BUFFER_SIZE : index;
 
     return &_buffer[actualIdx];
 }

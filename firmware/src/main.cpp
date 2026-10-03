@@ -372,11 +372,12 @@ void setup() {
     {
         uint32_t sessionPoints = cookSession.getPointCount();
         const DataPoint* firstPoint = cookSession.getPoint(0);
-        uint32_t graphOrigin = firstPoint ? firstPoint->timestamp : 0;
+        uint32_t previousTimestamp = firstPoint ? firstPoint->timestamp : 0;
         for (uint32_t i = 0; i < sessionPoints; i++) {
             const DataPoint* dp = cookSession.getPoint(i);
             if (dp) {
-                g_graphRecoveredSec = dp->timestamp >= graphOrigin ? dp->timestamp - graphOrigin : g_graphRecoveredSec;
+                g_graphRecoveredSec += sessionPointElapsed(previousTimestamp, dp->timestamp);
+                previousTimestamp = dp->timestamp;
                 ui_graph_add_point(
                     dp->pitTemp / 10.0f,
                     dp->meat1Temp / 10.0f,
@@ -603,7 +604,8 @@ void loop() {
                         tempManager.getMeat1Temp(),
                         tempManager.getMeat2Temp(),
                         g_setpoint,
-                        g_pitReached);
+                        g_pitReached,
+                        pidController.isLidOpen());
 
     // 6. Error manager
     {

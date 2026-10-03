@@ -105,8 +105,9 @@ void ui_update_lid_detection(bool enabled, bool active, uint16_t remainingSecond
     ui_refresh_alert_layout();
 }
 
-void ui_update_alerts(uint8_t alarm, bool, bool fireOut, uint8_t errors) {
+void ui_update_alerts(uint8_t alarm, bool lidOpen, bool fireOut, uint8_t errors) {
     if (!alert_banner) return;
+    if (lidOpen && alarm == 2) alarm = 0; // Never present an expected drop as PIT LOW.
     const char* text = nullptr; bool acknowledge = alarm >= 1 && alarm <= 4;
     switch (alarm) {
         case 1: text = LV_SYMBOL_WARNING " PIT HIGH"; break;
@@ -120,6 +121,10 @@ void ui_update_alerts(uint8_t alarm, bool, bool fireOut, uint8_t errors) {
     if (!text && errors) {
         snprintf(message, sizeof(message), "Probe error:%s%s%s", errors & 1 ? " Pit" : "", errors & 2 ? " Meat 1" : "", errors & 4 ? " Meat 2" : "");
         text = message; warning = true;
+    }
+    if (!text && lidOpen) {
+        text = "Lid opened";
+        warning = true;
     }
     if (text) {
         lv_label_set_text(lbl_alert_text, text);

@@ -1,4 +1,5 @@
 #include "graph_history.h"
+#include "../temperature_validity.h"
 
 GraphHistory::GraphHistory() : _count(0) {}
 
@@ -17,9 +18,9 @@ void GraphHistory::addPoint(float pit, float meat1, float meat2, float setpoint,
     slot.meat1 = meat1;
     slot.meat2 = meat2;
     slot.setpoint = setpoint;
-    slot.pitValid = !pitDisc;
-    slot.meat1Valid = !meat1Disc;
-    slot.meat2Valid = !meat2Disc;
+    slot.pitValid = !pitDisc && isPlausibleTempF(pit);
+    slot.meat1Valid = !meat1Disc && isPlausibleTempF(meat1);
+    slot.meat2Valid = !meat2Disc && isPlausibleTempF(meat2);
     slot.elapsedSec = elapsedSec;
     _count++;
 }

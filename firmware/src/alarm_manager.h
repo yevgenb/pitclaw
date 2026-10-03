@@ -28,8 +28,9 @@ public:
 
     // Check all alarm conditions. Call every loop().
     // pitReached: true if pit has at some point reached setpoint (for pit alarm arming)
+    // lidOpen: active manual/automatic lid pause; suppresses the expected pit-low alarm.
     void update(float pitTemp, float meat1Temp, float meat2Temp,
-                float setpoint, bool pitReached);
+                float setpoint, bool pitReached, bool lidOpen = false);
 
     // Get array of currently active alarm types
     // Returns count of active alarms, fills the array up to maxCount

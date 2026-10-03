@@ -199,8 +199,12 @@ int main() {
     ui_update_output_bars(0,0);
     ui_update_lid_detection(false,true,120,true); ui_update_alerts(0,true,false,0); pump();
     assert(strcmp(lv_label_get_text(lv_obj_get_child(btn_lid_action,0)),"Close lid")==0);
-    assert(!lv_obj_is_visible(alert_banner) && lv_obj_is_visible(lbl_lid_compact));
-    assert(lv_obj_get_height(pit_card) == 190 && lv_obj_get_height(meat_cards[1]) == 91);
+    assert(lv_obj_is_visible(alert_banner) && lv_obj_is_visible(lbl_lid_compact));
+    assert(strcmp(lv_label_get_text(lbl_alert_text), "Lid opened") == 0);
+    assert(!lv_obj_is_visible(btn_alert_ack));
+    assert(lv_color_eq(lv_obj_get_style_bg_color(alert_banner, LV_PART_MAIN), COLOR_ORANGE));
+    assert(lv_obj_get_height(pit_card) == 136 && lv_obj_get_height(meat_cards[1]) == 64);
+    check_temperature_readings();
     for (auto obj : {btn_lid_action, lbl_elapsed, lbl_units, lbl_damper_bar}) assert(!overlap(lbl_lid_compact, obj));
     assert(!overlap(btn_lid_action,lbl_elapsed)); capture("manual-lid-open");
     check_button_face(btn_lid_action, lid_resumes);
@@ -213,18 +217,40 @@ int main() {
     ui_update_temps(225,200,200,true,true,true);
     lid_resumes=0;
     ui_update_lid_detection(true,true,83); ui_update_alerts(0,true,false,0); pump();
-    assert(!lv_obj_is_visible(alert_banner) && lv_obj_is_visible(lbl_lid_compact));
+    assert(lv_obj_is_visible(alert_banner) && lv_obj_is_visible(lbl_lid_compact));
+    ui_update_alerts(2,true,false,0); // A stale low alarm cannot obscure the lid warning.
+    assert(strcmp(lv_label_get_text(lbl_alert_text), "Lid opened") == 0);
+    assert(!lv_obj_is_visible(btn_alert_ack));
     assert(!button(lv_layer_top(), "Resume now"));
     capture("lid-open");
     ui_switch_screen(Screen::GRAPH); pump();
-    assert(lv_obj_is_visible(lbl_lid_compact) && lv_obj_get_height(chart_temps) == 168);
+    assert(lv_obj_is_visible(lbl_lid_compact) && lv_obj_get_height(chart_temps) == 112);
+    assert(lv_obj_is_visible(lbl_alert_text) && overlap(lbl_alert_text, alert_banner));
+    assert(strcmp(lv_label_get_text(lbl_alert_text), "Lid opened") == 0);
+    assert(lv_obj_get_height(lbl_alert_text) > 0);
     assert(!overlap(lbl_lid_compact, lbl_graph_title) && !overlap(lbl_lid_compact, lbl_graph_span));
     capture("lid-graph");
+    // A visible label object is not sufficient: navigation used to erase its
+    // pixels until the next data update, leaving an empty orange warning bar.
+    lv_obj_invalidate(lv_screen_active()); pump();
+    lv_area_t warning_text_area; lv_obj_get_coords(lbl_alert_text, &warning_text_area);
+    bool warning_text_drawn = false;
+    for (int y = warning_text_area.y1; y <= warning_text_area.y2; ++y)
+        for (int x = warning_text_area.x1; x <= warning_text_area.x2; ++x) {
+            size_t pixel = (y * 480 + x) * 3;
+            if (frame_pixels[pixel] < 80 && frame_pixels[pixel + 1] < 80 && frame_pixels[pixel + 2] < 80)
+                warning_text_drawn = true;
+        }
+    assert(warning_text_drawn);
     ui_switch_screen(Screen::DASHBOARD);
     tap(btn_lid_action); assert(lid_resumes==1 && acknowledgments==0);
     ui_update_lid_detection(true,false,0); ui_update_alerts(0,false,false,0);
     assert(!lv_obj_is_visible(alert_banner));
     assert(!lv_obj_is_visible(lbl_lid_compact));
+    ui_update_alerts(2,false,false,0);
+    assert(strstr(lv_label_get_text(lbl_alert_text), "PIT LOW"));
+    assert(lv_obj_is_visible(btn_alert_ack));
+    ui_update_alerts(0,false,false,0);
     ui_switch_screen(Screen::SETTINGS);
     lv_obj_scroll_to_view_recursive(btn_lid_toggle,LV_ANIM_OFF); pump();
     tap(btn_lid_toggle); assert(!requested_lid_enabled);
@@ -233,6 +259,7 @@ int main() {
     tap(btn_lid_toggle); assert(requested_lid_enabled);
     ui_update_lid_detection(true,true,83); ui_update_alerts(3,true,false,0);
     assert(lv_obj_is_visible(btn_alert_ack));
+    assert(strstr(lv_label_get_text(lbl_alert_text), "MEAT 1 DONE"));
     pump(); assert(lv_obj_get_height(settings_content) == 158);
     assert(!button(scr_settings, "Touch test") && !button(scr_settings, "Open lid") && !button(scr_settings, "Close lid"));
     pump(); lv_obj_scroll_to_view_recursive(btn_lid_timeout_plus,LV_ANIM_OFF); pump(); capture("lid-settings");

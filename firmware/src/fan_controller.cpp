@@ -10,7 +10,6 @@ FanController::FanController()
     , _currentDuty(0)
     , _kickStartActive(false)
     , _kickStartEndMs(0)
-    , _kickStartTargetPct(0.0f)
     , _longPulseActive(false)
     , _longPulseCycleStartMs(0)
     , _wasOff(true)
@@ -91,7 +90,6 @@ void FanController::update() {
         _wasOff = false;
         _kickStartActive = true;
         _kickStartEndMs = now + FAN_KICKSTART_MS;
-        _kickStartTargetPct = effectivePct;
 
         uint8_t duty = percentToDuty((float)FAN_KICKSTART_PCT);
         _currentPct = (float)FAN_KICKSTART_PCT;

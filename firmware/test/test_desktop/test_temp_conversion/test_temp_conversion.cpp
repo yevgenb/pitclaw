@@ -1,5 +1,6 @@
 /** Production TempManager tests using known resistor-fixture ADC counts. */
 #include <unity.h>
+#include <initializer_list>
 #include "temp_manager.h"
 #include "temp_manager.cpp"
 
@@ -110,6 +111,19 @@ void test_celsius_to_fahrenheit(void) {
     TEST_ASSERT_FLOAT_WITHIN(0.01f, -40.0f, TempManager::cToF(-40.0f));
 }
 
+void test_implausible_conversion_never_enters_filter(void) {
+    manager.processSample(PROBE_MEAT1, 13200, 26400);
+    for (float badOffset : {5000.0f, -5000.0f, NAN, INFINITY}) {
+        manager.setOffset(PROBE_MEAT1, badOffset);
+        manager.processSample(PROBE_MEAT1, 13200, 26400);
+        TEST_ASSERT_FALSE(manager.isConnected(PROBE_MEAT1));
+        manager.setOffset(PROBE_MEAT1, 0);
+        manager.processSample(PROBE_MEAT1, 8800, 26400);
+        TEST_ASSERT_TRUE(manager.isConnected(PROBE_MEAT1));
+        TEST_ASSERT_FLOAT_WITHIN(5.0f, 220.0f, manager.getMeat1Temp());
+    }
+}
+
 int main(int argc, char** argv) {
     UNITY_BEGIN();
     RUN_TEST(test_known_resistor_fixture_temperatures);
@@ -120,5 +134,6 @@ int main(int argc, char** argv) {
     RUN_TEST(test_probe_reconnect_resets_filter);
     RUN_TEST(test_calibration_units_and_channel_filtering);
     RUN_TEST(test_celsius_to_fahrenheit);
+    RUN_TEST(test_implausible_conversion_never_enters_filter);
     return UNITY_END();
 }

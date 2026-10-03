@@ -31,9 +31,4 @@ public:
 private:
     bool     _updating;
     uint8_t  _progress;
-    bool     _initialized;
-
-#ifndef NATIVE_BUILD
-    AsyncWebServer* _server;
-#endif
 };

@@ -32,16 +32,20 @@ void AlarmManager::begin() {
 }
 
 void AlarmManager::update(float pitTemp, float meat1Temp, float meat2Temp,
-                           float setpoint, bool pitReached) {
+                           float setpoint, bool pitReached, bool lidOpen) {
     if (!_enabled) {
         setBuzzer(false);
         return;
     }
 
+    // Opening the lid explains a temperature drop. Clear even a low alarm
+    // raised before lid detection caught up; updateBuzzer() silences it below.
+    if (lidOpen) removeAlarm(AlarmType::PIT_LOW);
+
     // --- Pit alarm (only active after pit has first reached setpoint) ---
     if (pitReached && setpoint > 0.0f && pitTemp > 0.0f) {
         bool pitOutOfBand = (pitTemp > setpoint + _pitBand) ||
-                            (pitTemp < setpoint - _pitBand);
+                            (!lidOpen && pitTemp < setpoint - _pitBand);
 
         if (pitOutOfBand && !_pitTriggered) {
             if (pitTemp > setpoint + _pitBand) {

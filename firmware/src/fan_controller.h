@@ -47,7 +47,6 @@ private:
     // Kick-start state
     bool          _kickStartActive;
     unsigned long _kickStartEndMs;
-    float         _kickStartTargetPct;  // Speed to apply after kick-start
 
     // Long-pulse state
     bool          _longPulseActive;

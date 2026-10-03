@@ -106,7 +106,6 @@ void BBQWebServer::begin(bool startListening) {
         if (path != "/api/auth/login" && path != "/api/auth/settings") {
             const auto reply = process();
             sendAuthReply(request, reply);
-            if (path == "/api/auth/settings" && reply.status == 200 && _ws) _ws->closeAll(1008, "Access settings changed");
             return;
         }
         // PBKDF2 must not occupy AsyncTCP's watched network task. Keep one job
@@ -212,13 +211,7 @@ void BBQWebServer::update() {
     // Periodic broadcast to all connected clients
     if (now - _lastBroadcastMs >= WS_SEND_INTERVAL) {
         _lastBroadcastMs = now;
-
-        if (_ws && _ws->count() > 0) {
-            bbq_protocol::DataPayload payload = buildDataPayload();
-            char buf[1024];
-            size_t len = bbq_protocol::buildDataMessage(buf, sizeof(buf), payload);
-            broadcastAuthenticated(buf, len);
-        }
+        broadcastNow();
     }
 
     // Clean up disconnected clients

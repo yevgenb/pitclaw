@@ -1,4 +1,5 @@
 #include "temp_manager.h"
+#include "temperature_validity.h"
 
 #ifndef NATIVE_BUILD
 #include <Arduino.h>
@@ -82,6 +83,12 @@ void TempManager::processSample(uint8_t probe, int16_t raw, int16_t rawSupply) {
     const float resistance = adcToResistance(raw, rawSupply);
     const float tempC = resistanceToTempC(resistance, _probeConfig[probe]) +
                         _probeConfig[probe].offset;
+
+    if (!isPlausibleTempC(tempC)) {
+        _status[probe] = ProbeStatus::OPEN_CIRCUIT;
+        _firstReading[probe] = true;
+        return;
+    }
 
     if (_firstReading[probe]) {
         _filteredTempC[probe] = tempC;

@@ -8,10 +8,6 @@
 OtaManager::OtaManager()
     : _updating(false)
     , _progress(0)
-    , _initialized(false)
-#ifndef NATIVE_BUILD
-    , _server(nullptr)
-#endif
 {
 }
 
@@ -21,8 +17,6 @@ void OtaManager::begin(AsyncWebServer* server) {
         Serial.println("[OTA] Error: null server pointer, OTA not initialized.");
         return;
     }
-
-    _server = server;
 
     // Set up ElegantOTA callbacks for progress tracking
     ElegantOTA.onStart([this]() {
@@ -58,9 +52,7 @@ void OtaManager::begin(AsyncWebServer* server) {
     });
 
     // Register the /update endpoint on the existing web server
-    ElegantOTA.begin(_server);
-
-    _initialized = true;
+    ElegantOTA.begin(server);
     Serial.println("[OTA] ElegantOTA initialized at /update");
 #endif
 }
