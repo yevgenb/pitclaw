@@ -158,8 +158,8 @@ private:
     // Serialize config to JSON document
     void toJson(JsonDocument& doc) const;
 
-    // Deserialize JSON document to config
-    void fromJson(const JsonDocument& doc);
+    // Deserialize JSON document to config; true when a legacy default was migrated.
+    bool fromJson(const JsonDocument& doc);
 
     AppConfig _config;
     bool      _mounted;   // Whether LittleFS is mounted

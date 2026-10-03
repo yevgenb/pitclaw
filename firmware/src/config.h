@@ -34,11 +34,14 @@
 
 // --- PID Defaults ---
 #define PID_KP          4.0
-#define PID_KI          0.02
+#define PID_KI          0.03    // Build airflow faster during a sustained temperature shortfall
 #define PID_KD          5.0
+#define PID_TUNING_VERSION 2   // Version 1 used 4.0 / 0.02 / 5.0
 #define PID_SAMPLE_MS   4000    // Compute every 4 seconds
 #define PID_OUTPUT_MIN  0.0
 #define PID_OUTPUT_MAX  100.0
+#define PID_SETTLING_ENTER_F 10.0f  // Internal temperatures are always Fahrenheit
+#define PID_SETTLING_EXIT_F  15.0f  // Hysteresis preserves warm-up damping after a large drop
 
 // --- Fan Control ---
 #define FAN_PWM_FREQ       100     // Provisional two-wire power PWM; bench-verify blower

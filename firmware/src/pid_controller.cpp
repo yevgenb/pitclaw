@@ -16,6 +16,7 @@ PidController::PidController()
 #endif
     , _pidNeedsReset(true)
     , _enabled(true)
+    , _settling(false)
 {
 }
 
@@ -33,6 +34,7 @@ void PidController::begin(float kp, float ki, float kd) {
     _lid.reset();
     _pidNeedsReset = true;
     _enabled = true;
+    _settling = false;
 
 #ifndef NATIVE_BUILD
     if (_pid != nullptr) {
@@ -69,6 +71,7 @@ float PidController::compute(float currentTemp, float setpoint, uint32_t nowMs) 
         if (!_enabled) _lid.reset();
         else _lid.update(currentTemp, setpoint, nowMs); // Manual pause still expires during a probe fault.
         _pidNeedsReset = true;
+        _settling = false;
         _pidOutput = 0;
         return 0;
     }
@@ -83,8 +86,20 @@ float PidController::compute(float currentTemp, float setpoint, uint32_t nowMs) 
         return 0;
     }
     if (_pidNeedsReset) restartPid(true);
+    const float error = std::fabs(setpoint - currentTemp);
+    if (error <= PID_SETTLING_ENTER_F) _settling = true;
+    else if (error > PID_SETTLING_EXIT_F) _settling = false;
 #ifndef NATIVE_BUILD
-    if (_pid) _pid->Compute();
+    if (_pid) {
+        // With pOnMeas, conditional anti-windup can make the integral increment
+        // negative on a small rise even while below target and unsaturated.
+        // Clamp near target so a persistent shortfall builds demand. Keep the
+        // existing conditional damping for warm-up and large disturbances;
+        // changing modes preserves the accumulated output and measurement history.
+        _pid->SetAntiWindupMode(_settling ? QuickPID::iAwMode::iAwClamp
+                                        : QuickPID::iAwMode::iAwCondition);
+        _pid->Compute();
+    }
     if (_pidOutput < PID_OUTPUT_MIN) _pidOutput = PID_OUTPUT_MIN;
     if (_pidOutput > PID_OUTPUT_MAX) _pidOutput = PID_OUTPUT_MAX;
 #endif
@@ -93,9 +108,11 @@ float PidController::compute(float currentTemp, float setpoint, uint32_t nowMs) 
 
 void PidController::restartPid(bool automatic) {
     _pidOutput = 0;
+    _settling = false;
 #ifndef NATIVE_BUILD
     if (_pid) {
         _pid->SetMode(QuickPID::Control::manual);
+        _pid->SetAntiWindupMode(QuickPID::iAwMode::iAwCondition);
         _pid->Reset();
         if (automatic && _enabled) _pid->SetMode(QuickPID::Control::automatic);
     }
@@ -123,6 +140,7 @@ void PidController::setTunings(float kp, float ki, float kd) {
 void PidController::resetIntegrator() {
     _pidOutput = 0;
     _pidNeedsReset = true;
+    _settling = false;
 }
 
 bool PidController::isLidOpen() const { return _lid.isOpen(); }

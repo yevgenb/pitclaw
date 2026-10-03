@@ -8,6 +8,7 @@ uint32_t testNow = 0;
 static float compute(PidController& p, float t, float sp, uint32_t ms) {
     testNow = ms; return p.compute(t,sp);
 }
+static float firstCorrection(float error) { return PID_KI * (PID_SAMPLE_MS / 1000.0f) * error; }
 static void pause(PidController& p) {
     compute(p,246,250,0); compute(p,246,250,30000);
     assert(compute(p,230,250,34000)==0 && p.isLidOpen());
@@ -16,19 +17,19 @@ int main() {
     PidController cold; cold.begin();
     assert(compute(cold,70,250,0)>0 && !cold.isLidOpen());
     PidController manual; manual.begin(); pause(manual); manual.resumeLid();
-    assert(std::fabs(compute(manual,220,250,38000)-2.4f)<.001f && !manual.isLidOpen());
+    assert(std::fabs(compute(manual,220,250,38000)-firstCorrection(30))<.001f && !manual.isLidOpen());
     PidController recovery; recovery.begin(); pause(recovery);
-    assert(std::fabs(compute(recovery,245,250,38000)-.4f)<.001f && !recovery.isLidOpen());
+    assert(std::fabs(compute(recovery,245,250,38000)-firstCorrection(5))<.001f && !recovery.isLidOpen());
     PidController timeout; timeout.begin(); pause(timeout);
-    assert(std::fabs(compute(timeout,200,250,154000)-4.0f)<.001f && !timeout.isLidOpen());
+    assert(std::fabs(compute(timeout,200,250,154000)-firstCorrection(50))<.001f && !timeout.isLidOpen());
     assert(compute(timeout,200,250,158000)>0 && !timeout.isLidOpen());
     PidController disabled; disabled.begin(); pause(disabled); disabled.setLidDetectionEnabled(false);
-    assert(std::fabs(compute(disabled,230,250,38000)-1.6f)<.001f && !disabled.isLidOpen());
+    assert(std::fabs(compute(disabled,230,250,38000)-firstCorrection(20))<.001f && !disabled.isLidOpen());
     PidController opened; opened.begin(); opened.setLidDetectionEnabled(false); opened.openLid(0);
     assert(compute(opened,250,250,0)==0 && opened.isLidManual());
     assert(compute(opened,250,250,10000)==0 && opened.isLidOpen());
     opened.resumeLid();
-    assert(std::fabs(compute(opened,220,250,14000)-2.4f)<.001f && !opened.isLidOpen());
+    assert(std::fabs(compute(opened,220,250,14000)-firstCorrection(30))<.001f && !opened.isLidOpen());
     PidController adjustable; adjustable.begin();
     assert(adjustable.getLidTimeoutSeconds()==120);
     assert(adjustable.setLidTimeoutSeconds(60)); adjustable.openLid(1000);

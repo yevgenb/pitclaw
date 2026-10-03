@@ -92,6 +92,34 @@ int main() {
     for (const char* bad : {R"({"type":"config","lidEnabled":"false"})",R"({"type":"config","lidEnabled":0})",R"({"type":"config","lidEnabled":false,"fanMode":"fan_only"})",R"({"type":"lid","action":"disable"})"})
         assert(parse(bad).type==CmdType::UNKNOWN);
     ConfigManager cfg;
+    assert(cfg.getPidKp() == 4.0f && cfg.getPidKi() == 0.03f && cfg.getPidKd() == 5.0f);
+    {
+        JsonDocument legacy;
+        assert(!deserializeJson(legacy, R"({"pid":{"p":4,"i":0.02,"d":5},"damper":{"closedUs":989,"openUs":1959},"fan":{"mode":"fan_and_damper","fanOnThreshold":30},"lid":{"enabled":false,"timeoutSeconds":300},"setupComplete":true})"));
+        ConfigManager migrated;
+        assert(migrated.fromJson(legacy));
+        assert(migrated.getPidKp() == 4 && migrated.getPidKi() == 0.03f && migrated.getPidKd() == 5);
+        assert(migrated.getConfig().damper.closedUs == 989 && migrated.getConfig().damper.openUs == 1959);
+        assert(migrated.getFanOnThreshold() == 30 && !migrated.isLidDetectionEnabled());
+        assert(migrated.getLidTimeoutSeconds() == 300 && migrated.isSetupComplete());
+        JsonDocument saved; migrated.toJson(saved);
+        assert(saved["pid"]["tuningVersion"] == PID_TUNING_VERSION);
+        ConfigManager afterReboot;
+        assert(!afterReboot.fromJson(saved) && afterReboot.getPidKi() == 0.03f);
+        // An explicit rollback remains a valid custom choice on subsequent boots.
+        migrated.setPidTunings(4, 0.02f, 5); migrated.toJson(saved);
+        assert(!afterReboot.fromJson(saved) && afterReboot.getPidKi() == 0.02f);
+        // Legacy custom tuning is never overwritten by the factory-default upgrade.
+        for (const char* custom : {R"({"pid":{"p":6,"i":0.02,"d":5}})",
+                                   R"({"pid":{"p":4,"i":0.04,"d":5}})",
+                                   R"({"pid":{"p":4,"i":0.02,"d":10}})"}) {
+            JsonDocument parsed; assert(!deserializeJson(parsed, custom));
+            assert(!afterReboot.fromJson(parsed));
+            assert(afterReboot.getPidKp() == parsed["pid"]["p"].as<float>());
+            assert(afterReboot.getPidKi() == parsed["pid"]["i"].as<float>());
+            assert(afterReboot.getPidKd() == parsed["pid"]["d"].as<float>());
+        }
+    }
     assert(cfg.isLidDetectionEnabled());
     JsonDocument old; old["fan"]["mode"]="fan_only"; cfg.fromJson(old);
     assert(cfg.isLidDetectionEnabled() && strcmp(cfg.getFanMode(),"fan_only")==0);

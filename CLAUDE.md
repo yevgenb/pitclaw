@@ -244,7 +244,7 @@ All user settings stored in `config.json` on LittleFS. Survives reboots and firm
 {
   "wifi": { "ssid": "", "password": "" },
   "units": "F",
-  "pid": { "p": 4.0, "i": 0.02, "d": 5.0 },
+  "pid": { "p": 4.0, "i": 0.03, "d": 5.0, "tuningVersion": 2 },
   "fan": { "mode": "fan_and_damper", "minSpeed": 15, "fanOnThreshold": 30 },
   "probes": {
     "pit":   { "name": "Pit",    "a": 7.3431401e-04, "b": 2.1574370e-04, "c": 9.5156860e-08, "offset": 0.0 },
@@ -391,7 +391,7 @@ Outside air → [butterfly damper] → [5015 blower fan] → [duct] → [UDS pip
 - 0.1uF ceramic filter cap on each ADC input
 
 **PID Defaults (HeaterMeter-derived):**
-- P = 4.0, I = 0.02, D = 5.0
+- P = 4.0, I = 0.03, D = 5.0
 - Temp sampling: 1s interval, 4-reading average
 - PID compute: every 4 seconds
 - Lid-open threshold: 6% drop below setpoint

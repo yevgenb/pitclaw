@@ -119,7 +119,14 @@ firmware/
 
 ### Key Modules
 
-**PID Controller** (`pid_controller.h/.cpp`) — wraps QuickPID with BBQ-specific features: proportional-on-measurement, derivative-on-measurement, integral anti-windup conditioning. Includes temperature-based lid detection with a warm-up guard, an adjustable timeout and shared UI controls.
+**PID Controller** (`pid_controller.h/.cpp`) — wraps QuickPID with BBQ-specific features: proportional-on-measurement, derivative-on-measurement, and integral anti-windup. Conditional anti-windup retains the existing warm-up damping. Within 10°F of the target, clamped anti-windup lets persistent small errors accumulate demand despite temperature ripple; it returns to conditional behavior beyond 15°F. Mode changes retain PID history, while target changes, faults and lid recovery reset it. These thresholds use internal Fahrenheit temperatures regardless of display units. Includes temperature-based lid detection with a warm-up guard, an adjustable timeout and shared UI controls.
+
+The default tuning is P=4.0, I=0.03, D=5.0. The integral gain was increased from
+0.02 after a physical warm-up test stalled near 210°F with a 225°F target and low
+airflow commands. This makes persistent shortfalls build output faster; it is a
+trial tuning, not a guarantee of settling time or overshoot for every smoker.
+Keep the exhaust position consistent when comparing cook tests. Startup fan/damper
+commands and actual vent restrictions both affect the warm-up response.
 
 **Temperature Manager** (`temp_manager.h/.cpp`) — reads ADS1115 ADC via I2C, converts raw ADC counts to temperature using Steinhart-Hart equation, applies EMA (exponential moving average) filtering, and supports per-probe calibration offsets.
 
@@ -140,7 +147,7 @@ All user settings stored in `config.json` on LittleFS. Survives reboots and firm
 {
   "wifi": { "ssid": "", "password": "" },
   "units": "F",
-  "pid": { "p": 4.0, "i": 0.02, "d": 5.0 },
+  "pid": { "p": 4.0, "i": 0.03, "d": 5.0, "tuningVersion": 2 },
   "fan": { "mode": "fan_and_damper", "minSpeed": 15, "fanOnThreshold": 30 },
   "probes": {
     "pit":   { "name": "Pit",    "a": 7.3431401e-04, "b": 2.1574370e-04, "c": 9.5156860e-08, "offset": 0.0 },
@@ -155,6 +162,10 @@ All user settings stored in `config.json` on LittleFS. Survives reboots and firm
 }
 ```
 
+On boot, the exact legacy factory PID tuple (4.0, 0.02, 5.0) without a current
+`tuningVersion` migrates to the new integral gain and is saved. Custom tunings are
+preserved. To explicitly retain or restore I=0.02, save it with `tuningVersion: 2`.
+
 ### Technical Constants
 
 **Thermoworks Pro-Series Steinhart-Hart Coefficients:**
@@ -163,7 +174,7 @@ All user settings stored in `config.json` on LittleFS. Survives reboots and firm
 - 0.1uF ceramic filter cap on each ADC input
 
 **PID Defaults (HeaterMeter-derived):**
-- P = 4.0, I = 0.02, D = 5.0
+- P = 4.0, I = 0.03, D = 5.0
 - Temp sampling: 1s interval, 4-reading average
 - PID compute: every 4 seconds
 - Lid detection: arm after 30 seconds within ±2% of target; trigger below 94%, recover at 98%, timeout defaults to two minutes (30–600 seconds, in 30-second steps).

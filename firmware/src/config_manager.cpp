@@ -94,7 +94,9 @@ bool ConfigManager::load() {
         return false;
     }
 
-    fromJson(doc);
+    if (fromJson(doc) && !save()) {
+        Serial.println("[CFG] Updated PID defaults in memory; could not persist migration.");
+    }
     return true;
 #else
     return false;
@@ -251,6 +253,7 @@ void ConfigManager::toJson(JsonDocument& doc) const {
     pid["p"] = _config.pid.kp;
     pid["i"] = _config.pid.ki;
     pid["d"] = _config.pid.kd;
+    pid["tuningVersion"] = PID_TUNING_VERSION;
 
     // Fan
     JsonObject fan = doc["fan"].to<JsonObject>();
@@ -289,7 +292,7 @@ void ConfigManager::toJson(JsonDocument& doc) const {
     doc["damper"]["openUs"] = _config.damper.openUs;
 }
 
-void ConfigManager::fromJson(const JsonDocument& doc) {
+bool ConfigManager::fromJson(const JsonDocument& doc) {
     // Start from defaults, then overlay with what's in JSON
     applyDefaults();
     const auto auth = doc["webAuth"];
@@ -339,6 +342,16 @@ void ConfigManager::fromJson(const JsonDocument& doc) {
     if (doc["pid"]["i"].is<float>()) _config.pid.ki = doc["pid"]["i"].as<float>();
     if (doc["pid"]["d"].is<float>()) _config.pid.kd = doc["pid"]["d"].as<float>();
 
+    // OTA preserves config.json, so changing constants alone would leave the
+    // installed controller on the old factory tuning. Migrate that exact old
+    // profile once; retain custom tuning and explicitly saved rollback values.
+    const bool legacyProfile = doc["pid"]["tuningVersion"].isNull() ||
+        (doc["pid"]["tuningVersion"].is<unsigned>() && doc["pid"]["tuningVersion"].as<unsigned>() < PID_TUNING_VERSION);
+    const bool migratePid = legacyProfile &&
+        doc["pid"]["p"].is<float>() && doc["pid"]["i"].is<float>() && doc["pid"]["d"].is<float>() &&
+        _config.pid.kp == 4.0f && _config.pid.ki == 0.02f && _config.pid.kd == 5.0f;
+    if (migratePid) _config.pid.ki = PID_KI;
+
     // Fan
     if (doc["fan"]["mode"].is<const char*>()) {
         strncpy(_config.fan.mode, doc["fan"]["mode"].as<const char*>(), CFG_NAME_MAX_LEN - 1);
@@ -381,4 +394,5 @@ void ConfigManager::fromJson(const JsonDocument& doc) {
     if (doc["setupComplete"].is<bool>()) {
         _config.setupComplete = doc["setupComplete"].as<bool>();
     }
+    return migratePid;
 }
