@@ -20,6 +20,10 @@ If you discover a security vulnerability, please report it responsibly:
 
 This is a hobbyist IoT device for BBQ temperature control. It runs on a local Wi-Fi network and does not handle sensitive personal data. Security concerns are primarily:
 
-- Web UI served over HTTP (local network only)
-- WebSocket protocol (unauthenticated, local network only)
-- OTA firmware updates (local network only)
+- Web UI, API, WebSocket controls and OTA uploads support optional shared-password
+  authentication, disabled by default. Enable it in Settings → Access before
+  exposing the controller through a reverse proxy.
+- Use HTTPS on the public reverse proxy; the device's HTTP port belongs on the
+  private LAN. See [proxy and authentication setup](firmware/docs/reverse-proxy.md).
+- Configuration and session storage are private and cannot be downloaded as
+  static files. Password hashes are salted; login sessions expire and can be revoked.

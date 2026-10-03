@@ -3,6 +3,7 @@
 #include <cstring>
 #include <cstdio>
 #include "web_protocol.h"
+#include "alarm_manager.h"
 // Access only the real JSON codec for round-trip tests; no simulated copy of its logic.
 #define private public
 #include "config_manager.h"
@@ -11,6 +12,68 @@
 static bbq_protocol::ParsedCommand parse(const char* s) { return bbq_protocol::parseCommand(s,strlen(s)); }
 int main() {
     using bbq_protocol::CmdType;
+    // Partial alarm commands leave omitted fields untouched. An explicit null
+    // clears only its named target; ArduinoJson also reports missing keys as null.
+    struct AlarmCase {
+        const char* json;
+        bool meat1, meat2, pitBand;
+        float value1, value2, band;
+    };
+    const AlarmCase alarmCases[] = {
+        {R"({"type":"alarm","meat1Target":185})", true, false, false, 185, 0, 0},
+        {R"({"type":"alarm","meat2Target":175})", false, true, false, 0, 175, 0},
+        {R"({"type":"alarm","pitBand":20})", false, false, true, 0, 0, 20},
+        {R"({"type":"alarm"})", false, false, false, 0, 0, 0},
+        {R"({"type":"alarm","meat1Target":null})", true, false, false, 0, 0, 0},
+        {R"({"type":"alarm","meat2Target":null})", false, true, false, 0, 0, 0},
+        {R"({"type":"alarm","meat1Target":185,"meat2Target":175})", true, true, false, 185, 175, 0},
+        {R"({"type":"alarm","meat1Target":null,"meat2Target":175})", true, true, false, 0, 175, 0},
+        {R"({"type":"alarm","meat1Target":185,"meat2Target":null})", true, true, false, 185, 0, 0},
+        {R"({"type":"alarm","meat1Target":null,"meat2Target":null})", true, true, false, 0, 0, 0},
+        {R"({"type":"alarm","meat1Target":185.5})", true, false, false, 185.5f, 0, 0},
+        {R"({"type":"alarm","meat2Target":175.25})", false, true, false, 0, 175.25f, 0},
+        {R"({"type":"alarm","meat1Target":185.5,"meat2Target":175.25,"pitBand":20.5})", true, true, true, 185.5f, 175.25f, 20.5f},
+        {R"({"type":"alarm","meat1Target":0})", true, false, false, 0, 0, 0},
+        {R"({"type":"alarm","meat1Target":true})", false, false, false, 0, 0, 0},
+        {R"({"type":"alarm","meat1Target":"185"})", false, false, false, 0, 0, 0},
+        {R"({"type":"alarm","meat1Target":[]})", false, false, false, 0, 0, 0},
+        {R"({"type":"alarm","meat1Target":{}})", false, false, false, 0, 0, 0},
+        {R"({"type":"alarm","meat2Target":false})", false, false, false, 0, 0, 0},
+        {R"({"type":"alarm","meat2Target":"175"})", false, false, false, 0, 0, 0},
+        {R"({"type":"alarm","meat2Target":[]})", false, false, false, 0, 0, 0},
+        {R"({"type":"alarm","meat2Target":{}})", false, false, false, 0, 0, 0},
+        {R"({"type":"alarm","pitBand":null})", false, false, false, 0, 0, 0},
+    };
+    const auto applyAlarm = [](AlarmManager& alarms, const bbq_protocol::ParsedCommand& cmd) {
+        if (cmd.hasMeat1Target) alarms.setMeat1Target(cmd.meat1Target);
+        if (cmd.hasMeat2Target) alarms.setMeat2Target(cmd.meat2Target);
+        if (cmd.hasPitBand) alarms.setPitBand(cmd.pitBand);
+    };
+    for (const auto& expected : alarmCases) {
+        const auto cmd = parse(expected.json);
+        assert(cmd.type == CmdType::ALARM);
+        assert(cmd.hasMeat1Target == expected.meat1 && cmd.hasMeat2Target == expected.meat2);
+        assert(cmd.hasPitBand == expected.pitBand);
+        if (expected.meat1) assert(cmd.meat1Target == expected.value1);
+        if (expected.meat2) assert(cmd.meat2Target == expected.value2);
+        if (expected.pitBand) assert(cmd.pitBand == expected.band);
+
+        AlarmManager alarms;
+        alarms.setMeat1Target(180); alarms.setMeat2Target(170);
+        const auto previousBand = alarms.getPitBand();
+        applyAlarm(alarms, cmd);
+        assert(alarms.getMeat1Target() == (expected.meat1 ? expected.value1 : 180));
+        assert(alarms.getMeat2Target() == (expected.meat2 ? expected.value2 : 170));
+        assert(alarms.getPitBand() == (expected.pitBand ? expected.band : previousBand));
+    }
+    AlarmManager partialAlarms;
+    partialAlarms.setMeat1Target(180); partialAlarms.setMeat2Target(170);
+    applyAlarm(partialAlarms, parse(R"({"type":"alarm","meat1Target":185})"));
+    applyAlarm(partialAlarms, parse(R"({"type":"alarm","meat2Target":175})"));
+    assert(partialAlarms.getMeat1Target() == 185 && partialAlarms.getMeat2Target() == 175);
+    applyAlarm(partialAlarms, parse(R"({"type":"alarm","meat1Target":null})"));
+    assert(partialAlarms.getMeat1Target() == 0 && partialAlarms.getMeat2Target() == 175);
+    std::puts("PASS: partial alarm commands preserve untouched targets; explicit null clears only its named target");
     auto off=parse(R"({"type":"config","lidEnabled":false})");
     assert(off.type==CmdType::SET_LID_ENABLED && !off.lidEnabled);
     auto on=parse(R"({"type":"config","lidEnabled":true})");

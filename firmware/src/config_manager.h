@@ -3,6 +3,7 @@
 #include "config.h"
 #include "touch_calibration.h"
 #include "damper_calibration.h"
+#include "web_auth.h"
 #include <stdint.h>
 
 #ifndef NATIVE_BUILD
@@ -60,6 +61,7 @@ struct WifiSettings {
 
 // Complete configuration structure matching config.json schema
 struct AppConfig {
+    WebAuthConfig   webAuth;
     WifiSettings    wifi;
     char            units[4];     // "F" or "C"
     PidSettings     pid;
@@ -82,6 +84,9 @@ public:
 
     // Save current config to LittleFS
     bool save();
+
+    // Serialize auth changes with other saves and roll back on storage failure.
+    bool saveWebAuth(const WebAuthConfig& auth);
 
     // Reload config from LittleFS into RAM
     bool load();
@@ -158,6 +163,7 @@ private:
 
     AppConfig _config;
     bool      _mounted;   // Whether LittleFS is mounted
+    std::recursive_mutex _saveMutex;
 
     // Static default probe settings (for getProbeSettings fallback)
     static const ProbeSettings _defaultProbe;

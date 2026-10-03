@@ -2,6 +2,9 @@
 
 #include "config.h"
 #include "web_protocol.h"
+#include "web_auth.h"
+#include "web_socket_peers.h"
+#include <atomic>
 #include <stdint.h>
 
 #ifndef NATIVE_BUILD
@@ -66,7 +69,7 @@ public:
     void onOpenLid(ResumeLidCallback cb) { _onOpenLid = cb; }
 
     // Send history replay to a specific client on connect
-    void sendHistory(uint8_t clientId);
+    void sendHistory(uint32_t clientId);
 
     // Force-send data to all clients immediately (bypasses interval)
     void broadcastNow();
@@ -85,7 +88,7 @@ private:
     bbq_protocol::DataPayload buildDataPayload();
 
     // Handle incoming WebSocket messages
-    void handleWebSocketMessage(uint8_t clientId, const char* data, size_t len);
+    void handleWebSocketMessage(uint32_t clientId, const char* data, size_t len);
 
     // WebSocket event handler
     void onWsEvent(AsyncWebSocket* server, AsyncWebSocketClient* client,
@@ -95,6 +98,10 @@ private:
     AsyncWebServer* _server;
     AsyncWebSocket* _ws;
     bool _listening = false;
+    WebAuth _auth;
+    std::atomic<bool> _authBusy{false};
+    WebSocketPeers _peers;
+    void broadcastAuthenticated(const char* data, size_t len);
 #endif
 
     // Module references

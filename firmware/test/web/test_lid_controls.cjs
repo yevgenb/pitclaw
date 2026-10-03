@@ -27,6 +27,7 @@ context.ui.cacheDom(); context.ui.initControls(); context.ui.wsConnect(); socket
 assert.equal(node('lidEnabled').disabled,true); // Wait for an authoritative snapshot.
 context.ui.applyLidState({lidEnabled:true,lid:true,lidRemaining:83,lidManual:false});
 assert.equal(node('lidBanner').hidden,false); assert.match(node('lidStatus').textContent,/1:23/);
+assert.match(node('lidStatus').textContent, /^Lid opened/);
 assert.equal(node('btnLidAction').disabled,false);
 node('btnLidAction').events.click();
 assert.deepEqual(sent.pop(),{type:'lid',action:'resume'});

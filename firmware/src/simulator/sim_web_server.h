@@ -5,6 +5,8 @@
 #include "../web_protocol.h"
 #include <vector>
 #include <cstdint>
+#include "../web_auth.h"
+#include <map>
 
 // Forward declare mongoose struct
 struct mg_mgr;
@@ -57,6 +59,9 @@ private:
     struct mg_mgr* _mgr;
     char _staticDir[256];
     int _port;
+    WebAuth _auth;
+    std::map<unsigned long, std::string> _peerTokens;
+    bool authorized(struct mg_connection* c) const;
 
     // Session history for replay
     std::vector<bbq_protocol::HistoryPoint> _history;

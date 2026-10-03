@@ -48,9 +48,9 @@ void OtaManager::begin(AsyncWebServer* server) {
     ElegantOTA.onEnd([this](bool success) {
         _updating = false;
         if (success) {
-            Serial.println("[OTA] Update successful! Rebooting...");
-            delay(500);
-            ESP.restart();
+            // ElegantOTA schedules its reboot after sending the HTTP reply.
+            // Restarting in this callback leaves browsers/proxies waiting at 100%.
+            Serial.println("[OTA] Update successful! Reboot scheduled.");
         } else {
             Serial.println("[OTA] Update failed.");
             _progress = 0;

@@ -216,7 +216,7 @@ ParsedCommand parseCommand(const char* data, size_t len) {
         if (doc["meat1Target"].is<float>()) {
             cmd.hasMeat1Target = true;
             cmd.meat1Target = doc["meat1Target"].as<float>();
-        } else if (doc["meat1Target"].isNull()) {
+        } else if (!doc["meat1Target"].isUnbound() && doc["meat1Target"].isNull()) {
             cmd.hasMeat1Target = true;
             cmd.meat1Target = 0;
         }
@@ -224,7 +224,7 @@ ParsedCommand parseCommand(const char* data, size_t len) {
         if (doc["meat2Target"].is<float>()) {
             cmd.hasMeat2Target = true;
             cmd.meat2Target = doc["meat2Target"].as<float>();
-        } else if (doc["meat2Target"].isNull()) {
+        } else if (!doc["meat2Target"].isUnbound() && doc["meat2Target"].isNull()) {
             cmd.hasMeat2Target = true;
             cmd.meat2Target = 0;
         }

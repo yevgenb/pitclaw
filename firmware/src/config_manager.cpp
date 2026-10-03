@@ -38,13 +38,16 @@ bool ConfigManager::begin() {
 }
 
 bool ConfigManager::save() {
+    std::lock_guard<std::recursive_mutex> lock(_saveMutex);
 #ifndef NATIVE_BUILD
     if (!_mounted) return false;
 
     JsonDocument doc;
     toJson(doc);
 
-    File file = LittleFS.open(CONFIG_FILE_PATH, "w");
+    // Commit atomically: failed writes must not erase an enabled login.
+    const String temporary = String(CONFIG_FILE_PATH) + ".tmp";
+    File file = LittleFS.open(temporary, "w");
     if (!file) {
         Serial.println("[CFG] Failed to open config file for writing!");
         return false;
@@ -54,10 +57,23 @@ bool ConfigManager::save() {
     file.close();
 
     Serial.printf("[CFG] Config saved (%u bytes).\n", (unsigned)written);
-    return written > 0;
+    if (written != measureJson(doc) || !LittleFS.rename(temporary, CONFIG_FILE_PATH)) {
+        LittleFS.remove(temporary);
+        return false;
+    }
+    return true;
 #else
     return true;
 #endif
+}
+
+bool ConfigManager::saveWebAuth(const WebAuthConfig& auth) {
+    std::lock_guard<std::recursive_mutex> lock(_saveMutex);
+    const auto previous = _config.webAuth;
+    _config.webAuth = auth;
+    if (save()) return true;
+    _config.webAuth = previous;
+    return false;
 }
 
 bool ConfigManager::load() {
@@ -86,6 +102,7 @@ bool ConfigManager::load() {
 }
 
 void ConfigManager::factoryReset() {
+    std::lock_guard<std::recursive_mutex> lock(_saveMutex);
 #ifndef NATIVE_BUILD
     Serial.println("[CFG] Factory reset! Deleting config and rebooting...");
     if (_mounted) {
@@ -217,6 +234,10 @@ void ConfigManager::applyDefaults() {
 }
 
 void ConfigManager::toJson(JsonDocument& doc) const {
+    doc["webAuth"]["enabled"] = _config.webAuth.enabled;
+    doc["webAuth"]["salt"] = _config.webAuth.salt;
+    doc["webAuth"]["hash"] = _config.webAuth.hash;
+    doc["webAuth"]["iterations"] = _config.webAuth.iterations;
     // WiFi
     JsonObject wifi = doc["wifi"].to<JsonObject>();
     wifi["ssid"] = _config.wifi.ssid;
@@ -271,6 +292,16 @@ void ConfigManager::toJson(JsonDocument& doc) const {
 void ConfigManager::fromJson(const JsonDocument& doc) {
     // Start from defaults, then overlay with what's in JSON
     applyDefaults();
+    const auto auth = doc["webAuth"];
+    // Old configs omit this object. Malformed auth records must fail closed.
+    _config.webAuth.enabled = !auth.isNull() &&
+        !(auth["enabled"].is<bool>() && !auth["enabled"].as<bool>());
+    const char* salt = auth["salt"] | "";
+    const char* hash = auth["hash"] | "";
+    if (strlen(salt) == 32) strcpy(_config.webAuth.salt, salt);
+    if (strlen(hash) == 64) strcpy(_config.webAuth.hash, hash);
+    _config.webAuth.iterations = auth["iterations"].isNull() ? WebAuth::LegacyPasswordIterations :
+        (auth["iterations"].is<uint32_t>() ? auth["iterations"].as<uint32_t>() : 0);
     if (doc["damper"]["closedUs"].is<uint16_t>() && doc["damper"]["openUs"].is<uint16_t>()) {
         DamperCalibration damper;
         damper.closedUs = doc["damper"]["closedUs"].as<uint16_t>();

@@ -8,6 +8,7 @@
 #include <cstring>
 #include <cmath>
 #include <string>
+#include <ArduinoJson.h>
 
 SimWebServer* g_simWebServer = nullptr;
 
@@ -38,6 +39,23 @@ SimWebServer::~SimWebServer() {
 void SimWebServer::begin(int port, const char* staticDir) {
     _port = port;
     strncpy(_staticDir, staticDir, sizeof(_staticDir) - 1);
+    // Separate from data/: never serve persisted simulator credentials.
+    FILE* file = fopen("sim-auth.json", "r");
+    if (file) {
+        char json[256] = {};
+        fread(json, 1, sizeof(json) - 1, file); fclose(file);
+        JsonDocument doc;
+        WebAuthConfig cfg;
+        cfg.enabled = true; // A corrupt saved credential fails closed.
+        if (!deserializeJson(doc, json)) {
+            cfg.enabled = doc["enabled"] | true;
+            snprintf(cfg.salt, sizeof(cfg.salt), "%s", doc["salt"] | "");
+            snprintf(cfg.hash, sizeof(cfg.hash), "%s", doc["hash"] | "");
+            cfg.iterations = doc["iterations"].isNull() ? WebAuth::LegacyPasswordIterations :
+                (doc["iterations"].is<uint32_t>() ? doc["iterations"].as<uint32_t>() : 0);
+        }
+        _auth.load(cfg);
+    }
 
     g_simWebServer = this;
 
@@ -53,6 +71,8 @@ void SimWebServer::begin(int port, const char* staticDir) {
 void SimWebServer::tick() {
     if (_mgr) {
         mg_mgr_poll(_mgr, 0);
+        for (auto* c = _mgr->conns; c; c = c->next)
+            if (c->is_websocket && !authorized(c)) c->is_closing = 1;
     }
 }
 
@@ -64,7 +84,7 @@ void SimWebServer::broadcastData(const bbq_protocol::DataPayload& data) {
 
     // Iterate all connections, send to WebSocket ones
     for (struct mg_connection* c = _mgr->conns; c != nullptr; c = c->next) {
-        if (c->is_websocket) {
+        if (c->is_websocket && authorized(c)) {
             mg_ws_send(c, buf, len, WEBSOCKET_OP_TEXT);
         }
     }
@@ -83,7 +103,7 @@ void SimWebServer::resetSession() {
     char buf[128];
     size_t n = bbq_protocol::buildSessionReset(buf, sizeof(buf), _setpoint);
     for (struct mg_connection* conn = _mgr->conns; conn != nullptr; conn = conn->next) {
-        if (conn->is_websocket) {
+        if (conn->is_websocket && authorized(conn)) {
             mg_ws_send(conn, buf, n, WEBSOCKET_OP_TEXT);
         }
     }
@@ -224,22 +244,65 @@ void SimWebServer::eventHandler(struct mg_connection* c, int ev, void* ev_data) 
 
     if (ev == MG_EV_HTTP_MSG) {
         struct mg_http_message* hm = (struct mg_http_message*)ev_data;
+        auto string = [](mg_str value) { return std::string(value.buf ? value.buf : "", value.len); };
+        auto header = [hm, &string](const char* name) {
+            auto* value = mg_http_get_header(hm, name);
+            return value ? string(*value) : std::string();
+        };
+        const auto method = string(hm->method), path = string(hm->uri), cookie = header("Cookie");
+        int denied = self->_auth.gate(method, path, cookie, header("Origin"), header("Host"), mg_millis());
+        if (path.compare(0, 9, "/api/auth") == 0 && hm->body.len > 1024) denied = 413;
+        if (denied) {
+            mg_http_reply(c, denied, "Content-Type: application/json\r\nCache-Control: no-store\r\n",
+                "{\"error\":\"Access denied\"}"); return;
+        }
+        if (path == "/api/auth" || path == "/api/auth/login" ||
+            path == "/api/auth/logout" || path == "/api/auth/settings") {
+            char password[129] = {}, enabled[8] = {};
+            const int length = mg_http_get_var(&hm->body, "password", password, sizeof(password));
+            mg_http_get_var(&hm->body, "enabled", enabled, sizeof(enabled));
+            if (path == "/api/auth/settings" && strcmp(enabled, "true") && strcmp(enabled, "false")) {
+                mg_http_reply(c, 400, "Content-Type: application/json\r\n", "{\"error\":\"Specify enabled as true or false\"}"); return;
+            }
+            const auto reply = self->_auth.handle(method, path, cookie,
+                length >= 0 ? std::string(password, length) : "", strcmp(enabled, "true") == 0,
+                mg_millis(), header("X-Forwarded-Proto") == "https", [](const WebAuthConfig& cfg) {
+                    JsonDocument doc;
+                    doc["enabled"] = cfg.enabled; doc["salt"] = cfg.salt; doc["hash"] = cfg.hash;
+                    doc["iterations"] = cfg.iterations;
+                    std::string data; serializeJson(doc, data);
+                    FILE* file = fopen("sim-auth.json.tmp", "w");
+                    if (!file) return false;
+                    const bool written = fwrite(data.data(), 1, data.size(), file) == data.size();
+                    const bool closed = fclose(file) == 0;
+                    return written && closed && rename("sim-auth.json.tmp", "sim-auth.json") == 0;
+                });
+            std::string headers = "Content-Type: application/json\r\nCache-Control: no-store\r\n";
+            if (!reply.cookie.empty()) headers += "Set-Cookie: " + reply.cookie + "\r\n";
+            if (reply.status == 429) headers += "Retry-After: 60\r\n";
+            if (path == "/api/auth/settings" && reply.status == 200)
+                for (auto* peer = self->_mgr->conns; peer; peer = peer->next)
+                    if (peer->is_websocket) peer->is_closing = 1;
+            mg_http_reply(c, reply.status, headers.c_str(), "%s", reply.body.c_str()); return;
+        }
 
         // WebSocket upgrade on /ws
         if (mg_match(hm->uri, mg_str("/ws"), nullptr)) {
+            self->_peerTokens[c->id] = WebAuth::tokenFromCookie(cookie);
             mg_ws_upgrade(c, hm, nullptr);
             return;
         }
 
         // Version API endpoint
         if (mg_match(hm->uri, mg_str("/api/version"), nullptr)) {
-            mg_http_reply(c, 200, "Content-Type: application/json\r\n",
-                          "{\"version\":\"%s\",\"board\":\"simulator\",\"releaseUpdatesEnabled\":false}",
-                          FIRMWARE_VERSION);
+            mg_http_reply(c, 200, "Content-Type: application/json\r\nCache-Control: no-store\r\n",
+                          "{\"version\":\"%s\",\"uiBuild\":\"%s\",\"board\":\"simulator\",\"releaseUpdatesEnabled\":false}",
+                          FIRMWARE_VERSION, WEB_UI_BUILD);
             return;
         }
 
-        // Serve static files from firmware/data/
+        // Serve only the public shell, never arbitrary files from the data dir.
+        if (!WebAuth::publicAsset(path)) { mg_http_reply(c, 404, "", "Not found"); return; }
         struct mg_http_serve_opts opts;
         memset(&opts, 0, sizeof(opts));
         opts.root_dir = self->_staticDir;
@@ -252,6 +315,7 @@ void SimWebServer::eventHandler(struct mg_connection* c, int ev, void* ev_data) 
         self->sendHistory(c);
     }
     else if (ev == MG_EV_WS_MSG) {
+        if (!self->authorized(c)) { c->is_closing = 1; return; }
         struct mg_ws_message* wm = (struct mg_ws_message*)ev_data;
         // Only handle text frames
         if ((wm->flags & 0x0F) == WEBSOCKET_OP_TEXT) {
@@ -259,10 +323,16 @@ void SimWebServer::eventHandler(struct mg_connection* c, int ev, void* ev_data) 
         }
     }
     else if (ev == MG_EV_CLOSE) {
+        self->_peerTokens.erase(c->id);
         if (c->is_websocket) {
             printf("[WEB] WebSocket client disconnected\n");
         }
     }
+}
+
+bool SimWebServer::authorized(struct mg_connection* c) const {
+    const auto peer = _peerTokens.find(c->id);
+    return peer != _peerTokens.end() && _auth.authenticated(peer->second, mg_millis());
 }
 
 #endif // SIMULATOR_BUILD

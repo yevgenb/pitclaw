@@ -333,10 +333,10 @@ void setup() {
     wifiManager.begin();
 
     // 11. Start HTTP server and WebSocket, pass module references
-    webServer.begin(!wifiManager.isAPMode());
     webServer.setModules(&tempManager, &pidController, &fanController,
                          &servoController, &configManager, &cookSession,
                          &alarmManager, &errorManager);
+    webServer.begin(!wifiManager.isAPMode());
     webServer.onSetpoint(ws_onSetpoint);
     webServer.onAlarm(ws_onAlarm);
     webServer.onSession(ws_onSession);
@@ -413,6 +413,8 @@ void loop() {
     // Service provisioning in every boot phase; never let two servers bind port 80.
     wifiManager.update();
     webServer.setEnabled(!wifiManager.isAPMode());
+    // Service delayed OTA reboot during splash/setup as well as normal operation.
+    otaManager.update();
 
     // --- Boot splash phase: only process LVGL and splash logic ---
     if (g_bootPhase == BootPhase::SPLASH) {
@@ -624,9 +626,6 @@ void loop() {
     // 8. Web server update (broadcasts to WebSocket clients at WS_SEND_INTERVAL)
     webServer.setSetpoint(g_setpoint);
     webServer.update();
-
-    // 10. OTA manager (handles OTA progress)
-    otaManager.update();
 
     // 11. LVGL display update (~1 Hz for data, ~5s for graph)
     if (now - g_lastDisplayMs >= 1000) {

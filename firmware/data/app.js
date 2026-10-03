@@ -9,9 +9,13 @@
   // ---------------------------------------------------------------------------
   var WS_MAX_BACKOFF = 30000;
   var DEBOUNCE_MS = 300;
+  var UI_BUILD = '5';
+  var TEMPERATURE_FIELDS = ['sp', 'meat1Target', 'meat2Target'];
+  var PASSWORD_MIN_LENGTH = 8;
   var CHART_WINDOW_SEC = 2 * 60 * 60; // 2 hours visible window
   var PREDICTION_WINDOW_SEC = 30 * 60; // 30 min of history for regression
   var MIN_PREDICTION_POINTS = 10; // ~5 min at 30s interval
+  var MIN_WALL_CLOCK_TS = 1704067200; // 2024-01-01; smaller values are boot uptime
   var GITHUB_REPO = 'MrMatt57/pitclaw';
   var OTA_CHUNK_SIZE = 4096;
 
@@ -22,6 +26,7 @@
   var wsBackoff = 1000;
   var reconnectTimer = null;
   var connected = false;
+  var authEnabled = false, authLocked = false, authChecked = false;
 
   var chart = null;
   var chartData = [[], [], [], [], [], [], [], [], []]; // [timestamps, pit, meat1, meat2, fan, damper, setpoint, meat1Target, meat2Target]
@@ -44,6 +49,11 @@
   var latestServerTs = null;  // most recent msg.ts from server (seconds)
 
   var debounceTimers = {};
+  // Editor intent is separate from controller telemetry. It is cleared only
+  // by reconciliation or a connection/session reset, never by a guessed ACK.
+  var temperatureEdits = {}, temperatureTyping = {}, temperatureCommands = {};
+  var temperatureError = '', settingsOpen = false;
+  var uiAuthRequests = 0, uiPendingBuild = null, uiCredentialEditing = false;
   var seriesShow = null; // persists toggle state across chart recreation
 
   var notifyEnabled = false;
@@ -67,6 +77,10 @@
     dom.btnCloseSettings = document.getElementById('btnCloseSettings');
     dom.settingsPanel = document.getElementById('settingsPanel');
     dom.settingsOverlay = document.getElementById('settingsOverlay');
+    dom.temperatureEditStatus = document.getElementById('temperatureEditStatus');
+    dom.btnUseControllerValues = document.getElementById('btnUseControllerValues');
+    dom.uiUpdateNotice = document.getElementById('uiUpdateNotice');
+    dom.btnReloadUi = document.getElementById('btnReloadUi');
     dom.pitTemp = document.getElementById('pitTemp');
     dom.pitSetpoint = document.getElementById('pitSetpoint');
     dom.pitPrediction = document.getElementById('pitPrediction');
@@ -129,6 +143,118 @@
     dom.updateProgress = document.getElementById('updateProgress');
     dom.updateStatus = document.getElementById('updateStatus');
     dom.btnCheckUpdate = document.getElementById('btnCheckUpdate');
+    ['authScreen', 'loginForm', 'loginPassword', 'btnLogin', 'authMessage', 'btnAuthRetry',
+      'authSettingsForm', 'authSettingsStatus', 'authSettingsMessage', 'newPassword',
+      'confirmPassword', 'btnSaveAuth', 'btnLogout', 'btnDisableAuth'].forEach(function (id) {
+      dom[id] = document.getElementById(id);
+    });
+  }
+
+  function lockDashboard(message) {
+    authLocked = true;
+    document.body.classList.remove('auth-pending');
+    document.body.classList.add('auth-locked');
+    dom.authScreen.hidden = false;
+    dom.loginForm.hidden = !authEnabled;
+    dom.authMessage.textContent = message || '';
+    useControllerTemperatures();
+    closeSettings();
+    connected = false;
+    updateConnectionStatus(false);
+    clearTimeout(reconnectTimer); reconnectTimer = null;
+    Object.keys(debounceTimers).forEach(function (key) { clearTimeout(debounceTimers[key]); });
+    debounceTimers = {};
+    if (ws) { ws.onclose = null; ws.close(); ws = null; }
+    // Discard private live/history data when a session ends.
+    chartData = [[], [], [], [], [], [], [], [], []];
+    predictionData = { meat1: null, meat2: null };
+    cookTimerStart = null; latestServerTs = null;
+    if (chart) chart.setData(chartData);
+  }
+
+  function refreshAuth() {
+    authChecked = true;
+    return fetch('api/auth', { cache: 'no-store', credentials: 'same-origin' })
+      .then(function (r) { if (!r.ok) throw new Error('Connection failed'); return r.json(); })
+      .then(function (status) {
+        if (typeof status.enabled !== 'boolean' || typeof status.authenticated !== 'boolean') throw new Error('Invalid authentication response');
+        authEnabled = status.enabled;
+        dom.authSettingsStatus.textContent = authEnabled ? 'Authentication is on' : 'Authentication is off';
+        dom.btnSaveAuth.textContent = authEnabled ? 'Change password' : 'Enable authentication';
+        dom.btnLogout.hidden = !authEnabled; dom.btnDisableAuth.hidden = !authEnabled;
+        dom.btnAuthRetry.hidden = true;
+        if (authEnabled && !status.authenticated) {
+          lockDashboard(); dom.loginPassword.focus(); return;
+        }
+        authLocked = false;
+        document.body.classList.remove('auth-pending', 'auth-locked');
+        dom.authScreen.hidden = true;
+        wsConnect(); fetchVersion();
+      }).catch(function () {
+        lockDashboard('Cannot reach your controller. Retrying…');
+        dom.btnAuthRetry.hidden = false;
+        scheduleReconnect();
+      });
+  }
+
+  function authRequest(path, values) {
+    uiAuthRequests++;
+    return fetch(path, { method: 'POST', credentials: 'same-origin', cache: 'no-store',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(values).toString()
+    }).then(function (response) {
+      return response.json().then(function (data) {
+        if (!response.ok) {
+          if (response.status === 401 && path !== 'api/auth/login') lockDashboard('Please sign in again.');
+          throw new Error(data.error || 'Request failed');
+        }
+        return data;
+      });
+    }).finally(function () { uiAuthRequests--; maybeReloadUi(); });
+  }
+
+  function initAuth() {
+    authLocked = true;
+    [dom.loginPassword, dom.newPassword, dom.confirmPassword].forEach(function (input) {
+      input.addEventListener('input', function () { uiCredentialEditing = true; });
+    });
+    dom.loginForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      dom.btnLogin.disabled = true; dom.authMessage.textContent = 'Signing in…';
+      authRequest('api/auth/login', { password: dom.loginPassword.value })
+        .then(function () { dom.loginPassword.value = ''; uiCredentialEditing = false; return refreshAuth(); })
+        .catch(function (error) { dom.authMessage.textContent = error.message; })
+        .finally(function () { dom.btnLogin.disabled = false; });
+    });
+    dom.authSettingsForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (Array.from(dom.newPassword.value).length < PASSWORD_MIN_LENGTH) {
+        dom.authSettingsMessage.textContent = 'Use at least 8 characters.'; return;
+      }
+      if (dom.newPassword.value !== dom.confirmPassword.value) {
+        dom.authSettingsMessage.textContent = 'Passwords do not match.'; return;
+      }
+      dom.btnSaveAuth.disabled = true; dom.authSettingsMessage.textContent = 'Saving…';
+      authRequest('api/auth/settings', { enabled: 'true', password: dom.newPassword.value })
+        .then(function () {
+          dom.newPassword.value = ''; dom.confirmPassword.value = '';
+          uiCredentialEditing = false;
+          dom.authSettingsMessage.textContent = ''; return refreshAuth();
+        }).catch(function (error) { dom.authSettingsMessage.textContent = error.message; })
+        .finally(function () { dom.btnSaveAuth.disabled = false; });
+    });
+    dom.btnLogout.addEventListener('click', function () {
+      authRequest('api/auth/logout', {}).then(refreshAuth)
+        .catch(function (error) { dom.authSettingsMessage.textContent = error.message; });
+    });
+    dom.btnDisableAuth.addEventListener('click', function () {
+      authRequest('api/auth/settings', { enabled: 'false' }).then(refreshAuth)
+        .catch(function (error) { dom.authSettingsMessage.textContent = error.message; });
+    });
+    dom.btnAuthRetry.addEventListener('click', function () {
+      clearTimeout(reconnectTimer); reconnectTimer = null; refreshAuth();
+    });
+    refreshAuth();
   }
 
   // ---------------------------------------------------------------------------
@@ -136,7 +262,123 @@
   // ---------------------------------------------------------------------------
   function debounce(key, fn, delay) {
     if (debounceTimers[key]) clearTimeout(debounceTimers[key]);
-    debounceTimers[key] = setTimeout(fn, delay || DEBOUNCE_MS);
+    debounceTimers[key] = setTimeout(function () {
+      delete debounceTimers[key];
+      fn();
+    }, delay || DEBOUNCE_MS);
+  }
+
+  function temperatureInput(key) {
+    return key === 'sp' ? dom.pitSpInput : key === 'meat1Target' ? dom.meat1TargetInput : dom.meat2TargetInput;
+  }
+
+  function controllerTemperature(key) {
+    return key === 'sp' ? pitSetpoint : key === 'meat1Target' ? meat1Target : meat2Target;
+  }
+
+  function editedTemperature(key) {
+    return Object.prototype.hasOwnProperty.call(temperatureEdits, key) ? temperatureEdits[key] : controllerTemperature(key);
+  }
+
+  function renderTemperatureInput(key, force) {
+    var input = temperatureInput(key);
+    if (!force && (temperatureTyping[key] || document.activeElement === input)) return;
+    var value = editedTemperature(key);
+    input.value = value === null ? '' : displayTemp(value);
+  }
+
+  function renderTemperatureStatus() {
+    var messages = temperatureError ? [temperatureError] : [];
+    var different = false;
+    TEMPERATURE_FIELDS.forEach(function (key, index) {
+      if (!Object.prototype.hasOwnProperty.call(temperatureEdits, key)) return;
+      var requested = temperatureEdits[key], actual = controllerTemperature(key);
+      if (requested === actual) return;
+      different = true;
+      function text(value) { return value === null ? 'off' : displayTemp(value) + unitLabel(); }
+      messages.push((index === 0 ? 'Pit' : 'Meat ' + index) + ': last requested ' + text(requested) + ', controller ' + text(actual));
+    });
+    dom.temperatureEditStatus.textContent = messages.join('; ');
+    dom.temperatureEditStatus.hidden = messages.length === 0;
+    dom.btnUseControllerValues.hidden = !different;
+  }
+
+  function cancelTemperatureCommands() {
+    TEMPERATURE_FIELDS.forEach(function (key) {
+      clearTimeout(debounceTimers[key]);
+      delete debounceTimers[key];
+    });
+    temperatureCommands = {};
+  }
+
+  function useControllerTemperatures() {
+    cancelTemperatureCommands();
+    temperatureEdits = {}; temperatureTyping = {}; temperatureError = '';
+    TEMPERATURE_FIELDS.forEach(function (key) { renderTemperatureInput(key, true); });
+    renderTemperatureStatus();
+  }
+
+  function sendTemperatureCommand(key) {
+    var command = temperatureCommands[key];
+    if (!command) return;
+    delete temperatureCommands[key];
+    if (!wsSend(command)) temperatureError = 'Connection unavailable. Reconnect before changing temperatures.';
+    renderTemperatureStatus();
+  }
+
+  function editTemperature(key, value) {
+    if (!connected) {
+      temperatureError = 'Connection unavailable. Reconnect before changing temperatures.';
+      renderTemperatureInput(key, true); renderTemperatureStatus(); return;
+    }
+    temperatureEdits[key] = value;
+    temperatureTyping[key] = false; temperatureError = '';
+    var command = { type: key === 'sp' ? 'set' : 'alarm' };
+    command[key] = value;
+    temperatureCommands[key] = command;
+    debounce(key, function () { sendTemperatureCommand(key); });
+    renderTemperatureInput(key, true); renderTemperatureStatus();
+  }
+
+  function temperatureBounds(key) {
+    return { min: currentUnits === 'C' ? 38 : 100,
+      max: key === 'sp' ? (currentUnits === 'C' ? 260 : 500) : (currentUnits === 'C' ? 100 : 212) };
+  }
+
+  function changeTemperature(key) {
+    temperatureTyping[key] = false;
+    var raw = temperatureInput(key).value.trim(), bounds = temperatureBounds(key);
+    if (key !== 'sp' && raw === '') return editTemperature(key, null);
+    var value = parseInt(raw, 10);
+    if (Number.isFinite(value) && value >= bounds.min && value <= bounds.max)
+      return editTemperature(key, displayTempFromInput(value));
+    temperatureError = 'Enter a temperature from ' + bounds.min + ' to ' + bounds.max + unitLabel() + '.';
+    renderTemperatureInput(key, true); renderTemperatureStatus();
+  }
+
+  function stepTemperature(key, direction) {
+    if (!connected) return;
+    var input = temperatureInput(key), raw = input.value.trim(), bounds = temperatureBounds(key);
+    var value = parseInt(raw, 10), step = currentUnits === 'C' ? 3 : 5;
+    if (key !== 'sp' && raw === '') {
+      if (direction < 0) return;
+      value = currentUnits === 'C' ? 90 : 195;
+    } else {
+      if (!Number.isFinite(value) || value < bounds.min || value > bounds.max)
+        value = displayTemp(editedTemperature(key)) || (currentUnits === 'C' ? 90 : 195);
+      value += direction * step;
+    }
+    value = Math.max(bounds.min, Math.min(bounds.max, value));
+    input.value = value;
+    editTemperature(key, displayTempFromInput(value));
+  }
+
+  function updateTemperatureControls() {
+    [dom.pitSpInput, dom.pitSpDown, dom.pitSpUp,
+      dom.meat1TargetInput, dom.meat1TargetDown, dom.meat1TargetUp,
+      dom.meat2TargetInput, dom.meat2TargetDown, dom.meat2TargetUp].forEach(function (control) {
+      control.disabled = !connected;
+    });
   }
 
   function formatTime(seconds) {
@@ -191,9 +433,15 @@
   function unitLabel() { return '\u00B0' + currentUnits; }
 
   function formatTemp(value) {
-    if (value === null || value === undefined) return '---';
     if (value === -1 || value === 'ERR') return 'ERR';
+    if (validTemperature(value) === null) return '---';
     return displayTemp(value).toString();
+  }
+
+  function validTemperature(value) {
+    // Match the firmware's broad sanity bounds; absent/error values are gaps.
+    return typeof value === 'number' && Number.isFinite(value) &&
+      value !== -1 && value >= -58 && value <= 752 ? value : null;
   }
 
   // ---------------------------------------------------------------------------
@@ -253,6 +501,7 @@
   // WebSocket Connection
   // ---------------------------------------------------------------------------
   function wsConnect() {
+    if (authLocked) return;
     if (ws && (ws.readyState === WebSocket.CONNECTING || ws.readyState === WebSocket.OPEN)) {
       return;
     }
@@ -303,19 +552,25 @@
     console.log('Reconnecting in ' + wsBackoff + 'ms...');
     reconnectTimer = setTimeout(function () {
       reconnectTimer = null;
-      wsConnect();
+      if (authChecked) refreshAuth(); else wsConnect();
     }, wsBackoff);
     wsBackoff = Math.min(wsBackoff * 2, WS_MAX_BACKOFF);
   }
 
   function wsSend(obj) {
     if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify(obj));
+      try { ws.send(JSON.stringify(obj)); return true; }
+      catch (err) { console.warn('Could not send controller command:', err); }
     }
+    return false;
   }
 
   function updateConnectionStatus(isConnected) {
-    if (!isConnected) lidControlsAvailable = false;
+    if (!isConnected) {
+      lidControlsAvailable = false;
+      useControllerTemperatures();
+    }
+    updateTemperatureControls();
     updateLidButtons();
     if (isConnected) {
       dom.wifiIcon.classList.add('connected');
@@ -389,7 +644,7 @@
     dom.btnLidAction.textContent = lidPaused ? 'Close lid' : 'Open lid';
     dom.btnLidAction.setAttribute('aria-pressed', String(lidPaused));
     var seconds = Number.isFinite(msg.lidRemaining) ? Math.max(0, Math.floor(msg.lidRemaining)) : 0;
-    dom.lidStatus.textContent = (msg.lidManual ? 'Lid open — manual pause' : 'Lid open — fan paused') + (seconds > 0 ?
+    dom.lidStatus.textContent = (msg.lidManual ? 'Lid opened — manual pause' : 'Lid opened — fan paused') + (seconds > 0 ?
       ' · ' + Math.floor(seconds / 60) + ':' + String(seconds % 60).padStart(2, '0') + ' remaining' : '');
     updateLidButtons();
   }
@@ -425,6 +680,11 @@
 
   function handleMessage(msg) {
     if (msg.type === 'data') {
+      // Until SNTP succeeds (including an offline setup AP), use browser time
+      // for live samples instead of displaying boot uptime as a date in 1970.
+      if (!Number.isFinite(msg.ts) || msg.ts < MIN_WALL_CLOCK_TS) {
+        msg.ts = Math.floor(Date.now() / 1000);
+      }
       applyLidState(msg);
       if (msg.fanMode && msg.fanMode !== currentFanMode) {
         applyFanMode(msg.fanMode);
@@ -450,6 +710,7 @@
     // race where stale data messages from the old session sneak in between
     // the local clear and the server-side reset, leaving cookTimerStart
     // pointing at an old-session timestamp and causing negative elapsed time.
+    useControllerTemperatures();
     closeSettings();
     resetCookTimer();
     latestServerTs = null;
@@ -462,11 +723,8 @@
     }
     updateLegendValues(null);
 
-    // Clear stale targets
     hideMeatTarget(1);
     hideMeatTarget(2);
-
-    // Restore setpoint from the server's reset defaults
     if (msg.sp !== undefined) {
       pitSetpoint = msg.sp;
       dom.pitSetpoint.textContent = displayTemp(msg.sp);
@@ -489,25 +747,13 @@
 
   function loadHistory(msg) {
     // Restore alarm targets and setpoint (server values are always °F)
-    if (msg.sp !== undefined) {
-      pitSetpoint = msg.sp;
-      dom.pitSetpoint.textContent = displayTemp(msg.sp);
-      dom.pitSpInput.value = displayTemp(msg.sp);
-    }
-    if (msg.meat1Target !== undefined) {
-      if (msg.meat1Target !== null && msg.meat1Target > 0) {
-        showMeatTarget(1, msg.meat1Target);
-      } else {
-        hideMeatTarget(1);
-      }
-    }
-    if (msg.meat2Target !== undefined) {
-      if (msg.meat2Target !== null && msg.meat2Target > 0) {
-        showMeatTarget(2, msg.meat2Target);
-      } else {
-        hideMeatTarget(2);
-      }
-    }
+    updateTemperatureSettings(msg);
+
+    // Old firmware recorded uptime as Unix time. It has no recoverable wall
+    // clock date across reboots. Exclude those points rather than invent dates.
+    msg.data = (msg.data || []).filter(function (point) {
+      return Number.isFinite(point.ts) && point.ts >= MIN_WALL_CLOCK_TS;
+    });
 
     // Populate chart data from history (stored as °F)
     if (!msg.data || !msg.data.length) return;
@@ -520,9 +766,9 @@
     for (var j = 0; j < msg.data.length; j++) {
       var d = msg.data[j];
       chartData[0].push(d.ts);
-      chartData[1].push(d.pit !== null && d.pit !== undefined && d.pit !== -1 ? d.pit : null);
-      chartData[2].push(d.meat1 !== null && d.meat1 !== undefined && d.meat1 !== -1 ? d.meat1 : null);
-      chartData[3].push(d.meat2 !== null && d.meat2 !== undefined && d.meat2 !== -1 ? d.meat2 : null);
+      chartData[1].push(validTemperature(d.pit));
+      chartData[2].push(validTemperature(d.meat1));
+      chartData[3].push(validTemperature(d.meat2));
       chartData[4].push(d.fan !== undefined ? d.fan : null);
       chartData[5].push(d.damper !== undefined ? d.damper : null);
       chartData[6].push(d.sp !== undefined ? d.sp : pitSetpoint);
@@ -533,7 +779,7 @@
     // Update display with the latest point
     var last = msg.data[msg.data.length - 1];
     latestServerTs = last.ts;
-    updateTemperatures(last);
+    updateProbeTemperatures(last);
     updateOutputs(last);
 
     // Reset cook timer and re-derive from history (server is source of truth)
@@ -550,33 +796,37 @@
     updateLegendValues(null);
   }
 
-  function updateTemperatures(msg) {
+  function updateProbeTemperatures(msg) {
     // Temperature values from server are always °F; formatTemp converts for display
     dom.pitTemp.textContent = formatTemp(msg.pit);
     dom.meat1Temp.textContent = formatTemp(msg.meat1);
     dom.meat2Temp.textContent = formatTemp(msg.meat2);
+  }
 
+  function updateTemperatures(msg) {
+    updateProbeTemperatures(msg);
+    updateTemperatureSettings(msg);
+  }
+
+  function updateTemperatureSettings(msg) {
     if (msg.sp !== undefined) {
       pitSetpoint = msg.sp;
       dom.pitSetpoint.textContent = displayTemp(msg.sp);
-      dom.pitSpInput.value = displayTemp(msg.sp);
+      renderTemperatureInput('sp');
     }
 
     if (msg.meat1Target !== undefined) {
-      if (msg.meat1Target !== null && msg.meat1Target > 0) {
-        showMeatTarget(1, msg.meat1Target);
-      } else {
-        hideMeatTarget(1);
-      }
+      if (meat1Target !== msg.meat1Target) notifyMeat1Fired = false;
+      if (msg.meat1Target !== null && msg.meat1Target > 0) showMeatTarget(1, msg.meat1Target);
+      else hideMeatTarget(1);
     }
 
     if (msg.meat2Target !== undefined) {
-      if (msg.meat2Target !== null && msg.meat2Target > 0) {
-        showMeatTarget(2, msg.meat2Target);
-      } else {
-        hideMeatTarget(2);
-      }
+      if (meat2Target !== msg.meat2Target) notifyMeat2Fired = false;
+      if (msg.meat2Target !== null && msg.meat2Target > 0) showMeatTarget(2, msg.meat2Target);
+      else hideMeatTarget(2);
     }
+    renderTemperatureStatus();
   }
 
   function updateOutputs(msg) {
@@ -594,8 +844,8 @@
   // ---------------------------------------------------------------------------
   function updateCookTimer(msg) {
     if (cookTimerStart) return; // already started
-    var meat1Valid = msg.meat1 !== null && msg.meat1 !== undefined && msg.meat1 !== -1;
-    var meat2Valid = msg.meat2 !== null && msg.meat2 !== undefined && msg.meat2 !== -1;
+    var meat1Valid = validTemperature(msg.meat1) !== null;
+    var meat2Valid = validTemperature(msg.meat2) !== null;
     if (meat1Valid || meat2Valid) {
       cookTimerStart = msg.ts || Math.floor(Date.now() / 1000);
       localStorage.setItem('bbq_cook_timer_start', cookTimerStart.toString());
@@ -643,7 +893,12 @@
   function restoreCookTimer() {
     var stored = localStorage.getItem('bbq_cook_timer_start');
     if (stored) {
-      cookTimerStart = parseInt(stored, 10);
+      var start = Number(stored);
+      if (Number.isFinite(start) && start >= MIN_WALL_CLOCK_TS && start <= Date.now() / 1000) {
+        cookTimerStart = start;
+      } else {
+        resetCookTimer();
+      }
     }
   }
 
@@ -828,10 +1083,19 @@
     var now = msg.ts || Math.floor(Date.now() / 1000);
     latestServerTs = now;
 
+    // A clock correction can move slightly backwards. Keep uPlot's time axis
+    // ordered, and replace duplicate snapshots rather than skewing regression.
+    while (chartData[0].length && chartData[0][chartData[0].length - 1] >= now) {
+      for (var s = 0; s < chartData.length; s++) chartData[s].pop();
+    }
+    if (cookTimerStart > now) {
+      cookTimerStart = now;
+      localStorage.setItem('bbq_cook_timer_start', String(now));
+    }
     chartData[0].push(now);
-    chartData[1].push(msg.pit !== null && msg.pit !== undefined && msg.pit !== -1 ? msg.pit : null);
-    chartData[2].push(msg.meat1 !== null && msg.meat1 !== undefined && msg.meat1 !== -1 ? msg.meat1 : null);
-    chartData[3].push(msg.meat2 !== null && msg.meat2 !== undefined && msg.meat2 !== -1 ? msg.meat2 : null);
+    chartData[1].push(validTemperature(msg.pit));
+    chartData[2].push(validTemperature(msg.meat1));
+    chartData[3].push(validTemperature(msg.meat2));
     chartData[4].push(msg.fan !== undefined ? msg.fan : null);
     chartData[5].push(msg.damper !== undefined ? msg.damper : null);
     chartData[6].push(msg.sp !== undefined ? msg.sp : pitSetpoint);
@@ -874,13 +1138,13 @@
     if (probe === 1) {
       meat1Target = fVal;
       dom.meat1Target.textContent = displayTemp(fVal);
-      dom.meat1TargetInput.value = displayTemp(fVal);
+      renderTemperatureInput('meat1Target');
       dom.meat1Card.classList.remove('no-target');
       restoreTargetInChart(7, fVal);
     } else {
       meat2Target = fVal;
       dom.meat2Target.textContent = displayTemp(fVal);
-      dom.meat2TargetInput.value = displayTemp(fVal);
+      renderTemperatureInput('meat2Target');
       dom.meat2Card.classList.remove('no-target');
       restoreTargetInChart(8, fVal);
     }
@@ -890,14 +1154,14 @@
     if (probe === 1) {
       meat1Target = null;
       dom.meat1Target.textContent = '---';
-      dom.meat1TargetInput.value = '';
+      renderTemperatureInput('meat1Target');
       dom.meat1Prediction.textContent = '';
       dom.meat1Card.classList.add('no-target');
       clearTargetFromChart(7);
     } else {
       meat2Target = null;
       dom.meat2Target.textContent = '---';
-      dom.meat2TargetInput.value = '';
+      renderTemperatureInput('meat2Target');
       dom.meat2Prediction.textContent = '';
       dom.meat2Card.classList.add('no-target');
       clearTargetFromChart(8);
@@ -978,17 +1242,21 @@
     var n = xs.length;
     if (n < 2) return null;
     var sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+    // Subtract the epoch first: squaring Unix seconds loses the small variance
+    // of closely spaced samples and can yield a zero/negative denominator.
+    var origin = xs[0];
     for (var i = 0; i < n; i++) {
-      sumX += xs[i];
+      var x = xs[i] - origin;
+      sumX += x;
       sumY += ys[i];
-      sumXY += xs[i] * ys[i];
-      sumXX += xs[i] * xs[i];
+      sumXY += x * ys[i];
+      sumXX += x * x;
     }
     var denom = n * sumXX - sumX * sumX;
-    if (denom === 0) return null;
+    if (denom <= 0) return null;
     var slope = (n * sumXY - sumX * sumY) / denom;
     var intercept = (sumY - slope * sumX) / n;
-    return { slope: slope, intercept: intercept };
+    return { slope: slope, intercept: intercept, origin: origin };
   }
 
   function predictDoneTime(seriesIndex, target) {
@@ -997,11 +1265,17 @@
     var now = chartData[0][chartData[0].length - 1];
     var windowStart = now - PREDICTION_WINDOW_SEC;
 
+    var readings = chartData[seriesIndex];
+    if (validTemperature(readings[readings.length - 1]) === null) return null;
+
     // Collect recent valid data points
     var xs = [];
     var ys = [];
     for (var i = 0; i < chartData[0].length; i++) {
-      if (chartData[0][i] >= windowStart && chartData[seriesIndex][i] !== null) {
+      if (chartData[0][i] >= windowStart && validTemperature(readings[i]) === null) {
+        // Reconnection starts a fresh trend; do not bridge a probe fault.
+        xs = []; ys = [];
+      } else if (chartData[0][i] >= windowStart) {
         xs.push(chartData[0][i]);
         ys.push(chartData[seriesIndex][i]);
       }
@@ -1016,8 +1290,8 @@
     if (!reg || reg.slope <= 0) return null; // Not rising
 
     // Time when regression line hits target
-    var doneTimeSec = (target - reg.intercept) / reg.slope;
-    if (doneTimeSec <= now) return null; // Already passed (shouldn't happen if slope > 0 and temp < target)
+    var doneTimeSec = reg.origin + (target - reg.intercept) / reg.slope;
+    if (!Number.isFinite(doneTimeSec) || doneTimeSec <= now) return null;
     if (doneTimeSec - now > 24 * 60 * 60) return null; // More than 24h away, probably bad data
 
     return {
@@ -1029,20 +1303,21 @@
   }
 
   function updatePitPrediction() {
-    if (!pitSetpoint || chartData[0].length < MIN_PREDICTION_POINTS) {
-      dom.pitPrediction.textContent = chartData[0].length > 0 ? 'Calculating...' : '';
+    var readings = chartData[1];
+    var last = validTemperature(readings[readings.length - 1]);
+    if (!pitSetpoint || last === null) {
+      dom.pitPrediction.textContent = '';
       return;
     }
 
-    var last = chartData[1][chartData[1].length - 1];
-    if (last !== null && last >= pitSetpoint) {
+    if (last >= pitSetpoint) {
       dom.pitPrediction.textContent = '';
       return;
     }
 
     var pred = predictDoneTime(1, pitSetpoint);
     if (!pred) {
-      dom.pitPrediction.textContent = 'Calculating...';
+      dom.pitPrediction.textContent = 'Waiting for temperature rise';
       return;
     }
 
@@ -1192,188 +1467,73 @@
     }
 
     dom.pitSetpoint.textContent = displayTemp(pitSetpoint);
-    dom.pitSpInput.value = displayTemp(pitSetpoint);
+    renderTemperatureInput('sp', true);
 
     if (meat1Target !== null) {
       dom.meat1Target.textContent = displayTemp(meat1Target);
-      dom.meat1TargetInput.value = displayTemp(meat1Target);
+      renderTemperatureInput('meat1Target', true);
       dom.meat1Card.classList.remove('no-target');
     } else {
       dom.meat1Target.textContent = '---';
-      dom.meat1TargetInput.value = '';
+      renderTemperatureInput('meat1Target', true);
       dom.meat1Card.classList.add('no-target');
     }
     if (meat2Target !== null) {
       dom.meat2Target.textContent = displayTemp(meat2Target);
-      dom.meat2TargetInput.value = displayTemp(meat2Target);
+      renderTemperatureInput('meat2Target', true);
       dom.meat2Card.classList.remove('no-target');
     } else {
       dom.meat2Target.textContent = '---';
-      dom.meat2TargetInput.value = '';
+      renderTemperatureInput('meat2Target', true);
       dom.meat2Card.classList.add('no-target');
     }
 
     updatePredictions();
     updateLegendValues(null);
+    renderTemperatureStatus();
   }
 
   // ---------------------------------------------------------------------------
   // Settings Panel
   // ---------------------------------------------------------------------------
   function openSettings() {
+    settingsOpen = true;
+    TEMPERATURE_FIELDS.forEach(function (key) { renderTemperatureInput(key, true); });
     dom.settingsPanel.classList.add('open');
     dom.settingsOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
 
   function closeSettings() {
+    // A normal close commits the latest queued intent once. Forced closes
+    // cancel first, so logout/reset can never replay obsolete commands.
+    TEMPERATURE_FIELDS.forEach(function (key) {
+      clearTimeout(debounceTimers[key]); delete debounceTimers[key];
+      sendTemperatureCommand(key);
+    });
+    temperatureTyping = {}; settingsOpen = false;
     dom.settingsPanel.classList.remove('open');
     dom.settingsOverlay.classList.remove('active');
     document.body.style.overflow = '';
+    maybeReloadUi();
   }
 
   // ---------------------------------------------------------------------------
   // Controls
   // ---------------------------------------------------------------------------
   function initControls() {
-    // Pit setpoint +/- buttons (step 5°F or 3°C)
-    dom.pitSpDown.addEventListener('click', function () {
-      var displayVal = parseInt(dom.pitSpInput.value, 10) || displayTemp(225);
-      var step = currentUnits === 'C' ? 3 : 5;
-      var min = currentUnits === 'C' ? 38 : 100;
-      displayVal = Math.max(min, displayVal - step);
-      dom.pitSpInput.value = displayVal;
-      sendSetpoint(displayTempFromInput(displayVal));
+    [
+      ['sp', dom.pitSpInput, dom.pitSpDown, dom.pitSpUp],
+      ['meat1Target', dom.meat1TargetInput, dom.meat1TargetDown, dom.meat1TargetUp],
+      ['meat2Target', dom.meat2TargetInput, dom.meat2TargetDown, dom.meat2TargetUp]
+    ].forEach(function (field) {
+      field[1].addEventListener('input', function () { temperatureTyping[field[0]] = true; });
+      field[1].addEventListener('change', function () { changeTemperature(field[0]); });
+      field[2].addEventListener('click', function () { stepTemperature(field[0], -1); });
+      field[3].addEventListener('click', function () { stepTemperature(field[0], 1); });
     });
-
-    dom.pitSpUp.addEventListener('click', function () {
-      var displayVal = parseInt(dom.pitSpInput.value, 10) || displayTemp(225);
-      var step = currentUnits === 'C' ? 3 : 5;
-      var max = currentUnits === 'C' ? 260 : 500;
-      displayVal = Math.min(max, displayVal + step);
-      dom.pitSpInput.value = displayVal;
-      sendSetpoint(displayTempFromInput(displayVal));
-    });
-
-    dom.pitSpInput.addEventListener('change', function () {
-      var displayVal = parseInt(this.value, 10);
-      var min = currentUnits === 'C' ? 38 : 100;
-      var max = currentUnits === 'C' ? 260 : 500;
-      if (!isNaN(displayVal) && displayVal >= min && displayVal <= max) {
-        sendSetpoint(displayTempFromInput(displayVal));
-      }
-    });
-
-    // Meat targets (user enters display unit, convert to °F for server)
-    dom.meat1TargetInput.addEventListener('change', function () {
-      notifyMeat1Fired = false;
-      var raw = this.value.trim();
-      if (raw === '') {
-        meat1Target = null;
-        dom.meat1Target.textContent = '---';
-        dom.meat1Prediction.textContent = '';
-        dom.meat1Card.classList.add('no-target');
-        clearTargetFromChart(7);
-        debounce('meat1Target', function () {
-          wsSend({ type: 'alarm', meat1Target: null });
-        });
-        return;
-      }
-      var displayVal = parseInt(raw, 10);
-      var min = currentUnits === 'C' ? 38 : 100;
-      var max = currentUnits === 'C' ? 100 : 212;
-      if (!isNaN(displayVal) && displayVal >= min && displayVal <= max) {
-        var fVal = displayTempFromInput(displayVal);
-        meat1Target = fVal;
-        dom.meat1Target.textContent = displayVal;
-        dom.meat1Card.classList.remove('no-target');
-        restoreTargetInChart(7, fVal);
-        debounce('meat1Target', function () {
-          wsSend({ type: 'alarm', meat1Target: fVal });
-        });
-      }
-    });
-
-    dom.meat2TargetInput.addEventListener('change', function () {
-      notifyMeat2Fired = false;
-      var raw = this.value.trim();
-      if (raw === '') {
-        meat2Target = null;
-        dom.meat2Target.textContent = '---';
-        dom.meat2Prediction.textContent = '';
-        dom.meat2Card.classList.add('no-target');
-        clearTargetFromChart(8);
-        debounce('meat2Target', function () {
-          wsSend({ type: 'alarm', meat2Target: null });
-        });
-        return;
-      }
-      var displayVal = parseInt(raw, 10);
-      var min = currentUnits === 'C' ? 38 : 100;
-      var max = currentUnits === 'C' ? 100 : 212;
-      if (!isNaN(displayVal) && displayVal >= min && displayVal <= max) {
-        var fVal = displayTempFromInput(displayVal);
-        meat2Target = fVal;
-        dom.meat2Target.textContent = displayVal;
-        dom.meat2Card.classList.remove('no-target');
-        restoreTargetInChart(8, fVal);
-        debounce('meat2Target', function () {
-          wsSend({ type: 'alarm', meat2Target: fVal });
-        });
-      }
-    });
-
-    // Meat 1 Target +/- buttons
-    dom.meat1TargetDown.addEventListener('click', function () {
-      var raw = dom.meat1TargetInput.value.trim();
-      if (raw === '') return;
-      var displayVal = parseInt(raw, 10);
-      var step = currentUnits === 'C' ? 3 : 5;
-      var min = currentUnits === 'C' ? 38 : 100;
-      displayVal = Math.max(min, displayVal - step);
-      dom.meat1TargetInput.value = displayVal;
-      dom.meat1TargetInput.dispatchEvent(new Event('change'));
-    });
-
-    dom.meat1TargetUp.addEventListener('click', function () {
-      var raw = dom.meat1TargetInput.value.trim();
-      var step = currentUnits === 'C' ? 3 : 5;
-      var max = currentUnits === 'C' ? 100 : 212;
-      var displayVal;
-      if (raw === '') {
-        displayVal = currentUnits === 'C' ? 90 : 195;
-      } else {
-        displayVal = Math.min(max, parseInt(raw, 10) + step);
-      }
-      dom.meat1TargetInput.value = displayVal;
-      dom.meat1TargetInput.dispatchEvent(new Event('change'));
-    });
-
-    // Meat 2 Target +/- buttons
-    dom.meat2TargetDown.addEventListener('click', function () {
-      var raw = dom.meat2TargetInput.value.trim();
-      if (raw === '') return;
-      var displayVal = parseInt(raw, 10);
-      var step = currentUnits === 'C' ? 3 : 5;
-      var min = currentUnits === 'C' ? 38 : 100;
-      displayVal = Math.max(min, displayVal - step);
-      dom.meat2TargetInput.value = displayVal;
-      dom.meat2TargetInput.dispatchEvent(new Event('change'));
-    });
-
-    dom.meat2TargetUp.addEventListener('click', function () {
-      var raw = dom.meat2TargetInput.value.trim();
-      var step = currentUnits === 'C' ? 3 : 5;
-      var max = currentUnits === 'C' ? 100 : 212;
-      var displayVal;
-      if (raw === '') {
-        displayVal = currentUnits === 'C' ? 90 : 195;
-      } else {
-        displayVal = Math.min(max, parseInt(raw, 10) + step);
-      }
-      dom.meat2TargetInput.value = displayVal;
-      dom.meat2TargetInput.dispatchEvent(new Event('change'));
-    });
+    dom.btnUseControllerValues.addEventListener('click', useControllerTemperatures);
+    updateTemperatureControls();
 
     // Session controls
     dom.btnNewSession.addEventListener('click', function () {
@@ -1399,14 +1559,6 @@
         applyFanMode(mode);
         wsSend({ type: 'config', fanMode: mode });
       });
-    });
-  }
-
-  function sendSetpoint(val) {
-    pitSetpoint = val; // always stored as °F
-    dom.pitSetpoint.textContent = displayTemp(val);
-    debounce('setpoint', function () {
-      wsSend({ type: 'set', sp: val });
     });
   }
 
@@ -1515,8 +1667,8 @@
   function checkTargetNotifications(msg) {
     if (!notifyEnabled) return;
 
-    var meat1Valid = msg.meat1 !== null && msg.meat1 !== undefined && msg.meat1 !== -1;
-    var meat2Valid = msg.meat2 !== null && msg.meat2 !== undefined && msg.meat2 !== -1;
+    var meat1Valid = validTemperature(msg.meat1) !== null;
+    var meat2Valid = validTemperature(msg.meat2) !== null;
 
     if (meat1Target && meat1Valid && !notifyMeat1Fired && msg.meat1 >= meat1Target) {
       notifyMeat1Fired = true;
@@ -1543,13 +1695,39 @@
   // ---------------------------------------------------------------------------
   // Firmware Version & OTA Update
   // ---------------------------------------------------------------------------
+  function maybeReloadUi() {
+    if (!uiPendingBuild) return;
+    dom.uiUpdateNotice.hidden = false;
+    if (settingsOpen || uiAuthRequests || uiCredentialEditing || dom.authScreen.hidden === false ||
+        Object.keys(temperatureEdits).length || Object.keys(temperatureCommands).length ||
+        (ws && ws.bufferedAmount > 0) ||
+        dom.updateOverlay.style.display !== 'none' ||
+        (document.activeElement && /^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName))) return;
+    // One automatic attempt per build and tab; cached/offline fallback must
+    // not trap the user in a reload loop. The notice permits an explicit retry.
+    var key = 'pitclaw-ui-reload:' + new URL('.', document.baseURI).href;
+    try {
+      if (sessionStorage.getItem(key) === uiPendingBuild) return;
+      sessionStorage.setItem(key, uiPendingBuild);
+    } catch (err) { return; }
+    uiPendingBuild = null;
+    window.location.reload();
+  }
+
   function fetchVersion() {
-    return fetch('api/version')
+    return fetch('api/version', { cache: 'no-store' })
       .then(function (r) {
         if (!r.ok) throw new Error('Version API ' + r.status);
         return r.json();
       })
       .then(function (data) {
+        if (typeof data.uiBuild === 'string' && data.uiBuild !== UI_BUILD) {
+          uiPendingBuild = data.uiBuild;
+          maybeReloadUi();
+        } else if (data.uiBuild === UI_BUILD) {
+          uiPendingBuild = null; dom.uiUpdateNotice.hidden = true;
+          try { sessionStorage.removeItem('pitclaw-ui-reload:' + new URL('.', document.baseURI).href); } catch (err) {}
+        }
         firmwareVersion = data.version;
         dom.fwVersion.textContent = 'Pit Claw v' + firmwareVersion;
         dom.settingsVersion.textContent = 'v' + firmwareVersion;
@@ -1717,6 +1895,22 @@
   // ---------------------------------------------------------------------------
   function init() {
     cacheDom();
+    // A legacy worker can mix old HTML with a freshly fetched script. Use a
+    // new document URL once to bypass its exact-URL cache before initialization.
+    if (!dom.btnUseControllerValues || !dom.temperatureEditStatus || !dom.uiUpdateNotice || !dom.btnReloadUi) {
+      var fresh = new URL(window.location.href);
+      if (fresh.searchParams.get('ui') !== UI_BUILD) {
+        fresh.searchParams.set('ui', UI_BUILD); window.location.replace(fresh.href);
+      } else if (dom.authMessage) {
+        dom.authMessage.textContent = 'Reload the page to finish the interface update.';
+        dom.btnAuthRetry.hidden = false;
+        dom.btnAuthRetry.addEventListener('click', function () {
+          fresh.searchParams.set('refresh', Date.now()); window.location.replace(fresh.href);
+        });
+      }
+      return;
+    }
+    document.body.setAttribute('data-ui-build', UI_BUILD);
     loadPrefs();
     document.documentElement.setAttribute('data-theme', currentTheme);
     updateToggleButtons();
@@ -1731,7 +1925,7 @@
     dom.meat1Card.classList.add('no-target');
     dom.meat2Card.classList.add('no-target');
 
-    wsConnect();
+    initAuth();
 
     // Notification bell
     dom.btnNotify.addEventListener('click', toggleNotifications);
@@ -1767,7 +1961,6 @@
     window.addEventListener('resize', onResize);
 
     // Firmware version and OTA update
-    fetchVersion();
     dom.btnUpdate.addEventListener('click', performUpdate);
     dom.btnDismissUpdate.addEventListener('click', function () {
       dom.updateBanner.style.display = 'none';
@@ -1775,6 +1968,7 @@
     dom.btnCheckUpdate.addEventListener('click', function () {
       checkForUpdate(true);
     });
+    dom.btnReloadUi.addEventListener('click', function () { window.location.reload(); });
   }
 
   // Wait for DOM

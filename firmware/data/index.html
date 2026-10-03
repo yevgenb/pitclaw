@@ -14,7 +14,20 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uplot@1.6.31/dist/uPlot.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="auth-pending">
+  <main class="auth-screen" id="authScreen">
+    <form class="auth-card" id="loginForm" hidden>
+      <img src="favicon.svg" width="56" height="56" alt="">
+      <h1>Pit Claw</h1>
+      <p>Sign in to your controller</p>
+      <label for="loginPassword">Password</label>
+      <input id="loginPassword" type="password" autocomplete="current-password" required maxlength="128">
+      <button class="btn btn-primary" id="btnLogin" type="submit">Sign in</button>
+    </form>
+    <p class="auth-message" id="authMessage" role="status" aria-live="polite">Connecting to your controller…</p>
+    <button class="btn btn-secondary" id="btnAuthRetry" hidden>Retry connection</button>
+    <noscript>Enable JavaScript to connect to your controller.</noscript>
+  </main>
   <!-- Header Banner -->
   <header class="header-banner">
     <div class="header-left">
@@ -74,7 +87,7 @@
   </header>
 
   <div class="lid-banner" id="lidBanner" role="status" hidden>
-    <span id="lidStatus">Lid open — fan paused</span>
+    <span id="lidStatus">Lid opened — fan paused</span>
   </div>
 
   <!-- Update Banner -->
@@ -191,6 +204,7 @@
   <!-- Footer -->
   <footer class="app-footer">
     <span id="fwVersion">Pit Claw</span>
+    <span id="uiUpdateNotice" hidden>Interface update available. <button class="btn btn-secondary" id="btnReloadUi">Reload</button></span>
   </footer>
 
   <!-- Update Progress Overlay -->
@@ -248,6 +262,10 @@
           <button class="btn btn-adjust" id="meat2TargetUp" aria-label="Increase target by 5">+5</button>
         </div>
       </div>
+      <div class="settings-group">
+        <p class="lid-help" id="temperatureEditStatus" role="status" aria-live="polite" hidden></p>
+        <button class="btn btn-secondary" id="btnUseControllerValues" hidden>Use controller values</button>
+      </div>
       <div class="settings-divider"></div>
       <div class="settings-group">
         <div class="settings-label">Fan Mode</div>
@@ -288,6 +306,23 @@
       </div>
       <div class="settings-divider"></div>
       <div class="settings-group">
+        <div class="settings-label">Access</div>
+        <p class="settings-hint" id="authSettingsStatus">Authentication is off</p>
+        <form id="authSettingsForm" class="auth-settings">
+          <label for="newPassword">New password</label>
+          <input id="newPassword" type="password" autocomplete="new-password" minlength="8" maxlength="128" required placeholder="At least 8 characters">
+          <label for="confirmPassword">Confirm password</label>
+          <input id="confirmPassword" type="password" autocomplete="new-password" minlength="8" maxlength="128" required>
+          <button class="btn btn-secondary" id="btnSaveAuth" type="submit">Enable authentication</button>
+        </form>
+        <p class="settings-hint" id="authSettingsMessage" role="status" aria-live="polite"></p>
+        <div class="auth-actions">
+          <button class="btn btn-secondary" id="btnLogout" hidden>Sign out</button>
+          <button class="btn btn-secondary" id="btnDisableAuth" hidden>Turn off authentication</button>
+        </div>
+      </div>
+      <div class="settings-divider"></div>
+      <div class="settings-group">
         <div class="settings-label">Firmware</div>
         <div class="firmware-info">
           <span id="settingsVersion">v---</span>
@@ -298,7 +333,7 @@
   </aside>
 
   <script src="https://cdn.jsdelivr.net/npm/uplot@1.6.31/dist/uPlot.iife.min.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=5"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(function(err) {

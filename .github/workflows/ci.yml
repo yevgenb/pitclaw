@@ -36,6 +36,18 @@ jobs:
         run: pio test -e native
         working-directory: firmware
 
+      - name: Run controller and configuration integration tests
+        run: python test/lid/run_checks.py
+        working-directory: firmware
+
+      - name: Run web UI regression tests
+        run: for test in test/web/*.cjs; do node "$test"; done
+        working-directory: firmware
+
+      - name: Run authentication integration tests
+        run: python test/auth/run_checks.py
+        working-directory: firmware
+
   simulator:
     name: Simulator Build
     runs-on: ubuntu-latest

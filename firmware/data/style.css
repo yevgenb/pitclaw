@@ -48,6 +48,52 @@
   --surface-6: rgba(0, 0, 0, 0.25);
 }
 
+/* Authentication uses the dashboard theme and stays usable on small phones. */
+[hidden] { display: none !important; }
+body.auth-pending > :not(.auth-screen),
+body.auth-locked > :not(.auth-screen) { display: none !important; }
+.auth-screen {
+  min-height: 100dvh;
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.auth-card {
+  width: 100%;
+  max-width: 360px;
+  padding: 32px;
+  border-radius: var(--border-radius);
+  background: var(--bg-card);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.auth-card img { align-self: center; }
+.auth-card h1, .auth-card p { text-align: center; }
+.auth-card p, .auth-message { color: var(--text-secondary); }
+.auth-message { max-width: 360px; text-align: center; }
+.auth-card input, .auth-settings input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--surface-6);
+  border-radius: 6px;
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font: inherit;
+}
+.auth-card input:focus-visible, .auth-settings input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.auth-card .btn { min-height: 44px; }
+.auth-settings { display: grid; gap: 10px; margin-top: 12px; }
+.auth-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+
 [data-theme="light"] .app-logo > circle {
   fill: var(--bg-card);
 }

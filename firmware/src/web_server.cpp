@@ -1,11 +1,12 @@
 #include "web_server.h"
-#include "storage_files.h"
 #include "web_assets.h"
 
 #ifndef NATIVE_BUILD
 #include <Arduino.h>
 #include <time.h>
 #include <cmath>
+#include <esp_timer.h>
+#include <new>
 
 #include "temp_manager.h"
 #include "pid_controller.h"
@@ -15,6 +16,43 @@
 #include "cook_session.h"
 #include "alarm_manager.h"
 #include "error_manager.h"
+
+namespace {
+uint64_t authNow() { return esp_timer_get_time() / 1000; }
+std::string header(AsyncWebServerRequest* request, const char* name) {
+    return request->hasHeader(name) ? request->getHeader(name)->value().c_str() : "";
+}
+void sendAuthReply(AsyncWebServerRequest* request, const WebAuthReply& reply) {
+    auto* response = request->beginResponse(reply.status, "application/json", reply.body.c_str());
+    response->addHeader("Cache-Control", "no-store");
+    if (!reply.cookie.empty()) response->addHeader("Set-Cookie", reply.cookie.c_str());
+    if (reply.status == 429) response->addHeader("Retry-After", "60");
+    request->send(response);
+}
+// This handler is selected at the end of HTTP headers, before any upload/body
+// callback can run. A response-only middleware is too late for ElegantOTA.
+class AuthGate : public AsyncWebHandler {
+public:
+    explicit AuthGate(WebAuth& auth) : _auth(auth) {}
+    int rejection(AsyncWebServerRequest* request) const {
+        if (request->url().startsWith("/api/auth") && request->contentLength() > 1024) return 413;
+        return _auth.gate(request->methodToString(), request->url().c_str(),
+            header(request, "Cookie"), header(request, "Origin"), request->host().c_str(), authNow());
+    }
+    bool canHandle(AsyncWebServerRequest* request) const override {
+        const int status = rejection(request);
+        if (status) request->setAttribute("authRejection", long(status));
+        return status != 0;
+    }
+    void handleRequest(AsyncWebServerRequest* request) override {
+        auto* response = request->beginResponse(request->getAttribute("authRejection", 401L),
+            "application/json", "{\"error\":\"Access denied\"}");
+        response->addHeader("Cache-Control", "no-store"); request->send(response);
+    }
+private:
+    WebAuth& _auth;
+};
+}
 #endif
 
 BBQWebServer::BBQWebServer()
@@ -47,6 +85,56 @@ BBQWebServer::BBQWebServer()
 void BBQWebServer::begin(bool startListening) {
 #ifndef NATIVE_BUILD
     _server = new AsyncWebServer(WEB_PORT);
+    if (_config) _auth.load(_config->getConfig().webAuth);
+    _server->addHandler(new AuthGate(_auth));
+    auto authHandler = [this](AsyncWebServerRequest* request) {
+        const auto parameter = [request](const char* name) -> std::string {
+            if (!request->hasParam(name, true)) return {};
+            const auto& value = request->getParam(name, true)->value();
+            return std::string(value.c_str(), value.length());
+        };
+        if (request->url() == "/api/auth/settings" && parameter("enabled") != "true" && parameter("enabled") != "false") {
+            request->send(400, "application/json", "{\"error\":\"Specify enabled as true or false\"}"); return;
+        }
+        const std::string method = request->methodToString(), path = request->url().c_str();
+        const auto cookie = header(request, "Cookie"), password = parameter("password");
+        const bool enable = parameter("enabled") == "true", secure = header(request, "X-Forwarded-Proto") == "https";
+        const auto process = [this, method, path, cookie, password, enable, secure]() {
+            return _auth.handle(method, path, cookie, password, enable, authNow(), secure,
+                [this](const WebAuthConfig& cfg) { return _config && _config->saveWebAuth(cfg); });
+        };
+        if (path != "/api/auth/login" && path != "/api/auth/settings") {
+            const auto reply = process();
+            sendAuthReply(request, reply);
+            if (path == "/api/auth/settings" && reply.status == 200 && _ws) _ws->closeAll(1008, "Access settings changed");
+            return;
+        }
+        // PBKDF2 must not occupy AsyncTCP's watched network task. Keep one job
+        // in flight, pause safely using the library's weak request continuation,
+        // and let the network/control tasks continue while the worker hashes.
+        if (_authBusy.exchange(true)) {
+            sendAuthReply(request, {429, "{\"error\":\"Authentication is busy. Try again shortly.\"}", {}}); return;
+        }
+        const auto continuation = request->pause();
+        auto* work = new (std::nothrow) std::function<void()>([this, continuation, process, path]() {
+            if (!continuation.expired()) {
+                const auto reply = process();
+                if (auto request = continuation.lock()) sendAuthReply(request.get(), reply);
+                if (path == "/api/auth/settings" && reply.status == 200 && _ws) _ws->closeAll(1008, "Access settings changed");
+            }
+            _authBusy = false;
+        });
+        if (!work || xTaskCreate([](void* arg) {
+            auto* work = static_cast<std::function<void()>*>(arg);
+            (*work)(); delete work; vTaskDelete(nullptr);
+        }, "web_auth", 6144, work, 1, nullptr) != pdPASS) {
+            delete work; _authBusy = false;
+            sendAuthReply(request, {503, "{\"error\":\"Authentication unavailable. Try again.\"}", {}});
+        }
+    };
+    _server->on("/api/auth", HTTP_GET, authHandler);
+    for (const char* path : {"/api/auth/login", "/api/auth/logout", "/api/auth/settings"})
+        _server->on(path, HTTP_POST, authHandler);
     _ws = new AsyncWebSocket(WS_PATH);
 
     // WebSocket event handler
@@ -59,11 +147,13 @@ void BBQWebServer::begin(bool startListening) {
 
     // Version API endpoint
     _server->on("/api/version", HTTP_GET, [](AsyncWebServerRequest* request) {
-        char json[128];
+        char json[160];
         snprintf(json, sizeof(json),
-                 "{\"version\":\"%s\",\"board\":\"wt32_sc01_plus\",\"releaseUpdatesEnabled\":%s}",
-                 FIRMWARE_VERSION, ENABLE_RELEASE_UPDATES ? "true" : "false");
-        request->send(200, "application/json", json);
+                 "{\"version\":\"%s\",\"uiBuild\":\"%s\",\"board\":\"wt32_sc01_plus\",\"releaseUpdatesEnabled\":%s}",
+                 FIRMWARE_VERSION, WEB_UI_BUILD, ENABLE_RELEASE_UPDATES ? "true" : "false");
+        auto* response = request->beginResponse(200, "application/json", json);
+        response->addHeader("Cache-Control", "no-store");
+        request->send(response);
     });
 
     // Read-only timer register diagnostics; this does not measure the external signal.
@@ -88,16 +178,7 @@ void BBQWebServer::begin(bool startListening) {
 
     registerWebAssets(*_server);
 
-    // Preserve access to existing filesystem data. Bundled UI routes take priority.
-    _server->serveStatic("/", LittleFS, "/")
-        .setDefaultFile("index.html")
-        .setTryGzipFirst(false)
-        .setFilter([](AsyncWebServerRequest* request) {
-            String path = request->url();
-            if (path.endsWith("/")) path += "index.html";
-            // The data/ assets are uncompressed. Missing requests go straight to 404.
-            return storageFileExists(path.c_str());
-        });
+    // LittleFS holds passwords, notification keys and cook data; it is private.
 
     // Fallback 404
     _server->onNotFound([](AsyncWebServerRequest* request) {
@@ -136,7 +217,7 @@ void BBQWebServer::update() {
             bbq_protocol::DataPayload payload = buildDataPayload();
             char buf[1024];
             size_t len = bbq_protocol::buildDataMessage(buf, sizeof(buf), payload);
-            _ws->textAll(buf, len);
+            broadcastAuthenticated(buf, len);
         }
     }
 
@@ -166,7 +247,7 @@ void BBQWebServer::broadcastNow() {
         bbq_protocol::DataPayload payload = buildDataPayload();
         char buf[1024];
         size_t len = bbq_protocol::buildDataMessage(buf, sizeof(buf), payload);
-        _ws->textAll(buf, len);
+        broadcastAuthenticated(buf, len);
     }
 #endif
 }
@@ -239,7 +320,7 @@ bbq_protocol::DataPayload BBQWebServer::buildDataPayload() {
     return payload;
 }
 
-void BBQWebServer::sendHistory(uint8_t clientId) {
+void BBQWebServer::sendHistory(uint32_t clientId) {
 #ifndef NATIVE_BUILD
     if (!_session || !_ws) return;
 
@@ -287,7 +368,7 @@ void BBQWebServer::sendHistory(uint8_t clientId) {
 #endif
 }
 
-void BBQWebServer::handleWebSocketMessage(uint8_t clientId, const char* data, size_t len) {
+void BBQWebServer::handleWebSocketMessage(uint32_t clientId, const char* data, size_t len) {
 #ifndef NATIVE_BUILD
     bbq_protocol::ParsedCommand cmd = bbq_protocol::parseCommand(data, len);
 
@@ -310,7 +391,7 @@ void BBQWebServer::handleWebSocketMessage(uint8_t clientId, const char* data, si
             {
                 char buf[128];
                 size_t n = bbq_protocol::buildSessionReset(buf, sizeof(buf), _setpoint);
-                _ws->textAll(buf, n);
+                broadcastAuthenticated(buf, n);
             }
             break;
 
@@ -360,6 +441,12 @@ void BBQWebServer::onWsEvent(AsyncWebSocket* server, AsyncWebSocketClient* clien
 #ifndef NATIVE_BUILD
     switch (type) {
         case WS_EVT_CONNECT:
+            {
+                auto* request = static_cast<AsyncWebServerRequest*>(arg);
+                const auto token = WebAuth::tokenFromCookie(header(request, "Cookie"));
+                if (!_auth.authenticated(token, authNow())) { client->close(1008, "Sign in required"); break; }
+                _peers.add(client->id(), token);
+            }
             Serial.printf("[WS] Client #%u connected from %s\n",
                           client->id(), client->remoteIP().toString().c_str());
             // Send history if session has data, otherwise send current snapshot
@@ -374,15 +461,23 @@ void BBQWebServer::onWsEvent(AsyncWebSocket* server, AsyncWebSocketClient* clien
             break;
 
         case WS_EVT_DISCONNECT:
+            {
+                _peers.remove(client->id());
+            }
             Serial.printf("[WS] Client #%u disconnected.\n", client->id());
             break;
 
         case WS_EVT_DATA:
             {
+                std::string token;
+                if (!_peers.token(client->id(), token) || !_auth.authenticated(token, authNow())) {
+                    client->close(1008, "Sign in required"); break;
+                }
+            }
+            {
                 AwsFrameInfo* info = (AwsFrameInfo*)arg;
                 if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
                     // Complete text message received
-                    data[len] = '\0';  // Null-terminate
                     handleWebSocketMessage(client->id(), (char*)data, len);
                 }
             }
@@ -397,3 +492,12 @@ void BBQWebServer::onWsEvent(AsyncWebSocket* server, AsyncWebSocketClient* clien
     }
 #endif
 }
+
+#ifndef NATIVE_BUILD
+void BBQWebServer::broadcastAuthenticated(const char* data, size_t len) {
+    _peers.visit([this, data, len](uint32_t id, const std::string& token) {
+        if (_auth.authenticated(token, authNow())) _ws->text(id, data, len);
+        else _ws->close(id, 1008, "Sign in required");
+    });
+}
+#endif

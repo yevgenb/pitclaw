@@ -8,11 +8,12 @@ struct FakeAddress {
 struct FakeWiFi {
     bool saved = false;
     bool connected = false;
+    bool connectOnBegin = false;
     unsigned beginCount = 0;
     void setHostname(const char*) {}
     void mode(int) {}
-    void begin() { ++beginCount; }
-    void begin(const char*, const char*) { ++beginCount; }
+    void begin() { ++beginCount; connected = connectOnBegin; }
+    void begin(const char*, const char*) { begin(); }
     int status() const { return connected ? WL_CONNECTED : 0; }
     void disconnect(bool = false) { connected = false; }
     void reconnect() {}

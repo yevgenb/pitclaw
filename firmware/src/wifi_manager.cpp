@@ -2,6 +2,12 @@
 
 #ifndef NATIVE_BUILD
 #include <Arduino.h>
+
+static void startNetworkTime() {
+    // Keep the device clock in UTC; web clients format it in their local zone.
+    // SNTP runs in the background and retries without delaying probe/control work.
+    configTime(0, 0, "pool.ntp.org", "time.nist.gov", "time.google.com");
+}
 #endif
 
 WifiManager::WifiManager()
@@ -55,6 +61,7 @@ void WifiManager::begin(const char* ssid, const char* password) {
             Serial.printf("[WIFI] Connected to '%s', IP: %s\n",
                           ssid, WiFi.localIP().toString().c_str());
             setupMDNS();
+            startNetworkTime();
             return;
         }
 
@@ -87,6 +94,7 @@ void WifiManager::begin(const char* ssid, const char* password) {
             Serial.printf("[WIFI] Connected! IP: %s\n",
                           WiFi.localIP().toString().c_str());
             setupMDNS();
+            startNetworkTime();
             return;
         }
 
@@ -122,6 +130,7 @@ void WifiManager::update() {
             Serial.printf("[WIFI] Connected via portal! IP: %s\n",
                           WiFi.localIP().toString().c_str());
             setupMDNS();
+            startNetworkTime();
         }
         return;
     }
@@ -139,6 +148,7 @@ void WifiManager::update() {
         _connected = true;
         _reconnectAttempts = 0;
         _reconnectIntervalMs = RECONNECT_BASE_MS;
+        startNetworkTime();
         Serial.printf("[WIFI] Reconnected! IP: %s, RSSI: %d dBm\n",
                       WiFi.localIP().toString().c_str(), WiFi.RSSI());
         if (!_mdnsStarted) {

@@ -61,7 +61,7 @@ async function checkPage(base, directory) {
     .map(match => match[1]).filter(url => !url.startsWith('https://'));
   assert.ok(localAssets.length >= 5);
   for (const asset of localAssets) {
-    assert.equal(new URL(asset, base).pathname, directory + path.basename(asset));
+    assert.equal(new URL(asset, base).pathname, directory + path.basename(asset.split('?')[0]));
   }
   context.navigator.serviceWorker = {
     register: url => { registrations.push(new URL(url, base).href); return Promise.resolve(); }
@@ -92,16 +92,16 @@ async function checkWorker(scope) {
     openWindow: async url => openedWindows.push(url)
   };
   const context = vm.createContext({
-    URL, clients,
+    URL, Request, clients, AbortController, setTimeout, clearTimeout,
     self: { registration: { scope }, clients, skipWaiting: async () => {},
       addEventListener: (name, callback) => { handlers[name] = callback; } },
     caches: {
       keys: async () => [...stores.keys()],
       delete: async name => { deleted.push(name); return stores.delete(name); },
       open: async name => ({
-        addAll: async urls => urls.forEach(url => store(name).set(url, new Response('cached ' + url))),
-        match: async request => store(name).get(request.url),
-        put: async (request, response) => store(name).set(request.url, response)
+        addAll: async urls => urls.forEach(request => store(name).set(request.url, new Response('cached ' + request.url))),
+        match: async request => store(name).get(typeof request === 'string' ? request : request.url),
+        put: async (request, response) => store(name).set(typeof request === 'string' ? request : request.url, response)
       })
     },
     fetch: async () => {

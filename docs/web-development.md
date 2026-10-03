@@ -78,6 +78,16 @@ preserve LittleFS settings and session history.
 - **Session export** — download cook data as CSV/JSON (device stores only current/last session)
 - **OTA update** — flash new firmware at Settings → Update
 - **Alarms** — configure pit deviation band, meat targets, Pushover notifications
+- **Optional authentication** — Settings → Access enables a shared password with
+  a simple login screen. It protects the API, WebSocket and firmware upload too.
+  See the [reverse proxy guide](../firmware/docs/reverse-proxy.md#optional-authentication)
+  for HTTPS configuration, sessions and password recovery.
+
+The simulator saves login settings in `sim-auth.json` in its working directory,
+outside its public asset directory. This local file is ignored by Git. Use a
+temporary working directory for isolated auth checks. Run
+`python3 test/auth/run_checks.py` from `firmware/` to test the production server
+adapter and shared authentication policy without SDL or ESP32 hardware.
 
 ### Graph
 

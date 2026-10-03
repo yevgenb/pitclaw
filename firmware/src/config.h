@@ -125,5 +125,6 @@ constexpr bool isValidLidTimeoutSeconds(unsigned seconds) {
 #define AP_SSID             "BBQ-Setup"
 #define AP_PASSWORD         "bbqsetup"
 #ifndef FIRMWARE_VERSION
-#define FIRMWARE_VERSION    "0.2.0"
+#define FIRMWARE_VERSION    "0.2.0-auth.5"
 #endif
+#define WEB_UI_BUILD        "5"

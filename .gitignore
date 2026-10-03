@@ -30,3 +30,7 @@ __pycache__/
 *.elf
 *.bin
 *.hex
+
+# Local simulator login credentials
+sim-auth.json
+sim-auth.json.tmp
