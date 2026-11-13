@@ -52,7 +52,7 @@ async function main() {
     assert.equal(cfg.iterations, 20000);
     assert.equal(cfg.hash, crypto.pbkdf2Sync(password, Buffer.from(cfg.salt, 'hex'), cfg.iterations, 32, 'sha256').toString('hex'));
     assert.ok(!JSON.stringify(cfg).includes(password));
-    for (const resource of ['/api/version', '/api/servo', '/update', '/ota/start', '/config.json', '/sim-auth.json'])
+    for (const resource of ['/api/version', '/api/servo', '/api/wifi-log', '/wifi-events.bin', '/wifi-events.tmp', '/update', '/ota/start', '/config.json', '/sim-auth.json'])
       assert.equal((await request(resource)).status, 401, resource);
     assert.equal((await request('/ota/upload', { file: 'untrusted firmware' })).status, 401);
     assert.equal((await request('/api/auth/login', { password: 'wrong' })).status, 401);
@@ -66,7 +66,16 @@ async function main() {
     assert.match(login.headers.get('set-cookie'), /Secure/);
     const cookie = login.headers.get('set-cookie').split(';')[0];
     assert.equal((await request('/api/version', undefined, cookie)).status, 200);
+    const diagnostics = await request('/api/wifi-log', undefined, cookie);
+    assert.equal(diagnostics.status, 200);
+    assert.match(diagnostics.headers.get('content-disposition'), /attachment.*pitclaw-wifi-log.json/);
+    assert.equal(diagnostics.headers.get('cache-control'), 'no-store');
+    const log = await diagnostics.json();
+    assert.equal(log.capacity, 32); assert.equal(log.snapshotBytes, 1040);
+    assert.deepEqual(log.events, []); assert.match(log.source, /simulator/);
     assert.equal((await request('/config.json', undefined, cookie)).status, 404);
+    assert.equal((await request('/wifi-events.bin', undefined, cookie)).status, 404);
+    assert.equal((await request('/wifi-events.tmp', undefined, cookie)).status, 404);
     assert.equal((await request('/api/auth/settings', { enabled: 'false' }, 'pitclaw_session=forged')).status, 401);
     assert.equal((await request('/ota/start', undefined, cookie, { Origin: 'https://evil.example' })).status, 403);
     const forbidden = await socket(cookie, 'https://evil.example');

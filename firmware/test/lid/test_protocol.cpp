@@ -4,6 +4,7 @@
 #include <cstdio>
 #include "web_protocol.h"
 #include "alarm_manager.h"
+#include "wifi_event_json.h"
 // Access only the real JSON codec for round-trip tests; no simulated copy of its logic.
 #define private public
 #include "config_manager.h"
@@ -11,6 +12,30 @@
 #include "config_manager.cpp"
 static bbq_protocol::ParsedCommand parse(const char* s) { return bbq_protocol::parseCommand(s,strlen(s)); }
 int main() {
+    {
+        WifiEventLog log;
+        log.startBoot({});
+        for (unsigned i = 0; i < 40; ++i) {
+            WifiEventLog::Event event;
+            event.kind = WifiEventLog::Disconnected; event.reason = 2;
+            event.uptimeMs = i; event.status = 3; event.statusBits = 0; event.rssi = -69;
+            event.ip[0] = 192; event.ip[1] = 168; event.ip[3] = i;
+            log.record(event);
+        }
+        JsonDocument doc;
+        wifiEventLogToJson(doc, log.snapshot(), true, false, true);
+        assert(doc["events"].size() == 32 && doc["snapshotBytes"] == 1040);
+        assert(doc["events"][0]["uptimeMs"] == 8);
+        assert(doc["events"][0]["ip"] == "192.168.0.8");
+        assert(doc["events"][31]["ip"] == "192.168.0.39");
+        assert(doc["events"][31]["disconnectReason"] == 2);
+        assert(doc["events"][31]["status"] == 3 && doc["events"][31]["statusBits"] == 0);
+        assert(doc["events"][31]["rssiDbm"] == -69);
+        assert(doc["minSaveIntervalSeconds"] == 60 && doc["pendingSave"] == true);
+        std::string output; serializeJson(doc, output);
+        assert(output.find("password") == std::string::npos && output.find("ssid") == std::string::npos);
+        std::puts("PASS: bounded Wi-Fi diagnostic JSON preserves event order, addresses and reason codes");
+    }
     using bbq_protocol::CmdType;
     // Partial alarm commands leave omitted fields untouched. An explicit null
     // clears only its named target; ArduinoJson also reports missing keys as null.

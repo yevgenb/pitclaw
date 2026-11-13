@@ -14,8 +14,9 @@ run `python test/lid/run_checks.py` from `firmware/`. The runner uses `CXX` (or
   response only; actual smoker overshoot and settling require a cook test.
 - The settling fixture drives the production controller with below-target
   temperature ripple and compares it with legacy conditional anti-windup. It
-  checks accumulated demand, unchanged cold warm-up, 10°F/15°F mode hysteresis,
-  overshoot correction, and reset behavior after a fault, target change or pause.
+  checks accumulated demand, overshoot correction, and reset behavior after a
+  fault, target change or pause. Recorded November 12 warm-up readings reproduce
+  the 5:11 airflow cutoff and verify useful demand remains during that rise.
   Cold-start and hot-restart closed-loop checks use an illustrative thermal
   model; their temperature results do not predict this smoker's overshoot.
 - The real JSON codec and configuration serializer cover command validation,

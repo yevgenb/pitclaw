@@ -1,6 +1,7 @@
 #ifdef SIMULATOR_BUILD
 
 #include "sim_web_server.h"
+#include "../wifi_event_json.h"
 #include "mongoose.h"
 #include "../config.h"
 #include <cstdio>
@@ -298,6 +299,17 @@ void SimWebServer::eventHandler(struct mg_connection* c, int ev, void* ev_data) 
             mg_http_reply(c, 200, "Content-Type: application/json\r\nCache-Control: no-store\r\n",
                           "{\"version\":\"%s\",\"uiBuild\":\"%s\",\"board\":\"simulator\",\"releaseUpdatesEnabled\":false}",
                           FIRMWARE_VERSION, WEB_UI_BUILD);
+            return;
+        }
+
+        if (path == "/api/wifi-log" && method == "GET") {
+            JsonDocument doc;
+            WifiEventLog log;
+            wifiEventLogToJson(doc, log.snapshot(), false, false, false);
+            doc["source"] = "simulator; no Wi-Fi hardware";
+            std::string output; serializeJson(doc, output);
+            mg_http_reply(c, 200, "Content-Type: application/json\r\nCache-Control: no-store\r\nContent-Disposition: attachment; filename=\"pitclaw-wifi-log.json\"\r\n",
+                          "%s", output.c_str());
             return;
         }
 

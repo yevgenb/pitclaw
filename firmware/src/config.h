@@ -40,8 +40,6 @@
 #define PID_SAMPLE_MS   4000    // Compute every 4 seconds
 #define PID_OUTPUT_MIN  0.0
 #define PID_OUTPUT_MAX  100.0
-#define PID_SETTLING_ENTER_F 10.0f  // Internal temperatures are always Fahrenheit
-#define PID_SETTLING_EXIT_F  15.0f  // Hysteresis preserves warm-up damping after a large drop
 
 // --- Fan Control ---
 #define FAN_PWM_FREQ       100     // Provisional two-wire power PWM; bench-verify blower
@@ -128,6 +126,6 @@ constexpr bool isValidLidTimeoutSeconds(unsigned seconds) {
 #define AP_SSID             "BBQ-Setup"
 #define AP_PASSWORD         "bbqsetup"
 #ifndef FIRMWARE_VERSION
-#define FIRMWARE_VERSION    "0.2.0-auth.5"
+#define FIRMWARE_VERSION    "0.2.0-wifi-log.1"
 #endif
-#define WEB_UI_BUILD        "5"
+#define WEB_UI_BUILD        "6"

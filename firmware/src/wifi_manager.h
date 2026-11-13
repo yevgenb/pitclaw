@@ -1,6 +1,8 @@
 #pragma once
 
 #include "config.h"
+#include "wifi_event_log.h"
+#include <atomic>
 
 #ifndef NATIVE_BUILD
 #include <WiFi.h>
@@ -56,6 +58,11 @@ public:
     // Release the application's HTTP listener before starting the portal.
     void onPortalStart(void (*callback)()) { _onPortalStart = callback; }
 
+    WifiEventLog::Image eventLogSnapshot() const { return _eventLog.snapshot(); }
+    bool eventLogPending() const { return _eventLog.pending(); }
+    bool eventLogSaved() const { return _eventLog.lastSaveOK(); }
+    bool eventLogStorageAvailable() const { return _logStorageAvailable; }
+
 private:
     /// Start mDNS responder.
     void setupMDNS();
@@ -79,8 +86,12 @@ private:
 
     unsigned long _lastConnectionCheckMs;
     void (*_onPortalStart)() = nullptr;
+    WifiEventLog _eventLog;
+    bool _logStorageAvailable = false, _logStarted = false;
+    mutable std::atomic<int8_t> _lastSignal{0};
 
 #ifndef NATIVE_BUILD
+    void recordNetworkEvent(uint8_t kind, uint8_t reason = 0);
     WiFiManager   _wifiManager;
 #endif
 };

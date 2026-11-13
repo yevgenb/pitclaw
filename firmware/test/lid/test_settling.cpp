@@ -7,6 +7,7 @@
 #include <initializer_list>
 #include <deque>
 #include "pid_controller.h"
+#include "split_range.h"
 
 uint32_t testNow = 0;
 
@@ -63,29 +64,44 @@ static void persistentShortfall() {
                 pid.getOutput(), legacy.output);
 }
 
-static void warmupAndHysteresis() {
+static void warmupCutoffReplay() {
+    // Actual 5-second pit readings, 2026-11-12 17:10:02..17:12:57 PST.
+    // Target was 225F and lid detection stayed inactive. The original controller
+    // closed the damper to 3% around 201F before recovering from a drop to 191F.
+    const float temperatures[] = {
+        178.9f,180.4f,181.8f,184.0f,185.9f,187.6f,189.6f,191.4f,192.9f,
+        194.6f,196.9f,199.0f,200.5f,201.2f,201.0f,200.7f,200.3f,199.9f,
+        199.1f,198.2f,197.3f,196.3f,195.6f,194.6f,193.9f,193.3f,192.7f,
+        192.4f,191.8f,191.4f,191.1f,191.0f,191.0f,190.8f,191.1f,191.7f
+    };
     testNow = 0;
     PidController pid; pid.begin();
-    Reference reference(82, QuickPID::iAwMode::iAwCondition);
-    for (unsigned seconds = 0; seconds <= 300; seconds += 4) {
-        const float temperature = 82 + 130.0f * seconds / 300;
-        matchesReference(pid, reference, temperature, 225, seconds);
+    Reference legacy(temperatures[0], QuickPID::iAwMode::iAwCondition);
+    // Both controllers were at full demand before the recorded rise. Establish
+    // that state through normal computations instead of accessing PID internals.
+    for (unsigned seconds = 0; seconds <= 120; seconds += 4) {
+        compute(pid, temperatures[0], 225, seconds);
+        legacy.compute(temperatures[0]);
     }
-    // Enter clamping at a 10F error; remain there throughout the 10..15F band.
-    reference.pid.SetAntiWindupMode(QuickPID::iAwMode::iAwClamp);
-    unsigned seconds = 304;
-    for (float temperature : {215.0f, 214.0f, 213.0f, 214.5f, 210.0f}) {
-        matchesReference(pid, reference, temperature, 225, seconds);
-        seconds += 4;
+    assert(pid.getOutput() == 100 && legacy.output == 100);
+    float minimumDemand = 100, legacyMinimum = 100;
+    constexpr unsigned lastSecond = (sizeof(temperatures) / sizeof(temperatures[0]) - 1) * 5;
+    for (unsigned seconds = 4; seconds <= lastSecond; seconds += 4) {
+        const unsigned index = seconds / 5;
+        const float temperature = temperatures[index] + (temperatures[index + 1] - temperatures[index]) * (seconds % 5) / 5.0f;
+        const float demand = compute(pid, temperature, 225, 120 + seconds);
+        legacy.compute(temperature);
+        assert(!pid.isLidOpen());
+        if (seconds >= 50 && seconds <= 90) {
+            minimumDemand = std::min(minimumDemand, demand);
+            legacyMinimum = std::min(legacyMinimum, legacy.output);
+            assert(splitRange(demand, "fan_and_damper", FAN_ON_THRESHOLD).fanPercent > 0);
+        }
     }
-    reference.pid.SetAntiWindupMode(QuickPID::iAwMode::iAwCondition);
-    for (float temperature : {209.5f, 210.5f, 212.0f, 214.0f}) {
-        matchesReference(pid, reference, temperature, 225, seconds);
-        seconds += 4;
-    }
-    reference.pid.SetAntiWindupMode(QuickPID::iAwMode::iAwClamp);
-    matchesReference(pid, reference, 215, 225, seconds);
-    std::puts("PASS: cold warm-up matches legacy; mode hysteresis retains PID history");
+    assert(legacyMinimum < 10); // The fixture must reproduce the reported cutoff.
+    assert(minimumDemand > 60); // Keep meaningful airflow while still 24F below target.
+    std::printf("PASS: recorded 5:11 warm-up: minimum demand %.2f%% versus legacy %.2f%%\n",
+                minimumDemand, legacyMinimum);
 }
 
 static void resetsAndOvershoot() {
@@ -104,12 +120,12 @@ static void resetsAndOvershoot() {
     compute(pid, NAN, 225, 244);
     assert(pid.getOutput() == 0);
     testNow = 248000;
-    Reference fresh(210, QuickPID::iAwMode::iAwCondition);
+    Reference fresh(210, QuickPID::iAwMode::iAwClamp);
     matchesReference(pid, fresh, 210, 225, 248);
 
     // A target change resets settling and accumulated demand.
     testNow = 252000;
-    Reference changed(230, QuickPID::iAwMode::iAwCondition);
+    Reference changed(230, QuickPID::iAwMode::iAwClamp);
     changed.setpoint = 250;
     matchesReference(pid, changed, 230, 250, 252);
 
@@ -117,7 +133,7 @@ static void resetsAndOvershoot() {
     assert(compute(pid, 248, 250, 256) == 0 && pid.isLidOpen());
     pid.resumeLid();
     testNow = 260000;
-    Reference resumed(220, QuickPID::iAwMode::iAwCondition);
+    Reference resumed(220, QuickPID::iAwMode::iAwClamp);
     resumed.setpoint = 250;
     matchesReference(pid, resumed, 220, 250, 260);
     assert(!pid.isLidOpen());
@@ -173,7 +189,7 @@ static void closedLoopFixtures() {
 
 int main() {
     persistentShortfall();
-    warmupAndHysteresis();
+    warmupCutoffReplay();
     resetsAndOvershoot();
     closedLoopFixtures();
 }

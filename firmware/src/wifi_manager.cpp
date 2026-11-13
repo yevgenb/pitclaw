@@ -2,6 +2,9 @@
 
 #ifndef NATIVE_BUILD
 #include <Arduino.h>
+#include <LittleFS.h>
+#include <ctime>
+#include <esp_system.h>
 
 static void startNetworkTime() {
     // Keep the device clock in UTC; web clients format it in their local zone.
@@ -24,6 +27,25 @@ WifiManager::WifiManager()
 
 void WifiManager::begin(const char* ssid, const char* password) {
 #ifndef NATIVE_BUILD
+    if (!_logStarted) {
+        _logStorageAvailable = LittleFS.totalBytes() > 0;
+        if (_logStorageAvailable) _eventLog.load(LittleFS);
+        _logStarted = true;
+        recordNetworkEvent(WifiEventLog::Boot, uint8_t(esp_reset_reason()));
+        WiFi.onEvent([this](WiFiEvent_t event, WiFiEventInfo_t info) {
+            switch (event) {
+                case ARDUINO_EVENT_WIFI_STA_START: recordNetworkEvent(WifiEventLog::Started); break;
+                case ARDUINO_EVENT_WIFI_STA_STOP: recordNetworkEvent(WifiEventLog::Stopped); break;
+                case ARDUINO_EVENT_WIFI_STA_CONNECTED: recordNetworkEvent(WifiEventLog::Associated); break;
+                case ARDUINO_EVENT_WIFI_STA_DISCONNECTED:
+                    recordNetworkEvent(WifiEventLog::Disconnected, info.wifi_sta_disconnected.reason); break;
+                case ARDUINO_EVENT_WIFI_STA_GOT_IP: recordNetworkEvent(WifiEventLog::GotIP); break;
+                case ARDUINO_EVENT_WIFI_STA_LOST_IP: recordNetworkEvent(WifiEventLog::LostIP); break;
+                case ARDUINO_EVENT_WIFI_STA_AUTHMODE_CHANGE: recordNetworkEvent(WifiEventLog::AuthChanged); break;
+                default: break;
+            }
+        });
+    }
     Serial.println("[WIFI] Initializing WiFi manager...");
 
     // Set hostname before connecting
@@ -112,6 +134,7 @@ void WifiManager::begin(const char* ssid, const char* password) {
 void WifiManager::update() {
 #ifndef NATIVE_BUILD
     unsigned long now = millis();
+    if (_logStorageAvailable) _eventLog.persist(LittleFS, now);
 
     // If we are in AP mode, let WiFiManager handle portal clients.
     // WiFiManager's process() services the captive portal in non-blocking mode.
@@ -207,11 +230,34 @@ String WifiManager::getSSID() const {
 int WifiManager::getRSSI() const {
 #ifndef NATIVE_BUILD
     if (_connected && !_apMode) {
-        return WiFi.RSSI();
+        const int8_t signal = WiFi.RSSI();
+        if (signal) _lastSignal.store(signal);
+        return signal;
     }
 #endif
     return 0;
 }
+
+#ifndef NATIVE_BUILD
+void WifiManager::recordNetworkEvent(uint8_t kind, uint8_t reason) {
+    WifiEventLog::Event event;
+    event.kind = kind;
+    event.reason = reason;
+    event.uptimeMs = millis();
+    const auto timestamp = std::time(nullptr);
+    if (timestamp >= 1704067200) event.timestamp = uint32_t(timestamp);
+    event.freeHeap = ESP.getFreeHeap();
+    event.statusBits = WiFi.getStatusBits();
+    event.status = uint8_t(WiFi.status());
+    const int8_t signal = WiFi.RSSI();
+    if (signal) _lastSignal.store(signal);
+    event.rssi = signal ? signal : _lastSignal.load();
+    const auto ip = WiFi.localIP(), gateway = WiFi.gatewayIP();
+    for (unsigned i = 0; i < 4; ++i) { event.ip[i] = ip[i]; event.gateway[i] = gateway[i]; }
+    if (kind == WifiEventLog::Boot) _eventLog.startBoot(event);
+    else _eventLog.record(event);
+}
+#endif
 
 String WifiManager::getAPQRCodeData() const {
     // Standard WiFi QR code format
@@ -235,6 +281,7 @@ void WifiManager::reconnect() {
     _reconnectIntervalMs = RECONNECT_BASE_MS;
     _connected = false;
 
+    WiFi.mode(WIFI_STA); // Manual disconnect turns STA off; reconnect requires it enabled.
     WiFi.disconnect();
     delay(100);
     WiFi.reconnect();

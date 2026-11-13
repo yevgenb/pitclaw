@@ -71,6 +71,5 @@ private:
     LidDetector _lid;
     bool _pidNeedsReset;
     bool _enabled;
-    bool _settling;
 
 };

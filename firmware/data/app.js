@@ -9,7 +9,7 @@
   // ---------------------------------------------------------------------------
   var WS_MAX_BACKOFF = 30000;
   var DEBOUNCE_MS = 300;
-  var UI_BUILD = '5';
+  var UI_BUILD = '6';
   var TEMPERATURE_FIELDS = ['sp', 'meat1Target', 'meat2Target'];
   var PASSWORD_MIN_LENGTH = 8;
   var CHART_WINDOW_SEC = 2 * 60 * 60; // 2 hours visible window

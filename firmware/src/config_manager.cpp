@@ -1,4 +1,5 @@
 #include "config_manager.h"
+#include "wifi_event_log.h"
 #include <string.h>
 
 #ifndef NATIVE_BUILD
@@ -110,6 +111,8 @@ void ConfigManager::factoryReset() {
     if (_mounted) {
         LittleFS.remove(CONFIG_FILE_PATH);
         LittleFS.remove(SESSION_FILE_PATH);
+        LittleFS.remove(WifiEventLog::Path);
+        LittleFS.remove(WifiEventLog::TemporaryPath);
     }
     delay(500);
     ESP.restart();

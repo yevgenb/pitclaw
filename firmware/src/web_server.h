@@ -23,6 +23,7 @@ class ConfigManager;
 class CookSession;
 class AlarmManager;
 class ErrorManager;
+class WifiManager;
 
 // Callback types for commands received from WebSocket clients
 typedef void (*SetpointCallback)(float setpoint);
@@ -55,7 +56,7 @@ public:
     // Set references to other modules for building data messages
     void setModules(TempManager* temp, PidController* pid, FanController* fan,
                     ServoController* servo, ConfigManager* config, CookSession* session,
-                    AlarmManager* alarm, ErrorManager* error);
+                    AlarmManager* alarm, ErrorManager* error, WifiManager* wifi = nullptr);
 
     // Set callbacks for incoming WebSocket commands
     void onSetpoint(SetpointCallback cb)  { _onSetpoint = cb; }
@@ -113,6 +114,7 @@ private:
     CookSession*    _session;
     AlarmManager*   _alarm;
     ErrorManager*   _error;
+    WifiManager*    _wifi;
 
     // State
     float    _setpoint;

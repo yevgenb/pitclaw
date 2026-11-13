@@ -3,12 +3,12 @@
 
 var APP_BASE = self.registration.scope;
 var CACHE_PREFIX = 'pitclaw:' + APP_BASE + ':';
-var CACHE_VERSION = CACHE_PREFIX + 'v14';
+var CACHE_VERSION = CACHE_PREFIX + 'v15';
 var APP_SHELL = [
   './',
   'index.html',
   'app.js',
-  'app.js?v=5',
+  'app.js?v=6',
   'style.css',
   'favicon.svg',
   'manifest.json',

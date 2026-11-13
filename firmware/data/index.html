@@ -329,11 +329,16 @@
           <button class="btn btn-secondary" id="btnCheckUpdate" disabled>Updates disabled</button>
         </div>
       </div>
+      <div class="settings-divider"></div>
+      <div class="settings-group">
+        <div class="settings-label">Diagnostics</div>
+        <a class="btn btn-secondary" href="api/wifi-log" download="pitclaw-wifi-log.json">Download Wi-Fi log</a>
+      </div>
     </div>
   </aside>
 
   <script src="https://cdn.jsdelivr.net/npm/uplot@1.6.31/dist/uPlot.iife.min.js"></script>
-  <script src="app.js?v=5"></script>
+  <script src="app.js?v=6"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(function(err) {

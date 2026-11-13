@@ -52,7 +52,7 @@ int main() {
         assert(auth.login(password, 0, invalidToken) == 401);
         auth.load(saved);
     }
-    for (const auto* path : {"/api/version", "/api/servo", "/ws", "/update", "/ota/start", "/ota/upload", "/config.json", "/session.csv"})
+    for (const auto* path : {"/api/version", "/api/servo", "/api/wifi-log", "/wifi-events.bin", "/wifi-events.tmp", "/ws", "/update", "/ota/start", "/ota/upload", "/config.json", "/session.csv"})
         assert(auth.gate("GET", path, "", "", "bbq", 0) == 401);
     assert(auth.gate("GET", "/api/auth", "", "", "bbq", 0) == 0);
     assert(auth.gate("GET", "/app.js", "", "", "bbq", 0) == 0);

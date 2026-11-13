@@ -16,6 +16,8 @@
 #include "cook_session.h"
 #include "alarm_manager.h"
 #include "error_manager.h"
+#include "wifi_manager.h"
+#include "wifi_event_json.h"
 
 namespace {
 uint64_t authNow() { return esp_timer_get_time() / 1000; }
@@ -70,6 +72,7 @@ BBQWebServer::BBQWebServer()
     , _session(nullptr)
     , _alarm(nullptr)
     , _error(nullptr)
+    , _wifi(nullptr)
     , _setpoint(225.0f)
     , _estimatedTime(0)
     , _lastBroadcastMs(0)
@@ -131,9 +134,9 @@ void BBQWebServer::begin(bool startListening) {
             sendAuthReply(request, {503, "{\"error\":\"Authentication unavailable. Try again.\"}", {}});
         }
     };
-    _server->on("/api/auth", HTTP_GET, authHandler);
+    _server->on("/api/auth", AsyncWebRequestMethod::HTTP_GET, authHandler);
     for (const char* path : {"/api/auth/login", "/api/auth/logout", "/api/auth/settings"})
-        _server->on(path, HTTP_POST, authHandler);
+        _server->on(path, AsyncWebRequestMethod::HTTP_POST, authHandler);
     _ws = new AsyncWebSocket(WS_PATH);
 
     // WebSocket event handler
@@ -145,7 +148,7 @@ void BBQWebServer::begin(bool startListening) {
     _server->addHandler(_ws);
 
     // Version API endpoint
-    _server->on("/api/version", HTTP_GET, [](AsyncWebServerRequest* request) {
+    _server->on("/api/version", AsyncWebRequestMethod::HTTP_GET, [](AsyncWebServerRequest* request) {
         char json[160];
         snprintf(json, sizeof(json),
                  "{\"version\":\"%s\",\"uiBuild\":\"%s\",\"board\":\"wt32_sc01_plus\",\"releaseUpdatesEnabled\":%s}",
@@ -156,7 +159,7 @@ void BBQWebServer::begin(bool startListening) {
     });
 
     // Read-only timer register diagnostics; this does not measure the external signal.
-    _server->on("/api/servo", HTTP_GET, [this](AsyncWebServerRequest* request) {
+    _server->on("/api/servo", AsyncWebRequestMethod::HTTP_GET, [this](AsyncWebServerRequest* request) {
         if (!_servo) { request->send(503, "application/json", "{\"error\":\"Servo unavailable\"}"); return; }
         const uint32_t duty = _servo->getPwmDutyTicks();
         const uint32_t frequency = _servo->getPwmFrequencyHz();
@@ -173,6 +176,22 @@ void BBQWebServer::begin(bool startListening) {
         snprintf(json, sizeof(json), "{\"source\":\"PWM registers\",\"gpio\":%u,\"channel\":%u,\"frequencyHz\":%lu,\"dutyTicks\":%lu,\"pulseUs\":%.2f%s}",
                  PIN_SERVO, SERVO_PWM_CHANNEL, (unsigned long)frequency, (unsigned long)duty, pulse, sampled);
         request->send(200, "application/json", json);
+    });
+
+    _server->on("/api/wifi-log", AsyncWebRequestMethod::HTTP_GET, [this](AsyncWebServerRequest* request) {
+        if (!_wifi) { request->send(503, "application/json", "{\"error\":\"Wi-Fi log unavailable\"}"); return; }
+        JsonDocument doc;
+        wifiEventLogToJson(doc, _wifi->eventLogSnapshot(), _wifi->eventLogPending(),
+                          _wifi->eventLogSaved(), _wifi->eventLogStorageAvailable());
+        doc["firmware"] = FIRMWARE_VERSION;
+        doc["capturedAt"] = uint32_t(time(nullptr));
+        doc["uptimeMs"] = millis();
+        String output;
+        serializeJson(doc, output);
+        auto* response = request->beginResponse(200, "application/json", output);
+        response->addHeader("Cache-Control", "no-store");
+        response->addHeader("Content-Disposition", "attachment; filename=\"pitclaw-wifi-log.json\"");
+        request->send(response);
     });
 
     registerWebAssets(*_server);
@@ -223,7 +242,7 @@ void BBQWebServer::update() {
 
 void BBQWebServer::setModules(TempManager* temp, PidController* pid, FanController* fan,
                             ServoController* servo, ConfigManager* config, CookSession* session,
-                            AlarmManager* alarm, ErrorManager* error) {
+                            AlarmManager* alarm, ErrorManager* error, WifiManager* wifi) {
     _temp   = temp;
     _pid    = pid;
     _fan    = fan;
@@ -232,6 +251,7 @@ void BBQWebServer::setModules(TempManager* temp, PidController* pid, FanControll
     _session = session;
     _alarm  = alarm;
     _error  = error;
+    _wifi   = wifi;
 }
 
 void BBQWebServer::broadcastNow() {

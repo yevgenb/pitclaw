@@ -61,7 +61,7 @@ async function checkPage(base, directory) {
     .map(match => match[1]).filter(url => !url.startsWith('https://'));
   assert.ok(localAssets.length >= 5);
   for (const asset of localAssets) {
-    assert.equal(new URL(asset, base).pathname, directory + path.basename(asset.split('?')[0]));
+    assert.equal(new URL(asset, base).pathname, directory + asset.split('?')[0]);
   }
   context.navigator.serviceWorker = {
     register: url => { registrations.push(new URL(url, base).href); return Promise.resolve(); }
@@ -141,6 +141,7 @@ async function checkWorker(scope) {
   offline = true;
   assert.equal(await (await get(scope + 'app.js')).text(), 'cached ' + scope + 'app.js');
   assert.equal(await get(scope + 'api/version'), undefined, 'API stays on the network');
+  assert.equal(await get(scope + 'api/wifi-log'), undefined, 'Wi-Fi diagnostics are never cached');
   assert.equal(await get(scope + 'ota/start'), undefined, 'OTA start is never cached');
   assert.equal(await get(scope + 'ota/upload', 'POST'), undefined);
   offline = false;

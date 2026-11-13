@@ -17,3 +17,5 @@ struct FakeSerial {
     template <typename... Args> void printf(const char*, Args...) {}
 };
 static FakeSerial Serial;
+struct FakeESP { unsigned getFreeHeap() const { return 200000; } };
+static FakeESP ESP;

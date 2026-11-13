@@ -335,7 +335,7 @@ void setup() {
     // 11. Start HTTP server and WebSocket, pass module references
     webServer.setModules(&tempManager, &pidController, &fanController,
                          &servoController, &configManager, &cookSession,
-                         &alarmManager, &errorManager);
+                         &alarmManager, &errorManager, &wifiManager);
     webServer.begin(!wifiManager.isAPMode());
     webServer.onSetpoint(ws_onSetpoint);
     webServer.onAlarm(ws_onAlarm);
