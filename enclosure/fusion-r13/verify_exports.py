@@ -48,7 +48,7 @@ def main():
             native.vertices*=np.array([1,-1,-1])
             native.vertices+=np.array([0,0,44.9])
         elif part=='retainer':
-            native.vertices-=np.array([0,0,30.1])
+            native.vertices-=np.array([0,0,31.9])
         elif part=='fascia':
             old=native.vertices.copy()
             native.vertices=np.column_stack((old[:,0],-old[:,2],old[:,1]+52))

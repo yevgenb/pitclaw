@@ -137,5 +137,29 @@
     4.0,
     4.1,
     4.2
-  ]
+  ],
+  "display_seat": {
+    "bezel_underside_z_mm": 43.7,
+    "glass_front_z_mm": 43.7,
+    "retainer_stop_z_mm": 34.4,
+    "unshimmed_retainer_front_z_mm": 34.4,
+    "unshimmed_retainer_back_z_mm": 31.9,
+    "effective_mount_depth_range_mm": [
+      9.3,
+      9.6
+    ],
+    "reported_gap_range_mm": [
+      1.5,
+      1.8
+    ],
+    "depth_basis": "Inferred from reported gap and original11.1mm stack; not a supplier measurement",
+    "anchor_shim_range_mm": [
+      0,
+      0.3
+    ],
+    "stop_shortening_from_original_mm": 1.8,
+    "nominal_air_gap_mm": 0,
+    "outer_face_recess_mm": 1.2,
+    "mounting": "Start with0.3mm shims at all four case anchors; reduce evenly until glass contacts without force and anchors are supported."
+  }
 }

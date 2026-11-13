@@ -1,0 +1,168 @@
+{
+  "status": "PASS",
+  "native": {
+    "bezel_underside_samples_z_mm": [
+      43.70000076293945,
+      43.70000076293945,
+      43.70000076293945,
+      43.70000076293945
+    ],
+    "anchors": [
+      {
+        "xy_mm": [
+          -35.5,
+          -40
+        ],
+        "retainer_back_z_mm": 31.899999618530273,
+        "retainer_front_z_mm": 34.400001525878906,
+        "stop_z_mm": 34.400001525878906,
+        "stop_to_retainer_gap_mm": 0.0,
+        "glass_to_bezel_gap_mm": -7.629394502828291e-07
+      },
+      {
+        "xy_mm": [
+          -35.5,
+          40
+        ],
+        "retainer_back_z_mm": 31.899999618530273,
+        "retainer_front_z_mm": 34.400001525878906,
+        "stop_z_mm": 34.400001525878906,
+        "stop_to_retainer_gap_mm": 0.0,
+        "glass_to_bezel_gap_mm": -7.629394502828291e-07
+      },
+      {
+        "xy_mm": [
+          35.5,
+          -40
+        ],
+        "retainer_back_z_mm": 31.899999618530273,
+        "retainer_front_z_mm": 34.400001525878906,
+        "stop_z_mm": 34.400001525878906,
+        "stop_to_retainer_gap_mm": 0.0,
+        "glass_to_bezel_gap_mm": -7.629394502828291e-07
+      },
+      {
+        "xy_mm": [
+          35.5,
+          40
+        ],
+        "retainer_back_z_mm": 31.899999618530273,
+        "retainer_front_z_mm": 34.400001525878906,
+        "stop_z_mm": 34.400001525878906,
+        "stop_to_retainer_gap_mm": 0.0,
+        "glass_to_bezel_gap_mm": -7.629394502828291e-07
+      }
+    ]
+  },
+  "print": {
+    "bezel_underside_samples_z_mm": [
+      43.70000078678131,
+      43.70000078678131,
+      43.70000078678131,
+      43.70000078678131
+    ],
+    "anchors": [
+      {
+        "xy_mm": [
+          -35.5,
+          -40
+        ],
+        "retainer_back_z_mm": 31.899999618530266,
+        "retainer_front_z_mm": 34.40000143051147,
+        "stop_z_mm": 34.40000190734863,
+        "stop_to_retainer_gap_mm": 4.76837158203125e-07,
+        "glass_to_bezel_gap_mm": -6.437301678374752e-07
+      },
+      {
+        "xy_mm": [
+          -35.5,
+          40
+        ],
+        "retainer_back_z_mm": 31.899999618530266,
+        "retainer_front_z_mm": 34.40000143051147,
+        "stop_z_mm": 34.40000190734863,
+        "stop_to_retainer_gap_mm": 4.76837158203125e-07,
+        "glass_to_bezel_gap_mm": -6.437301678374752e-07
+      },
+      {
+        "xy_mm": [
+          35.5,
+          -40
+        ],
+        "retainer_back_z_mm": 31.899999618530266,
+        "retainer_front_z_mm": 34.40000143051147,
+        "stop_z_mm": 34.40000190734863,
+        "stop_to_retainer_gap_mm": 4.76837158203125e-07,
+        "glass_to_bezel_gap_mm": -6.437301678374752e-07
+      },
+      {
+        "xy_mm": [
+          35.5,
+          40
+        ],
+        "retainer_back_z_mm": 31.899999618530266,
+        "retainer_front_z_mm": 34.40000143051147,
+        "stop_z_mm": 34.40000190734863,
+        "stop_to_retainer_gap_mm": 4.76837158203125e-07,
+        "glass_to_bezel_gap_mm": -6.437301678374752e-07
+      }
+    ]
+  },
+  "shim_meshes": [
+    {
+      "file": "display-shim-0.1.stl",
+      "thickness_mm": 0.1,
+      "outer_diameter_mm": 9,
+      "through_hole_mm": 3.4,
+      "copies_required": 4
+    },
+    {
+      "file": "display-shim-0.2.stl",
+      "thickness_mm": 0.2,
+      "outer_diameter_mm": 9,
+      "through_hole_mm": 3.4,
+      "copies_required": 4
+    }
+  ],
+  "fit_range": [
+    {
+      "anchor_shim_mm": 0,
+      "effective_module_depth_mm": 9.3,
+      "glass_to_bezel_gap_mm": -7.629394502828291e-07,
+      "forward_movement_mm": 1.8
+    },
+    {
+      "anchor_shim_mm": 0.1,
+      "effective_module_depth_mm": 9.4,
+      "glass_to_bezel_gap_mm": -7.629394502828291e-07,
+      "forward_movement_mm": 1.7
+    },
+    {
+      "anchor_shim_mm": 0.2,
+      "effective_module_depth_mm": 9.5,
+      "glass_to_bezel_gap_mm": -7.629394502828291e-07,
+      "forward_movement_mm": 1.6
+    },
+    {
+      "anchor_shim_mm": 0.3,
+      "effective_module_depth_mm": 9.6,
+      "glass_to_bezel_gap_mm": -7.629394573882564e-07,
+      "forward_movement_mm": 1.5
+    }
+  ],
+  "original_gap_negative_control_rejected": true,
+  "original_gap_control_mm": 1.8,
+  "effective_mount_depth_range_mm": [
+    9.3,
+    9.6
+  ],
+  "tolerance_mm": 0.005,
+  "sources_sha256": {
+    "native-stl/carrier-top.stl": "3b00a1c9d281f258421367076553955128edf8a03bf41ff9606fd5490a67b39c",
+    "native-stl/carrier-retainer.stl": "7d7d8402be11c27952df738dd9f3e2c4756e0463c41957afe9b8e53ba9810015",
+    "stl/carrier-top.stl": "14a4d5caf343412d2cc4c89de35828de63df30eb60ae8083dabe812b8765e97c",
+    "stl/carrier-retainer.stl": "9c18068f01bc343bdb9c61573113419950b8253f7233e098d7bcb6152ce132e3",
+    "stl/display-shim-0.1.stl": "366a85b7cc2728a3a6a744a0d10ac7b4aafb79f484e8588a0bb489129ba87a7b",
+    "stl/display-shim-0.2.stl": "bb54f72679564ad69e1605b2e371b84f5a16db0c6fe85fb662a91205b60bbc43"
+  }
+}

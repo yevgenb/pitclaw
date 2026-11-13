@@ -9,14 +9,14 @@ from pathlib import Path
 import argparse,concurrent.futures,hashlib,json,shutil,subprocess,sys
 
 HERE=Path(__file__).resolve().parent
-PARTS=[('bottom','carrier-bottom.stl'),('top','carrier-top.stl'),
+PARTS=[('display-shim-0.1','display-shim-0.1.stl'),('display-shim-0.2','display-shim-0.2.stl'),('bottom','carrier-bottom.stl'),('top','carrier-top.stl'),
        ('retainer','carrier-retainer.stl'),('fascia','probe-fascia.stl'),('usb-base','adafruit5807-base.stl'),
        ('joint-coupon-bottom','joint-coupon-bottom.stl'),
        ('joint-coupon-top','joint-coupon-top.stl'),
        ('joint-coupon-fascia','joint-coupon-fascia.stl'),
        ('fit-coupon','fit-coupon.stl'),('insert-coupon','insert-coupon.stl'),
        ('mount-coupon','mount-coupon.stl')]
-COUPONS=[name for part,name in PARTS if 'coupon' in part]
+COUPONS=[name for part,name in PARTS if 'coupon' in part or 'shim' in part]
 INPUTS=['adafruit5807-base.scad','base-geometry.json','carrier-case.scad','carrier-interface.scad','verify_reference.py',
         'verify_running_clearance.py','geometry-contract.json']
 
@@ -62,6 +62,6 @@ def main():
     if args.copy_coupons:
         output=HERE.parent/'stl';output.mkdir(exist_ok=True)
         for name in COUPONS:shutil.copyfile(HERE/name,output/name)
-    print('R13 reference complete:37 geometry checks,11 meshes, and measured full-part clearances.',flush=True)
+    print('R13 reference complete:37 geometry checks,13 meshes, and measured full-part clearances.',flush=True)
 
 if __name__=='__main__':main()

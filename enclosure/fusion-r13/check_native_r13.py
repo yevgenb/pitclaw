@@ -160,6 +160,72 @@ def run(_context):
             minimum_capture.append({'centre_mm':[x,y],'minimum_insert_od_mm':4.0,
                 'nominal_floor_clash_mm3':nominal,'outward_1_5mm_floor_contact_mm3':blocked})
     report['minimum_od_secondary_capture_checks']=minimum_capture
+    # A no-collision check alone also passes a recessed/loose display. Measure
+    # the actual broad planar glass and ledge faces, then prove upward contact.
+    display=d.rootComponent.occurrences.item(4).bRepBodies.item(0)
+    def broad_face_z(body, approximate):
+        faces=[f for f in body.faces if f.geometry.objectType==C.Plane.classType()
+               and abs(f.geometry.normal.z)>.999 and f.area*100>1000
+               and abs(f.geometry.origin.z*10-approximate)<.01]
+        assert len(faces)==1,(body.name,approximate,len(faces))
+        return faces[0].geometry.origin.z*10
+    ledge_z=broad_face_z(top,43.7)
+    glass_z=broad_face_z(display,43.7)
+    gap=ledge_z-glass_z
+    assert abs(gap)<1e-6,('Display must contact the bezel underside',gap)
+    upward_contact=overlap(display,top,dz=.05)
+    assert upward_contact>1e-5,upward_contact
+    old_gap=ledge_z-(glass_z-1.8)
+    assert old_gap>1.79,'Negative control must detect the original recessed seat'
+    report['display_seat']={'bezel_underside_z_mm':ledge_z,'glass_front_z_mm':glass_z,
+        'air_gap_mm':gap,'outer_face_recess_mm':44.9-glass_z,
+        'upward_0_05mm_contact_volume_mm3':upward_contact,
+        'negative_control_old_position_gap_mm':old_gap,
+        'effective_module_depth_range_mm':[9.3,9.6],
+        'scope':'Fit-derived model from reported1.5..1.8mm gap; not a supplier dimension. Actual print needs shim selection.'}
+    # Keep the shell stops fixed and vary the effective module stack through
+    # the user's reported range. Shims go at the four case anchors, not glass.
+    root=d.rootComponent
+    depth_parameter=d.userParameters.itemByName('screen_mount_depth')
+    fit_cases=[]
+    for depth in (9.3,9.4,9.5,9.6):
+        depth_parameter.expression=f'{depth} mm'
+        assert d.computeAll()
+        current_display=root.occurrences.item(4).bRepBodies.item(0)
+        current_retainer=root.occurrences.item(2).bRepBodies.item(0)
+        current_top=root.occurrences.item(1).bRepBodies.item(0)
+        shim=depth-9.3
+        seat=43.7-depth
+        assert abs(broad_face_z(current_display,43.7)-broad_face_z(current_top,43.7))<1e-6
+        assert abs(current_retainer.boundingBox.maxPoint.z*10-seat)<1e-6
+        component_clash=overlap(current_retainer,current_display)
+        for moving in (current_display,current_retainer):
+            for index in (0,1,7,9):
+                component_clash+=overlap(moving,root.occurrences.item(index).bRepBodies.item(0))
+            for path,body in parts:
+                if not path.startswith('REFERENCE - WT32 nominal mounting envelope:'):
+                    component_clash+=overlap(moving,body)
+        assert component_clash<1e-5,(depth,component_clash)
+        shim_clash=0
+        if shim>1e-7:
+            for x in (-35.5,35.5):
+                for y in (-40,40):
+                    washer=manager.createCylinderOrCone(C.Point3D.create(x/10,y/10,seat/10),.45,
+                        C.Point3D.create(x/10,y/10,3.44),.45)
+                    hole=manager.createCylinderOrCone(C.Point3D.create(x/10,y/10,(seat-.01)/10),.17,
+                        C.Point3D.create(x/10,y/10,3.441),.17)
+                    assert manager.booleanOperation(washer,hole,F.BooleanTypes.DifferenceBooleanType)
+                    shim_clash+=sum(overlap(washer,b) for b in (current_top,current_retainer,current_display))
+            assert shim_clash<1e-5,(depth,shim_clash)
+        engagement=6-2.5-shim
+        assert 3.19<engagement<=4 and 5-engagement>=1.49
+        fit_cases.append({'effective_module_depth_mm':depth,'anchor_shim_thickness_mm':round(shim,6),
+            'forward_movement_from_original_mm':round(1.8-shim,6),'glass_to_bezel_gap_mm':0,
+            'component_clash_mm3':component_clash,'shim_clash_mm3':shim_clash,
+            'M3x6_insert_engagement_mm':round(engagement,6),'pilot_bottom_clearance_mm':round(5-engagement,6)})
+    depth_parameter.expression='9.3 mm'
+    assert d.computeAll()
+    report['display_seat']['shimmed_fit_range_checks']=fit_cases
     report['mount_check_scope']='The insert/pilot press-fit and screw/thread overlap are intentional. Tool access assumes the empty bottom before electronics and a straight 8mm working envelope. Floor capture is secondary after insert movement; no pull-out or load rating.'
     assert not clashes and not issues,report
     (OUT/'native-verification.json').write_text(json.dumps(report,indent=2)+'\n')

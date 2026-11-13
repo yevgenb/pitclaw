@@ -24,7 +24,7 @@ and production firmware before applying the small corrections below.
 | P2 | Final routing put a narrow return beside the servo signal at J2 pin 4. | Move the servo approach between layers and widen the shared ground escape to 1.2 mm; recheck filled-ground paths. |
 | P2 | Mounting courtyards alone did not prohibit copper under metal washers. | Add top-washer copper keepouts and round the NPTH exemptions; preserve underside boss/sweep exclusions. |
 | P2 | Existing controller enclosure instructions appeared applicable to the new carrier. | Mark the 50 × 70 mm perfboard case and controller STLs incompatible with the Rev B mounting and connector layout. |
-| P2 | The first carrier case used an unsupported 8 mm WT32 rear mounting datum. | Use the Plus V1.3 drawing's 10.8 mm datum. The revised 44.9 mm case also lowers the carrier onto 5 mm posts and mounts Q1 flat. |
+| P2 | The fixed WT32 mounting stack left a reported 1.5–1.8 mm glass-to-bezel gap despite seated retention. | The earlier 10.8 mm mounting-depth assumption does not reproduce the bench fit. R13 now shortens the top retainer stops 1.8 mm and uses 0–0.3 mm anchor shims; see the enclosure fit procedure. The effective 9.3–9.6 mm depth is inferred from the gap, not a supplier measurement. |
 
 J9’s [manufacturer drawing](https://tensility.s3.us-west-2.amazonaws.com/imports/product_spec_sheets/54-00133.pdf)
 shows A as the isolated center contact and B–C as the sleeve switch. The original

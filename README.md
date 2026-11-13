@@ -24,7 +24,7 @@ As of **13 November 2026**:
 | Touchscreen | LVGL Home, Graph, Settings, temperature editors, alarms, manual/automatic lid pauses, adjustable lid timeout, damper calibration and first-boot setup. Works without a web login or Wi-Fi. |
 | Web interface | Live temperatures, history and predictions, CSV export, shared-password authentication, lid controls, Wi-Fi log download and manual firmware OTA. Supports an Nginx path prefix. |
 | Carrier PCB | **Rev B-T2F0-A5807-S4** routed prototype. Recorded KiCad ERC, DRC, schematic parity, and unconnected-item checks pass. A reviewed bare-board fabrication package is available; physical qualification remains. |
-| Enclosure | **Fusion r13**, 104 × 86 × 44.9 mm: five complete printable parts and fit coupons. Display seating and printed fit remain part of physical qualification. |
+| Enclosure | **Fusion r13**, 104 × 86 × 44.9 mm: five complete printable parts, coupons and optional display-seat shims. The latest top corrects the reported display gap; the revised print still needs a physical fit check. |
 
 The November 13 checks passed the firmware build, **56 targeted native tests**,
 real QuickPID/controller integration tests, authentication/download checks, and
@@ -128,8 +128,10 @@ A relay selects wall power when present and USB-PD otherwise.
 
 The linked fabrication records describe a prototype package. Carrier load,
 relay-transfer, thermal and module-fit qualification remain documented hardware
-work. Use the [enclosure guide](enclosure/README.md) for r13 print files, assembly
-and fit procedures, and the separate fan/damper assembly.
+work. Use the [enclosure guide](enclosure/README.md) for current r13 print files,
+the display-seat correction and the separate fan/damper assembly. Reprint only
+the revised top for the display-gap correction; follow the shim-fitting procedure
+before tightening the retainer.
 
 ## Getting started
 

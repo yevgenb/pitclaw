@@ -41,7 +41,7 @@
       "watertight": true,
       "winding_consistent": true,
       "connected_solids": 1,
-      "volume_mm3": 30245.711103481746,
+      "volume_mm3": 29787.733813612107,
       "bounds_mm": [
         [
           -43.0,
@@ -54,42 +54,42 @@
           21.9
         ]
       ],
-      "triangles": 45932,
-      "native_source_sha256": "5c87b29b35170254c2c1ac6849545404653317d5776a171e5e8af5d7b18d7d6f",
-      "reference_sha256": "a42e89d5b2799d57dc4f005fc08a8733ebbdf48a7a2b8aec52c0c92c01de22bc",
+      "triangles": 44244,
+      "native_source_sha256": "3b00a1c9d281f258421367076553955128edf8a03bf41ff9606fd5490a67b39c",
+      "reference_sha256": "24eaed86f41fd3d371e13aece201957aba194b63ae910c658f5004290062af11",
       "native_to_reference": {
-        "samples": 73890,
+        "samples": 71358,
         "max_mm": 0.01070602802724712,
-        "p99_mm": 0.01005025421647583
+        "p99_mm": 0.010050254216477216
       },
       "reference_to_native": {
         "samples": 21519,
         "max_mm": 0.02989959716796875,
-        "p99_mm": 0.009249858937388382
+        "p99_mm": 0.009236700123223038
       },
-      "relative_volume_difference": 0.00040218730128491735,
+      "relative_volume_difference": 0.00036671259621161913,
       "surface_comparison_pass": true,
-      "print_stl_sha256": "48a63a04014f3aed13caf647003b697cc2a477d248c9a35021cbbe46d2f699bb"
+      "print_stl_sha256": "14a4d5caf343412d2cc4c89de35828de63df30eb60ae8083dabe812b8765e97c"
     },
     "retainer": {
       "watertight": true,
       "winding_consistent": true,
       "connected_solids": 1,
-      "volume_mm3": 3184.5910726324014,
+      "volume_mm3": 3184.595931936452,
       "bounds_mm": [
         [
           -39.9995002746582,
           -48.0,
-          3.8146972514141453e-07
+          -3.8146972514141453e-07
         ],
         [
           39.9995002746582,
           48.0,
-          2.4999984741210923
+          2.5000015258789077
         ]
       ],
       "triangles": 11824,
-      "native_source_sha256": "c8b7d0e3520a7615e1e04ea9628d26d5f4d1d6508f67e783b261970f84ffb55e",
+      "native_source_sha256": "7d7d8402be11c27952df738dd9f3e2c4756e0463c41957afe9b8e53ba9810015",
       "reference_sha256": "c0cecafacd62aac840012e25c48364af924318e06678f69a789ac1327c76559d",
       "native_to_reference": {
         "samples": 22720,
@@ -101,9 +101,9 @@
         "max_mm": 0.010699975724866782,
         "p99_mm": 0.009159504310394924
       },
-      "relative_volume_difference": 0.00015038725371744311,
+      "relative_volume_difference": 0.0001519133632609027,
       "surface_comparison_pass": true,
-      "print_stl_sha256": "992e3f1d4e6c708155129f651bffb29cae8ffea10237358fa6be79d396820cda"
+      "print_stl_sha256": "9c18068f01bc343bdb9c61573113419950b8253f7233e098d7bcb6152ce132e3"
     },
     "fascia": {
       "watertight": true,

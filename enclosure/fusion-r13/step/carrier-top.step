@@ -10,7 +10,7 @@ FILE_DESCRIPTION(
 
 FILE_NAME(
 /* name */ 'carrier-top.step',
-/* time_stamp */ '2026-09-15T10:15:48-07:00',
+/* time_stamp */ '2026-10-03T13:53:28-07:00',
 /* author */ (''),
 /* organization */ (''),
 /* preprocessor_version */ 'ST-DEVELOPER v20.2',
@@ -5584,34 +5584,34 @@ POSITIVE_RATIO_MEASURE(7850.),#3441);
 #5480=CARTESIAN_POINT('',(3.8,-4.8,2.56));
 #5481=CARTESIAN_POINT('Origin',(3.5,-4.8,2.76));
 #5482=CARTESIAN_POINT('',(-3.8,-4.8,2.56));
-#5483=CARTESIAN_POINT('Origin',(3.55,-4.,3.258));
-#5484=CARTESIAN_POINT('',(3.34,-4.,3.26));
-#5485=CARTESIAN_POINT('Origin',(3.55,-4.,3.26));
-#5486=CARTESIAN_POINT('',(3.34,-4.,3.76));
-#5487=CARTESIAN_POINT('',(3.34,-4.,3.258));
-#5488=CARTESIAN_POINT('Origin',(3.55,-4.,3.76));
-#5489=CARTESIAN_POINT('Origin',(3.55,-4.,3.76));
-#5490=CARTESIAN_POINT('Origin',(-3.55,4.,3.258));
-#5491=CARTESIAN_POINT('',(-3.76,4.,3.26));
-#5492=CARTESIAN_POINT('Origin',(-3.55,4.,3.26));
-#5493=CARTESIAN_POINT('',(-3.76,4.,3.76));
-#5494=CARTESIAN_POINT('',(-3.76,4.,3.258));
-#5495=CARTESIAN_POINT('Origin',(-3.55,4.,3.76));
-#5496=CARTESIAN_POINT('Origin',(-3.55,4.,3.76));
-#5497=CARTESIAN_POINT('Origin',(-3.55,-4.,3.258));
-#5498=CARTESIAN_POINT('',(-3.76,-4.,3.26));
-#5499=CARTESIAN_POINT('Origin',(-3.55,-4.,3.26));
-#5500=CARTESIAN_POINT('',(-3.76,-4.,3.76));
-#5501=CARTESIAN_POINT('',(-3.76,-4.,3.258));
-#5502=CARTESIAN_POINT('Origin',(-3.55,-4.,3.76));
-#5503=CARTESIAN_POINT('Origin',(-3.55,-4.,3.76));
-#5504=CARTESIAN_POINT('Origin',(3.55,4.,3.258));
-#5505=CARTESIAN_POINT('',(3.34,4.,3.26));
-#5506=CARTESIAN_POINT('Origin',(3.55,4.,3.26));
-#5507=CARTESIAN_POINT('',(3.34,4.,3.76));
-#5508=CARTESIAN_POINT('',(3.34,4.,3.258));
-#5509=CARTESIAN_POINT('Origin',(3.55,4.,3.76));
-#5510=CARTESIAN_POINT('Origin',(3.55,4.,3.76));
+#5483=CARTESIAN_POINT('Origin',(3.55,-4.,3.438));
+#5484=CARTESIAN_POINT('',(3.34,-4.,3.44));
+#5485=CARTESIAN_POINT('Origin',(3.55,-4.,3.44));
+#5486=CARTESIAN_POINT('',(3.34,-4.,3.94));
+#5487=CARTESIAN_POINT('',(3.34,-4.,3.438));
+#5488=CARTESIAN_POINT('Origin',(3.55,-4.,3.94));
+#5489=CARTESIAN_POINT('Origin',(3.55,-4.,3.94));
+#5490=CARTESIAN_POINT('Origin',(-3.55,4.,3.438));
+#5491=CARTESIAN_POINT('',(-3.76,4.,3.44));
+#5492=CARTESIAN_POINT('Origin',(-3.55,4.,3.44));
+#5493=CARTESIAN_POINT('',(-3.76,4.,3.94));
+#5494=CARTESIAN_POINT('',(-3.76,4.,3.438));
+#5495=CARTESIAN_POINT('Origin',(-3.55,4.,3.94));
+#5496=CARTESIAN_POINT('Origin',(-3.55,4.,3.94));
+#5497=CARTESIAN_POINT('Origin',(-3.55,-4.,3.438));
+#5498=CARTESIAN_POINT('',(-3.76,-4.,3.44));
+#5499=CARTESIAN_POINT('Origin',(-3.55,-4.,3.44));
+#5500=CARTESIAN_POINT('',(-3.76,-4.,3.94));
+#5501=CARTESIAN_POINT('',(-3.76,-4.,3.438));
+#5502=CARTESIAN_POINT('Origin',(-3.55,-4.,3.94));
+#5503=CARTESIAN_POINT('Origin',(-3.55,-4.,3.94));
+#5504=CARTESIAN_POINT('Origin',(3.55,4.,3.438));
+#5505=CARTESIAN_POINT('',(3.34,4.,3.44));
+#5506=CARTESIAN_POINT('Origin',(3.55,4.,3.44));
+#5507=CARTESIAN_POINT('',(3.34,4.,3.94));
+#5508=CARTESIAN_POINT('',(3.34,4.,3.438));
+#5509=CARTESIAN_POINT('Origin',(3.55,4.,3.94));
+#5510=CARTESIAN_POINT('Origin',(3.55,4.,3.94));
 #5511=CARTESIAN_POINT('Origin',(3.8,-2.8,4.17));
 #5512=CARTESIAN_POINT('',(3.48,-2.8,4.17));
 #5513=CARTESIAN_POINT('Origin',(3.8,-2.8,4.17));
@@ -6033,34 +6033,34 @@ POSITIVE_RATIO_MEASURE(7850.),#3441);
 #5909=CARTESIAN_POINT('Origin',(-2.91,-4.51,4.19));
 #5910=CARTESIAN_POINT('Origin',(-2.91,-4.51,4.37));
 #5911=CARTESIAN_POINT('Origin',(0.,0.,4.37));
-#5912=CARTESIAN_POINT('Origin',(3.55,4.,3.26));
+#5912=CARTESIAN_POINT('Origin',(3.55,4.,3.44));
 #5913=CARTESIAN_POINT('',(3.1,4.,4.19));
 #5914=CARTESIAN_POINT('Origin',(3.55,4.,4.19));
-#5915=CARTESIAN_POINT('',(3.1,4.,3.26));
-#5916=CARTESIAN_POINT('',(3.1,4.,3.26));
-#5917=CARTESIAN_POINT('Origin',(3.55,4.,3.26));
-#5918=CARTESIAN_POINT('Origin',(3.55,4.,3.26));
-#5919=CARTESIAN_POINT('Origin',(-3.55,-4.,3.26));
+#5915=CARTESIAN_POINT('',(3.1,4.,3.44));
+#5916=CARTESIAN_POINT('',(3.1,4.,3.44));
+#5917=CARTESIAN_POINT('Origin',(3.55,4.,3.44));
+#5918=CARTESIAN_POINT('Origin',(3.55,4.,3.44));
+#5919=CARTESIAN_POINT('Origin',(-3.55,-4.,3.44));
 #5920=CARTESIAN_POINT('',(-4.,-4.,4.19));
 #5921=CARTESIAN_POINT('Origin',(-3.55,-4.,4.19));
-#5922=CARTESIAN_POINT('',(-4.,-4.,3.26));
-#5923=CARTESIAN_POINT('',(-4.,-4.,3.26));
-#5924=CARTESIAN_POINT('Origin',(-3.55,-4.,3.26));
-#5925=CARTESIAN_POINT('Origin',(-3.55,-4.,3.26));
-#5926=CARTESIAN_POINT('Origin',(-3.55,4.,3.26));
+#5922=CARTESIAN_POINT('',(-4.,-4.,3.44));
+#5923=CARTESIAN_POINT('',(-4.,-4.,3.44));
+#5924=CARTESIAN_POINT('Origin',(-3.55,-4.,3.44));
+#5925=CARTESIAN_POINT('Origin',(-3.55,-4.,3.44));
+#5926=CARTESIAN_POINT('Origin',(-3.55,4.,3.44));
 #5927=CARTESIAN_POINT('',(-4.,4.,4.19));
 #5928=CARTESIAN_POINT('Origin',(-3.55,4.,4.19));
-#5929=CARTESIAN_POINT('',(-4.,4.,3.26));
-#5930=CARTESIAN_POINT('',(-4.,4.,3.26));
-#5931=CARTESIAN_POINT('Origin',(-3.55,4.,3.26));
-#5932=CARTESIAN_POINT('Origin',(-3.55,4.,3.26));
-#5933=CARTESIAN_POINT('Origin',(3.55,-4.,3.26));
+#5929=CARTESIAN_POINT('',(-4.,4.,3.44));
+#5930=CARTESIAN_POINT('',(-4.,4.,3.44));
+#5931=CARTESIAN_POINT('Origin',(-3.55,4.,3.44));
+#5932=CARTESIAN_POINT('Origin',(-3.55,4.,3.44));
+#5933=CARTESIAN_POINT('Origin',(3.55,-4.,3.44));
 #5934=CARTESIAN_POINT('',(3.1,-4.,4.19));
 #5935=CARTESIAN_POINT('Origin',(3.55,-4.,4.19));
-#5936=CARTESIAN_POINT('',(3.1,-4.,3.26));
-#5937=CARTESIAN_POINT('',(3.1,-4.,3.26));
-#5938=CARTESIAN_POINT('Origin',(3.55,-4.,3.26));
-#5939=CARTESIAN_POINT('Origin',(3.55,-4.,3.26));
+#5936=CARTESIAN_POINT('',(3.1,-4.,3.44));
+#5937=CARTESIAN_POINT('',(3.1,-4.,3.44));
+#5938=CARTESIAN_POINT('Origin',(3.55,-4.,3.44));
+#5939=CARTESIAN_POINT('Origin',(3.55,-4.,3.44));
 #5940=CARTESIAN_POINT('Origin',(3.9,4.4,2.76));
 #5941=CARTESIAN_POINT('',(3.9,4.4,2.76));
 #5942=CARTESIAN_POINT('',(3.9,4.7,2.56));
@@ -6244,19 +6244,20 @@ SOLID_ANGLE_UNIT()
 #6088=PRODUCT_DEFINITION_SHAPE('',$,#6091);
 #6089=SHAPE_REPRESENTATION('',(#3450),#6081);
 #6090=PRODUCT_DEFINITION_CONTEXT('part definition',#6095,'design');
-#6091=PRODUCT_DEFINITION('02 Top bezel - fitted lip and 4.2mm pilots',
-'02 Top bezel - fitted lip and 4.2mm pilots',#6092,#6090);
+#6091=PRODUCT_DEFINITION(
+'02 Top bezel - direct glass seat and 4.2mm pilots',
+'02 Top bezel - direct glass seat and 4.2mm pilots',#6092,#6090);
 #6092=PRODUCT_DEFINITION_FORMATION('',$,#6097);
 #6093=PRODUCT_RELATED_PRODUCT_CATEGORY(
-'02 Top bezel - fitted lip and 4.2mm pilots',
-'02 Top bezel - fitted lip and 4.2mm pilots',(#6097));
+'02 Top bezel - direct glass seat and 4.2mm pilots',
+'02 Top bezel - direct glass seat and 4.2mm pilots',(#6097));
 #6094=APPLICATION_PROTOCOL_DEFINITION('international standard',
 'automotive_design',2009,#6095);
 #6095=APPLICATION_CONTEXT(
 'Core Data for Automotive Mechanical Design Process');
 #6096=PRODUCT_CONTEXT('part definition',#6095,'mechanical');
-#6097=PRODUCT('02 Top bezel - fitted lip and 4.2mm pilots',
-'02 Top bezel - fitted lip and 4.2mm pilots',$,(#6096));
+#6097=PRODUCT('02 Top bezel - direct glass seat and 4.2mm pilots',
+'02 Top bezel - direct glass seat and 4.2mm pilots',$,(#6096));
 #6098=PRESENTATION_STYLE_ASSIGNMENT((#6100));
 #6099=PRESENTATION_STYLE_ASSIGNMENT((#6101));
 #6100=SURFACE_STYLE_USAGE(.BOTH.,#6102);

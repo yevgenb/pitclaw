@@ -42,6 +42,7 @@ INPUT_NAMES = (
 )
 EMPTY_MESSAGE = "Current top level object is empty."
 EXPECTED_SIZE = {
+    "shim01":[9,9,.1],"shim02":[9,9,.2],
     "usb_base":[23.32,24.995,4.2],
     "bottom":[86,104,27.6],"top":[86,104,21.9],"retainer":[80,96,2.5],
     "fascia":[72,27.4,9.8],"joint_bottom":[33,30,27.6],
@@ -49,6 +50,7 @@ EXPECTED_SIZE = {
     "coupon":[86,22,27.6],"insert_coupon":[36,16,7.5],"mount_coupon":[16,21,10],
 }
 MESH_NAMES = {
+    "shim01":"display-shim-0.1.stl","shim02":"display-shim-0.2.stl",
     "usb_base":"adafruit5807-base.stl",
     "bottom":"carrier-bottom.stl","top":"carrier-top.stl",
     "retainer":"carrier-retainer.stl","fascia":"probe-fascia.stl",
@@ -156,8 +158,11 @@ def run_check(check: Check, command: list[str], output: Path, timeout: float) ->
         if not near_vector(case, [86, 104, 44.9]):
             raise ValueError(f"Case dimensions changed with diagnostic witnesses: {case}")
         datums = echo_vector(log, "Seam / retainer underside / glass front")
-        if not near_vector(datums, [27.6, 30.1, 43.4]):
+        if not near_vector(datums, [27.6, 31.9, 43.7]):
             raise ValueError(f"Nominal shell/display datums moved with the witnesses: {datums}")
+        contact = echo_vector(log, "Bezel underside / glass gap / outer recess")
+        if not near_vector(contact, [43.7, 0, 1.2]):
+            raise ValueError(f"Display no longer seats directly beneath the bezel: {contact}")
         if check.part.startswith(("guide-capture-","guide-support-")):
             if not target.is_file() or process.returncode != 0:
                 raise ValueError("Guide did not block the required motion")
@@ -200,9 +205,9 @@ def run_check(check: Check, command: list[str], output: Path, timeout: float) ->
             record["result"]="PASS: both lands support downward motion" if support else "PASS: both guides block upward motion"
         elif EMPTY_MESSAGE in log and not target.exists():
             record["result"] = "PASS: empty intersection"
-        elif check.part in ("shell-closure-check","shell-closure-with-fascia-check") and target.is_file() and process.returncode == 0:
+        elif check.part in ("shell-closure-check","shell-closure-with-fascia-check","insertion-check") and target.is_file() and process.returncode == 0:
             # Some OpenSCAD backends retain the shared meeting-face triangles.
-            # Accept this only for shell closure and only at the known seam;
+            # Accept only the known shell seam or glass-to-bezel contact plane;
             # zero signed volume alone would not exclude a real collision.
             import numpy as np
             import trimesh
@@ -213,21 +218,22 @@ def run_check(check: Check, command: list[str], output: Path, timeout: float) ->
             triangles = contact.triangles
             signed_volume = float(np.einsum("ij,ij->i", triangles[:, 0],
                 np.cross(triangles[:, 1], triangles[:, 2])).sum() / 6)
-            max_plane_error = float(np.max(np.abs(contact.vertices[:, 2] - 27.6)))
+            contact_plane = 43.7 if check.part == "insertion-check" else 27.6
+            max_plane_error = float(np.max(np.abs(contact.vertices[:, 2] - contact_plane)))
             thickness = float(contact.bounds[1][2] - contact.bounds[0][2])
             tolerance = 0.00001
-            record["intentional_seam_contact"] = {
+            record["intentional_glass_contact" if check.part == "insertion-check" else "intentional_seam_contact"] = {
                 "file": str(target.relative_to(output)), "sha256": sha256(target),
                 "bounds_mm": contact.bounds.tolist(), "triangles": len(contact.faces),
                 "signed_volume_mm3": signed_volume, "z_thickness_mm": thickness,
                 "maximum_distance_from_seam_mm": max_plane_error,
-                "seam_z_mm": 27.6, "numeric_tolerance": tolerance,
+                "contact_plane_z_mm": contact_plane, "numeric_tolerance": tolerance,
             }
             if not (np.isfinite(contact.vertices).all() and np.isfinite(signed_volume)
                     and max_plane_error <= tolerance and thickness <= tolerance
                     and abs(signed_volume) <= tolerance):
-                raise ValueError("Shell contact is not confined to the intentional zero-thickness seam")
-            record["result"] = "PASS: intentional coplanar seam contact"
+                raise ValueError("Contact is not confined to the intentional zero-thickness seating plane")
+            record["result"] = "PASS: intentional coplanar glass contact" if check.part == "insertion-check" else "PASS: intentional coplanar seam contact"
         else:
             raise ValueError("Collision check did not produce the required empty intersection")
     except subprocess.TimeoutExpired as error:
@@ -332,7 +338,7 @@ def main() -> int:
             "Case geometry stays nominal; printer dimensional error is not silently added to witnesses.",
             "Guide capture checks require positive intersections on both sides; shell closure may retain only coplanar Z27.6 contact; other intersections must be empty.",
             "The programmed 0.3 mm installation lift, clipped solder tails, and declared M2 hardware envelopes apply.",
-            "No modeled tolerance establishes OEM screw suitability, glass-pad preload, cable reach, or thermal/weather qualification.",
+            "No modeled tolerance establishes OEM screw suitability, actual glass seating, cable reach, or thermal/weather qualification.",
         ],
         "geometry_checks": {}, "meshes": {},
     }

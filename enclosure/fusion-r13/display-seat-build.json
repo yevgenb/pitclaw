@@ -1,0 +1,61 @@
+{
+  "status": "CAD VERIFIED for reported1.5..1.8mm gap; physical shim selection and fit check required",
+  "reported_original_gap_range_mm": [
+    1.5,
+    1.8
+  ],
+  "nominal_gap_mm": 0,
+  "bezel_underside_z_mm": 43.7,
+  "glass_front_z_mm": 43.7,
+  "retainer_front_z_mm": 34.4,
+  "retainer_back_z_mm": 31.9,
+  "maximum_retainer_movement_toward_bezel_mm": 1.8,
+  "anchor_shim_range_mm": [
+    0,
+    0.3
+  ],
+  "outer_glass_recess_mm": 1.2,
+  "effective_mount_depth_range_mm": [
+    9.3,
+    9.6
+  ],
+  "depth_basis": "Inferred from reported gap and original11.1mm stack; not a supplier measurement",
+  "reprint": [
+    "carrier-top.stl"
+  ],
+  "unchanged_print_geometry": [
+    "carrier-bottom.stl",
+    "carrier-retainer.stl",
+    "probe-fascia.stl",
+    "adafruit5807-base.stl"
+  ],
+  "physical_fit": "First fit required; start with0.3mm shims at all anchors and reduce evenly until glass contacts without force. Do not tighten across an anchor support gap.",
+  "unchanged_print_geometry_verification": {
+    "carrier-bottom": {
+      "maximum_corresponding_vertex_difference_mm": 0.0,
+      "same_topology": true
+    },
+    "carrier-retainer": {
+      "maximum_corresponding_vertex_difference_mm": 2.86102294921875e-06,
+      "same_topology": true
+    },
+    "probe-fascia": {
+      "maximum_corresponding_vertex_difference_mm": 0.0,
+      "same_topology": true
+    },
+    "adafruit5807-base": {
+      "maximum_corresponding_vertex_difference_mm": 0.0,
+      "same_topology": true
+    }
+  },
+  "evidence": {
+    "gap_range_mm": [
+      1.5,
+      1.8
+    ],
+    "user_observation": "No obstruction to retainer seating",
+    "inside_photo": "IMG_4777.JPG",
+    "inference": "Fixed printed mounting stack holds the glass short of the bezel; exact supplier depth and printed post distance have not been measured separately."
+  },
+  "native_archive_sha256": "2fbf81e3267c45ba74356c976d0e9e4019c5d9e6f557f3254c9ad9532b6c3a52"
+}

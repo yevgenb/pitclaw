@@ -2,7 +2,9 @@
 
 This base replaces **both 3 mm nylon spacers and the adhesive rear support**.
 It reuses the existing two M2 screws, four washers and two nuts. The four
-enclosure parts are unchanged: **no case reprint is needed**.
+enclosure parts were unchanged by the USB-base addition. The subsequent
+[display-seat correction](../README.md#display-gap-correction) requires a new
+top only; it does not change this base or the other printed shapes.
 
 - [Print STL](../stl/adafruit5807-base.stl)
 - [STEP](../step/adafruit5807-base.step)

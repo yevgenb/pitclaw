@@ -3,8 +3,8 @@
   "scope": "Full native STL sections, all 16 pilots and 12 M3 screw passages at 3 depths; diameter tolerance 0.005mm for mesh faceting.",
   "sources_sha256": {
     "carrier-bottom": "bf56c07e3d6270ca00659f2fb539fb083a7821b4db27ecbeab5e58cb36b73a43",
-    "carrier-top": "5c87b29b35170254c2c1ac6849545404653317d5776a171e5e8af5d7b18d7d6f",
-    "carrier-retainer": "c8b7d0e3520a7615e1e04ea9628d26d5f4d1d6508f67e783b261970f84ffb55e"
+    "carrier-top": "3b00a1c9d281f258421367076553955128edf8a03bf41ff9606fd5490a67b39c",
+    "carrier-retainer": "7d7d8402be11c27952df738dd9f3e2c4756e0463c41957afe9b8e53ba9810015"
   },
   "measurements": [
     {
@@ -853,7 +853,7 @@
       "assembled_coordinates_mm": [
         -35.5,
         -40,
-        33
+        34.8
       ],
       "diameters_xy_mm": [
         4.1999969482421875,
@@ -867,7 +867,7 @@
       "assembled_coordinates_mm": [
         -35.5,
         -40,
-        35
+        36.8
       ],
       "diameters_xy_mm": [
         4.1999969482421875,
@@ -881,7 +881,7 @@
       "assembled_coordinates_mm": [
         -35.5,
         -40,
-        37
+        38.8
       ],
       "diameters_xy_mm": [
         4.1999969482421875,
@@ -895,7 +895,7 @@
       "assembled_coordinates_mm": [
         -35.5,
         -40,
-        30.5
+        32.3
       ],
       "diameters_xy_mm": [
         3.4000015258789062,
@@ -909,7 +909,7 @@
       "assembled_coordinates_mm": [
         -35.5,
         -40,
-        31.5
+        33.3
       ],
       "diameters_xy_mm": [
         3.4000015258789062,
@@ -923,7 +923,7 @@
       "assembled_coordinates_mm": [
         -35.5,
         -40,
-        32
+        33.8
       ],
       "diameters_xy_mm": [
         3.4000015258789062,
@@ -937,7 +937,7 @@
       "assembled_coordinates_mm": [
         -35.5,
         40,
-        33
+        34.8
       ],
       "diameters_xy_mm": [
         4.1999969482421875,
@@ -951,7 +951,7 @@
       "assembled_coordinates_mm": [
         -35.5,
         40,
-        35
+        36.8
       ],
       "diameters_xy_mm": [
         4.1999969482421875,
@@ -965,7 +965,7 @@
       "assembled_coordinates_mm": [
         -35.5,
         40,
-        37
+        38.8
       ],
       "diameters_xy_mm": [
         4.1999969482421875,
@@ -979,7 +979,7 @@
       "assembled_coordinates_mm": [
         -35.5,
         40,
-        30.5
+        32.3
       ],
       "diameters_xy_mm": [
         3.4000015258789062,
@@ -993,7 +993,7 @@
       "assembled_coordinates_mm": [
         -35.5,
         40,
-        31.5
+        33.3
       ],
       "diameters_xy_mm": [
         3.4000015258789062,
@@ -1007,7 +1007,7 @@
       "assembled_coordinates_mm": [
         -35.5,
         40,
-        32
+        33.8
       ],
       "diameters_xy_mm": [
         3.4000015258789062,
@@ -1021,7 +1021,7 @@
       "assembled_coordinates_mm": [
         35.5,
         -40,
-        33
+        34.8
       ],
       "diameters_xy_mm": [
         4.1999969482421875,
@@ -1035,7 +1035,7 @@
       "assembled_coordinates_mm": [
         35.5,
         -40,
-        35
+        36.8
       ],
       "diameters_xy_mm": [
         4.1999969482421875,
@@ -1049,7 +1049,7 @@
       "assembled_coordinates_mm": [
         35.5,
         -40,
-        37
+        38.8
       ],
       "diameters_xy_mm": [
         4.1999969482421875,
@@ -1063,7 +1063,7 @@
       "assembled_coordinates_mm": [
         35.5,
         -40,
-        30.5
+        32.3
       ],
       "diameters_xy_mm": [
         3.4000015258789062,
@@ -1077,7 +1077,7 @@
       "assembled_coordinates_mm": [
         35.5,
         -40,
-        31.5
+        33.3
       ],
       "diameters_xy_mm": [
         3.4000015258789062,
@@ -1091,7 +1091,7 @@
       "assembled_coordinates_mm": [
         35.5,
         -40,
-        32
+        33.8
       ],
       "diameters_xy_mm": [
         3.4000015258789062,
@@ -1105,7 +1105,7 @@
       "assembled_coordinates_mm": [
         35.5,
         40,
-        33
+        34.8
       ],
       "diameters_xy_mm": [
         4.1999969482421875,
@@ -1119,7 +1119,7 @@
       "assembled_coordinates_mm": [
         35.5,
         40,
-        35
+        36.8
       ],
       "diameters_xy_mm": [
         4.1999969482421875,
@@ -1133,7 +1133,7 @@
       "assembled_coordinates_mm": [
         35.5,
         40,
-        37
+        38.8
       ],
       "diameters_xy_mm": [
         4.1999969482421875,
@@ -1147,7 +1147,7 @@
       "assembled_coordinates_mm": [
         35.5,
         40,
-        30.5
+        32.3
       ],
       "diameters_xy_mm": [
         3.4000015258789062,
@@ -1161,7 +1161,7 @@
       "assembled_coordinates_mm": [
         35.5,
         40,
-        31.5
+        33.3
       ],
       "diameters_xy_mm": [
         3.4000015258789062,
@@ -1175,7 +1175,7 @@
       "assembled_coordinates_mm": [
         35.5,
         40,
-        32
+        33.8
       ],
       "diameters_xy_mm": [
         3.4000015258789062,

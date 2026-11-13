@@ -9,9 +9,12 @@ from underneath.
 
 A fifth printable part, the [Adafruit 5807 base](fusion-r13/usb-base/README.md),
 replaces both module spacers and the adhesive rear support. It uses the existing
-M2 hardware and keeps the same 3 mm board seating height. The user confirmed
-the original R13 case fit; its four enclosure parts are unchanged, so **no case
-reprint is needed**. Only the new base needs a physical fit check.
+M2 hardware and keeps the same 3 mm board seating height. The current top also
+corrects the reported 1.5–1.8 mm display gap: its four retainer stops are 1.8 mm
+shorter, with 0–0.3 mm outer-anchor shims for fitting. **Only the top needs
+reprinting** for this change; the other main printed shapes are unchanged.
+Follow the [display fit procedure](fusion-r13/README.md#display-gap-correction)
+to seat the glass without forcing it.
 
 - [Print package and editable Fusion model](fusion-r13/pitclaw-enclosure-r13.zip)
 - [Print settings, coupons, hardware and assembly](fusion-r13/README.md)
@@ -21,7 +24,7 @@ reprint is needed**. Only the new base needs a physical fit check.
 - [Matching joint coupons](fusion-r13/README.md#coupons) for checking the same guide,
   seam and insert geometry used by the complete enclosure.
 
-The current package has five complete parts and six coupons. Only the latest
+The current package has five complete parts, six coupons and two optional shim thicknesses. Only the latest
 controller enclosure is kept in the working tree; older designs remain in Git
 history. CAD checks pass. Printed strength and mounting load capacity remain
 unrated.

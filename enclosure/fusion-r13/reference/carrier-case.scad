@@ -52,21 +52,25 @@ carrier_component_height = 16;    // provisional; requires Q1 flat on the carrie
 // K1 is modeled separately from the CAD contract at 16.2 mm seated height.
 // Its local reserved gap is 2.8 mm; do not pretend it fits the 16 mm envelope.
 board_gap = 3;                    // below the lowest display/retainer screw head
-wt32_size = [60,92,10.8];          // footprint and nominal rear mounting-boss datum
-// The 10.8 mm datum is not a maximum rear-component or mated-connector height.
+wt32_size = [60,92,10.8];          // footprint and conservative rear-space envelope
+// Rear components and mated connectors are not fully represented by this box.
 // Fit-check those parts and the harness within the reserved rear stack below.
 wt32_mount_xy = [[4.305,6.52],[55.695,6.52],
                  [4.305,81.66],[55.695,81.66]];
 wt32_active = [49.56,74.04];       // manufacturer drawing, centered on front
 window_size = [50.6,75.1];        // provisional touch/display edge allowance
-glass_recess = 1.5;
-front_pad_compressed = 0.3;       // soft perimeter strip on inactive glass border
+case_height = 44.9;              // preserve the fitted shell, seam and closure grip
+bezel_rim_thickness = 1.2;        // outer face -> underside of the overlapping rim
+front_pad_compressed = 0;        // direct seating on inactive glass border; no air gap
 module_side_clearance = 0.6;      // body tolerance plus print allowance; no glass pinch
 
-// The manufacturer's side view places the rear boss face 10.8 mm behind glass.
-// Verify the purchased module, screw type/engagement, and cable exits physically.
+// Bench gap1.5..1.8mm with the original11.1mm stop-to-ledge distance implies
+// an effective9.3..9.6mm mounting stack, assuming the mating faces are seated.
+// This is a fit-derived range, not a newly measured supplier dimension.
 // Four small screws pass through retainer INTO the OEM's rear blind bosses.
-wt32_rear_mount_depth = 10.8;     // glass front -> OEM boss rear face; sample-verify
+wt32_rear_mount_depth = 9.3;      // zero-shim end of the bench-derived fit range
+retainer_stop_z = 34.4;           // fixed: original32.6 + maximum1.8mm correction
+// For9.4/9.5/9.6mm effective depths use0.1/0.2/0.3mm shims at all four anchors.
 retainer_thickness = 2.5;        // retain stiffness along the long, narrow webs
 small_screw_head_height = 2;
 small_screw_clearance = 2.8;      // provisional; OEM pilot is shown as diameter2.3
@@ -137,9 +141,11 @@ carrier_top_z = carrier_bottom_z + carrier_board_mm[2];
 // Actual WT32 rear components and mated connectors still require measurement.
 display_rear_depth = max(wt32_size[2], wt32_rear_mount_depth +
                         retainer_thickness + small_screw_head_height);
-glass_front_z = carrier_top_z + carrier_component_height + board_gap +
-                display_rear_depth;
-case_height = glass_front_z + glass_recess;
+// Locate the display FROM the bezel contact face, rather than deriving its
+// height independently from the electronics stack. The old independent stack
+// left a permanent 0.3mm gap at the retainer hard stops when no strip was fitted.
+front_pocket_roof_z = case_height - bezel_rim_thickness;
+glass_front_z = front_pocket_roof_z - front_pad_compressed;
 power_opening_roof_z = max(
     max([for(i=[0:1]) carrier_top_z+power_face_center_z[i]+
         power_face_size[i][1]/2+power_profile_clearance+carrier_slide_lift]),
@@ -150,7 +156,6 @@ seam_z = max(carrier_top_z + carrier_component_height + 2,
              carrier_top_z+18.5,power_opening_roof_z + 2);
 retainer_top_z = glass_front_z - wt32_rear_mount_depth;
 retainer_bottom_z = retainer_top_z - retainer_thickness;
-front_pocket_roof_z = glass_front_z + front_pad_compressed;
 inside_width = case_width - 2*wall;
 inside_length = case_length - 2*wall;
 lip_width = inside_width - 2*locating_lip_clearance;
@@ -182,8 +187,8 @@ assert(insert_boss_od >= insert_od+2*1.6, "Insert boss wall too thin");
 assert(floor_thickness+carrier_standoff-insert_bore_depth >=
        minimum_floor_under_insert, "Blind insert bore thins the bottom floor");
 assert(insert_bore_depth >= insert_length+1, "Insufficient insert melt relief");
-assert(front_pad_compressed > 0 && glass_recess-front_pad_compressed >= 1,
-       "Need compliant interface plus at least1mm plastic front rim");
+assert(front_pad_compressed >= 0 && bezel_rim_thickness >= 1,
+       "Need nonnegative interface thickness and at least1mm plastic front rim");
 assert(window_size[0] > wt32_active[0] && window_size[1] > wt32_active[1],
        "Window masks active display");
 assert(retainer_outer[0] < inside_width && retainer_outer[1] < inside_length,
@@ -213,7 +218,7 @@ assert(seam_z >= power_opening_roof_z+2-eps,
        "Power opening leaves less than 2 mm wall below the seam");
 assert(retainer_top_z > seam_z+1,
        "Retainer insertion relief reaches the final anchor hard stops");
-assert(case_height-retainer_top_z-retainer_anchor_bore_depth >= 2.5,
+assert(case_height-retainer_stop_z-retainer_anchor_bore_depth >= 2.5,
        "Retainer insert bore leaves too little front material");
 for (p=case_closure_xy)
     assert(abs(p[0])-insert_boss_od/2 > carrier_board_mm[0]/2,
@@ -228,13 +233,15 @@ echo("FIT_CHECK_INPUTS", [check_pcb_thickness, check_pd_thickness,
 echo("Carrier underside / top / max component", [carrier_bottom_z,
      carrier_top_z,carrier_top_z+carrier_component_height]);
 echo("Seam / retainer underside / glass front", [seam_z,retainer_bottom_z,glass_front_z]);
+echo("Bezel underside / glass gap / outer recess",
+     [front_pocket_roof_z,front_pocket_roof_z-glass_front_z,case_height-glass_front_z]);
 echo("USB face setback / pocket floor thickness / channel separation",
      [usb_face_setback,usb_nominal_floor,usb_pocket_channel_gap]);
 echo("USB local floor skin at hidden PCB / screw-head clearances",
      [usb_pcb_relief_skin,usb_head_relief_skin]);
 echo("USB PCB / mounting hardware clearance from normal wall",
      [pd_pcb_wall_clearance,pd_hardware_wall_clearance]);
-echo("UNMEASURED: OEM rear mounting plane, screw engagement, glass pad preload,");
+echo("UNMEASURED: OEM rear mounting plane, screw engagement, glass seating,");
 echo("rear components/antenna/cables, all plug overmolds and most connector Z.");
 
 module rounded_rect(w,h,r=2) {
@@ -363,7 +370,7 @@ module bottom_shell_board_coordinates() {
 module top_bezel_base() {
     difference() {
         union() {
-            // Top cup: screen pocket is cut separately, leaving a soft-pad ledge.
+            // Top cup: screen pocket leaves a ledge on the inactive glass border.
             difference() {
                 translate([0,0,seam_z])
                     rounded_solid(case_width,case_length,case_height-seam_z,corner_radius);
@@ -395,11 +402,12 @@ module top_bezel_base() {
             for(p=case_closure_xy)
                 translate([p[0],p[1],seam_z])
                     cylinder(d=insert_boss_od,h=case_height-seam_z);
-            // These hard stops fix the retainer plane; tightening cannot close
-            // the glass pocket. Pad compression is set by dimensions, not torque.
+            // Fixed shortened stops allow1.8mm forward travel. Fit0..0.3mm shims
+            // between these stops and retainer to establish glass contact.
+            // Tightening must not bridge a support gap or load/bow the glass.
             for(p=retainer_anchor_xy)
-                translate([p[0],p[1],retainer_top_z])
-                    cylinder(d=retainer_anchor_od,h=case_height-retainer_top_z);
+                translate([p[0],p[1],retainer_stop_z])
+                    cylinder(d=retainer_anchor_od,h=case_height-retainer_stop_z);
         }
         translate([0,0,seam_z-eps])
             rounded_solid(wt32_size[0]+2*module_side_clearance,
@@ -419,7 +427,7 @@ module top_bezel_base() {
                 cylinder(d=m3_head_clearance,h=closure_head_recess+eps);
         }
         for(p=retainer_anchor_xy)
-            translate([p[0],p[1],retainer_top_z-eps])
+            translate([p[0],p[1],retainer_stop_z-eps])
                 cylinder(d=retainer_anchor_pilot,h=retainer_anchor_bore_depth+eps);
         retainer_insertion_relief();
     }
@@ -610,7 +618,7 @@ module wt32_witness() {
     color([0.20,0.21,0.23])
         translate([0,0,glass_front_z-4.8]) ring(60,92,53,82,3.35,1.5);
     color([0.11,0.13,0.14])
-        translate([-24,-35,glass_front_z-wt32_size[2]]) cube([48,70,1.6]);
+        translate([-24,-35,glass_front_z-wt32_rear_mount_depth]) cube([48,70,1.6]);
     for(p=wt32_mount_xy)
         color([0.2,0.21,0.23])
             translate(concat(local_xy(p),[retainer_top_z]))
@@ -618,7 +626,8 @@ module wt32_witness() {
                     cylinder(d=5.8,h=wt32_rear_mount_depth-4.8);
                     translate([0,0,-eps]) cylinder(d=2.3,h=2.5);
                 }
-    // Compliant strip is shown as a witness only; fit compression experimentally.
+    // Optional interface only when explicitly dimensioned; default is direct contact.
+    if (front_pad_compressed > 0)
     color([0.82,0.83,0.80])
         translate([0,0,glass_front_z])
             ring(58.8,90.8,55.2,85.2,front_pad_compressed,1.2);
@@ -764,6 +773,8 @@ else if(part=="lid-closing-check") lid_closing_collision();
 else if(part=="top") top_print();
 else if(part=="bottom") bottom_shell();
 else if(part=="retainer") retainer();
+else if(part=="display-shim-0.1") display_shim(.1);
+else if(part=="display-shim-0.2") display_shim(.2);
 else if(part=="fit-coupon") fit_coupon();
 else if(part=="insert-coupon") insert_coupon();
 else if(part=="print") {
@@ -1121,5 +1132,13 @@ module lowered_entry_collision() {
             }
             carrier_sweep(carrier_case_offset_y,carrier_case_offset_y,0,0);
         }
+    }
+}
+
+// One washer per STL; print four copies of each required thickness.
+module display_shim(t) {
+    difference() {
+        cylinder(d=retainer_anchor_od,h=t);
+        translate([0,0,-eps]) cylinder(d=m3_clearance,h=t+2*eps);
     }
 }

@@ -321,5 +321,60 @@
       "outward_1_5mm_floor_contact_mm3": 1.7435839227424275
     }
   ],
+  "display_seat": {
+    "bezel_underside_z_mm": 43.7,
+    "glass_front_z_mm": 43.7,
+    "air_gap_mm": 0.0,
+    "outer_face_recess_mm": 1.1999999999999957,
+    "upward_0_05mm_contact_volume_mm3": 85.94334954080004,
+    "negative_control_old_position_gap_mm": 1.7999999999999972,
+    "effective_module_depth_range_mm": [
+      9.3,
+      9.6
+    ],
+    "scope": "Fit-derived model from reported1.5..1.8mm gap; not a supplier dimension. Actual print needs shim selection.",
+    "shimmed_fit_range_checks": [
+      {
+        "effective_module_depth_mm": 9.3,
+        "anchor_shim_thickness_mm": 0.0,
+        "forward_movement_from_original_mm": 1.8,
+        "glass_to_bezel_gap_mm": 0,
+        "component_clash_mm3": 0,
+        "shim_clash_mm3": 0,
+        "M3x6_insert_engagement_mm": 3.5,
+        "pilot_bottom_clearance_mm": 1.5
+      },
+      {
+        "effective_module_depth_mm": 9.4,
+        "anchor_shim_thickness_mm": 0.1,
+        "forward_movement_from_original_mm": 1.7,
+        "glass_to_bezel_gap_mm": 0,
+        "component_clash_mm3": 0,
+        "shim_clash_mm3": 0,
+        "M3x6_insert_engagement_mm": 3.4,
+        "pilot_bottom_clearance_mm": 1.6
+      },
+      {
+        "effective_module_depth_mm": 9.5,
+        "anchor_shim_thickness_mm": 0.2,
+        "forward_movement_from_original_mm": 1.6,
+        "glass_to_bezel_gap_mm": 0,
+        "component_clash_mm3": 0,
+        "shim_clash_mm3": 0,
+        "M3x6_insert_engagement_mm": 3.3,
+        "pilot_bottom_clearance_mm": 1.7
+      },
+      {
+        "effective_module_depth_mm": 9.6,
+        "anchor_shim_thickness_mm": 0.3,
+        "forward_movement_from_original_mm": 1.5,
+        "glass_to_bezel_gap_mm": 0,
+        "component_clash_mm3": 0,
+        "shim_clash_mm3": 0,
+        "M3x6_insert_engagement_mm": 3.2,
+        "pilot_bottom_clearance_mm": 1.8
+      }
+    ]
+  },
   "mount_check_scope": "The insert/pilot press-fit and screw/thread overlap are intentional. Tool access assumes the empty bottom before electronics and a straight 8mm working envelope. Floor capture is secondary after insert movement; no pull-out or load rating."
 }

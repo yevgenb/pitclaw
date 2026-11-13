@@ -1,6 +1,5 @@
 {
-  "document": "PitClaw enclosure r13 - fitted enclosure with USB base",
-  "source_f3d_sha256": "ca7851904af2cbe75ff7c9a623b59fd13645fee92741013a807a5e538b02906f",
+  "document": "PitClaw enclosure r13 - fitted display seat with USB base",
   "mount_centres_mm": [
     [
       -36,
@@ -109,5 +108,19 @@
     "seat_height_mm": 3,
     "report": "usb-base/build-native.json",
     "case_solids_unchanged": true
-  }
+  },
+  "display_seat": {
+    "report": "display-seat-build.json",
+    "nominal_air_gap_mm": 0,
+    "retainer_stop_shortening_mm": 1.8,
+    "anchor_shim_range_mm": [
+      0,
+      0.3
+    ],
+    "reported_original_gap_range_mm": [
+      1.5,
+      1.8
+    ]
+  },
+  "source_f3d_sha256_before_display_fix": "ca7851904af2cbe75ff7c9a623b59fd13645fee92741013a807a5e538b02906f"
 }

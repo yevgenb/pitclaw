@@ -15,6 +15,7 @@ PROTECTED = {
     'hardware/carrier-revb/fabrication/jlcpcb-2026-09-06/pitclaw-carrier-jlcpcb.zip': 'd75ea76ef0e9b0892459d3f8e0c6367630f1d467716bc774757389a562409497',
 }
 SIZES = {
+    'display-shim-0.1': [9,9,.1], 'display-shim-0.2': [9,9,.2],
     'adafruit5807-base': [23.32,24.995,4.2],
     'carrier-bottom': [86, 104, 27.6], 'carrier-top': [86, 104, 21.9],
     'carrier-retainer': [80, 96, 2.5], 'probe-fascia': [72, 27.4, 9.8],
@@ -42,7 +43,7 @@ def main():
     assert usb_native['status']=='PASS' and usb_mesh['status']=='PASS'
     assert sha(OUT/'native-stl/adafruit5807-base.stl')==usb_mesh['native_sha256']
     assert sha(OUT/'stl/adafruit5807-base.stl')==usb_mesh['print_sha256']
-    for report_name in ('running-clearance-verification.json','insert-hole-verification.json'):
+    for report_name in ('running-clearance-verification.json','insert-hole-verification.json','display-seat-verification.json'):
         measured=json.loads((OUT/report_name).read_text())
         assert measured['status'].startswith('PASS'),report_name
         for name,expected in measured['sources_sha256'].items():
@@ -67,7 +68,7 @@ def main():
         assert sha(OUT / 'native-stl' / (name + '.stl')) == record['native_source_sha256']
         assert sha(OUT / 'reference' / (name + '.stl')) == record['reference_sha256']
     for name in ['joint-coupon-bottom', 'joint-coupon-top', 'joint-coupon-fascia',
-                 'fit-coupon', 'insert-coupon', 'mount-coupon']:
+                 'fit-coupon', 'insert-coupon', 'mount-coupon', 'display-shim-0.1', 'display-shim-0.2']:
         assert meshes[name]['sha256'] == sha(OUT / 'reference' / (name + '.stl'))
 
     files = [OUT / p for p in [
@@ -77,6 +78,7 @@ def main():
         'native-verification.json', 'mesh-verification.json', 'build-native.json',
         'reference/fit-verification.json',
         'running-clearance-verification.json', 'insert-hole-verification.json',
+        'display-seat-build.json', 'display-seat-verification.json', 'display-seat-section.png',
         'assembled-probe-face.png', 'assembly-1-carrier.png', 'assembly-2-fascia.png',
         'assembly-3-lid.png', 'fascia-back.png', 'bezel-keys.png', 'reinforced-joint-detail.png',
         'bottom-mounts-inside.png', 'bottom-mounts-outside.png', 'mount-pattern-top-view.png',
@@ -89,13 +91,17 @@ def main():
     files += sorted(OUT.glob('*.py'))
     files += [p for p in sorted((OUT/'usb-base').iterdir()) if p.is_file()]
     files = sorted(set(files))
-    assert len(list((OUT / 'stl').glob('*.stl'))) == 11
+    assert len(list((OUT / 'stl').glob('*.stl'))) == 13
     assert len(list((OUT / 'step').glob('*.step'))) == 5
     assert all(p.is_file() and p.stat().st_size > 0 for p in files)
     manifest = {
-        'revision': 'r13 fitted enclosure with printed Adafruit5807 base',
+        'revision': 'r13 direct glass seat with printed Adafruit5807 base',
         'created_utc': datetime.now(timezone.utc).isoformat(),
-        'status': 'CAD VERIFIED; original case fit confirmed by user; added USB base awaits physical fit',
+        'status': 'CAD VERIFIED for reported1.5..1.8mm gap; select0..0.3mm anchor shims during physical fit',
+        'display_air_gap_mm': 0, 'display_outer_recess_mm': 1.2,
+        'display_fix_reprint': ['carrier-top.stl'],
+        'display_stop_shortening_mm': 1.8, 'display_anchor_shim_range_mm': [0,.3],
+        'display_shims': ['display-shim-0.1.stl','display-shim-0.2.stl'],
         'geometry_checks': len(reference['geometry_checks']),
         'reference_meshes': len(reference['meshes']),
         'native_body_case_tests': native['body_case_boolean_tests'],

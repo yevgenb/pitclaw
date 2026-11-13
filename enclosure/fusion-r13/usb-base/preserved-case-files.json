@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "scope": "All previously supplied case parts and coupons retain their exact STL/STEP bytes; no case reprint required.",
+  "scope": "Historical check at USB-base introduction only. The later display-seat correction supersedes the top and the assembly placement of the retainer; see ../display-seat-build.json.",
   "files_sha256": {
     "enclosure/fusion-r13/stl/joint-coupon-bottom.stl": "cf26e005e4af6eb09a8fd4a05162f2260939c06204cef4b32808e1a91f255fe7",
     "enclosure/fusion-r13/stl/insert-coupon.stl": "ae7ea4d04560875b8cd0fe6083c8da4c2cd6aeab0f6031d84b585f22d1df8b9e",

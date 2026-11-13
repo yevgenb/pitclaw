@@ -20,8 +20,8 @@ def main():
             locations.append(('carrier-bottom','external mount screw passage',x,y,[.5,1.5,2],3.4))
     for x in (-35.5,35.5):
         for y in (-40,40):
-            locations.append(('carrier-top','retainer pilot',x,y,[33,35,37],4.2))
-            locations.append(('carrier-retainer','retainer screw passage',x,y,[30.5,31.5,32],3.4))
+            locations.append(('carrier-top','retainer pilot',x,y,[34.8,36.8,38.8],4.2))
+            locations.append(('carrier-retainer','retainer screw passage',x,y,[32.3,33.3,33.8],3.4))
     files={name:OUT/'native-stl'/f'{name}.stl' for name,*_ in locations}
     hashes={n:sha(p) for n,p in files.items()}
     meshes={n:trimesh.load(p,force='mesh') for n,p in files.items()}
