@@ -1,5 +1,11 @@
 # <img src="firmware/data/favicon.svg" width="36" height="36" alt="Pit Claw logo"> Pit Claw
 
+<p align="center">
+  <img src="enclosure/fusion-r13/assembled-probe-face.png" width="820" alt="Pit Claw controller in its orange and charcoal Fusion r13 enclosure, with the touchscreen bezel and three probe inputs">
+</p>
+
+*The current [Fusion r13 enclosure](enclosure/fusion-r13/README.md), shown as a CAD rendering.*
+
 [![CI](https://github.com/yevgenb/pitclaw/actions/workflows/ci.yml/badge.svg)](https://github.com/yevgenb/pitclaw/actions/workflows/ci.yml)
 
 BBQ temperature monitor and controller built around the WT32-SC01 Plus: an
@@ -10,25 +16,26 @@ temperature control work without Wi-Fi.
 
 ## Current project state
 
-As of **9 September 2026**:
+As of **13 November 2026**:
 
 | Area | State |
 | --- | --- |
-| Firmware | Version **0.2.0**, built and flashed to a WT32-SC01 Plus; upload verified and the device responded after reboot. |
-| Touchscreen | LVGL Home, Graph, Settings, temperature editors, shared alarms, and first-boot setup are implemented. The latest polish is included in the flashed build. |
-| Web interface | Live temperatures, history and prediction graphs, session controls/export, settings, and manual firmware OTA. Supports deployment under an Nginx path prefix. |
+| Firmware | Device build **0.2.0-wifi-log.1**, web UI build **6**. Installed through OTA; version, login, live updates and saved Wi-Fi diagnostics verified after restart. |
+| Touchscreen | LVGL Home, Graph, Settings, temperature editors, alarms, manual/automatic lid pauses, adjustable lid timeout, damper calibration and first-boot setup. Works without a web login or Wi-Fi. |
+| Web interface | Live temperatures, history and predictions, CSV export, shared-password authentication, lid controls, Wi-Fi log download and manual firmware OTA. Supports an Nginx path prefix. |
 | Carrier PCB | **Rev B-T2F0-A5807-S4** routed prototype. Recorded KiCad ERC, DRC, schematic parity, and unconnected-item checks pass. A reviewed bare-board fabrication package is available; physical qualification remains. |
-| Enclosure | **r7 landscape fit prototype**, with exported STLs, fit coupons, and a print guide. Physical module and printed-part fit still need verification. |
+| Enclosure | **Fusion r13**, 104 × 86 × 44.9 mm: five complete printable parts and fit coupons. Display seating and printed fit remain part of physical qualification. |
 
-The firmware and simulator builds, **132 native test cases**, and the headless
-LVGL checks passed on 8 September 2026. The LVGL checks include 123 navigation
-taps and editor, unit, alarm, probe-state, and layout transitions. This validation
-does not establish smoker temperature accuracy or qualify the new carrier's
-electrical loads, thermal behavior, or physical fit.
+The November 13 checks passed the firmware build, **56 targeted native tests**,
+real QuickPID/controller integration tests, authentication/download checks, and
+web UI cache/reverse-proxy checks. The recorded November 12 warm-up cutoff is
+now a regression fixture. The updated PID still needs a physical cold-start
+overshoot check. Software and CAD checks do not qualify probe accuracy, PCB
+loads, thermal behavior or printed fit.
 
 ## Touchscreen
 
-![Current Pit Claw touchscreen dashboard](docs/media/pitclaw-dashboard.png)
+![Example Pit Claw touchscreen dashboard](docs/media/pitclaw-dashboard.png)
 
 The current dashboard uses large temperature readings, rounded cards and
 navigation buttons, neutral status labels, and consistent edit icons. Smaller
@@ -44,6 +51,9 @@ The image above is a native 480×320 LVGL render with example readings.
   editor. Disconnected probes display dashes.
 - Setup provides Back navigation, Wi-Fi connection feedback, live probe checks,
   and separate fan, servo, and buzzer test buttons.
+- **Open lid / Close lid** pauses and resumes airflow. Settings provides automatic
+  lid detection and a 30–600 second timeout. **Damper setup** tests and saves the
+  actual closed/open servo endpoints.
 
 ## Control and monitoring
 
@@ -51,18 +61,28 @@ The image above is a native 480×320 LVGL render with example readings.
   thermistor probes with 2.5 mm jacks. Thermoworks Pro-Series is the intended
   probe family; other probes require suitable coefficients and calibration.
 - **PID control:** fan-only, fan-and-damper, and damper-priority modes, with
-  startup handling, lid-open detection, and output shutdown on a pit-probe fault.
-- **Alarms:** local buzzer, browser audio, and configurable Pushover notifications.
-- **Cook sessions:** temperature history, predicted meat completion times, and
-  CSV/JSON export. Download a session before starting a new one.
-- **Configuration:** persistent settings, probe calibration, and Wi-Fi reconnect.
+  clamped anti-windup throughout warm-up and settling. Default gains are
+  **P=4, I=0.03, D=5**, computed every four seconds. Pit-probe faults stop the fan
+  and close the damper; unplugged meat probes are optional.
+- **Alarms:** local buzzer, browser audio and browser notifications where supported.
+  Pushover settings exist in the configuration schema; delivery is not implemented.
+- **Cook sessions:** five-second sampling, a rolling 600-point device history
+  (about 50 minutes), restart recovery, CSV export of that retained window and
+  estimated meat completion times. Download before starting a new session.
+- **Configuration:** persistent probe/touch calibration, damper endpoints, fan
+  mode, web authentication and Wi-Fi reconnect.
+- **Wi-Fi diagnostics:** 32 recent connection/IP events, saved across restarts
+  with rate-limited writes. Download under **Settings → Diagnostics**. This records
+  events; it does not actively test router reachability.
 
 ## Web interface
 
 ![Pit Claw web dashboard](docs/media/pitclaw.png)
 
-Open `http://bbq.local` or the controller's LAN IP from a device on the same
-network. The dashboard uses WebSocket updates and also works behind an Nginx
+Open `http://bbq.local` or the IP shown in the controller's Settings from a device
+on the same network. The current home deployment reserves **192.168.0.30**;
+other installations should use their own address. The dashboard uses WebSocket
+updates and also works behind an Nginx
 directory prefix such as `/newbbq/`; see the
 [reverse-proxy guide](firmware/docs/reverse-proxy.md).
 
@@ -70,10 +90,23 @@ PWA installation, service-worker caching, and browser notifications need a secur
 context; use HTTPS on the reverse proxy for those features. Live readings still
 require a connection to the controller.
 
+Enable a shared password in **Settings → Access** before exposing the dashboard
+outside the LAN. Authentication protects API, WebSocket and firmware-upload
+routes. Login sessions expire after 12 hours and end on restart; refresh and sign
+in again after OTA. Local touchscreen control remains available.
+
+For a network problem, download **Settings → Diagnostics → Download Wi-Fi log**
+after reconnecting. Its fixed 1,040-byte checkpoint retains 32 events; changed
+logs are saved at most once per minute. The newest unsaved entries can be lost
+on a sudden power cut. Signal strength and a green Connected label alone do not
+confirm usable IP connectivity. See the
+[Wi-Fi diagnostics guide](docs/firmware-development.md#wi-fi-event-diagnostics).
+
 Manual firmware updates are available at `/update`. Automatic GitHub release
 checks are disabled in the current PlatformIO configuration. `firmware.bin`
 includes the web UI, so one firmware upload updates both interfaces while
-preserving LittleFS settings and session history.
+preserving LittleFS settings and session history. Reboot resets runtime pit/meat
+targets: the pit starts at 225°F and meat targets are cleared.
 
 ## Hardware and enclosure
 
@@ -93,10 +126,10 @@ A relay selects wall power when present and USB-PD otherwise.
 | [Fusion enclosure model](enclosure/fusion-r13/pitclaw-enclosure-r13.f3d) | Editable 104×86×44.9 mm controller case |
 | [STL package and print guide](enclosure/fusion-r13/README.md) | Top, bottom, probe fascia, display retainer, USB base, coupons, and assembly guide |
 
-The fabrication documentation records no submitted PCB order. Carrier load,
-relay-transfer, thermal, and module-fit checks remain, along with printed
-enclosure fit checks. Use the [enclosure guide](enclosure/README.md) for the
-current controller case and the separate fan/damper assembly.
+The linked fabrication records describe a prototype package. Carrier load,
+relay-transfer, thermal and module-fit qualification remain documented hardware
+work. Use the [enclosure guide](enclosure/README.md) for r13 print files, assembly
+and fit procedures, and the separate fan/damper assembly.
 
 ## Getting started
 
@@ -130,7 +163,8 @@ pio run -e wt32_sc01_plus --target upload
 
 No filesystem upload is needed for the web UI. A filesystem upload replaces
 LittleFS and can erase configuration and session data; normal firmware updates
-preserve that filesystem. The display board's programming USB port requires
+preserve configuration, session data and Wi-Fi event checkpoints. The display
+board's programming USB port requires
 opening the enclosure; the carrier's external USB-C PD port is for power.
 
 For later manual firmware OTA, open `http://bbq.local/update` and upload
@@ -156,6 +190,12 @@ UI at `http://localhost:3000`. Run these commands from `firmware/`:
 # Native control-logic regression tests
 pio test -e native
 
+# Real QuickPID, configuration and command integration checks
+python3 test/lid/run_checks.py
+
+# Authentication, private-file and HTTP/WebSocket integration checks
+python3 test/auth/run_checks.py
+
 # Desktop simulator; requires SDL2
 pio run -e simulator
 .pio/build/simulator/program
@@ -163,9 +203,8 @@ pio run -e simulator
 # Headless production LVGL interaction checks; run after building the simulator
 python3 test/ui/run_checks.py
 
-# Web update and reverse-proxy checks
-node test/web/test_release_updates.cjs
-node test/web/test_reverse_proxy.cjs
+# Web regression checks (POSIX shell)
+for test in test/web/*.cjs; do node "$test"; done
 ```
 
 On Apple Silicon with Homebrew SDL2, use

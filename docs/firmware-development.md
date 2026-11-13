@@ -57,6 +57,15 @@ pio test -e wt32_sc01_plus
 
 # Headless production LVGL checks (build the simulator first)
 python3 test/ui/run_checks.py
+
+# Real QuickPID, configuration, diagnostic JSON and command integration
+python3 test/lid/run_checks.py
+
+# Authentication and HTTP/WebSocket adapter integration
+python3 test/auth/run_checks.py
+
+# Browser-independent web regressions (POSIX shell)
+for test in test/web/*.cjs; do node "$test"; done
 ```
 
 Tests use the Unity framework with two environments:
@@ -73,6 +82,28 @@ After the initial USB flash, firmware can be updated over Wi-Fi:
 
 The web UI is bundled in firmware. LittleFS configuration and session data are
 preserved across firmware updates.
+Restart ends web login sessions and resets runtime pit/meat targets. The pit
+starts at 225°F and meat targets are cleared; saved calibration, fan/lid settings,
+authentication and retained session data remain. Sign back in after OTA.
+
+### Wi-Fi event diagnostics
+
+In the web dashboard, open **Settings → Diagnostics → Download Wi-Fi log**.
+The `api/wifi-log` endpoint, relative to the installation root, uses the dashboard's existing access policy
+and is excluded from service-worker caching. It records station start/stop,
+association, disconnection reason codes, IP acquisition/loss, and authentication
+changes. Each event includes boot number, UTC time when synchronized, uptime,
+signal strength (the last known value after a disconnect), IP/gateway, driver
+status flags and free heap. Passwords and SSIDs are not recorded.
+
+The RAM ring retains 32 fixed 32-byte records. Its checkpoint is exactly 1,040
+bytes; an atomic temporary file can briefly hold a second checkpoint. Filesystem
+metadata adds a few blocks, but log files never grow. Only changed logs are saved,
+at most once per minute, including during event storms or write failures. A
+power loss can discard the newest buffered entries; the last committed snapshot
+survives restart and OTA. Factory reset clears it. Wi-Fi callbacks only add RAM
+records; filesystem work runs outside the callback. This is event recording,
+not a router reachability check or a change to PID/network recovery behavior.
 
 ## Architecture
 
@@ -85,6 +116,8 @@ firmware/
     config.h                    # Pin assignments, constants, defaults
     config_manager.h/.cpp       # Load/save config.json on LittleFS
     wifi_manager.h/.cpp         # WiFiManager captive portal, mDNS, auto-reconnect
+    wifi_event_log.h            # Bounded event ring and rate-limited LittleFS checkpoints
+    wifi_event_json.h           # Credential-free diagnostic JSON serialization
     ota_manager.h/.cpp          # Web-based OTA firmware update endpoint
     pid_controller.h/.cpp       # PID wrapper (QuickPID + lid-open, startup, split-range)
     temp_manager.h/.cpp         # ADS1115 reading, Steinhart-Hart, EMA filtering
@@ -119,7 +152,7 @@ firmware/
 
 ### Key Modules
 
-**PID Controller** (`pid_controller.h/.cpp`) — wraps QuickPID with BBQ-specific features: proportional-on-measurement, derivative-on-measurement, and integral anti-windup. Conditional anti-windup retains the existing warm-up damping. Within 10°F of the target, clamped anti-windup lets persistent small errors accumulate demand despite temperature ripple; it returns to conditional behavior beyond 15°F. Mode changes retain PID history, while target changes, faults and lid recovery reset it. These thresholds use internal Fahrenheit temperatures regardless of display units. Includes temperature-based lid detection with a warm-up guard, an adjustable timeout and shared UI controls.
+**PID Controller** (`pid_controller.h/.cpp`) — wraps QuickPID with proportional-on-measurement, derivative-on-measurement, and clamped anti-windup throughout warm-up and settling. Conditional anti-windup previously drained demand during a rapid rise around 200°F against a 225°F target, nearly closing the air before the pit reached temperature. Clamping keeps accumulated demand bounded while allowing persistent errors to build correction; proportional and derivative braking still operate. Target changes, faults and lid recovery reset PID history. Includes temperature-based lid detection with a warm-up guard, an adjustable timeout and shared UI controls.
 
 The default tuning is P=4.0, I=0.03, D=5.0. The integral gain was increased from
 0.02 after a physical warm-up test stalled near 210°F with a 225°F target and low
@@ -135,13 +168,16 @@ commands and actual vent restrictions both affect the warm-up response.
 - Fan: activates above configurable threshold (default 30%), scales within its own min-max range
 - Three modes: fan-only, fan+damper coordinated, damper-primary with fan boost
 
-**Cook Session** (`cook_session.h/.cpp`) — stores the current cook as a circular buffer in RAM (600 samples, ~50 min at 5s intervals), flushed to LittleFS every 60 seconds for power-loss recovery. Only one session stored on device — web UI provides CSV/JSON download.
+**Cook Session** (`cook_session.h/.cpp`) — keeps 600 samples (about 50 minutes at five-second intervals) in a circular RAM buffer, flushed to LittleFS every 60 seconds for recovery. The web CSV download and reconnect history replay export that retained window, not a complete multi-hour cook archive. Starting a new session replaces the previous one.
 
 **Error Manager** (`error_manager.h/.cpp`) — detects probe disconnect (ADC max/open circuit), probe short (ADC zero), fire-out (pit declining >2°F/min for 10+ min at full fan), and Wi-Fi loss.
 
 ### Configuration
 
-All user settings stored in `config.json` on LittleFS. Survives reboots and firmware OTA updates.
+Persistent settings live in `config.json` on LittleFS and survive firmware OTA.
+WiFiManager provisions the network through ESP32 station credentials in NVS.
+Runtime pit/meat targets and web login sessions are not persisted. Pushover fields
+remain in the configuration schema, but notification delivery is not implemented.
 
 ```json
 {

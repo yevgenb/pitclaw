@@ -8,10 +8,11 @@ below. Choose any mount directory in your Nginx configuration.
 
 Include the locations from [nginx-newbbq.conf](nginx-newbbq.conf) inside the
 existing Nginx `server` block for `eugene-home.ddns.net`. Change the device IP
-if needed, then run `nginx -t` and reload Nginx.
+if needed, then run `nginx -t` and reload Nginx. The current home controller has
+a DHCP reservation at **192.168.0.30**; use the address shown on its Settings screen.
 
 Open `/newbbq`; the redirect adds the required trailing slash. Both the
-`location /newbbq/` and `proxy_pass http://192.168.0.29/` trailing slashes matter:
+`location /newbbq/` and `proxy_pass http://192.168.0.30/` trailing slashes matter:
 Nginx turns `/newbbq/api/version` into `/api/version` on the device. The Upgrade
 headers allow `/newbbq/ws` to carry live readings and controls. See Nginx's
 [URI forwarding documentation](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass)
@@ -26,7 +27,7 @@ For the current home deployment, use `https://eugene-home.ddns.net:8443/newbbq/`
 The router forwards WAN TCP **8443** to **192.168.0.139:443** (Nginx Proxy Manager).
 WAN 443 remains reserved for router administration; forwarding it intercepted
 the router's own local HTTPS interface on this router. The controller upstream
-remains `http://192.168.0.29/`. Preserve `$http_host`, including `:8443`, for
+is `http://192.168.0.30/`. Preserve `$http_host`, including `:8443`, for
 authenticated requests. Redirect only `/newbbq` and `/ota/` to HTTPS port 8443;
 the hostname also serves other applications.
 
@@ -41,9 +42,14 @@ Settings also lets you change the password, sign out, or turn authentication off
 When enabled, a session is required for every API, WebSocket, and firmware upload
 route. The bundled HTML, scripts, styles, icon, manifest, service worker, and
 authentication status/login endpoints stay public so the login can load. Private
-LittleFS files, including `config.json`, are never served over HTTP, even to a
+LittleFS files, including `config.json` and raw Wi-Fi event checkpoints, are never served over HTTP, even to a
 signed-in client. The service worker caches only the public shell and never
 caches authentication responses or controller data.
+
+The authenticated diagnostic download is `/newbbq/api/wifi-log` (or
+`api/wifi-log` relative to another mount point). **Settings → Diagnostics →
+Download Wi-Fi log** uses this relative route, returns an attachment with
+`Cache-Control: no-store`, and needs no additional proxy location.
 
 Sessions use random tokens in HttpOnly, SameSite=Strict cookies, expire after
 12 hours, and end on restart. Logout invalidates that session; changing the
@@ -89,7 +95,7 @@ page through Nginx, also add this location to the same `server` block:
 
 ```nginx
 location ^~ /ota/ {
-    proxy_pass http://192.168.0.29/ota/;
+    proxy_pass http://192.168.0.30/ota/;
     proxy_http_version 1.1;
     proxy_set_header Host $http_host;
     proxy_set_header X-Forwarded-Proto $scheme;

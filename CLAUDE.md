@@ -44,12 +44,15 @@ pio run -e simulator                                # Build simulator
 # === Firmware ===
 pio run -e wt32_sc01_plus                          # Build firmware
 pio run -e wt32_sc01_plus --target upload           # Flash firmware via USB
-pio run -e wt32_sc01_plus --target uploadfs         # Upload web UI to LittleFS
+# Web assets are embedded in firmware.bin; uploadfs replaces saved settings/history.
 
 # === Tests ===
 pio test -e native                                  # Desktop unit tests (no hardware)
 pio test -e native --filter test_desktop/test_pid    # Single test suite
 pio test -e wt32_sc01_plus                          # On-device integration tests
+python3 test/lid/run_checks.py                      # Real QuickPID, codec and config checks
+python3 test/auth/run_checks.py                     # Authenticated HTTP/WebSocket checks
+for test in test/web/*.cjs; do node "$test"; done     # Web/cache/proxy checks (POSIX shell)
 
 # === Utilities ===
 pio device monitor --baud 115200                    # Serial monitor
@@ -61,22 +64,22 @@ pio run --target clean                              # Clean build
 ### Hardware Target
 
 The active hardware source is `hardware/carrier-revb/README.md` and `docs/wiring.md`
-(Rev B-T2F0-A5807-S3). The perfboard hardware descriptions below are historical,
+(Rev B-T2F0-A5807-S4). The perfboard layout below is historical,
 not assembly instructions for the carrier PCB. See `docs/hardware-review.md` for
 confirmed fixes and remaining display/enclosure bring-up work.
 
 - **MCU Board**: WT32-SC01 Plus (ESP32-S3, 3.5" 480x320 capacitive touchscreen, 16MB flash, 2MB PSRAM, 92x60x10.8mm)
-- **Carrier Board**: 50x70mm perfboard consolidating all electronics behind the display
+- **Carrier Board**: 60×92 mm routed Rev B-T2F0-A5807-S4 prototype
 - **ADC**: ADS1115 16-bit I2C (4 channels: 3 probes + 1 spare) — socketed on carrier board
-- **Probes**: Thermoworks Pro-Series NTC thermistors via panel-mount 2.5mm mono jacks
-- **Fan**: 5015 12V blower via IRLZ44N logic-level MOSFET on carrier board (PWM on GPIO12)
+- **Probes**: Thermoworks Pro-Series NTC thermistors via PCB-mounted 2.5 mm jacks
+- **Fan**: 5015 12 V blower via the carrier's IRF5305 high-side switch (GPIO12)
 - **Damper**: MG90S servo (PWM on GPIO13)
 - **Buzzer**: Piezo buzzer soldered to carrier board (GPIO14)
-- **Power**: 12V barrel jack (panel-mount) → MP1584EN mini buck converter (22x17mm) → 5V rail
+- **Power**: 12 V barrel input or Adafruit 5807 USB-C PD; wall-priority relay and Traco TSR 2-2450N 5 V / 2 A converter
 - **I2C Bus**: GPIO10 (SDA), GPIO11 (SCL)
-- **Enclosure**: 101.5x69.5x41.4mm (deck-of-cards form factor), derived from the internal stack
+- **Enclosure**: Fusion r13, 104×86×44.9 mm; use the current print/fit guide
 
-### Carrier Board Layout (50x70mm perfboard)
+### Historical carrier layout (50×70 mm perfboard)
 
 All internal electronics consolidated onto a single board mounted behind the WT32-SC01 Plus:
 
@@ -128,14 +131,14 @@ Connections off the carrier board (short wire runs):
 ### Software Stack
 
 - **Framework**: PlatformIO + Arduino
-- **Display UI**: LVGL v9 (parallel 8-bit interface, TFT_eSPI driver)
+- **Display UI**: LVGL v9, PanelLan/LovyanGFX WT32-SC01 Plus driver
 - **Web Server**: ESPAsyncWebServer + AsyncWebSocket (JSON protocol)
-- **Web UI**: Vanilla JS PWA served gzipped from LittleFS, uPlot for charting (all times in browser local timezone)
+- **Web UI**: Vanilla JS PWA embedded in firmware, uPlot charts, browser-local times
 - **Wi-Fi Provisioning**: WiFiManager (captive portal with auto-redirect)
 - **Network Discovery**: mDNS — device accessible at `http://bbq.local`
-- **OTA Updates**: Web-based firmware upload via `/update` endpoint (ArduinoOTA + ElegantOTA)
-- **PID**: QuickPID library (pOnMeas, dOnMeas, iAwCondition anti-windup)
-- **File System**: LittleFS (cook session, web assets, config.json)
+- **OTA Updates**: ElegantOTA manual upload via `/update`; firmware includes both UIs
+- **PID**: QuickPID (pOnMeas, dOnMeas, iAwClamp throughout warm-up and settling)
+- **File System**: LittleFS (cook session, config and bounded Wi-Fi event checkpoints)
 - **Testing**: Unity framework, dual envs (native for logic, embedded for hardware)
 - **Simulator**: SDL2 + mongoose desktop build for touchscreen + web UI development without hardware
 
@@ -148,6 +151,8 @@ firmware/
     config.h                    # Pin assignments, constants, defaults
     config_manager.h/.cpp       # Load/save config.json on LittleFS, defaults, factory reset
     wifi_manager.h/.cpp         # WiFiManager captive portal, mDNS, auto-reconnect
+    wifi_event_log.h            # 32-event ring and rate-limited LittleFS snapshots
+    wifi_event_json.h           # Authenticated diagnostic download serialization
     ota_manager.h/.cpp          # Web-based OTA firmware update endpoint
     pid_controller.h/.cpp       # BBQ-specific PID wrapper (QuickPID + lid-open, startup, split-range)
     temp_manager.h/.cpp         # ADS1115 reading, Steinhart-Hart, EMA filtering, calibration
@@ -171,7 +176,7 @@ firmware/
       sim_profiles.h            # Pre-built cook profiles
       sim_web_server.h/.cpp     # Mongoose HTTP + WebSocket server
       mongoose.h/.c             # Mongoose embedded web server library
-  data/                         # Web UI files (uploaded to LittleFS)
+  data/                         # Embedded web UI sources; served directly by the simulator
     index.html
     app.js
     style.css
@@ -195,7 +200,7 @@ scripts/                        # Developer setup scripts (setup-dev.ps1)
 
 ### Cook Simulator (Desktop)
 
-PlatformIO native build that runs the LVGL touchscreen UI in an SDL2 window and serves the web UI via an embedded web server (mongoose). Uses the same C++ thermal model and shared WebSocket protocol as the firmware — one source of truth.
+PlatformIO native build that runs production LVGL screens in SDL2 and serves the web UI through Mongoose. Both interfaces share simulated readings and the production WebSocket codec. Its thermal/controller model is simplified and separate from the real QuickPID engine; use the integration fixtures and physical cooks to assess PID behavior.
 
 ```bash
 # Build and run
@@ -238,7 +243,7 @@ pio run -e simulator
 
 ### Configuration Persistence
 
-All user settings stored in `config.json` on LittleFS. Survives reboots and firmware OTA updates (LittleFS partition is not overwritten by firmware flash).
+Persistent configuration lives in `config.json` on LittleFS; WiFiManager stores station credentials in ESP32 NVS. Firmware OTA preserves both. Pit/meat targets are runtime state (225°F and cleared meat targets after restart), and login sessions end on restart.
 
 ```json
 {
@@ -275,6 +280,7 @@ On first power-on (or after factory reset), the touchscreen walks the user throu
 - **QR code on screen**: In AP mode, touchscreen displays a QR code encoding a WiFi network config (`WIFI:T:WPA;S:BBQ-Setup;P:bbqsetup;;`). Scanning connects the phone to the AP automatically, then captive portal opens.
 - **mDNS**: After joining home network, device registers `bbq.local`. Access web UI at `http://bbq.local`.
 - **Auto-reconnect**: If Wi-Fi drops, device retries in background. Touchscreen UI remains fully functional — Wi-Fi is a convenience layer, not a dependency.
+- **Status limitation**: Connected/RSSI reflects SDK radio state, not verified router reachability. The 32-event log records status bits, IP changes and disconnect reasons; download it from Settings → Diagnostics. Its 1,040-byte checkpoint is saved only when changed, at most once per minute. Pending entries can be lost on power loss.
 - **Fallback AP**: If stored Wi-Fi credentials fail 3 times on boot, device falls back to AP mode for reconfiguration.
 
 ### OTA Firmware Updates
@@ -296,7 +302,7 @@ On first power-on (or after factory reset), the touchscreen walks the user throu
 
 ### Factory Reset
 
-Hold finger on touchscreen for 10 seconds during the boot splash screen. Device wipes `config.json`, restarts, and enters setup wizard. Cook session data is also cleared.
+Hold a finger on the touchscreen for 10 seconds during boot splash to request factory reset. It clears LittleFS configuration, cook history and Wi-Fi diagnostic checkpoints, then restarts into setup. WiFiManager station credentials in NVS are not erased by this routine.
 
 ### Controller enclosure
 
@@ -397,19 +403,18 @@ Outside air → [butterfly damper] → [5015 blower fan] → [duct] → [UDS pip
 - Lid-open threshold: 6% drop below setpoint
 
 **Fan Control:**
-- PWM frequency: 25 kHz
-- Kick-start: 75% for 500ms
+- PWM frequency: 100 Hz, 10-bit hardware duty (provisional; bench-verify the blower)
+- Kick-start: 100% for 500ms
 - Long-pulse mode below 10% (10s cycle)
 - Min sustained speed: 15%
 
 **Data Storage (single-session model):**
 - Only the current/last cook session is stored on device — no multi-session archive
-- Cook data point: 13 bytes (timestamp + 3 temps + fan% + damper% + flags)
+- Cook data fields occupy 13 bytes; native struct records include padding (`sizeof(DataPoint)`, 16 bytes on the ESP32)
 - RAM buffer: 600 samples (~50 min at 5s intervals)
-- LittleFS flush: every 60 seconds (power-loss recovery — lose at most 60s of data)
-- 12-hour cook: ~110 KB on flash
+- LittleFS flush: every 60 seconds; newest unflushed samples can be lost on power loss
 - Starting a new session requires confirmation and overwrites previous session
-- Web UI provides CSV/JSON download before overwrite — the phone/laptop is the archive
+- The CSV download exports the retained 600-point window, not a complete multi-hour archive
 
 ### Fan + Damper Coordination (Split-Range)
 
@@ -433,23 +438,23 @@ The chart always shows a projected curve for each meat probe from the current te
 
 - Meat target alarm: triggers when probe reaches set temperature
 - Pit alarm: no alerts during ramp-up; once setpoint reached, alerts on deviation beyond configurable band (recommend ±15°F default based on normal oscillation)
-- Three alarm layers: local buzzer, Web Audio API (browser open), Pushover notifications (phone in pocket)
+- Local buzzer, browser audio and browser notifications where supported. Pushover keys exist in the configuration schema; delivery is not implemented.
 
 ### Web UI as PWA
 
 - `manifest.json` with app name, icon, theme color, `display: standalone`
 - Service worker (`sw.js`) caches the app shell (HTML/JS/CSS) for offline loading — data still requires WebSocket connection
 - "Add to Home Screen" prompt on first visit (or manual via browser menu)
-- On iOS: must be added to home screen for push notification support (iOS 16.4+)
+- Browser notifications require permission and a supported secure context; there is no server-side Web Push delivery.
 
 ### WebSocket Protocol
 
 ```json
 // Server → Client: periodic data (every 1-2s)
-{"type":"data","ts":1707600000,"pit":225.5,"meat1":145.2,"meat2":98.7,"fan":45,"damper":80,"sp":225,"lid":false,"est":1707614400,"meat1Target":203,"meat2Target":null,"errors":[]}
+{"type":"data","ts":1707600000,"pit":225.5,"meat1":145.2,"meat2":98.7,"fan":45,"damper":80,"sp":225,"lid":false,"lidEnabled":true,"lidTimeoutSeconds":120,"lidRemaining":0,"lidManual":false,"fanMode":"fan_and_damper","est":1707614400,"meat1Target":203,"meat2Target":null,"errors":[]}
 
 // Server → Client: history dump (on connect)
-{"type":"history","sp":225,"meat1Target":203,"meat2Target":null,"data":[[ts,pit,meat1,meat2,fan,damper],...]}
+{"type":"history","sp":225,"meat1Target":203,"meat2Target":null,"data":[{"ts":1707600000,"pit":225.5,"meat1":145.2,"meat2":null,"fan":45,"damper":80,"sp":225,"lid":false}]}
 
 // Server → Client: session reset confirmation
 {"type":"session","action":"reset","sp":225}
