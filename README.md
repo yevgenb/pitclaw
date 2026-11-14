@@ -14,6 +14,34 @@ one pit probe and two meat probes, controls a blower and optional servo damper,
 and provides a web dashboard for monitoring and control. The touchscreen and
 temperature control work without Wi-Fi.
 
+This is an **independently maintained fork** of
+[MrMatt57's Pit Claw](https://github.com/MrMatt57/pitclaw). The original project
+provides the ESP32 touchscreen controller, probe monitoring, PID fan/damper
+control and web interface. This fork develops the hardware and enclosure and
+refines the firmware through bench checks and real cooking sessions. It is
+maintained separately; it is not an official upstream release.
+
+**Start here:** [Builder's guide](docs/build-guide.md) ·
+[Prototype downloads](https://github.com/yevgenb/pitclaw/releases/tag/prototype-2026-11-14) ·
+[The build story](docs/build-story.md) ·
+[Report your build](https://github.com/yevgenb/pitclaw/issues/new?template=build_report.yml)
+
+## What this fork changes
+
+- **Custom carrier PCB:** routed KiCad design with PCB-mounted connectors,
+  USB-C PD power and wall-priority power selection, with BOM and wiring records.
+- **Redesigned enclosure:** editable Fusion model, printable parts, fit coupons,
+  adjustable display seating and four M3 accessory mounting points.
+- **Controller refinements:** warm-up airflow regression coverage, clamped
+  anti-windup, explicit lid controls and damper calibration.
+- **Web access and diagnostics:** shared-password authentication, authenticated
+  OTA/downloads, reverse-proxy support and bounded Wi-Fi event logging.
+
+This is a **prototype for experienced builders**. The latest PID update needs
+a physical cold-start overshoot check; the revised display seat needs a print
+fit check; carrier load and thermal qualification remain. See the
+[builder's guide](docs/build-guide.md) for what to test and how to report it.
+
 ## Current project state
 
 As of **13 November 2026**:
@@ -80,8 +108,8 @@ The image above is a native 480×320 LVGL render with example readings.
 ![Pit Claw web dashboard](docs/media/pitclaw.png)
 
 Open `http://bbq.local` or the IP shown in the controller's Settings from a device
-on the same network. The current home deployment reserves **192.168.0.30**;
-other installations should use their own address. The dashboard uses WebSocket
+on the same network. A DHCP reservation can keep that address consistent.
+The dashboard uses WebSocket
 updates and also works behind an Nginx
 directory prefix such as `/newbbq/`; see the
 [reverse-proxy guide](firmware/docs/reverse-proxy.md).
@@ -224,4 +252,8 @@ and alternate SDL paths. UI screenshots can be regenerated locally on demand.
 
 ## License
 
-TBD
+The upstream project and this fork currently have no project-wide license
+(upstream lists it as TBD). Public availability is not a blanket permission
+to reuse or redistribute the work. Licensing remains to be clarified with the
+original author and relevant contributors. Existing third-party notices still
+apply; this prototype release does not add or replace a license.

@@ -48,7 +48,7 @@ body:
     attributes:
       label: Firmware Version
       description: Check Settings screen or web UI footer
-      placeholder: e.g. 2026.2.0
+      placeholder: e.g. 0.2.0-wifi-log.1 / UI 6
   - type: textarea
     id: context
     attributes:

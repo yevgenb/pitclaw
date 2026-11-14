@@ -1,0 +1,39 @@
+name: Build report
+description: Share hardware, enclosure fit and measured prototype results
+title: "[Build] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying this independently maintained fork. Describe the checks you actually performed; untested items are useful to identify too. Review attachments for passwords, tokens and personal network details before posting.
+  - type: input
+    id: version
+    attributes:
+      label: Release and firmware version
+      placeholder: prototype-2026-11-14 / 0.2.0-wifi-log.1 / UI 6
+    validations:
+      required: true
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Hardware and grill
+      description: Carrier revision, display module, probes, blower/servo, power supply and grill. List substitutions.
+    validations:
+      required: true
+  - type: textarea
+    id: enclosure
+    attributes:
+      label: Enclosure and mounting
+      description: Case revision, printer, material, layer height, insert size, shims and measured fit. Say if you did not print the case.
+  - type: textarea
+    id: results
+    attributes:
+      label: Checks and measured results
+      description: Probe/reference readings, fan startup, warm-up/overshoot, lid recovery, restart/reconnect behavior or loaded power switching. Include ambient conditions and vent settings for cook results. Identify anything not tested.
+    validations:
+      required: true
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Photos, CSV or diagnostic logs
+      description: Attach only files you have reviewed for private information. For a reproducible defect, use the Bug Report form as well.
