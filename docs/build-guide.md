@@ -24,6 +24,12 @@ and the **Rev B-T2F0-A5807-S4** carrier BOM.
 The release tag identifies the whole project snapshot; the device reports the
 firmware version, not the date-based release tag.
 
+Use the dependency versions in the tagged `firmware/platformio.ini`. The preview
+pins Espressif32 **7.1.2**, LVGL **9.5.0** and its other direct firmware libraries
+to the tested versions. Espressif32 8.x selects a newer Arduino core whose LEDC
+API is incompatible with this firmware; upgrading the toolchain is a separate
+firmware migration, not an installation step.
+
 - `firmware.bin`: application and embedded web UI for the WT32-SC01 Plus.
 - `pitclaw-enclosure-r13.zip`: Fusion/STEP sources, five complete printable parts,
   coupons, shims, assembly illustrations and recorded geometry checks.
