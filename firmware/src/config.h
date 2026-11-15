@@ -128,4 +128,4 @@ constexpr bool isValidLidTimeoutSeconds(unsigned seconds) {
 #ifndef FIRMWARE_VERSION
 #define FIRMWARE_VERSION    "0.2.0-wifi-log.1"
 #endif
-#define WEB_UI_BUILD        "6"
+#define WEB_UI_BUILD        "7"

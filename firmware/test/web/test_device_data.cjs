@@ -57,10 +57,18 @@ function sample(ts, pit = 70, meat1 = null) {
 {
   const {ui, node} = createUI();
   for (let i = 0; i < 12; i++) ui.handleMessage(sample(now + i, 70));
-  assert.equal(node('pitPrediction').textContent, 'Waiting for temperature rise');
+  assert.equal(node('pitPrediction').textContent, '');
   assert.equal(ui.predictDoneTime(1, 225), null);
   ui.handleMessage(sample(now + 12, 225));
   assert.equal(node('pitPrediction').textContent, '');
+}
+{
+  const {ui, node} = createUI();
+  // A rapid warm-up followed by settling can project the target into the past.
+  const temperatures = [70, 100, 130, 160, 190, 215, 224, 224.5, 224.7, 224.8, 224.9];
+  temperatures.forEach((pit, i) => ui.handleMessage(sample(now + i * 60, pit)));
+  assert.equal(ui.predictDoneTime(1, 225), null);
+  assert.equal(node('pitPrediction').textContent, '', 'An unavailable ETA must not imply heating stopped');
 }
 {
   const {ui, node} = createUI();

@@ -3,22 +3,30 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname, '../../data/app.js'), 'utf8').replace(/\n\}\)\(\);\s*$/, `
-  globalThis.ui = {cacheDom, initAuth, refreshAuth};
+  globalThis.ui = {cacheDom, initAuth, refreshAuth, initChart};
 })();`);
 async function check(base) {
-  const nodes = new Map(), requests = [], sockets = [], timers = [], classes = new Set(['auth-pending']);
+  const nodes = new Map(), requests = [], sockets = [], timers = [], charts = [], classes = new Set(['auth-pending']);
   const node = id => {
     if (!nodes.has(id)) nodes.set(id, {style:{},value:'',hidden:false,classList:{toggle(){},add(){},remove(){}},events:{},
       addEventListener(event, handler) { this.events[event] = handler; }, focus() { this.focused = true; }});
     return nodes.get(id);
   };
+  Object.defineProperty(node('chartContainer'), 'clientWidth', {
+    get: () => classes.has('auth-pending') || classes.has('auth-locked') ? 0 : 720
+  });
+  class Plot {
+    constructor(options) { this.width = options.width; charts.push(this); }
+    setSize(size) { this.width = size.width; }
+    setData() {}
+  }
   let status = { enabled: true, authenticated: false }, networkFailure = false, loginStatus = 401;
   class Socket {
     static CONNECTING = 0; static OPEN = 1;
     constructor(url) { this.url = url; this.readyState = 1; sockets.push(this); }
     close() { this.readyState = 3; }
   }
-  const context = vm.createContext({URL, URLSearchParams, WebSocket:Socket, console:{log(){},warn(){},error(){}},window:{},navigator:{},
+  const context = vm.createContext({URL, URLSearchParams, WebSocket:Socket, uPlot:Plot, console:{log(){},warn(){},error(){}},window:{innerHeight:800},navigator:{},
     setTimeout(callback) { timers.push(callback); return timers.length; }, clearTimeout(){},
     document: {baseURI:base,readyState:'loading',addEventListener(){},getElementById:node,querySelector:node,
       body:{style:{},classList:{add(...values){values.forEach(v=>classes.add(v));},remove(...values){values.forEach(v=>classes.delete(v));}}}},
@@ -35,7 +43,8 @@ async function check(base) {
       return {ok:code === 200,status:code,json:async()=>data};
     }
   });
-  vm.runInContext(source,context); context.ui.cacheDom(); context.ui.initAuth();
+  vm.runInContext(source,context); context.ui.cacheDom(); context.ui.initChart(); context.ui.initAuth();
+  assert.equal(charts[0].width,0,'The chart starts inside the hidden authentication gate');
   const settle = () => new Promise(resolve=>setImmediate(resolve));
   await settle();
   assert.equal(sockets.length,0,'A locked dashboard must not open a websocket');
@@ -47,6 +56,7 @@ async function check(base) {
   assert.equal(node('loginPassword').value,''); assert.equal(node('authScreen').hidden,true);
   assert.equal(sockets.length,1); assert.equal(sockets[0].url,new URL('ws',base).href.replace(/^http/,'ws'));
   assert.ok(!classes.has('auth-locked'));
+  assert.equal(charts[0].width,720,'Signing in must size the chart without a window resize');
   const beforeShort=requests.length;
   for (const short of ['1234567','é'.repeat(7),'😀'.repeat(4)]) {
     node('newPassword').value=short; node('confirmPassword').value=short;

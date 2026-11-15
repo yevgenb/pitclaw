@@ -9,7 +9,7 @@
   // ---------------------------------------------------------------------------
   var WS_MAX_BACKOFF = 30000;
   var DEBOUNCE_MS = 300;
-  var UI_BUILD = '6';
+  var UI_BUILD = '7';
   var TEMPERATURE_FIELDS = ['sp', 'meat1Target', 'meat2Target'];
   var PASSWORD_MIN_LENGTH = 8;
   var CHART_WINDOW_SEC = 2 * 60 * 60; // 2 hours visible window
@@ -189,6 +189,7 @@
         authLocked = false;
         document.body.classList.remove('auth-pending', 'auth-locked');
         dom.authScreen.hidden = true;
+        resizeChart();
         wsConnect(); fetchVersion();
       }).catch(function () {
         lockDashboard('Cannot reach your controller. Retrying…');
@@ -1317,7 +1318,7 @@
 
     var pred = predictDoneTime(1, pitSetpoint);
     if (!pred) {
-      dom.pitPrediction.textContent = 'Waiting for temperature rise';
+      dom.pitPrediction.textContent = '';
       return;
     }
 
